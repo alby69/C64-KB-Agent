@@ -1,0 +1,131 @@
+---
+title: Scoring points
+source_url: https://codebase.c64.org/doku.php?id=base%3Ascoring_points
+category: reference
+topics:
+- graphics
+- raster interrupts
+- sprite programming
+- assembly
+difficulty: intermediate
+language: assembly
+hardware:
+- VIC-II
+- CPU
+related:
+- sprite-programming
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-07-14'
+---
+
+# Scoring points
+
+### Table of Contents
+
+# Scoring points
+
+by Achim
+
+There are three ways to code scoring.
+
+## 1) Decimal mode
+
+This one can be found in many games. You only have to declare a couple of variables for the player's score and switch to decimal mode.
+
+Example for six digits:
+
+sed //set decimal mode clc lda #$50 //50 points scored adc score1 //ones and tens sta score1 lda score2 //hundreds and thousands adc #00 sta score2 lda score3 //ten-thousands and hundred-thousands adc #00 sta score3 cld //clear decimal mode
+
+The score can now be printed on screen:
+
+lda score3 and #$f0 //hundred-thousands lsr lsr lsr lsr ora #$30 // -->ascii sta screenposition //print on screen lda score3 and #$0f //ten-thousands ora #$30 // -->ascii sta screenposition+1 //print on next screen position lda score2 //same procedure for all digits ...
+
+Switching to decimal mode can cause problems under certain conditions: Let's say an irq kicks in to write sprite registers while decimal mode is set. This would mess up all registers, of course. This might happen with a sprite mulitplexer, because these irqs are unpredictable. Idea would be to start these irqs with CLD. Another would be to disable irqs while calculating.
+
+## 2) Hexadecimal mode
+
+Not much to explain. Declare your variables for the score. Use a standard hexadecimal addition
+and print the result on screen (preferably with a routine like [this](https://codebase.c64.org/doku.php?id=base:32_bit_hexadecimal_to_decimal_conversion), which converts hexadecimal to decimal, then ascii).
+
+## 3) ASCII
+
+This one's most commonly used in games. Each ascii code on screen is treated like a digit. An addition would look like this:
+
+ldx #$05 lda #$00 !: sta carry,x //clear carry table dex bpl !- ldx #$05 //6 digits !: lda figure1,x //current score, usually located in screen memory clc adc figure2,x //add points adc carry,x and #$0f //check bits0-3 cmp #$0a //if >=10 bcc nocarry inc carry-1,x //then set carry for next digit... sec sbc #$0a //... -10 for correct ascii nocarry: ora #$30 //-->ascii sta sum,x dex bpl !- rts figure1: .byte $31, $32, $30, $33, $37, $39 // 120379 (example) figure2: .byte $32, $32, $30, $39, $32, $31 // +220921 carry: .byte $00, $00, $00, $00, $00, $00 //tmp for carry sum: .byte $00, $00, $00, $00, $00, $00
+
+## Codice Estratto
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+sed		//set decimal mode
+clc
+lda #$50	//50 points scored
+adc score1	//ones and tens
+sta score1
+lda score2	//hundreds and thousands
+adc #00
+sta score2
+lda score3	//ten-thousands and hundred-thousands
+adc #00
+sta score3
+cld		//clear decimal mode
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+lda score3
+and #$f0	        //hundred-thousands
+lsr
+lsr
+lsr
+lsr
+ora #$30		// -->ascii
+sta screenposition	//print on screen
+lda score3
+and #$0f		//ten-thousands
+ora #$30		// -->ascii
+sta screenposition+1	//print on next screen position
+
+lda score2		//same procedure for all digits
+...
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+ldx #$05
+		lda #$00
+!:		sta carry,x		//clear carry table
+		dex
+		bpl !-
+
+		ldx #$05		//6 digits
+!:		lda figure1,x           //current score, usually located in screen memory
+		clc
+		adc figure2,x           //add points
+		adc carry,x
+		and #$0f		//check bits0-3
+		cmp #$0a		//if >=10
+		bcc nocarry
+		inc carry-1,x		//then set carry for next digit...
+		sec
+		sbc #$0a		//... -10 for correct ascii
+nocarry:	ora #$30		//-->ascii
+		sta sum,x
+		dex
+		bpl !-
+		rts
+
+figure1:	.byte		$31, $32, $30, $33, $37, $39 		//   120379 (example)
+figure2:	.byte		$32, $32, $30, $39, $32, $31 		//  +220921
+carry:		.byte		$00, $00, $00, $00, $00, $00		//tmp for carry
+sum:		.byte		$00, $00, $00, $00, $00, $00
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Ascoring_points](https://codebase.c64.org/doku.php?id=base%3Ascoring_points)*

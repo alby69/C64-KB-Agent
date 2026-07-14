@@ -1,0 +1,134 @@
+---
+title: Using KickAss to include .gif sprite data
+source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_data_and_kickassembler
+category: tool
+topics:
+- graphics
+- sprite programming
+- assembly
+difficulty: beginner
+language: assembly
+hardware:
+- VIC-II
+- KERNAL
+related:
+- sprite-programming
+- memory-map
+- raster-interrupts
+- kernal-routines
+- vic-ii-registers
+scraped_at: '2026-07-14'
+---
+
+# Using KickAss to include .gif sprite data
+
+base:sprite_data_and_kickassembler
+
+                ### Table of Contents
+
+# Using KickAss to include .gif sprite data
+
+[KickAssembler](http://www.theweb.dk/KickAssembler/Main.php) aka KickAss is a multi platform crossassembler written in Java with some nice features when it comes to handling graphics data. The author of KickAss (Slammer) provided the following example on how to easily make sprite data out of .gif images just by using a rather simple macro:
+
+```
+.pc = $3000 "Sprite Data"
+spriteData:
+	:LoadSpriteFromPicture("sprite1.gif")
+	:LoadSpriteFromPicture("sprite2.gif")
+	:LoadSpriteFromPicture("sprite3.gif")
+// etc
+.macro LoadSpriteFromPicture(filename) {
+	.var picture = LoadPicture(filename, List().add($000000, $ffffff,$6c6c6c,$959595))
+	.for (var y=0; y<21; y++)
+		.for (var x=0; x<3; x++)
+			.byte picture.getMulticolorByte(x,y) 
+	.byte 0
+}
+```
+The example was posted in the following [CSDb thread](http://noname.c64.org/csdb/forums/?roomid=11&topicid=67797#67839).
+
+# Using KickAss to convert an image to rows of sprites
+
+Another question popped up in the [same thread](http://csdb.dk/forums/?roomid=11&topicid=67797) on how to convert a picture to multiple sprites.
+
+The following macro converts any sized image (png/gif/jpg/bmp) to rows of sprites. Correct size should be: width = N * 3 * 8, height = M * 21.
+
+```
+// in this example logo.png is a 4 color (black and 3 greys in pepto palette) 192x84 pixels image
+// this will convert it to 32 sprites (4 rows of 8 sprites)
+:LoadSpritesFromPicture( "logo.png", $000000, $444444, $6c6c6c, $959595 )
+.macro LoadSpritesFromPicture( filename, bgcolor, color0, color1, color2 ) {
+    .var picture  = LoadPicture( filename, List().add(bgcolor, color0, color1, color2) )
+    .var xsprites = floor( picture.width  / [ 3 * 8 ] )
+    .var ysprites = floor( picture.height / 21 )
+    .for (var ysprite = 0; ysprite < ysprites; ysprite++) {
+        .for (var xsprite = 0; xsprite < xsprites; xsprite++) {
+            .for (var i = 0; i < [3 * 21]; i++) {
+                .byte picture.getMulticolorByte(
+                    [[xsprite * 3]  + mod(i, 3)],
+                    [[ysprite * 21] + floor(i / 3)]
+                )
+            }
+            .byte 0
+        }
+    }
+}
+```
+base/sprite_data_and_kickassembler.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+.pc = $3000 "Sprite Data"
+spriteData:
+
+	:LoadSpriteFromPicture("sprite1.gif")
+	:LoadSpriteFromPicture("sprite2.gif")
+	:LoadSpriteFromPicture("sprite3.gif")
+// etc
+
+
+
+.macro LoadSpriteFromPicture(filename) {
+	.var picture = LoadPicture(filename, List().add($000000, $ffffff,$6c6c6c,$959595))
+	.for (var y=0; y<21; y++)
+		.for (var x=0; x<3; x++)
+			.byte picture.getMulticolorByte(x,y) 
+	.byte 0
+}
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+// in this example logo.png is a 4 color (black and 3 greys in pepto palette) 192x84 pixels image
+// this will convert it to 32 sprites (4 rows of 8 sprites)
+
+:LoadSpritesFromPicture( "logo.png", $000000, $444444, $6c6c6c, $959595 )
+
+.macro LoadSpritesFromPicture( filename, bgcolor, color0, color1, color2 ) {
+
+    .var picture  = LoadPicture( filename, List().add(bgcolor, color0, color1, color2) )
+    .var xsprites = floor( picture.width  / [ 3 * 8 ] )
+    .var ysprites = floor( picture.height / 21 )
+
+    .for (var ysprite = 0; ysprite < ysprites; ysprite++) {
+        .for (var xsprite = 0; xsprite < xsprites; xsprite++) {
+            .for (var i = 0; i < [3 * 21]; i++) {
+                .byte picture.getMulticolorByte(
+                    [[xsprite * 3]  + mod(i, 3)],
+                    [[ysprite * 21] + floor(i / 3)]
+                )
+            }
+            .byte 0
+        }
+    }
+}
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Asprite_data_and_kickassembler](https://codebase.c64.org/doku.php?id=base%3Asprite_data_and_kickassembler)*

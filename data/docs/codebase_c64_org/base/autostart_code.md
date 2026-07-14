@@ -1,0 +1,26 @@
+---
+title: Autostart Code
+source_url: https://codebase.c64.org/doku.php?id=base%3Aautostart_code
+category: reference
+topics:
+- assembly
+difficulty: intermediate
+language: assembly
+hardware:
+- KERNAL
+related:
+- memory-map
+- kernal-routines
+scraped_at: '2026-07-14'
+---
+
+# Autostart Code
+
+# Autostart Code
+
+Although this document concentrates on hardware, there is one thing that you must know about the firmware to get complete control over your computer. As the Commodore 64 always switches the ROMs on upon -RESET, you cannot relocate the RESET vector by writing something in RAM. Instead, you have to use the Autostart code that will be recognized by the KERNAL ROM. If the memory places from $8004 through $8008 contain the PETSCII string 'CBM80' (C3 C2 CD 38 30), the RESET routine jumps to ($8000) and the default NMI handler jumps to ($8002).
+
+Some programs that load into RAM take advantage of this and don't let the machine to be reset. You don't have to modify the ROM to get rid of this annoying behaviour. Simply ground the -EXROM line for the beginning of the RESET sequence.
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Aautostart_code](https://codebase.c64.org/doku.php?id=base%3Aautostart_code)*

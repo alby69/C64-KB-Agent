@@ -1,0 +1,152 @@
+---
+title: Splitting NES Elite across multiple ROM banks
+source_url: https://elite.bbcelite.com/deep_dives/splitting_nes_elite_across_multiple_rom_banks.html
+category: source-code
+topics:
+- memory management
+- basic
+- raster interrupts
+- assembly
+difficulty: advanced
+language: mixed
+hardware:
+- CPU
+- SID
+- KERNAL
+related:
+- sound-programming
+- music-player
+- raster-interrupts
+- memory-map
+- sprite-programming
+- vic-ii-registers
+- kernal-routines
+- sid-registers
+scraped_at: '2026-07-14'
+---
+
+# Splitting NES Elite across multiple ROM banks
+
+## Details of the MMC1 controller and the 128K game ROM
+
+The NES was originally designed to take cartridge ROMs containing up to 32K of program code (called PRG-ROM) and 8K of pattern data (called CHR-ROM). This standard setup maps the program code into CPU memory from $8000 to $FFFF and the character patterns into PPU memory from $0000 to $1FFF, with the 2K of on-board WRAM completing the picture from $0000 to $07FF.
+
+This memory structure is enough to support classic tile-based games like Super Mario Bros, but more sophisticated game designs just don't fit into 32K of code and 8K of patterns. Swapping the CHR-ROM for CHR-RAM lets the game code create patterns on-the-fly, which can help ease the restrictions of having a hard-coded pattern table in ROM, but a much more flexible solution is to build mapping circuitry into the cartridge to support bank-switching. This allows the game code to switch different banks of memory in and out of the main memory map, thus extending the amount of code that can be included in the cartridge. The idea is pretty similar to the BBC Micro's sideways ROM system, which allows you to page different ROMs into memory out of a maximum of 16 (if you have an expansion board).
+
+The first NES cartridges to support bank-switching used multiple 7400-series chips to implement the logic, but eventually Nintendo released the ASIC-based MMC1 mapper, which was the first custom-built memory manager to be included in a cartridge. Games like The Legend of Zelda and Metroid used the MMC1 to push the boundaries of what the NES could do, and over the years lots of other mapper designs appeared, extending the system's capabilites even further.
+
+Elite on the NES uses the MMC1 mapper, so let's look at how it works and what it means for the game code.
+
+## Bank-switching in Elite
+
+													 -----------------------
+
+						The Elite cartridge contains three main blocks of memory:
+
+- 8K of battery-backed [cartridge WRAM](https://elite.bbcelite.com/nes/common/workspace/cartridge_wram.html), also known as PRG-RAM, which is mapped into CPU memory from $6000 to $7FFF and is used for the graphics buffers and saved commanders
+- 8K of CHR-RAM, which is mapped to the PPU's VRAM from $0000 to $1FFF, and is used to store the two PPU pattern tables
+- 128K of [game code in ROM](https://elite.bbcelite.com/nes/all/bank_0_1.html), which is paged into the top 32K of CPU memory from $8000 to $FFFF, in two switchable banks of 16K
+
+The two 8K blocks of RAM are mapped into memory at fixed addresses, so writing to $6000-$7FFF in WRAM or $0000-$1FFF in VRAM will update the relevant memory locations, as expected. The 128K of game code is more problematic as $8000 to $FFFF is only 32K, and we have 128K of game ROM to squeeze into this memory range.
+
+The solution is to split the game code into eight 16K banks, numbered 0 to 7. Bank 7 is permanently mapped into the top part of the memory map, from $C000 to $FFFF, and we can switch any of the other seven banks into memory from $8000 to $BFFF by writing to the MMC1 registers.
+
+There are four write-only MMC1 registers, each of which is five bits in size. We can write a five-bit value into an MMC1 register by sending it one bit at a time, starting with the lowest bit (bit 0) and working up to the highest bit (bit 4). We send each individual bit by poking a byte into the register's address, with the bit that we want to send in bit 0 of that byte (the other bits are ignored).
+
+The registers are mapped into memory like this:
+
+- The MMC1 control register is mapped to $8000-$9FFF
+- The MMC1 CHR bank 0 register is mapped to $A000-$BFFF
+- The MMC1 CHR bank 1 register is mapped to $C000-$DFFF
+- The MMC1 PRG bank register is mapped to $E000-$FFFF
+
+In other words, to write to the last one, the MMC1 PRG bank register, which is the one we use for bank-switching, we need to write the five-bit bank number, one bit at a time, into any memory address between $E000 and $FFFF, and the cartridge hardware will ensure that it reaches the MMC1 mapper. Elite chooses to use the top address of each of these banks, so if you see a write to any of $9FFF, $BFFF, $DFFF or $FFFF in the source code, then that's the game configuring the MMC1 mapper.
+
+Of the four MMC1 registers, Elite only uses the first three when initialising the system. This is done in the [SetupMMC1](https://elite.bbcelite.com/nes/bank_7/subroutine/setupmmc1.html) routine that gets called on reset and start-up. This routine configures the mapper as follows:
+
+- Set MMC1 control register to %00001110, which configures the following:
+								- %xxxxxx10 = vertical mirroring, so nametable/attribute table 0 is mapped to $2000-$23FF and nametable/attribute table 1 is mapped to $2400-$27FF
+- %xxxx11xx = PRG-ROM bank mode 3, which fixes ROM bank 7 at $C000 and switches the other 16K ROM banks into $8000
+- %xxx0xxxx = CHR-ROM bank mode 0, so when setting the MMC1 CHR bank registers in the next two steps, we switch the CHR-RAM into memory 8K at a time
+ 
+- Set MMC1 CHR bank 0 register to 0, so we map the first 8K of CHR-RAM to $0000 in VRAM for pattern table 0
+- Set MMC1 CHR bank 1 register to 0, so we map the second 8K of CHR-RAM to $1000 in VRAM for pattern table 1
+
+Unlike the first three registers, which are only set as above, the fourth MMC1 register is changed all the time. This is the PRG bank register at $FFFF, and writing a five-bit number to this register will switch that bank number into memory at $8000. There are quite a few bank-switching routines in Elite, but they are all based on the same approach; the best example is the [SetBank](https://elite.bbcelite.com/nes/bank_7/subroutine/setbank.html) routine, which writes the argument in A into $FFFF one bit at a time, thereby switching bank A into memory at $8000. The important part looks like this:
+
+STA $FFFF LSR A STA $FFFF LSR A STA $FFFF LSR A STA $FFFF LSR A STA $FFFF
+
+When sending a value to an MMC1 register, only bit 0 of the byte being sent actually reaches the MMC1, so we can simply shift the value of A right by one place each time to move the next bit to send into bit 0. Incidentally, looking at the [exact chips used in the Elite cartridge](https://nescartdb.com/profile/view/4538/elite), we can see the mapper is an MMC1B3, which means that bit 4 of the register controls whether PRG-RAM is enabled (PRG-RAM being the 8K of cartridge RAM that's mapped to $6000, and which we use for the graphics buffers and saved commanders). We need this bit to be clear for PRG-RAM to be enabled, which will always be the case as the bank number in A is in the range 0 to 6.
+
+For more detailed information on the MMC1 registers, see the NESDev wiki article on the [MMC1](https://www.nesdev.org/wiki/MMC1).
+
+## The bank 7 switchyard routines
+
+													 ------------------------------
+
+						So we can switch any of the ROM banks into memory at $8000, but how do we manage this within the game code? Well, bank 7 is always mapped into memory at $C000, so all the code in bank 7 is available all of the time. This is where we put vital routines like the [NMI](https://elite.bbcelite.com/nes/bank_7/subroutine/nmi.html) interrupt handler, which gets called every VBlank, and any heavily used code like the maths routines, the most used lookup tables and so on.
+
+Bank 7 also contains a whole collection of routines that enable code in any bank to call a fixed set of routines from other banks. I call this the "bank 7 switchyard" because it's a bit like the switching stations you find in railways (and electricity substations), where tracks (or cables) get routed to their correct destinations. To make a routine callable from anywhere in the game code, we add a switchyard routine into bank 7 that works as follows.
+
+Consider some code that's in ROM bank x, and we want to call a routine in ROM bank y (where y is not 7, as we can always call routines in bank 7). We do this by calling that routine's switchyard routine in bank 7, which does the following:
+
+- Fetch the number of the bank that is currently switched into memory at $8000 (which we always store in the [currentBank](https://elite.bbcelite.com/nes/common/workspace/zp.html#currentbank)variable), and stick it on the stack. In our example, this will be bank x.
+- Call the [SetBank](https://elite.bbcelite.com/nes/bank_7/subroutine/setbank.html)routine to switch to the bank number of the routine we want to run, so this switches the bank containing the routine into memory at $8000. In our example, we call SetBank with A set to y, so bank y gets switched into memory.
+- Call the routine we want to run using a JSR, as the code for our routine is now paged into memory.
+- When it returns, retrieve the original bank number from the stack (bank x in our case) and call SetBank again to switch the original bank back into memory. The [ResetBank](https://elite.bbcelite.com/nes/bank_7/subroutine/resetbank.html)does exactly this, so that's what we call.
+- Return from the switchyard routine, which returns us back to our originating call in bank x, which is now paged back into memory.
+
+The naming convention for the switchyard routines is to take the original routine's name and add "_bn" to the end of the name, where n is the bank number containing the actual routine. So say we want to call the [FadeToBlack](https://elite.bbcelite.com/nes/bank_3/subroutine/fadetoblack.html) routine in bank 3 to fade the screen to black, but from a different bank. We just call the bank 7 switchyard routine at [FadeToBlack_b3](https://elite.bbcelite.com/nes/bank_7/subroutine/fadetoblack_b3.html), which then  calls the FadeToBlack routine in bank 3 for us while taking care of all the bank-switching that needs to be done.
+
+In this way we can jump around between our different ROM banks without having to worry about bank-switching and without things getting confusing (when reading the source code, you can basically ignore the "_bn" part of the name, which is what I do in the commentary for the most part). Accessing tables in other banks is a bit more difficult, which is why most of them are in bank 7, but even that's easily solved with a switchyard routine.
+
+## The start-up process
+
+													 --------------------
+
+						When we first switch on the NES, we don't know which ROM banks are mapped into which addresses - nothing is guaranteed about the start-up state. The NES is hard-coded to run a JMP ($FFFC) instruction on start-up, so to make sure things work properly, every ROM bank in the game contains the same address in this location, so the system will always call the same routine, irrespective of which ROM bank happens to be paged into the top 16K of memory as the machine warms up.
+
+That routine is called ResetMMC1, and it is the same in every bank - here's [ResetMMC1 in bank 0](https://elite.bbcelite.com/nes/bank_0/subroutine/resetmmc1_b0.html), and here is [ResetMMC1_b7 in bank 7](https://elite.bbcelite.com/nes/bank_7/variable/resetmmc1_b7.html) (the latter has "_b7" appended to the name to prevent a name clash when assembling the game, as bank 7 is loaded while we assemble the other banks, but the routine is identical). To ensure that this reset routine is always called on start-up, each bank has the same set of vectors in the last six bytes of its 16K block, containing vectors to the NMI, RESET and IRQ routines - here are the [vectors in bank 0](https://elite.bbcelite.com/nes/bank_0/variable/vectors_b0.html), and here they are in [bank 7](https://elite.bbcelite.com/nes/bank_7/variable/vectors_b7.html).
+
+So it doesn't matter which ROM bank is mapped into the top of memory on start-up, we always run this routine. And what does the ResetMMC1 routine do? It resets the MMC1 mapper by writing a value with bit 7 set into any address within ROM space (i.e. $8000 to $FFFF). Resetting the MMC1 mapper ensures that ROM bank 7 is mapped to $C000 and enables the bank at $8000 to be switched, so this write into ROM space ensures that bank 7 is present and correct, and then we jump to the game code proper with a JMP instruction to the game's entry point in bank 7 at [BEGIN](https://elite.bbcelite.com/nes/bank_7/subroutine/begin.html).
+
+For more detailed information on the MMC1 reset process, see the reset section in the NESDev wiki article on the [MMC1](https://www.nesdev.org/wiki/MMC1#Reset).
+
+## The iNES header and the Elite cartridge
+
+													 ---------------------------------------
+
+						A lot of people run their NES games on emulators, so the [repository that accompanies this analysis](https://github.com/markmoxon/elite-source-code-nes) adds an iNES header to support loading of the final ROM image into pretty much every emulator out there.
+
+The header tells the emulator what kind of cartridge is being emulated. In the case of Elite, it configures the size of the ROM to 128K, sets the mapper to MMC1, configures battery-backed PRG-RAM as being present at $6000-$7FFF, and it also configures horizontal mirroring, though this is changed to vertical mirroring in the game code. You can see the header in the [iNES header](https://elite.bbcelite.com/nes/all/header.html) source. For more detailed information on the iNES header format, see the NESDev wiki article on [iNES](https://www.nesdev.org/wiki/INES).
+
+As for the real Elite cartridge, it contains the following chips:
+
+- 128K of PRG-ROM
+- 8K of CHR-RAM
+- 8K of battery-backed WRAM (PRG-RAM)
+- A Nintendo MMC1B3 mapper
+- A Nintendo Checking Integrated Circuit (CIC) lockout chip
+
+For a detailed breakdown of the insides of the Elite game cartridge, see the [Elite entry in the NES Cart Database](https://nescartdb.com/profile/view/4538/elite).
+
+## Codice Estratto
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+STA $FFFF
+  LSR A
+  STA $FFFF
+  LSR A
+  STA $FFFF
+  LSR A
+  STA $FFFF
+  LSR A
+  STA $FFFF
+```
+
+
+
+---
+*Fonte originale: [https://elite.bbcelite.com/deep_dives/splitting_nes_elite_across_multiple_rom_banks.html](https://elite.bbcelite.com/deep_dives/splitting_nes_elite_across_multiple_rom_banks.html)*

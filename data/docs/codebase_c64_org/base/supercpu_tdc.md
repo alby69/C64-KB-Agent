@@ -1,0 +1,100 @@
+---
+title: TCD
+source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_tdc
+category: reference
+topics: []
+difficulty: intermediate
+language: none
+hardware:
+- CPU
+related: []
+scraped_at: '2026-07-14'
+---
+
+# TCD
+
+base:supercpu_tdc
+
+                # TCD
+
+```
+    /*-------------------------------------------------------------------------
+    OP CODE: TDC (Transfer Direct page register to 16-Bit aCcumulator)
+    ==================================================================
+    
+    Addressing Modes:
+        Implied                            ($7b - 1 byte, 2 cycles)
+    Flags Affected:
+        n - Set if most significant bit of transferred value is set; else
+            cleared.
+        z - Set if value transferred is zero; else cleared.
+    Description:
+        Transfer the value in the sixteen-bit direct page register D to the
+        sixteen-bit accumulator C, regardless of the setting of the
+        accumulator/memory mode flag.
+        An alternate mnemonic is TDA (transfer the value in the direct page
+        register to the A accumulator).
+        In TDC, the “C” is used to indicate that sixteen bits are transferred
+        regardless of the m flag. If the A accumulator is set to just eight
+        bits (whether because the m flag is set, or because the processor is in
+        6502 emulation mode), then it takes the value of the low byte of the
+        direct page register and the hidden B accumulator takes the value of
+        the high byte of the direct page register.
+        The direct page register’s sixteen-bit value is unchanged by the
+        operation.
+    Notes:
+    -------------------------------------------------------------------------*/
+    .pseudocommand tdc {
+        .byte $7b
+    }
+```
+base/supercpu_tdc.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+/*-------------------------------------------------------------------------
+    OP CODE: TDC (Transfer Direct page register to 16-Bit aCcumulator)
+    ==================================================================
+    
+    Addressing Modes:
+        Implied                            ($7b - 1 byte, 2 cycles)
+
+    Flags Affected:
+        n - Set if most significant bit of transferred value is set; else
+            cleared.
+        z - Set if value transferred is zero; else cleared.
+
+    Description:
+        Transfer the value in the sixteen-bit direct page register D to the
+        sixteen-bit accumulator C, regardless of the setting of the
+        accumulator/memory mode flag.
+
+        An alternate mnemonic is TDA (transfer the value in the direct page
+        register to the A accumulator).
+
+        In TDC, the “C” is used to indicate that sixteen bits are transferred
+        regardless of the m flag. If the A accumulator is set to just eight
+        bits (whether because the m flag is set, or because the processor is in
+        6502 emulation mode), then it takes the value of the low byte of the
+        direct page register and the hidden B accumulator takes the value of
+        the high byte of the direct page register.
+
+        The direct page register’s sixteen-bit value is unchanged by the
+        operation.
+
+    Notes:
+
+    -------------------------------------------------------------------------*/
+
+    .pseudocommand tdc {
+        .byte $7b
+    }
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Asupercpu_tdc](https://codebase.c64.org/doku.php?id=base%3Asupercpu_tdc)*

@@ -1,0 +1,291 @@
+---
+title: base:8x8-plasma-scripted [Codebase64 wiki]
+source_url: https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-scripted
+category: reference
+topics:
+- graphics
+- raster interrupts
+- basic
+- assembly
+difficulty: intermediate
+language: assembly
+hardware:
+- VIC-II
+related:
+- sprite-programming
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-07-14'
+---
+
+
+# base:8x8-plasma-scripted [Codebase64 wiki]
+
+base:8x8-plasma-scripted
+
+                ```
+//--------------------------------------------------------------------------------------------------
+// 8x8 Plasma Crap w/ Scripted Speedcode
+// For Codebase64
+// By Cruzer/CML 2009
+// Asm: KickAss 3.0
+//--------------------------------------------------------------------------------------------------
+// memory...
+.var plasmaCnt =	$02
+.var add =		$04
+.var screen =		$0400
+.var basic =		$0801
+.var sine64 =		$1000
+.var sine128 =		$1200
+.var colorTable =	$1400
+.var bitmap =		$2000
+.var code =		$4000
+//--------------------------------------------------------------------------------------------------
+.pc = sine64 "sine64"
+.for (var i=0; i<$200; i++)
+	.by 32 + 32 * sin(i/[$100/2/PI])
+.pc = sine128 "sine128"
+.for (var i=0; i<$200; i++)
+	.by 64 + 64 * sin(i/[$100/2/PI])
+//--------------------------------------------------------------------------------------------------
+.pc = $0801 "basic"
+:BasicUpstart(code)
+//--------------------------------------------------------------------------------------------------
+.pc = code "code"
+	jmp start
+//--------------------------------------------------------------------------------------------------
+// plasma params...
+.var width = 40
+.var height = 25
+.var sineSpreadX = 	$03
+.var sineSpreadY =	$01
+.var colorSpreadX = 	$01
+.var colorSpreadY = 	$02
+.var realtimeSpread0 =	$04
+.var realtimeSpread1 =	$07
+sineSpeeds:	.byte $03,$fe
+addSpeed:	.byte $ff
+colors:		.byte $a7,$aa,$8a,$2a,$b8,$95,$b5,$c5,$55,$5f,$cd,$5d,$37,$dd,$d1,$11
+//--------------------------------------------------------------------------------------------------
+start:
+	sei
+// fill bitmap...
+	ldx #0
+	ldy #$1f
+	lda #%01010101
+!:	sta bitmap,x
+	eor #%11111111
+	inx
+	bne !-
+	inc !- +2
+	dey
+	bpl !-
+// generate color table...
+	ldx #0
+!loop:
+	txa
+	asl
+	asl
+	asl
+	bcc !+
+	eor #$ff
+!:	lsr
+	lsr
+	lsr
+	lsr
+	tay
+	lda colors,y
+	sta colorTable,x
+	sta colorTable+$100,x
+	inx
+	bne !loop-
+// init vic...
+	lda #$3b
+	sta $d011
+	lda #$18
+	sta $d018
+//--------------------------------------------------------------------------------------------------
+mainLoop:
+	lda #$00
+	sta $d020
+	lda #$44
+!:	cmp $d012
+	bne !-
+	sta $d020
+	lda plasmaCnt+0
+	clc
+	adc sineSpeeds+0
+	sta plasmaCnt+0
+	lda plasmaCnt+1
+	clc
+	adc sineSpeeds+1
+	sta plasmaCnt+1
+	lda add
+	clc
+	adc addSpeed
+	anc #$3f
+	sta add
+.for (var yPos=0; yPos<height; yPos++) {
+	ldx plasmaCnt + 0
+	ldy plasmaCnt + 1
+	clc
+	lda sine128 + yPos * realtimeSpread0 ,x
+	adc sine64 + yPos * realtimeSpread1 ,y
+	tax
+.for (var xPos=0; xPos<width; xPos++) {
+	.var sineOffset = [xPos*sineSpreadX + yPos*sineSpreadY] & $ff
+	.var colorOffset = [xPos*colorSpreadX + yPos*colorSpreadY] & $3f
+	lda sine64 + sineOffset,x
+	adc add
+	tay
+	lda colorTable + colorOffset,y
+	sta screen + xPos + yPos*40
+}}
+	jmp mainLoop
+```
+                    
+                                    base/8x8-plasma-scripted.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+//--------------------------------------------------------------------------------------------------
+// 8x8 Plasma Crap w/ Scripted Speedcode
+// For Codebase64
+// By Cruzer/CML 2009
+// Asm: KickAss 3.0
+//--------------------------------------------------------------------------------------------------
+// memory...
+.var plasmaCnt =	$02
+.var add =		$04
+.var screen =		$0400
+.var basic =		$0801
+.var sine64 =		$1000
+.var sine128 =		$1200
+.var colorTable =	$1400
+.var bitmap =		$2000
+.var code =		$4000
+//--------------------------------------------------------------------------------------------------
+.pc = sine64 "sine64"
+.for (var i=0; i<$200; i++)
+	.by 32 + 32 * sin(i/[$100/2/PI])
+.pc = sine128 "sine128"
+.for (var i=0; i<$200; i++)
+	.by 64 + 64 * sin(i/[$100/2/PI])
+//--------------------------------------------------------------------------------------------------
+.pc = $0801 "basic"
+:BasicUpstart(code)
+//--------------------------------------------------------------------------------------------------
+.pc = code "code"
+	jmp start
+//--------------------------------------------------------------------------------------------------
+// plasma params...
+.var width = 40
+.var height = 25
+.var sineSpreadX = 	$03
+.var sineSpreadY =	$01
+.var colorSpreadX = 	$01
+.var colorSpreadY = 	$02
+.var realtimeSpread0 =	$04
+.var realtimeSpread1 =	$07
+sineSpeeds:	.byte $03,$fe
+addSpeed:	.byte $ff
+colors:		.byte $a7,$aa,$8a,$2a,$b8,$95,$b5,$c5,$55,$5f,$cd,$5d,$37,$dd,$d1,$11
+//--------------------------------------------------------------------------------------------------
+start:
+	sei
+
+// fill bitmap...
+	ldx #0
+	ldy #$1f
+	lda #%01010101
+!:	sta bitmap,x
+	eor #%11111111
+	inx
+	bne !-
+	inc !- +2
+	dey
+	bpl !-
+
+// generate color table...
+	ldx #0
+!loop:
+	txa
+	asl
+	asl
+	asl
+	bcc !+
+	eor #$ff
+!:	lsr
+	lsr
+	lsr
+	lsr
+	tay
+	lda colors,y
+	sta colorTable,x
+	sta colorTable+$100,x
+	inx
+	bne !loop-
+
+// init vic...
+	lda #$3b
+	sta $d011
+	lda #$18
+	sta $d018
+
+//--------------------------------------------------------------------------------------------------
+mainLoop:
+	lda #$00
+	sta $d020
+	lda #$44
+!:	cmp $d012
+	bne !-
+	sta $d020
+
+	lda plasmaCnt+0
+	clc
+	adc sineSpeeds+0
+	sta plasmaCnt+0
+	lda plasmaCnt+1
+	clc
+	adc sineSpeeds+1
+	sta plasmaCnt+1
+	lda add
+	clc
+	adc addSpeed
+	anc #$3f
+	sta add
+
+.for (var yPos=0; yPos<height; yPos++) {
+	ldx plasmaCnt + 0
+	ldy plasmaCnt + 1
+	clc
+	lda sine128 + yPos * realtimeSpread0 ,x
+	adc sine64 + yPos * realtimeSpread1 ,y
+	tax
+
+.for (var xPos=0; xPos<width; xPos++) {
+	.var sineOffset = [xPos*sineSpreadX + yPos*sineSpreadY] & $ff
+	.var colorOffset = [xPos*colorSpreadX + yPos*colorSpreadY] & $3f
+	lda sine64 + sineOffset,x
+	adc add
+	tay
+	lda colorTable + colorOffset,y
+	sta screen + xPos + yPos*40
+}}
+	jmp mainLoop
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-scripted](https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-scripted)*
+
+
+### Collegamenti e Riferimenti Hardware
+- **$D020 (Border Color)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d020).
+- **$D011 (VIC Control Register 1)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d011).
+- **$D012 (Raster Counter)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d012).
+- **$D018 (Memory Setup Register)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d018).

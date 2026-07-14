@@ -1,0 +1,128 @@
+---
+title: How to calculate SID frequency tables
+source_url: https://codebase.c64.org/doku.php?id=base%3Ahow_to_calculate_your_own_sid_frequency_table
+category: tool
+topics:
+- assembly
+- sound generation
+difficulty: beginner
+language: assembly
+hardware:
+- SID
+- KERNAL
+related:
+- sound-programming
+- memory-map
+- sid-registers
+- music-player
+- kernal-routines
+scraped_at: '2026-07-14'
+---
+
+# How to calculate SID frequency tables
+
+### Table of Contents
+
+# How to calculate SID frequency tables
+
+By FTC/HT.
+
+How do you know what value to feed the 16-bit SID frequency register to get a certain note? The easy way is to use ready made tables calculated by someone else. In this case, the only thing to keep in mind is that if you want a specific tuning, the tables you use will be different depending on the machine you use. For standard concert pitch (A4 = 440 Hz), use [this table](https://codebase.c64.org/doku.php?id=base:pal_frequency_table) for a PAL C64 and [this table](https://codebase.c64.org/doku.php?id=base:ntsc_frequency_table) for a NTSC C64.
+
+What if you need a table which is not based on the standard 440 Hz A note, or what if you need a table which contains intermediate values between the notes to use for fine-tuning or such? Then you have to calculate yourself. …but how?
+
+## Calculating note frequencies in Hertz
+
+First thing you need to do is to calculate the actual Hz of the notes that you want to use (such as 440hz for the standard A note). This is calculated in the following way:
+
+BASEFREQ = 440; //This is the Hz for the standard A note. NOTE = 0; //This is the note relative to the standard A. 0 = standard A itself, -1 = G# etc. STEPS_PER_OCTAVE = 12; //Normally we use 12 notes per octave. FREQ_HZ = BASEFREQ * 2^(NOTE/STEPS_PER_OCTAVE);
+
+Using this formula, we get a table which looks something like this:
+
+| Note | NOTE freq (hz) | 
+|---|---|
+| 0 (A) | 440,0 | 
+| 1 (A#) | 466,2 | 
+| 2 (B) | 493,9 | 
+| 3 (C) | 523,3 | 
+| 4 (C#) | 554,4 | 
+| 5 (D) | 587,3 | 
+| 6 (D#) | 622,3 | 
+| 7 (E) | 659,3 | 
+| 8 (F) | 698,5 | 
+| 9 (F#) | 740,0 | 
+| 10 (G) | 784,0 | 
+| 11 (G#) | 830,6 | 
+| 12 (A) | 880,0 | 
+
+Most SID music editors actually start their freq tables, not at standard A, but at a C note which is (5*12)+3 (or (4*12)+3) notes below the standard A. The +3 gives us the C note as the starting note rather than the A note, since the C note is 3 steps above the A. Hence, just put -(5*12)+3 into the “NOTE” variable in the formula above to get the Hz value for the first (i.e. the lowest) note useable in a standard C64 Music editor.
+
+## Calculating the SID freq values
+
+How do we calculate the actual 16bit SID freq values we need to use from the Hz values calculated in the previous section? This is done with the following formula:
+
+PAL_PHI = 985248; NTSC_PHI = 1022727; //This is for machines with 6567R8 VIC. 6567R56A is slightly different. CONSTANT = 256^(3) / PAL_PHI; //Select the constant appropriate for your machine (PAL vs NTSC). SID_FREQ = CONSTANT * FREQ_HZ; //Calculate SID freq for a certain note (specified in Hz).
+
+The FREQ_HZ value is obtained by the calculations explained in the previous section. Hence, for a standard 440hz A on a PAL machine the actual calculation simply looks like this:
+
+17,02841924 * 440 = 7493 (or $1D45 in hex)
+
+Hence, if we feed the 16bit SID frequency register with 7493 (or $1D45 if we write the values in hexadecimal instead of decimal) on a PAL machine, we will get the standard A.
+
+## Calculating the (machine dependent) constant
+
+You may wonder what is going on with that constant mentioned above, which differs between different types of machines. It is nothing less than the number of cycles in the machine in one second. It can (obviously) be calculated in this way if you don't know it already:
+
+lines_on_screen = 312; cycles_per_line = 63; framerate = 50,12454212; //This is synonymous with "frames per second" constant = lines_on_screen * cycles_per_line * framerate;
+
+The example above provides the values to use on PAL c64s. Knowing this formula may be useful if you need to calculate a frequency table for a more exotic C64 than PAL machines or the NTSC machines with the common 6567R8 VIC chip. Note that the number of lines and cycles per line etc are different for NTSC machines with the 6567R56A VIC as well as the rare DREAN C64.
+
+The “All about your 64” reference contains some info on various machines ([look here](http://unusedino.de/ec64/technical/aay/c64/victypes.htm)). It is currently incomplete though. 
+
+## An additional note on freq calculations in assembler
+
+Note that the Hz freq for the A note one octave above the first A note is exactly double the frequency of the first, 440hz vs 880hz. This is actually the way it works for all notes that is one octave above any other note. Notes that are one octave below another note have, by the same logic, frequencies that are exactly half the frequency of the note one octave above. You probably also know that division/multiplication by 2 is very easy to do in assembler. Just shift the bits in a value up and down to do multiplication and division by 2, respectively. This can be exploited to save some memory in some circumstances since you can, for example, pre-calc the freqs only for the highest octave that you are going to use, and then calc the freqs for the other octaves by just shifting the values down one bit for each lower octave that you want to use.
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+BASEFREQ = 440; //This is the Hz for the standard A note.
+	NOTE = 0;	//This is the note relative to the standard A. 0 = standard A itself, -1 = G# etc. 
+	STEPS_PER_OCTAVE = 12;	//Normally we use 12 notes per octave.
+
+	FREQ_HZ = BASEFREQ * 2^(NOTE/STEPS_PER_OCTAVE);
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+PAL_PHI = 985248;
+	NTSC_PHI = 1022727; //This is for machines with 6567R8 VIC. 6567R56A is slightly different.
+
+	CONSTANT = 256^(3) / PAL_PHI; //Select the constant appropriate for your machine (PAL vs NTSC).
+
+	SID_FREQ = CONSTANT * FREQ_HZ; //Calculate SID freq for a certain note (specified in Hz).
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+17,02841924 * 440 = 7493 (or $1D45 in hex)
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+lines_on_screen = 312;
+	cycles_per_line = 63;
+	framerate = 50,12454212;	//This is synonymous with "frames per second"
+
+	constant = lines_on_screen * cycles_per_line * framerate;
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Ahow_to_calculate_your_own_sid_frequency_table](https://codebase.c64.org/doku.php?id=base%3Ahow_to_calculate_your_own_sid_frequency_table)*

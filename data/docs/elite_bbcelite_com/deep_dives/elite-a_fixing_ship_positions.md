@@ -1,0 +1,320 @@
+---
+title: Fixing ship positions
+source_url: https://elite.bbcelite.com/deep_dives/elite-a_fixing_ship_positions.html
+category: deep-dive
+topics:
+- memory management
+- basic
+- assembly
+difficulty: beginner
+language: mixed
+hardware:
+- CPU
+- SID
+- KERNAL
+related:
+- music-player
+- sound-programming
+- memory-map
+- kernal-routines
+- sid-registers
+scraped_at: '2026-07-14'
+---
+
+# Fixing ship positions
+
+## Why Elite spawns certain ships in certain places, and how Elite-A fixes this
+
+I still can't quite believe it, but it turns out that when you're in deep space in 6502 Elite, and something new pops up on the scanner, then you can instantly tell whether it's agressive, friendly or just a bit of space junk, using nothing more than where it spawns on-screen.
+
+How did I not know this? I played Elite religiously back in the day, and I had absolutely no idea that this was a "feature" of the game. I thought I had a pretty good feeling for the intentions of other ships, which I guess could have been me picking up the rules subconsciously, but I must have missed the hints and tips column where this was revealed. And then, not long ago, I saw the following in the [ship positions and numbers](http://knackered.org/angus/beeb/elite.html#Ship%20positions%20and%20numbers) section of Angus Duggan's guide to Elite-A:
+
+*In the original Elite, it was easy to tell whether an object was a pirate, a trader, an asteroid or a police ship by the position in which it appeared on the flight grid scanner. In Elite-A this is not possible, as objects now appear at random positions in the forward quadrant.*
+
+So pirates, traders, asteroids and cops can be identified solely from where they spawn? I wish I'd known about this when I was working on my combat rank back in 1984...
+
+This article explains why ships spawn where they do in Elite, and what Angus did to fix it in Elite-A. The links below will take you to the relevant code in the BBC Micro disc version, as this is the version that Angus modified to create Elite-A, but the same spawning logic is used in all versions of Elite on the 6502, which means they all exhibit the same behaviour.
+
+## Not so random numbers
+
+													 ---------------------
+
+						The key to understanding Elite's predictable spawning behaviour lies in the [DORND](https://elite.bbcelite.com/disc/flight/subroutine/dornd.html) routine, which produces random numbers that are used throughout the game. DORND actually composes a sequence of pseudo-random numbers, and returns the newest random number in the sequence in A, and the previous value in the sequence in X (for more on how the routine works, see the deep dive on [generating random numbers](https://elite.bbcelite.com/generating_random_numbers.html)). So the value of X returned by DORND is not a brand new random number - it's actually the value of A that was returned by the previous call to DORND.
+
+The next part of the puzzle is the [Ze](https://elite.bbcelite.com/disc/flight/subroutine/ze.html) routine, which initialises the INWK workspace to a fairly aggressive ship. When we call Ze, it resets the INWK workspace and calls DORND, and then it sets the x-coordinate of the new ship to the value in A, and the y-coordinate to the value in X.
+
+This means that Ze doesn't necessarily spawn our new ship in a completely random place; instead, the y-coordinate is set to the previous value of A that DORND returned... and if we already used that value of A to make a decision about the kind of ship that we are spawning with Ze, then this means the y-coordinate of our new ship will not be random at all, but will instead be related to the kind of ship being spawned.
+
+This is why ships appear in predictable places in Elite; let's take a closer look at where the code goes wrong.
+
+## Asteroids, traders and cargo
+
+													 ----------------------------
+
+						We start our sleuthing in [part 2 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_2_of_6.html), where we check the main loop counter and only consider spawning a new ship once every 256 iterations (the spawning code starts just after the JMP MLOOP instruction at [ytq](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_2_of_6.html#ytq)). The first bit of logic checks whether we are in witchspace, and assuming we aren't, it goes on to decide whether to spawn junk (i.e. an asteroid or a cargo canister) or a trader. The code looks like this:
+
+```
+  JSR DORND           \ Set A and X to random numbers
+  CMP #35             \ If A >= 35 (87% chance), jump down to MTT1 to skip
+  BCS MTT1            \ the spawning of an asteroid or cargo canister and
+                      \ potentially spawn something else
+  LDA JUNK            \ If we already have 3 or more bits of junk in the local
+  CMP #3              \ bubble, jump down to MTT1 to skip the following and
+  BCS MTT1            \ potentially spawn something else
+```
+So we call DORND, and if our random A >= 35 or we already have enough junk in the vicinity, we jump down to MTT1 to skip the spawning of an asteroid, cargo canister or trader, and potentially spawn something else (see the next section). But if our random A < 35, we keep going, and the code then goes on to reset the INWK workspace with a call to ZINF and set z_hi to 38, so whatever we spawn will be far away in the distance ahead of us.
+						So far so good... and then we do this:
+
+```
+  JSR DORND           \ Set A, X and C flag to random numbers
+  STA INWK            \ Set x_lo = random
+  STX INWK+3          \ Set y_lo = random
+  AND #%10000000      \ Set x_sign = bit 7 of x_lo
+  STA INWK+2
+  TXA                 \ Set y_sign = bit 7 of y_lo
+  AND #%10000000
+  STA INWK+5
+  ROL INWK+1          \ Set bit 1 of x_hi to the C flag, which is random, so
+  ROL INWK+1          \ this randomly moves us off-centre by 512 (as if x_hi
+                      \ is %00000010, then (x_hi x_lo) is 512 + x_lo)
+```
+						On the surface, this looks fine - we grab a couple of random numbers into A and X, and set the x-coordinate in (x_sign x_lo) to A, and the y-coordinate in (y_sign y_lo) to X. Then the last two instructions either leave x_hi at 0 or set it to 512, so the ship's x-coordinate ends up in one of three bands: -767 to -512 (to the left), -255 to +255 (around the centre), or +512 to +767 (to the right). These might sound like big numbers, but as the ship spawns in the far distance, it means it still appears within our laser sights, just slightly to the right or left of centre.
+
+Except the call to DORND doesn't return a random value in X; instead, it returns the value of A from the previous call to DORND, which we already know is less than 35, so the above code always sets the y-coordinate to a positive value in the range 0 to 34.
+
+In other words, we just initialised INWK to a ship that's ahead of us; is either in the centre, or just to the left or right; and is always at a positive y-coordinate in the range 0 to 35. That's a pretty small value for the y-coordinate, and given the distance in z_hi, that means our ship will always spawn on or just above the horizontal.
+
+We then do another set of checks to decide whether to spawn a trader with this INWK workspace, or whether to spawn a boulder, asteroid or (more rarely) a cargo canister. But we don't change the coordinates again, so this means that traders and junk will always spawn on or just above the horizontal, either dead ahead or a fixed distance to the left or right.
+
+## Spawning cops
+
+													 -------------
+
+						In the above logic, we jumped down to MTT1 if A >= 35, skipping asteroids and traders in favour of something more interesting. Let's see what happens at [MTT1](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_3_of_6.html#mtt1), which is in [part 3 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_3_of_6.html).
+
+First we make sure we aren't in the station's safe zone, as the safe zone has its own spawning rules (see the [TACTICS](https://elite.bbcelite.com/disc/flight/subroutine/tactics_part_2_of_7.html) routine for that logic). Assuming we are in deep space, we then calculate how bad are, based on our legal status and the amount of contraband we are carrying, and store the result in A. And then we fall into the same trap as above:
+
+```
+  STA T               \ Store our badness level in T
+  JSR Ze              \ Call Ze to initialise INWK to a fairly aggressive
+                      \ ship, and set A and X to random values
+  CMP T               \ If the random value in A >= our badness level, which
+  BCS P%+7            \ will be the case unless we have been really, really
+                      \ bad, then skip the following two instructions (so
+                      \ if we are really bad, there's a higher chance of
+                      \ spawning a cop, otherwise we got away with it, for
+                      \ now)
+  LDA #COPS           \ Add a new police ship to the local bubble
+  JSR NWSHP
+```
+						As before, the Ze routine calls DORND and sets the ship's y-coordinate to the value of X that is returned. This value of X is the same as the value of A that was returned from the previous call to DORND, which is the one we checked above to decide whether to jump to MTT1 (i.e. A >= 35). So we know that y_lo >= 35, and y_sign gets set to bit 7 of this previous value of A. This means the y-coordinate can be positive or negative, though there's a higher chance that it's negative as we know the X returned from DORND in Ze is in the range 35 to 255, and most of these values have bit 7 set, giving a negative y_sign. Specifically, 93 values of X (35 to 127, or 42%) give a positive y-coordinate, while 128 values of X (128 to 255, or 58%) give a negative y-coordinate.
+
+If we have been bad, then this is the INWK block that is used to spawn the cop that's hunting us - in other words, there's a slightly higher chance of cops spawning in the bottom half of the screen than in the top half.
+
+## Thargoids
+
+													 ---------
+
+						If we haven't been that bad (or we're just plain lucky), then we move into [part 4 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_4_of_6.html) to potentially spawn a Thargoid, a lone bounty hunter, or up to four pirates.
+
+We start with the Thargoid. There's a bit of checking to see whether we are in the middle of mission 2, which spawns a lot more Thargoids than normal, but if we aren't, we consider whether to spawn a random Thargoid like this:
+
+```
+  JSR DORND           \ Set A and X to random numbers
+  CMP #200            \ If the random number in A < 200 (78% chance), jump to
+  BCC nopl            \ nopl to skip spawning a Thargoid
+.fothg2
+  JSR GTHG            \ Call GTHG to spawn a Thargoid ship and a Thargon
+                      \ companion
+.nopl
+```
+						This is pretty reasonable, and it means we only jump to GTHG if our random number A >= 200. But what awaits us in [GTHG](https://elite.bbcelite.com/disc/flight/subroutine/gthg.html)? It's another call to Ze:
+
+```
+ .GTHG
+  JSR Ze              \ Call Ze to initialise INWK
+  LDA #%11111111      \ Set the AI flag in byte #32 so that the ship has AI,
+  STA INWK+32         \ an aggression level of 63 out of 63, and E.C.M.
+  LDA #THG            \ Call NWSHP to add a new Thargoid ship to our local
+  JSR NWSHP           \ bubble of universe
+  LDA #TGL            \ Call NWSHP to add a new Thargon ship to our local
+  JMP NWSHP           \ bubble of universe, and return from the subroutine
+                      \ using a tail call
+```
+						So this call to Ze will set the Thargoid's y-coordinate to the value of A from the previous call to DORND, which we know is >= 200. As this is converted into a sign-magnitude number using bit 7 for the sign, this means that Thargoids in deep space always spawn with a negative y-coordinate, which is in the bottom half of the screen.
+
+(In witchspace, Thargoids are spawned by the [MJP](https://elite.bbcelite.com/disc/flight/subroutine/mjp.html) routine, which doesn't suffer from the same problem. However, this routine does call Ze in a loop to spawn a pack of Thargoids, so the Thargoids don't spawn in a completely random fashion, as the y-coordinate of each Thargoid is the same as the x-coordinate of the previously spawned Thargoid. Luckily this lack of randomness isn't that obvious, as by this point most of us are too busy panicking to notice...)
+
+## Pirates and bounty hunters
+
+													 --------------------------
+
+						If we skipped to nopl above, avoiding the Thargoid spawning, then this is what we come across next:
+
+```
+.nopl
+  JSR DORND           \ Set A and X to random numbers
+  LDY gov             \ If the government of this system is 0 (anarchy), jump
+  BEQ LABEL_2         \ straight to LABEL_2 to start spawning pirates or a
+                      \ lone bounty hunter
+  CMP #120            \ If the random number in A >= 120 (53% chance), jump
+  BCS MLOOPS          \ to MLOOPS to stop spawning (so there's a 47% chance
+                      \ of spawning pirates or a lone bounty hunter)
+  AND #7              \ Reduce the random number in A to the range 0-7, and
+  CMP gov             \ if A is less than government of this system, jump
+  BCC MLOOPS          \ to MLOOPS to stop spawning (so safer governments with
+                      \ larger gov numbers have a greater chance of jumping
+                      \ out, which is another way of saying that more
+                      \ dangerous systems spawn pirates and bounty hunters
+                      \ more often)
+ .LABEL_2
+                      \ Now to spawn a lone bounty hunter, a Thargoid or a
+                      \ group of pirates
+  JSR Ze              \ Call Ze to initialise INWK to a fairly aggressive
+                      \ ship, and set A and X to random values
+```
+						So we call DORND, and if the current system is an anarchy, then we jump to LABEL_2 and call Ze before using either A or X, meaning the aggressive ship set up by Ze will be in a random position. However, if this is not an anarchy, then we only continue through to LABEL_2 if A < 120, at which point we call Ze... and Ze sets the ship's y-coordinate to this, the value of A from the previous call to DORND. So this means in non-anarchy systems, the y-coordinate is always positive and in the range 0 to 119.
+
+This INWK block is then used to spawn either a lone bounty hunter, the Constrictor (during mission 1), or a pack of pirates, without the coordinates being changed, so in non-anarchy systems, these ships always spawn in the top half of the screen. In the advanced versions, this same block is also used for the [rarest of rare ships, the Cougar](https://elite.bbcelite.com/deep_dives/the_elusive_cougar.html), so even that ship has a predictable spawning location outside of anarchy systems.
+
+## Spawning in Elite-A
+
+													 --------------------
+
+						To summarise, the 6502 versions of Elite spawn ships in deep space as follows, working our way down the screen:
+
+- In non-anarchy systems, lone bounty hunters, the Constrictor, the Cougar and packs of pirates always spawn in the top half of the screen
+- Asteroids, traders and cargo always spawn on or just above the horizontal, either dead ahead or slightly to the left or right
+- 58% of cops spawn in the bottom half of the screen, while 42% spawn in the top half
+- Thargoids always spawn in the bottom half of the screen
+
+Angus clearly knew about this "feature" of the original Elite, because in Elite-A he introduced a new routine, [rand_posn](https://elite.bbcelite.com/elite-a/flight/subroutine/rand_posn.html), which is either called directly (as in part 2 of [Elite-A's modified main loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_2_of_6.html#ytq), for example), or by [Elite-A's modified version of Ze](https://elite.bbcelite.com/elite-a/flight/subroutine/ze.html). This new routine still uses the A and X values from DORND to set the x_lo and y_lo values for the x- and y-coordinates, but this time it makes sure to set the sign bits randomly, so the spawned ships can appear anywhere on screen.
+
+Luckily, in Elite-A, you can pick up an [I.F.F. system](https://elite.bbcelite.com/elite-a_the_iff_system.html) to tell you whether new arrivals are friendly, aggressive or junk, so you can still have your cake and eat it. For a price...
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+JSR DORND           \ Set A and X to random numbers
+
+  CMP #35             \ If A >= 35 (87% chance), jump down to MTT1 to skip
+  BCS MTT1            \ the spawning of an asteroid or cargo canister and
+                      \ potentially spawn something else
+
+  LDA JUNK            \ If we already have 3 or more bits of junk in the local
+  CMP #3              \ bubble, jump down to MTT1 to skip the following and
+  BCS MTT1            \ potentially spawn something else
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+JSR DORND           \ Set A, X and C flag to random numbers
+
+  STA INWK            \ Set x_lo = random
+
+  STX INWK+3          \ Set y_lo = random
+
+  AND #%10000000      \ Set x_sign = bit 7 of x_lo
+  STA INWK+2
+
+  TXA                 \ Set y_sign = bit 7 of y_lo
+  AND #%10000000
+  STA INWK+5
+
+  ROL INWK+1          \ Set bit 1 of x_hi to the C flag, which is random, so
+  ROL INWK+1          \ this randomly moves us off-centre by 512 (as if x_hi
+                      \ is %00000010, then (x_hi x_lo) is 512 + x_lo)
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+STA T               \ Store our badness level in T
+
+  JSR Ze              \ Call Ze to initialise INWK to a fairly aggressive
+                      \ ship, and set A and X to random values
+
+  CMP T               \ If the random value in A >= our badness level, which
+  BCS P%+7            \ will be the case unless we have been really, really
+                      \ bad, then skip the following two instructions (so
+                      \ if we are really bad, there's a higher chance of
+                      \ spawning a cop, otherwise we got away with it, for
+                      \ now)
+
+  LDA #COPS           \ Add a new police ship to the local bubble
+  JSR NWSHP
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+JSR DORND           \ Set A and X to random numbers
+
+  CMP #200            \ If the random number in A < 200 (78% chance), jump to
+  BCC nopl            \ nopl to skip spawning a Thargoid
+
+.fothg2
+
+  JSR GTHG            \ Call GTHG to spawn a Thargoid ship and a Thargon
+                      \ companion
+
+.nopl
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+.GTHG
+
+  JSR Ze              \ Call Ze to initialise INWK
+
+  LDA #%11111111      \ Set the AI flag in byte #32 so that the ship has AI,
+  STA INWK+32         \ an aggression level of 63 out of 63, and E.C.M.
+
+  LDA #THG            \ Call NWSHP to add a new Thargoid ship to our local
+  JSR NWSHP           \ bubble of universe
+
+  LDA #TGL            \ Call NWSHP to add a new Thargon ship to our local
+  JMP NWSHP           \ bubble of universe, and return from the subroutine
+                      \ using a tail call
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+.nopl
+
+  JSR DORND           \ Set A and X to random numbers
+
+  LDY gov             \ If the government of this system is 0 (anarchy), jump
+  BEQ LABEL_2         \ straight to LABEL_2 to start spawning pirates or a
+                      \ lone bounty hunter
+
+  CMP #120            \ If the random number in A >= 120 (53% chance), jump
+  BCS MLOOPS          \ to MLOOPS to stop spawning (so there's a 47% chance
+                      \ of spawning pirates or a lone bounty hunter)
+
+  AND #7              \ Reduce the random number in A to the range 0-7, and
+  CMP gov             \ if A is less than government of this system, jump
+  BCC MLOOPS          \ to MLOOPS to stop spawning (so safer governments with
+                      \ larger gov numbers have a greater chance of jumping
+                      \ out, which is another way of saying that more
+                      \ dangerous systems spawn pirates and bounty hunters
+                      \ more often)
+
+ .LABEL_2
+
+                      \ Now to spawn a lone bounty hunter, a Thargoid or a
+                      \ group of pirates
+
+  JSR Ze              \ Call Ze to initialise INWK to a fairly aggressive
+                      \ ship, and set A and X to random values
+```
+
+
+
+---
+*Fonte originale: [https://elite.bbcelite.com/deep_dives/elite-a_fixing_ship_positions.html](https://elite.bbcelite.com/deep_dives/elite-a_fixing_ship_positions.html)*

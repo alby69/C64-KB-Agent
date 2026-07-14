@@ -1,0 +1,96 @@
+---
+title: PLB
+source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_plb
+category: reference
+topics:
+- sprite programming
+- assembly
+difficulty: intermediate
+language: mixed
+hardware:
+- KERNAL
+related:
+- sprite-programming
+- memory-map
+- raster-interrupts
+- kernal-routines
+- vic-ii-registers
+scraped_at: '2026-07-14'
+---
+
+# PLB
+
+base:supercpu_plb
+
+                # PLB
+
+```
+    /*-------------------------------------------------------------------------
+    OP CODE: PLB (PulL data Bank register)
+    ======================================
+    
+    Addressing Modes:
+        Stack                            ($ab - 1 byte, 4 cycles)
+    Flags Affected:
+        n - Set if most significant bit of pulled value is set; else cleared.
+        z - Set if value pulled is zero; else cleared.
+    Description:
+        Pull the eight-bit value on top of the stack into the data bank
+        register B, switching the data bank to that value. All instructions
+        which reference data that specify only sixteen-bit addresses will get
+        their bank address from the value pulled into the data bank register.
+        This is the only instruction that can modify the data bank register.
+        Since the bank register is an eight-bit register, only one byte is
+        pulled from the stack, regardless of the settings of the m and x mode
+        select flags. The stack pointer is first incremented. Then the byte
+        pointed to by the stack pointer is loaded into the register.
+    Notes:
+    -------------------------------------------------------------------------*/
+    .pseudocommand plb {
+        .byte $ab
+    }
+```
+base/supercpu_plb.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+/*-------------------------------------------------------------------------
+    OP CODE: PLB (PulL data Bank register)
+    ======================================
+    
+    Addressing Modes:
+        Stack                            ($ab - 1 byte, 4 cycles)
+
+    Flags Affected:
+        n - Set if most significant bit of pulled value is set; else cleared.
+        z - Set if value pulled is zero; else cleared.
+
+    Description:
+        Pull the eight-bit value on top of the stack into the data bank
+        register B, switching the data bank to that value. All instructions
+        which reference data that specify only sixteen-bit addresses will get
+        their bank address from the value pulled into the data bank register.
+        This is the only instruction that can modify the data bank register.
+
+        Since the bank register is an eight-bit register, only one byte is
+        pulled from the stack, regardless of the settings of the m and x mode
+        select flags. The stack pointer is first incremented. Then the byte
+        pointed to by the stack pointer is loaded into the register.
+
+    Notes:
+
+
+    -------------------------------------------------------------------------*/
+
+    .pseudocommand plb {
+        .byte $ab
+    }
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Asupercpu_plb](https://codebase.c64.org/doku.php?id=base%3Asupercpu_plb)*

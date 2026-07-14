@@ -1,0 +1,522 @@
+---
+title: Sprites in bottom sideborder
+source_url: https://codebase.c64.org/doku.php?id=base%3Asprites_in_bottom_sideborder
+category: reference
+topics:
+- raster interrupts
+- memory management
+- sprite programming
+- assembly
+difficulty: beginner
+language: assembly
+hardware:
+- SID
+- VIC-II
+related:
+- sprite-programming
+- sound-programming
+- raster-interrupts
+- sid-registers
+- music-player
+- vic-ii-registers
+scraped_at: '2026-07-14'
+---
+
+
+# Sprites in bottom sideborder
+
+base:sprites_in_bottom_sideborder
+
+                # Sprites in bottom sideborder
+
+By Groepaz.
+
+```
+        *=$0810
+        sei
+        ; init ghostbyte with some pattern to make border more visible
+        ; and so we can see character boundaries in the border
+        lda #%10000000
+        sta $3fff
+        ; setup textscreen Y position
+        lda #$18
+        sta $d011
+        ; init X scroll
+        lda #$c8
+        sta $d016
+        ; now setup the 8 sprites
+        lda #$ff
+        sta $d015 ;enable
+        lda #%11111111
+        sta $d01d ;xpand-x
+        lda #$0
+        sta $d017 ;xpand-y
+        sta $d01c ;muco
+        sta $d01b ;prio
+        ldx #0
+        ldy #0
+ll
+        txa
+        sta $d027,x        ; sprite colors
+        lda #spritedata/64
+        sta $07f8,x        ; sprite pointers
+        lda #$ff           ; $ff for the first variation of the main loop, $fa for the second variation
+        sta $d001,y        ; y-pos
+        iny
+        iny
+        inx
+        cpx #8
+        bne ll
+        ; sprite data
+        ldx #0
+        lda #$ff
+l2
+        sta spritedata,x
+        inx
+        cpx #63
+        bne l2
+        ; to display a sprite further left than regular position 0, set MSB in $d010
+        ; and substract 8 extra pixels
+	lda #$f8-8
+	sta $d000
+        ; set x pos for the other 7 sprites
+	lda #$f8
+	ldx #7
+	ldy #2
+spr1			
+	clc
+	adc #(2*24)
+	sta $d000,y
+	iny
+	iny
+	dex
+	bpl spr1
+        ; x-pos MSB
+        lda #%11000001
+        sta $d010
+        jmp main_loop
+```
+first variation, first opens the bottom border, then the sideborder
+
+```
+        *=$0900 ; align to some page so branches do not cross a page boundary and fuck up the timing        
+        ;-------------------mainloop---------
+main_loop
+        ; since we need cycle exact non jittering timing we must stabilize the raster
+        ldx #$d1
+        jsr rastersync
+        ldy #$c8        ; value for 40 columns mode
+        lda #$f8
+rl1     cmp $d012
+        bne rl1
+        ; open the lower border
+        lda #$18&$f7
+        sta $d011
+        lda #$ff
+rl2     cmp $d012
+        bne rl2
+        ; delay so the first write to $d016 happens exactly at the
+        ; beginning of the last character before the border
+        ; 0: 4 cycles 1: 9 cycles 2: 14 cycles 3: 19 cycles etc
+        ldx #6             ; 2
+wl1     dex                ; 2
+        bpl wl1            ; 3 (2)
+        nop                ; 2
+        ; the actual loop to open the sideborders
+        ldx #21
+ol1
+        dec $d016       ; 6
+        sty $d016       ; 4
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        clc             ; 2
+        bcc sk1         ; 3
+sk1
+        dex             ; 2
+        bpl ol1         ; 3
+                        ; -> 46 ( 63-((8*2)+1) )
+        ; reset $d011 for next round of upper/lower border opening
+        lda #$18
+        sta $d011
+        jmp main_loop
+```
+second variation, places sprites at rasterline $fa and starts opening the sideborder in the last rasterline of the normal visible textwindow, and so avoids having to open the bottom border before.
+
+```
+        *=$0900 ; align to some page so branches do not cross a page boundary and fuck up the timing        
+        ;-------------------mainloop---------
+main_loop
+        ; since we need cycle exact non jittering timing we must stabilize the raster
+;        ldx #$d1
+ ;       jsr rastersync
+        ldy #$c8        ; value for 40 columns mode
+        lda #$fa
+rl2     cmp $d012
+        bne rl2
+        ; delay so the first write to $d016 happens exactly at the
+        ; beginning of the last character before the border
+        ; 0: 4 cycles 1: 9 cycles 2: 14 cycles 3: 19 cycles etc
+        ldx #5             ; 2
+wl1     dex                ; 2
+        bpl wl1            ; 3 (2)
+        nop                ; 2
+        nop                ; 2
+        nop                ; 2
+        nop                ; 2
+        ; the actual loop to open the sideborders
+        ldx #21
+ol1
+        dec $d016       ; 6
+        sty $d016       ; 4
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        clc             ; 2
+        bcc sk1         ; 3
+sk1
+        dex             ; 2
+        bpl ol1         ; 3
+                        ; -> 46 ( 63-((8*2)+1) )
+        jmp main_loop
+```
+```
+;--------------------------------------------------
+; simple polling rastersync routine
+        *=$0d00 ; align to some page so branches do not cross a page boundary and fuck up the timing
+rastersync:
+lp1:
+          cpx $d012
+          bne lp1
+          jsr cycles
+          bit $ea
+          nop
+          cpx $d012
+          beq skip1
+          nop
+          nop
+skip1:    jsr cycles
+          bit $ea
+          nop
+          cpx $d012
+          beq skip2
+          bit $ea
+skip2:    jsr cycles
+          nop
+          nop
+          nop
+          cpx $d012
+          bne onecycle
+onecycle: rts
+cycles:
+         ldy #$06
+lp2:     dey
+         bne lp2
+         inx
+         nop
+         nop
+         rts
+spritedata=$0fc0
+```
+base/sprites_in_bottom_sideborder.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+*=$0810
+
+        sei
+
+        ; init ghostbyte with some pattern to make border more visible
+        ; and so we can see character boundaries in the border
+        lda #%10000000
+        sta $3fff
+
+        ; setup textscreen Y position
+        lda #$18
+        sta $d011
+        ; init X scroll
+        lda #$c8
+        sta $d016
+
+        ; now setup the 8 sprites
+
+        lda #$ff
+        sta $d015 ;enable
+
+        lda #%11111111
+        sta $d01d ;xpand-x
+
+        lda #$0
+        sta $d017 ;xpand-y
+        sta $d01c ;muco
+        sta $d01b ;prio
+
+        ldx #0
+        ldy #0
+ll
+        txa
+        sta $d027,x        ; sprite colors
+        lda #spritedata/64
+        sta $07f8,x        ; sprite pointers
+        lda #$ff           ; $ff for the first variation of the main loop, $fa for the second variation
+        sta $d001,y        ; y-pos
+        iny
+        iny
+        inx
+        cpx #8
+        bne ll
+
+        ; sprite data
+        ldx #0
+        lda #$ff
+l2
+        sta spritedata,x
+        inx
+        cpx #63
+        bne l2
+
+        ; to display a sprite further left than regular position 0, set MSB in $d010
+        ; and substract 8 extra pixels
+	lda #$f8-8
+	sta $d000
+
+        ; set x pos for the other 7 sprites
+	lda #$f8
+	ldx #7
+	ldy #2
+spr1			
+	clc
+	adc #(2*24)
+	sta $d000,y
+	iny
+	iny
+	dex
+	bpl spr1
+
+        ; x-pos MSB
+        lda #%11000001
+        sta $d010
+
+        jmp main_loop
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+*=$0900 ; align to some page so branches do not cross a page boundary and fuck up the timing        
+
+        ;-------------------mainloop---------
+main_loop
+
+        ; since we need cycle exact non jittering timing we must stabilize the raster
+
+        ldx #$d1
+        jsr rastersync
+
+        ldy #$c8        ; value for 40 columns mode
+
+        lda #$f8
+rl1     cmp $d012
+        bne rl1
+
+        ; open the lower border
+        lda #$18&$f7
+        sta $d011
+
+        lda #$ff
+rl2     cmp $d012
+        bne rl2
+
+        ; delay so the first write to $d016 happens exactly at the
+        ; beginning of the last character before the border
+
+        ; 0: 4 cycles 1: 9 cycles 2: 14 cycles 3: 19 cycles etc
+        ldx #6             ; 2
+wl1     dex                ; 2
+        bpl wl1            ; 3 (2)
+
+        nop                ; 2
+
+        ; the actual loop to open the sideborders
+
+        ldx #21
+ol1
+        dec $d016       ; 6
+        sty $d016       ; 4
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        clc             ; 2
+        bcc sk1         ; 3
+sk1
+        dex             ; 2
+        bpl ol1         ; 3
+                        ; -> 46 ( 63-((8*2)+1) )
+
+        ; reset $d011 for next round of upper/lower border opening
+        lda #$18
+        sta $d011
+
+        jmp main_loop
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+*=$0900 ; align to some page so branches do not cross a page boundary and fuck up the timing        
+
+        ;-------------------mainloop---------
+main_loop
+
+        ; since we need cycle exact non jittering timing we must stabilize the raster
+
+;        ldx #$d1
+ ;       jsr rastersync
+
+        ldy #$c8        ; value for 40 columns mode
+
+        lda #$fa
+rl2     cmp $d012
+        bne rl2
+
+        ; delay so the first write to $d016 happens exactly at the
+        ; beginning of the last character before the border
+
+        ; 0: 4 cycles 1: 9 cycles 2: 14 cycles 3: 19 cycles etc
+        ldx #5             ; 2
+wl1     dex                ; 2
+        bpl wl1            ; 3 (2)
+
+        nop                ; 2
+        nop                ; 2
+        nop                ; 2
+        nop                ; 2
+
+        ; the actual loop to open the sideborders
+
+        ldx #21
+ol1
+        dec $d016       ; 6
+        sty $d016       ; 4
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        nop             ; 2
+        clc             ; 2
+        bcc sk1         ; 3
+sk1
+        dex             ; 2
+        bpl ol1         ; 3
+                        ; -> 46 ( 63-((8*2)+1) )
+
+        jmp main_loop
+```
+
+### Snippet Codice (Dialetto: Turbo Assembler / Generic)
+
+#### Routine Identificate:
+- **`rastersync`** ($0d00): -------------------------------------------------- simple polling rastersync routine =$0d00 ; align to some page so branches do not cross a page boundary and fuck up the timing
+- **`lp1`** ($0d00): =$0d00 ; align to some page so branches do not cross a page boundary and fuck up the timing
+- **`skip1`** ($0d00): No description available
+- **`skip2`** ($0d00): No description available
+- **`onecycle`** ($0d00): No description available
+- **`cycles`** ($0d00): No description available
+- **`lp2`** ($0d00): No description available
+
+```assembly
+;--------------------------------------------------
+; simple polling rastersync routine
+
+        *=$0d00 ; align to some page so branches do not cross a page boundary and fuck up the timing
+
+rastersync:
+
+lp1:
+          cpx $d012
+          bne lp1
+          jsr cycles
+          bit $ea
+          nop
+          cpx $d012
+          beq skip1
+          nop
+          nop
+skip1:    jsr cycles
+          bit $ea
+          nop
+          cpx $d012
+          beq skip2
+          bit $ea
+skip2:    jsr cycles
+          nop
+          nop
+          nop
+          cpx $d012
+          bne onecycle
+onecycle: rts
+
+cycles:
+         ldy #$06
+lp2:     dey
+         bne lp2
+         inx
+         nop
+         nop
+         rts
+
+spritedata=$0fc0
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Asprites_in_bottom_sideborder](https://codebase.c64.org/doku.php?id=base%3Asprites_in_bottom_sideborder)*
+
+
+### Collegamenti e Riferimenti Hardware
+- **$D011 (VIC Control Register 1)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d011).
+- **$D012 (Raster Counter)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d012).
+- **$D015 (Sprite Enable Register)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d015).
+- **$D016 (VIC Control Register 2)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d016).

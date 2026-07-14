@@ -1,0 +1,105 @@
+---
+title: The pattern and nametable buffers
+source_url: https://elite.bbcelite.com/deep_dives/pattern_and_nametable_buffers.html
+category: deep-dive
+topics:
+- basic
+- assembly
+- graphics
+difficulty: beginner
+language: mixed
+hardware:
+- CPU
+- SID
+- KERNAL
+related:
+- music-player
+- sound-programming
+- memory-map
+- kernal-routines
+- sid-registers
+scraped_at: '2026-07-14'
+---
+
+# The pattern and nametable buffers
+
+## How the NES version achieves its beautifully smooth wireframe graphics
+
+Unlike the other 6502-based versions of Elite, the NES version doesn't draw directly into screen memory. Instead, it draws into the pattern, nametable and attribute buffers, so let's take a look at this fundamental aspect of the game's graphics engine.
+
+There are two sets of these graphics buffers. They are stored in the extra WRAM that's provided in the Elite cartridge (this RAM is battery-backed, incidentally, though that isn't needed for the graphics buffers, only for the save files that are also stored in the extra WRAM). Here's the memory map of those buffers (see the [NES Elite memory map](https://elite.bbcelite.com/the_elite_memory_map_nes.html) to see this in context):
+
++-----------------------------------+ $77FF | | | Attribute buffer 1 | | | +-----------------------------------+ $77C0 | | | Nametable buffer 1 | | | +-----------------------------------+ $7400 | | | Attribute buffer 0 | | | +-----------------------------------+ $73C0 | | | Nametable buffer 0 | | | +-----------------------------------+ $7000 | | | Pattern buffer 1 | | | +-----------------------------------+ $6800 | | | Pattern buffer 0 | | | +-----------------------------------+ $6000 =[Cartridge WRAM](https://elite.bbcelite.com/nes/common/workspace/cartridge_wram.html)
+
+The game draws all of the pixels and lines of the wireframe space view into these buffers, and only when everything has been drawn does the game start sending anything to the PPU. We'll talk about the PPU later, as the sending process is pretty complex, but for now let's just concentrate on the buffers. If you haven't already, you might find it useful to read the deep dives on [drawing pixels in the NES version](https://elite.bbcelite.com/drawing_pixels_in_the_nes_version.html) and [drawing lines in the NES version](https://elite.bbcelite.com/drawing_lines_in_the_nes_version.html), which explain how the drawing routines poke pixels and lines into these buffers.
+
+## The graphics buffers
+
+													 --------------------
+
+						There are two pattern buffers, each of which can contain 256 patterns. These patterns are slightly different to the patterns in the PPU's VRAM, in that they are monochrome, with only one bit per pixel. This means that instead of the strange interleaved structure of the PPU pattern tables (as described in the deep dive on [understanding the NES for Elite](https://elite.bbcelite.com/understanding_the_nes_for_elite.html)), the pattern buffers are nice and simple, with 8 bytes per pattern, and 256 patterns in total, giving each pattern buffer a total size of 2K.
+
+(As an aside, this means that the pattern buffers essentially have the same structure as the original BBC Micro mode 4 screen in the 1984 release of Elite, just with the screen split into patterns rather than character blocks. I suspect this symmetery wasn't lost on the original authors.)
+
+Alongside these pattern buffers are two nametable buffers and two attribute buffers. These have the same structure as the PPU equivalents, so that's 960 bytes in each nametable buffer (one byte per tile), and 64 bytes in each attribute buffer. Altogether this means that each nametable/attribute table pair is 1K in size, just like the same tables in VRAM.
+
+For the nametable and attribute tables, we have two different sets of buffers so we can clear down and draw into one set while the other set is being sent to the PPU (as both of these processes take quite a bit of time). If we only had one set of buffers then we would either have to wait until everything had been sent to the PPU before drawing anything new, which would be really slow, or we'd have to put up with the screen corrupting when drawing the next frame over the top of the existing one while it's still being sent to the PPU. Neither of these are a good idea, so two buffers it is.
+
+For the pattern buffers, which always get sent to pattern table 1 in the PPU, we have one buffer for bitplane 0 and another buffer for bitplane 1. For an in-depth discussion of bitplanes, see the deep dive on [bitplanes in NES Elite](https://elite.bbcelite.com/bitplanes_in_nes_elite.html).
+
+## Buffer size
+
+													 -----------
+
+						The space view portion of the NES Elite screen contains 18 tile rows, so skipping the box edges, that's 18 by 30 tiles, or 540 tiles. But each pattern buffer only contains 256 patterns, and we only use one buffer when drawing each frame, so how do these 256 patterns manage to support such a large screen area?
+
+Well, if you think about it, space is mainly empty, and the same is true of the space view. Consider the title screen:
+
+![The title screen in NES Elite](https://elite.bbcelite.com/images/nes/general/title.png) 
+
+						This contains a pretty hefty wireframe rendering of the Cobra Mk III, so you would think it would take up an awful lot of pattern space. Let's take a look at the tile view of this screen, and highlight the wireframe tiles that have non-empty patterns:
+
+![The title screen in NES Elite with used tiles highlighted](https://elite.bbcelite.com/images/nes/drawing_vector_graphics/title_with_grid_highlighted.png) 
+
+						Counting these up gives us a total of 110 tiles with wireframe patterns, so we need 110 patterns in the pattern buffer to display this ship. In a typical space view, the game reserves 183 patterns for wireframes (though this figure will be smaller if there is an in-flight message or a longer on-screen view name). Our total of 110 patterns easily fits into 183, taking up about 60% of the buffer space. That still leaves 73 patterns for other ships, the planet, the sun and so on, and this is normally enough.
+
+If we do run out of buffer space when drawing lines or pixels, then we simply don't draw anything in the tile where we run out. In practice you don't see this happening, and even if you did, Elite is such a fast-moving game that you probably wouldn't notice it. Thank goodness for the void of space, as otherwise Elite wouldn't even get out of the starting blocks.
+
+For more information on how the buffers are used to draw the screen in NES Elite, see the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html).
+
+## Codice Estratto
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
++-----------------------------------+   $77FF
+  |                                   |
+  | Attribute buffer 1                |
+  |                                   |
+  +-----------------------------------+   $77C0
+  |                                   |
+  | Nametable buffer 1                |
+  |                                   |
+  +-----------------------------------+   $7400
+  |                                   |
+  | Attribute buffer 0                |
+  |                                   |
+  +-----------------------------------+   $73C0
+  |                                   |
+  | Nametable buffer 0                |
+  |                                   |
+  +-----------------------------------+   $7000
+  |                                   |
+  | Pattern buffer 1                  |
+  |                                   |
+  +-----------------------------------+   $6800
+  |                                   |
+  | Pattern buffer 0                  |
+  |                                   |
+  +-----------------------------------+   $6000 = Cartridge WRAM
+```
+
+
+
+---
+*Fonte originale: [https://elite.bbcelite.com/deep_dives/pattern_and_nametable_buffers.html](https://elite.bbcelite.com/deep_dives/pattern_and_nametable_buffers.html)*

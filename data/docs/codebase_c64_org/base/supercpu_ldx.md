@@ -1,0 +1,138 @@
+---
+title: LDX
+source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_ldx
+category: reference
+topics: []
+difficulty: intermediate
+language: assembly
+hardware:
+- KERNAL
+- CPU
+related:
+- memory-map
+- kernal-routines
+scraped_at: '2026-07-14'
+---
+
+# LDX
+
+base:supercpu_ldx
+
+                # LDX
+
+```
+    /*-------------------------------------------------------------------------
+    OP CODE: LDY (LoaD index register Y from memory)
+    ================================================
+    Addressing Modes:
+        Immediate                        ($a0 - 2 bytes*, 2 cycles¹)
+        Absolute                         ($ac - 3 bytes, 4 cycles¹)
+        Direct Page (also DP)            ($a4 - 2 bytes, 3 cycles¹²)
+        Absolute Indexed, X              ($bc - 3 bytes, 4 cycles¹³)
+        DP Indexed, X                    ($b4 - 2 bytes, 4 cycles¹²)
+        * - Add 1 byte if m = 0 (16-bit index registers)
+        ¹ - Add 1 cycle if m = 0 (16-bit index registers)
+        ² - Add 1 cycle if low byte of Direct Page register is other than zero
+            (DL< >0)
+        ³ - Add 1 cycle if adding index crosses a page boundary
+    Flags Affected:
+        n - Set if most significant bit of loaded value is set; else cleared.
+        z - Set if value loaded is zero; else cleared.
+    Description:
+        Load index register Y with the data located at the effective address
+        specific by the operand.
+        8-bit index registers (all processors): Data is eight-bit.
+        16-bit index registers (65802/65816 only, x = 0): Data is sixteen-bit:
+        the low-order eight bits are located at the effective address; the
+        high-order eight bits are located at the effective address plus one.
+    Notes:
+    -------------------------------------------------------------------------*/
+    .pseudocommand ldy val {
+        .if (val.getType()==AT_IMMEDIATE) {
+            .byte $a0, <val.getValue(), >val.getValue()
+        }
+        .if (val.getType()==AT_ABSOLUTE) {
+            .if (val.getValue()<256) {
+                .byte $a4, <val.getValue()  // Direct Page
+            } else {
+                ldy val.getValue()
+            }
+        }
+        .if (val.getType()==AT_ABSOLUTEX) {
+            .if (val.getValue()<256) {
+                .byte $b4, <val.getValue()
+            } else {
+                .byte $bc, <val.getValue(), >val.getValue()
+            }
+        }
+    }
+```
+base/supercpu_ldx.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+/*-------------------------------------------------------------------------
+    OP CODE: LDY (LoaD index register Y from memory)
+    ================================================
+
+    Addressing Modes:
+        Immediate                        ($a0 - 2 bytes*, 2 cycles¹)
+        Absolute                         ($ac - 3 bytes, 4 cycles¹)
+        Direct Page (also DP)            ($a4 - 2 bytes, 3 cycles¹²)
+        Absolute Indexed, X              ($bc - 3 bytes, 4 cycles¹³)
+        DP Indexed, X                    ($b4 - 2 bytes, 4 cycles¹²)
+        * - Add 1 byte if m = 0 (16-bit index registers)
+        ¹ - Add 1 cycle if m = 0 (16-bit index registers)
+        ² - Add 1 cycle if low byte of Direct Page register is other than zero
+            (DL< >0)
+        ³ - Add 1 cycle if adding index crosses a page boundary
+
+    Flags Affected:
+        n - Set if most significant bit of loaded value is set; else cleared.
+        z - Set if value loaded is zero; else cleared.
+
+    Description:
+        Load index register Y with the data located at the effective address
+        specific by the operand.
+
+        8-bit index registers (all processors): Data is eight-bit.
+
+        16-bit index registers (65802/65816 only, x = 0): Data is sixteen-bit:
+        the low-order eight bits are located at the effective address; the
+        high-order eight bits are located at the effective address plus one.
+
+    Notes:
+
+    -------------------------------------------------------------------------*/
+
+    .pseudocommand ldy val {
+
+        .if (val.getType()==AT_IMMEDIATE) {
+            .byte $a0, <val.getValue(), >val.getValue()
+        }
+
+        .if (val.getType()==AT_ABSOLUTE) {
+            .if (val.getValue()<256) {
+                .byte $a4, <val.getValue()  // Direct Page
+            } else {
+                ldy val.getValue()
+            }
+        }
+
+        .if (val.getType()==AT_ABSOLUTEX) {
+            .if (val.getValue()<256) {
+                .byte $b4, <val.getValue()
+            } else {
+                .byte $bc, <val.getValue(), >val.getValue()
+            }
+        }
+    }
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Asupercpu_ldx](https://codebase.c64.org/doku.php?id=base%3Asupercpu_ldx)*

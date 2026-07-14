@@ -1,0 +1,460 @@
+---
+title: Understanding the NES for Elite
+source_url: https://elite.bbcelite.com/deep_dives/understanding_the_nes_for_elite.html
+category: tutorial
+topics:
+- sprite programming
+- basic
+- assembly
+- memory management
+- graphics
+difficulty: beginner
+language: mixed
+hardware:
+- VIC-II
+- CIA
+- SID
+- CPU
+- KERNAL
+related:
+- cia-registers
+- keyboard-handling
+- sound-programming
+- music-player
+- raster-interrupts
+- joystick-reading
+- memory-map
+- sprite-programming
+- vic-ii-registers
+- kernal-routines
+- sid-registers
+scraped_at: '2026-07-14'
+---
+
+# Understanding the NES for Elite
+
+## The NES architecture and how it applies to Elite
+
+When people think of 1980s Elite, it's normally on a home computer - the BBC Micro, the Commodore 64 and the ZX Spectrum spring to mind, though there are plenty of versions to choose from. Typically these machines share the same basic architectural structure, particularly when it comes to screen memory, but the NES console is quite a different beast.
+
+This article looks at the architecture of the NES and how it affects the NES conversion of BBC Micro Elite. It's intentionally terse, and only summarises what you need to know in order to understand how NES Elite works. It is not comprehensive, but there are plenty of excellent tutorial and reference sites out there if you're interested in diving deeper into the NES (which I highly recommend); see the [useful links](https://elite.bbcelite.com/about_site/useful_links.html) page for some examples.
+
+## Comparing the NES with home computers
+
+													 -------------------------------------
+
+						Broadly speaking, home computers of the 1980s tend to have the same kind of architecture, with a CPU doing the legwork, a ROM containing the operating system and varying amounts of RAM for storing programs. Indeed, when buying a computer, the CPU and the amount of RAM were hugely important factors: the Commodore 64 had its memory specs branded into its name for a reason, as 64K was a pretty hefty amount at the time.
+
+Most home computers use part of that RAM for storing the screen, which gets sent from memory to the chosen display by the computer's video circuitry. This means that in most home computers, you can update the screen contents by poking values directly into screen memory yourself, or by using routines built into the operating system that poke graphics and text into screen memory for you. This is how Elite works on the BBC Micro, Commodore 64 and so on, by poking lines and stars and suns and ships directly into screen memory (and removing them in the same way).
+
+The NES differs from this model in a couple of important ways. First, it has no operating system at all, which is a bit of a surprise for those of us more used to the kernals and OS's of traditional computers; and second, you can't poke directly into screen memory, but instead you have to update the screen by talking to the custom Picture Processing Unit (PPU) chip, which doesn't cater for pixel-level updates, but instead draws the screen using 8x8-pixel tiles and sprites.
+
+Not only that, but you can only update the PPU during a small time window called VBlank, otherwise the screen gets corrupted. Add in the fact that there's only 2K of built-in RAM, and instead of a keyboard there are two controllers with only eight buttons each, and it all starts to feel very different to the original home of Elite.
+
+With this in mind, let's look at how the NES works, from the CPU to the PPU and beyond.
+
+## The CPU
+
+													 -------
+
+						The CPU at the heart of the NES is based on the 6502 architecture, so it's broadly compatible with the 6502 in the BBC Micro. The NES CPU is actually a Ricoh 2A07 (in the PAL version) or a Ricoh 2A03 (in the NTSC version), which contains a 6502 die, clocked at 1.66 MHz (PAL) or 1.79 MHz (NTSC), but with Binary Coded Decimal (BCD) disabled. It also contains an Audio Processing Unit (APU) for generating sound, and memory-mapped I/O ports for reading button presses from two controllers.
+
+This means that the 6502 code from the BBC Micro version of Elite can run relatively unchanged on the NES, with the exception of the SED and CLD instructions (which simply have no effect on the NES as BCD is disabled) and any operating system calls (which need to be rewritten for each different system anyway). Luckily Elite only uses BCD in two specific cases - when working with internal key numbers in the 6502 Second Processor and BBC Master versions (see [KEYBOARD](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/keyboard.html) and [RDKEY](https://elite.bbcelite.com/master/main/subroutine/rdkey.html) respectively) - so we don't have to worry about the lack of BCD support in the NES.
+
+The NES is a bit slower than the BBC Micro, clocking in at 1.66 MHz or 1.79 MHz compared to the 2 MHz of the BBC's CPU, but the NES is quite a bit faster than the Commodore 64 and Apple II, both of which run their CPUs at 1.023 MHz.
+
+## Memory
+
+													 ------
+
+						There are five distinct types of memory in an NES that has an Elite cartridge inserted. Understanding these different types makes life quite a bit easier when analysing the code.
+
+- The first is work RAM (WRAM), which is available for use by the game code. The NES comes with 2K of WRAM fitted to the motherboard, which is used for zero page, the 6502 stack, a sprite buffer and 1.25K of further RAM. The Elite cartridge contains an extra 8K of WRAM, giving a grand total of 10K.
+- The second is video RAM (VRAM), which contains the data that the PPU uses when drawing the screen. This is only accessible via the PPU registers, so we can't poke directly into screen memory. The Elite cartridge provides 8K of VRAM for storing two pattern tables (see below). This is known as CHR-RAM ("character RAM") and is a writeable version of the CHR-ROM ("character ROM") in more standard NES cartridges. The NES itself provides another 2K of on-board VRAM for the two nametables and attribute tables.
+- The third is Object Attribute Memory (OAM), which is internal to the PPU and stores data for the hardware sprites. We can't poke directly into this memory either, but it does support Direct Memory Access (DMA), so we can update the contents of the OAM by updating a sprite buffer in WRAM and leaving the DMA to deal with the transfer.
+- The fourth is palette memory, which is again internal to the PPU. This stores the four background and four sprite palettes, and they can only be accessed via the PPU registers.
+- The fifth is the game code itself, which comes packaged into 128K of Read-only Memory (ROM) on the cartridge. This gets paged into the memory map in two 16K chunks, one for bank 7, and the other for one of banks 0 to 6.
+
+Let's start by looking at the memory that the CPU can access.
+
+## CPU-accessible memory
+
+													 ---------------------
+
+						The CPU in the NES can access all 10K of WRAM as well as 32K of cartridge ROM (though it can't access VRAM - only the PPU can do that). The layout of the CPU-accessible memory is described in more detail in the [NES Elite memory map](https://elite.bbcelite.com/the_elite_memory_map_nes.html), but essentially there are three main blocks:
+
+- 2K of on-board WRAM from $0000 to $07FF that's used for [zero page](https://elite.bbcelite.com/nes/common/workspace/zp.html), the[XX3](https://elite.bbcelite.com/nes/common/workspace/xx3.html)heap, the 6502 stack, the[sprite buffer](https://elite.bbcelite.com/nes/common/workspace/sprite_buffer.html)and the[WP](https://elite.bbcelite.com/nes/common/workspace/wp.html)and[K%](https://elite.bbcelite.com/nes/common/workspace/k_per_cent.html)workspaces
+- 8K of battery-backed [cartridge WRAM](https://elite.bbcelite.com/nes/common/workspace/cartridge_wram.html)from $6000 to $7FFF that's used for the graphics buffers and saved commanders
+- 128K of [game code in ROM](https://elite.bbcelite.com/nes/all/bank_0_1.html)that's paged into the top 32K of memory from $8000 to $FFFF, using a bank-switching system that's not unlike the sideways ROM system in the BBC Micro
+
+The CPU can also access the memory-mapped PPU registers, as well as its own memory-mapped registers for accessing the controllers and Audio Processing Unit (APU). Here's an overview of all the memory that the CPU can access when the Elite cartridge is plugged in:
+
+$0000-$07FF Work RAM (WRAM) $0800-$1FFF Unused in Elite (contains mirrors of the work RAM) $2000-$2007 PPU registers $2008-$3FFF Unused in Elite (contains mirrors of the PPU registers) $4000-$401F CPU registers (controllers and APU) $4020-$5FFF Unused in Elite (typically used for more cartridge space) $6000-$7FFF Battery-backed WRAM in cartridge $8000-$BFFF ROM banks 0 to 6 $C000-$FFFF ROM bank 7
+
+The NES "mirrors" various blocks of memory throughout the CPU memory map, due to the way the chips are wired together, so in theory we could write to the PPU registers at locations $2008 through $200F instead of the standard $2000 through $2007, and they would work in the same way. But that way madness lies, so I'm going to ignore the mirrored locations and stick to the conventions, just like Elite does.
+
+See the deep dive on [splitting NES Elite across multiple ROM banks](https://elite.bbcelite.com/splitting_nes_elite_across_multiple_rom_banks.html) for more on the game ROM, and see below for more on the PPU's memory map.
+
+## No operating system
+
+													 -------------------
+
+						The NES has no operating system - it is purely hardware-based, and gets all its software via the cartridge port. When the NES is turned on, the CPU is hard-wired to execute a JMP ($FFFC) instruction. This address is mapped to the cartridge ROM, and the Elite ROMs contain the address of the [ResetMMC1_b7](https://elite.bbcelite.com/nes/bank_7/variable/resetmmc1_b7.html) routine at $FFFC, so as soon as the console is turned on, it jumps into the game code. This is quite different from home computers, which start up with an operating system prompt from which you load the game yourself.
+
+The main impact is that NES Elite can't use any operating system routines, as there aren't any. Luckily BBC Micro Elite doesn't rely on the operating system much anyway, so this doesn't make life harder, but it's quite a change for those of us who are used to home computers starting up with a cheery beep and a BASIC prompt.
+
+## No hardware timers
+
+													 ------------------
+
+						Of much more impact is that fact that the NES doesn't have any hardware timers. The BBC Micro version is famous for its [split-screen mode](https://elite.bbcelite.com/deep_dives/the_split-screen_mode.html) that uses hardware timers to switch screen mode part-way down the screen, enabling a high resolution monochrome space view to be shown at the same time as a lower resolution four-colour dashboard.
+
+The NES doesn't have hardware timers, but Elite could really use a couple of them in this version. The NES also has a split-screen mode for displaying the dashboard, but this is implemented using sprite 0 detection rather than hardware timers (see the deep dive on [the split-screen mode in NES Elite](https://elite.bbcelite.com/the_split-screen_mode_nes.html) for details). And because screen data can only be sent to the PPU during a short period known as VBlank, the NMI routine needs to count cycles to make sure that it stops sending data at the end of VBlank, rather than simply setting a timer to alert it at the right time (see the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html) for details).
+
+That's the CPU and RAM covered, so now let's look at the NES's proprietary hardware, starting with the PPU.
+
+## The Picture Processing Unit (PPU)
+
+													 ---------------------------------
+
+						The PPU is by far the most important part of the NES. It's a proprietary chip, the Ricoh 2C02 (for NTSC) or 2C07 (for PAL), and it is responsible for drawing the screen. The way in which it does this is key to understanding how NES Elite works and why it is such a technical achievement.
+
+The PPU supports two separate systems: a tile-based background, and hardware sprites. In Elite the tile-based background is used to display the space view, the text views, the dashboard, the icon bar and most of what you see on-screen (see the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html) for more on this). Sprites are used for stardust particles, the compass, ships on the 3D scanner, laser sights, crosshairs on charts, the explosion burst and more (see the deep dive on [sprite usage in NES Elite](https://elite.bbcelite.com/sprite_usage_in_nes_elite.html) for details). Meanwhile, the commander and system images use both background tiles and sprites to display colourful two-layer images, and the Cobra Mk III on the Equip Ship screen uses them to show the equipment currently fitted to our ship (see the deep dive on [displaying two-layer images](https://elite.bbcelite.com/displaying_two-layer_images.html) for more information on these delightful examples of pixel art).
+
+In Elite, the PPU has its own 10K of video RAM (VRAM) for storing sprite and tile data, made up of the 2K of VRAM built into the NES and another 8K of CHR-RAM in the Elite cartridge. This is separate from the WRAM that the CPU can access and which we discussed above. We can write to VRAM by accessing the various PPU registers, but these can only be updated during VBlank, which is a short period during each screen refresh when the PPU is not updating the screen. Squeezing the PPU routines into VBlank is one of the biggest challenges for any NES game, and Elite is no exception.
+
+The PPU also has 256 bytes of Object Attribute Memory (OAM), which is used for holding sprite data. We can configure the system to copy a 256-byte block of data from WRAM to OAM every VBlank using Direct Memory Access (DMA), which just means it gets sent to the PPU very quickly and without us having to write any code to do the sending. See the section below on sprites for more information on this.
+
+For a very technical analysis of the PPU, see the NESDev wiki's [PPU programmer reference](https://www.nesdev.org/wiki/PPU_programmer_reference), but for a gentler introduction, let's take a look at how the screen is constructed on the NES using patterns, tiles, nametables, attributes and palettes.
+
+## Patterns
+
+													 --------
+
+						Patterns are at the core of the NES graphics system, and Elite takes full advantage of this. A pattern is essentially an 8x8-pixel design. When displaying a tile or sprite on-screen, we tell the PPU which pattern to use, so the PPU then knows which pixels to draw on the screen.
+
+Patterns are stored in two "pattern tables" in the PPU's VRAM, each of which has space for 256 patterns. We can configure which pattern table is used for displaying the background, and which pattern table is used for displaying the sprites. In Elite these patterns live in VRAM, so they can be updated dynamically (this is called CHR-RAM); in simpler NES games, the set of available patterns is fixed in ROM and can't be changed (this is called CHR-ROM).
+
+For example, consider the title screen in NES Elite:
+
+![The title screen for NES Elite](https://elite.bbcelite.com/images/nes/general/title.png) 
+
+						There are 512 patterns used to create this screen, stored across the two pattern tables for this screen. Here's what the first pattern table looks like:
+
+![Sample patterns in NES Elite](https://elite.bbcelite.com/images/nes/understanding/title_patterns_0.png) 
+
+						And here's the second pattern table:
+
+![Sample patterns in NES Elite](https://elite.bbcelite.com/images/nes/understanding/title_patterns_1.png) 
+
+						Note that I have added appropriate colours to the patterns in the above screenshots to make them easier to spot, but the pattern tables don't actually look like this, as they don't contain palette data, they just contain pixels with colour numbers from 0 to 3. It's probably more accurate to show pattern tables in greyscale, but that's a bit too dull for my taste.
+
+Anyway, you can see patterns containing bits of vector lines towards the end of the second pattern table, and there are patterns from the copyright message at the start of the first. There are also patterns for the dashboard, the title text, horizontal and vertical lines, and lots more. The way that Elite uses the pattern tables is fascinating, and is at the core of the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html).
+
+Each individual 8x8-pixel pattern is stored in the pattern table using 16 bytes. Storing an 8x8-pixel pattern using 16 bytes means that each pixel has two bits associated with it. This means that each pixel in a pattern can have one of four values (%00, %01, %10 and %11), and when the PPU applies a palette to this pattern, these four values are drawn on-screen using the relevant colour from the palette.
+
+To see how this works, let's look at how patterns are stored. Each pattern consists of 16 bytes in the pattern table, stored as two consecutive batches of 8 bytes. The first batch of bytes determines bit 0 of each pixel colour, while the second batch determines bit 1 of each pixel colour (you can think of this order as little-endian, just like the 6502, if that helps).
+
+Let's consider an example. The Short-range Chart in NES Elite uses a single pattern for each system shown on the chart, and if we look at the pattern used for the Lave system, it looks like this in-game:
+
+![The Lave system on the Short-range Chart](https://elite.bbcelite.com/images/nes/understanding/lave_pattern.png) 
+
+						This pattern is part of the dashboard image data at [dashImage](https://elite.bbcelite.com/nes/bank_3/variable/dashimage.html), and when this data is unpacked into the PPU's pattern table, the 16 bytes of data combine with the palette data to produce the four-colour image above, as follows:
+
+$00 = %00000000 $00 = %00000000 -- Bit 0 of each pixel ---+ $08 = %00001000 | $1C = %00011100 | $18 = %00011000 v $08 = %00001000 00 00 00 00 00 00 00 00 0 0 0 0 0 0 0 0 $00 = %00000000 00 00 00 00 00 00 00 00 0 0 0 0 0 0 0 0 $00 = %00000000 00 00 00 10 11 00 00 00 0 0 0 2 3 0 0 0 00 00 10 01 11 11 00 00 ---> 0 0 2 1 3 3 0 0 00 00 10 01 01 10 00 00 0 0 2 1 1 2 0 0 $00 = %00000000 00 00 00 10 11 00 00 00 0 0 0 2 3 0 0 0 $00 = %00000000 00 00 00 00 00 00 00 00 0 0 0 0 0 0 0 0 $18 = %00011000 00 00 00 00 00 00 00 00 0 0 0 0 0 0 0 0 $2C = %00101100 ^ $24 = %00100100 | $18 = %00011000 | $00 = %00000000 -- Bit 1 of each pixel --+ $00 = %00000000
+
+Elite uses four-colour patterns everywhere, from the dashboard to the system charts, and this is a pretty standard use of the PPU's pattern system; pretty much every PPU tutorial you'll come across will have a variation on the above diagram. For Elite, though, we also need to consider the space view, and the way that the space view uses patterns is quite different; it uses separate bitplanes to squeeze two completely independent patterns into each 16-byte block.
+
+The concept of bitplanes is absolutely core to understanding the genius of Elite, and it is discussed in detail in the deep dive on [bitplanes in NES Elite](https://elite.bbcelite.com/bitplanes_in_nes_elite.html). Bitplanes are technically identical to the four-colour example above, they're just a different way of looking at the same thing, so understanding the standard model above is an excellent first step.
+
+## Tiles and nametables
+
+													 --------------------
+
+						The NES screen is made up of tiles. Each tile is 8x8 pixels. The PAL screen is 256x240 pixels (made up of 32x30 tiles) while the NTSC screen is 256x224 pixels (or 32x28 tiles). To take just one example, these are the tiles that make up the game's title screen that we saw above:
+
+![The tiles that make up the title screen for NES Elite](https://elite.bbcelite.com/images/nes/understanding/title_with_grid.png) 
+
+						Each tile has an associated pattern number, which determines the pixels that get drawn on-screen for that tile. As discussed above, each pattern contains the pixel data for an 8x8-pixel four-colour tile, so each tile is also an 8x8-pixel four-colour tile.
+
+The layout of the tiles on-screen is determined by the so-called "nametables" in the PPU's VRAM. As with the pattern tables, there are two nametables in VRAM, and we can switch between them to change the layout of the screen. Each nametable consists of one byte for each tile, which contains the number of the pattern (0 to 255) to be shown at that position on-screen. The PAL screen has 32x30 = 960 tiles, while the NTSC screen has 32x28 = 896 tiles, so 960 bytes are allocated to each nametable on both systems (and the NTSC console just ignores the extra 64 tiles). The tiles are laid out from left to right and top to bottom, so the first 32 entries cover the first tile row, the next 32 cover the second row, and so on.
+
+(Note that the PPU actually supports four nametables, but there is only enough VRAM for two, so the other two are mirrored either horizontally or vertically, depending on which way you want your game screen to scroll. Elite doesn't use scrolling, so as far as it's concerned there are just two nametables, so let's keep things simple and ignore the other two.)
+
+## Palettes and colours
+
+													 --------------------
+
+						A palette on the NES is simply a collection of four colours. The first entry in each palette is always mapped to the background colour (which is defined as black in Elite, but can be set to any colour), while the other three entries can be picked from the full range of colours that the NES supports. There are four palettes that can be applied to tiles (palettes 0 to 3), and there are four separate palettes that can be applied to sprites (sprite palettes 0 to 3). Each palette takes up just three bytes, with one byte each for the second, third and fourth entries in the palette (as we know the first entry is the background colour).
+
+For example, here's the Data on System view showing the data for Lave:
+
+![The Data on System view in NES Elite](https://elite.bbcelite.com/images/nes/general/data_on_lave.png) 
+
+						And here are the palettes used in this view:
+
+![The palettes for the Data on System view in NES Elite](https://elite.bbcelite.com/images/nes/understanding/data_on_lave_palette.png) 
+
+						The first four palettes are used for the background tiles, with the first two being used for the text, the third for the greyscale background of the two-layer image, and the fourth for the icon bar. The second four palettes are used for the sprites, with the sixth one being used for the foreground of the two-layer image, and the eighth for the pink rectangle of the icon bar pointer.
+
+Colours on the NES are stored as hue and value, using an HSV model but without the saturation. Specifically the hue (i.e. blue, red etc.) is stored in the low nibble, while the value (i.e. the brightness) is stored in bits 4 and 5 of the high nibble. Bits 6 and 7 are unused and are always zero.
+
+This means that given a colour value in hexadecimal, it will be in the form $vh where v is the value (brightness) and h is the hue. We can therefore alter the brightness of a colour by increasing or decreasing the high nibble between 0 and 3, with $0h being the darkest and $3h being the brightest. You can see some example colour values in the palette above.
+
+The NES only supports 54 of the 64 possible colours in this scheme, with colours $vE and $vF all being black, as well as $0D. The convention is to use $0F for all these variants of black.
+
+See the [NESDev wiki entry on PPU palettes](https://www.nesdev.org/wiki/PPU_palettes) for more information and lots of pretty colour charts.
+
+## Attributes
+
+													 ----------
+
+						So each tile on the screen displays a pattern (whose number is defined by the nametable), and each pattern supports four colours (as each pixel has two bits associated with it). We've also seen that the PPU contains four palettes that can be applied to tiles to control which colours are actually shown on-screen for those tiles.
+
+The PPU's attribute tables define which palette gets applied to each tile. As with the pattern tables and nametables, there are two attribute tables. Each attribute table contains 64 bytes and lives in the PPU's VRAM, directly after the 960 bytes of the corresponding nametable (so each nametable/attribute table combination takes up 1024 bytes).
+
+Unfortunately, 64 bytes isn't enough space to carry one palette number for every tile: we need two bits for a palette number (0 to 3), so one byte can hold four palette numbers, and 64 bytes can only hold 64 * 4 = 256 palette numbers. But there are 960 tiles on the PAL screen, so each byte in the attribute table actually covers a 4x4 block of tiles, setting one palette for each of the four 2x2 block of tiles in the 4x4 block.
+
+For example, here's the Data on System view showing the data for Lave:
+
+![The Data on System view in NES Elite](https://elite.bbcelite.com/images/nes/general/data_on_lave.png) 
+
+						And here is the underlying set of attributes for this view, as defined by variable [viewAttributes10](https://elite.bbcelite.com/nes/bank_3/variable/viewattributes10.html), showing the colours available to each 2x2 block of tiles:
+
+![The attributes for the Data on System view in NES Elite](https://elite.bbcelite.com/images/nes/understanding/data_on_lave_attr.png) 
+
+						You don't really need to understand the attribute tables when analysing the clever parts of NES Elite, as the space view uses the same palette across the whole area, but the [NESDev wiki entry on PPU attribute tables](https://www.nesdev.org/wiki/PPU_attribute_tables) does a good job of expanding on my terse explanation above.
+
+## Updating the screen
+
+													 -------------------
+
+						Given all of the above, there are four different ways to alter the screen background:
+
+- Changing a pattern will change the pixel layout for every tile that uses that pattern (so that's every tile that has this pattern number in the nametable).
+- Changing a nametable entry will change the pattern that's used for that specific tile.
+- Changing an attribute entry will change the palette that's used in the relevant 4x4 block of tiles.
+- Changing a palette entry will change the colours for all tiles that are set to use that palette.
+
+Elite uses all four approaches, depending on what needs changing. But how do we actually make these changes? We are prevented from directly accessing the PPU's VRAM, so instead we have to send all our changes via the PPU registers. The PPU registers are memory-mapped locations in the range $2000 to $2007, so to update VRAM, we simply write values to these memory locations, and the PPU will update the screen accordingly.
+
+That said, there are lots of subtleties when it comes to PPU interactions, so let's look at those first, before moving on to the registers themselves.
+
+## VBlank and NMI
+
+													 --------------
+
+						As the NES is a raster-based system - just like the home computers of the era - the screen gets updated in the familiar horizontal and vertical zig-zag manner. In other words, the cathode ray of the TV or monitor starts in the top-left corner of the screen and moves right, drawing each pixel as it goes, before moving down and left to the start of the next pixel line where it draws another row of pixels. This process repeats until the raster reaches the bottom of the screen, at which point it moves back to the top-left corner and the whole process starts again. On the PAL NES, this frame-drawing process happens 50 times a second to give a 50 Hz display, while the NTSC NES does it 60 times a second for a 60 Hz display.
+
+We can't write data to the PPU while it is busy drawing pixels on-screen, as otherwise we will interrupt the PPU's timings and the display will be corrupted. We can only write to the PPU in the short time period after it has finished drawing the last visible pixel of the current screen, and before it starts drawing the first visible pixel of the next one.
+
+This interval is called VBlank, and the system tells us when it starts by issuing an NMI interrupt. Our NMI interrupt handling routine is therefore called 50 or 60 times a second, and it is responsible for sending all our graphics data to the PPU before the end of VBlank. Unfortunately there is no way of telling when VBlank has finished - we can only tell when it starts.
+
+VBlank and the NMI routine are central to understanding Elite on the NES, as Elite has a spectacular amount of data to send to the PPU, and it all has to be sent during VBlank. Part of the challenge is that there is too much data to send in just one VBlank, so Elite's [NMI routine](https://elite.bbcelite.com/nes/bank_7/subroutine/nmi.html) uses buffers, cycle-counting and splitting the process across multiple VBlanks, all of which are described in the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html).
+
+For more information on VBlank and NMIs, see the NESDev wiki articles on [the frame and NMIs](https://www.nesdev.org/wiki/The_frame_and_NMIs) and [PPU rendering](https://www.nesdev.org/wiki/PPU_rendering).
+
+## PPU memory
+
+													 ----------
+
+						So the only way to update the screen on the NES is by writing data to the PPU, and it has to be done during VBlank. But how do we write data to the PPU? We do it by writing data to the PPU registers, which are mapped into CPU memory from $2000 to $2007. Indeed, the *only* way to access the PPU's VRAM is through this kind of register-based keyhole surgery, which is a bit of a shock for those of us who are used to the much more open screen-memory approach of most home computers.
+
+We'll look at the PPU registers themselves in the next section, but before we can send data to VRAM, we need to know where in VRAM we need to send the data to. To answer that, here's the memory map of the PPU's VRAM:
+
+$0000-$0FFF Pattern table 0 $1000-$1FFF Pattern table 1 $2000-$23BF Nametable 0 $23C0-$23FF Attribute table 0 $2400-$27BF Nametable 1 $27C0-$27FF Attribute table 1 $2800-$23FF Unused in Elite (mirror of nametable 0) $2C00-$2FFF Unused in Elite (mirror of nametable 1) $3000-$3EFF Unused in Elite (mirror of $2000-$2EFF) $3F00-$3F1F Palette table $3F20-$3FFF Unused in Elite (mirror of $3F00-$3F1F)
+
+As with the CPU-accessible WRAM, the NES mirrors various blocks of memory, so we can ignore them. Also, note that the layout of VRAM shown above is the one used for Elite (it's called "vertical mirroring"). There are other mirroring modes available that affect the layout of VRAM, but we don't need to worry about them (see the NESDev wiki article on [PPU nametables](https://www.nesdev.org/wiki/PPU_nametables) if you're curious).
+
+As described above, each pattern table contains 256 patterns of 16 bytes each, so each pattern table takes up 4096 ($1000) bytes. Each nametable contains pattern numbers for 960 tiles (32x30) with one byte per tile, so that's 960 ($3C0) bytes, and each attribute table consists of 64 ($40) bytes.
+
+The palette table from $3F00 to $3F1F consists of the background colour (which is set to black in Elite), plus three colour entries for each of the four background and four sprite palettes:
+
+$3F00 Background colour for all palettes $3F01-$3F03 Background palette 0 $3F05-$3F07 Background palette 1 $3F09-$3F0B Background palette 2 $3F0D-$3F0F Background palette 3 $3F11-$3F13 Sprite palette 0 $3F15-$3F17 Sprite palette 1 $3F19-$3F1B Sprite palette 2 $3F1D-$3F1F Sprite palette 3
+
+So to update the screen, we need to write values to the PPU registers, which then update values in VRAM according to the above memory map. Now we know which locations we want to change, let's take a look at the gatekeeping PPU registers that control our access to VRAM.
+
+## PPU registers
+
+													 -------------
+
+						The PPU registers are mapped into CPU-accessible memory at $2000 to $2007, and there's also one of the CPU registers at $4014 that's related to graphics. Some are write-only, some are read-only, and one is read/write. Here's a list:
+
+$2000 PPU_CTRL = PPU control (write) $2001 PPU_MASK = PPU mask (write) $2002 PPU_STATUS = PPU status (read) $2003 OAM_ADDR = OAM address (write) $2004 OAM_DATA = OAM data (write) $2005 PPU_SCROLL = Scroll register (write) $2006 PPU_ADDR = VRAM address register (write) $2007 PPU_DATA = VRAM data register (read/write) $4014 OAM_DMA = OAM DMA register
+
+As far as Elite is concerned, the important registers are these ones:
+
+- PPU_ADDR and PPU_DATA allow us to read data from and write data to addresses in VRAM, so these are used throughout the code to send pattern, palette, nametable and attribute data to the PPU (Elite doesn't use them to read from VRAM, only to write). We send data by first writing the VRAM address to PPU_ADDR (high byte first, then the low byte), and then writing the actual data to PPU_DATA. The address increments after each write, so we can write to consecutive addresses in VRAM by sending data bytes repeatedly to PPU_DATA without having to update PPU_ADDR as we go. See the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html)for more about sending data to the PPU.
+- PPU_CTRL allows us to configure which of the two nametable, attribute and pattern tables the PPU should use to draw the next frame, and it also allows us to disable the VBlank NMI during the reset routines.
+- PPU_STATUS can be read to give various bits of information about the state of the PPU. Elite uses this register to work out whether sprite 0 has been hit when implementing the split-screen mode (see the deep dive on [the split-screen mode in NES Elite](https://elite.bbcelite.com/the_split-screen_mode_nes.html)for details), and to detect whether VBlank has started (which is used by the various wait and delay routines).
+- PPU_MASK allows us to hide the background and sprites while we are in the process of sending them to the PPU.
+
+The three OAM registers are also used, but they are covered in the deep dive on [sprite usage in NES Elite](https://elite.bbcelite.com/sprite_usage_in_nes_elite.html). As for PPU_SCROLL, Elite doesn't scroll the screen, so it is only used once when initialising the game.
+
+For more detailed analysis of all the PPU registers, see the NESDev wiki article on [PPU registers](https://www.nesdev.org/wiki/PPU_registers).
+
+## Sprites
+
+													 -------
+
+						The NES supports 64 hardware sprites, each of which is an 8x8-pixel four-colour shape that uses one of the 256 patterns in the pattern table. Sprites can appear anywhere on-screen and can appear in front of or behind the background tiles. Each sprite also has its own palette allocation, and can be flipped horizontally or vertically. NES sprites are pretty versatile, and Elite uses them for stardust particles, the compass, ships on the 3D scanner, laser sights, crosshairs on charts, the explosion burst and more.
+
+Each sprite has four bytes allocated to it in the PPU's 256-byte block of Object Attribute Memory (OAM). This memory is separate from the VRAM and gets updated automatically and very quickly every VBlank without us having to do anything. It does this using Direct Memory Access (DMA) at the hardware level, so there's no need for PPU registers here.
+
+The DMA approach lets the system copy 256 bytes from WRAM to the PPU very quickly, so Elite has a [sprite buffer](https://elite.bbcelite.com/nes/common/workspace/sprite_buffer.html) in VRAM from $0200 to $02FF which contains the four bytes that define each sprite, and DMA is configured to copy the sprite buffer to the OAM. We do this in the [SendPaletteSprites](https://elite.bbcelite.com/nes/bank_7/subroutine/sendpalettesprites.html) routine by zeroing OAM_ADDR and setting OAM_DMA to the page number of the sprite buffer ($02), and the NES does the rest.
+
+The four bytes associated with each of the 64 sprites in the sprite buffer are as follows (the following label names are for sprite 0):
+
+- xSprite0 contains the pixel x-coordinate of the sprite (0-255)
+- ySprite0 contains the pixel y-coordinate of the sprite (0-255)
+- pattSprite0 contains the pattern number to use for the sprite (0-255)
+- attrSprite0 contains the sprite's various attributes, as follows:
+								- Bits 0-1 = sprite palette number (0-3)
+- Bit 5 clear = show in front of background
+ Bit 5 set = show behind background
+- Bit 6 clear = do not flip horizontally
+ Bit 6 set = flip horizontally
+- Bit 7 clear = do not flip vertically
+ Bit 7 set = flip vertically
+ 
+
+We can hide a sprite from the screen by setting its y-coordinate to 240, which is off the bottom of the screen; see the [HideSprites](https://elite.bbcelite.com/nes/bank_7/subroutine/hidesprites.html) routine for an example.
+
+## Controllers
+
+													 -----------
+
+						There are two NES controllers, each of which has eight buttons. The state of these buttons can be read via two CPU registers that are memory mapped to $4016 (JOY1) and $4017 (JOY2).
+
+Because the controller port is implemented in the hardware using a shift register, we can only read the data from one button at a time. We start the process by writing 1 and then 0 to JOY1, which tells the controller hardware to latch the button positions (see the [ReadControllers](https://elite.bbcelite.com/nes/bank_7/subroutine/readcontrollers.html) routine). We then read the position of each button in turn by reading JOY1 repeatedly, which returns a 1 if the button is pressed or zero if it isn't.
+
+Each read of JOY1 returns the status of a button from controller 1, stepping through them in this order with each read: A, B, Select, Start, Up, Down, Left, Right. Each read of JOY2 returns the status of each button on controller 2, in the same order. The [ScanButtons](https://elite.bbcelite.com/nes/bank_7/subroutine/scanbuttons.html) routine implements this in Elite, adding the results to the key logger (see the deep dive on [bolting NES controllers onto the key logger](https://elite.bbcelite.com/bolting_nes_controllers_onto_the_key_logger.html) for more details).
+
+For more information on all of the CPU's registers, see the NESDev wiki page on the [2A03 chip](https://www.nesdev.org/wiki/2A03).
+
+## Sound and the APU
+
+													 -----------------
+
+						The final piece of the NES puzzle is the sound system, which is implemented by the Audio Processing Unit (APU) that's built into the CPU. The sound system is pretty complex and is explained in the deep dives on [sound effects in NES Elite](https://elite.bbcelite.com/sound_effects_in_nes_elite.html) and [music in NES Elite](https://elite.bbcelite.com/music_in_nes_elite.html), but just like the PPU, the APU has a set of registers that control the console's sound:
+
+$4000 SQ1_VOL = Volume for square wave channel 1 $4001 SQ1_SWEEP = Sweep control for square wave channel 1 $4002 SQ1_LO = Period (low byte) for square wave channel 1 $4003 SQ1_HI = Period (high byte) for square wave channel 1 $4004 SQ2_VOL = Volume for square wave channel 2 $4005 SQ2_SWEEP = Sweep control for square wave channel 2 $4006 SQ2_LO = Period (low byte) for square wave channel 2 $4007 SQ2_HI = Period (high byte) for square wave channel 2 $4008 TRI_LINEAR = Linear counter for the triangle wave channel $400A TRI_LO = Period (low byte) for the triangle wave channel $400B TRI_HI = Period (high byte) for the triangle wave channel $400C NOISE_VOL = Volume for the noise channel $400E NOISE_LO = Period (low byte) for the noise channel $400F NOISE_HI = Period (high byte) for the noise channel $4010 DMC_FREQ = Not used in Elite (controls the DMC channel) $4011 DMC_RAW = Not used in Elite (controls the DMC channel's DAC) $4012 DMC_START = Not used in Elite (start address on the DMC channel) $4013 DMC_LEN = Not used in Elite (sample length on the DMC channel) $4015 SND_CHN = Sound channel enable/disable register $4017 APU_FC = APU frame counter control register (write-only)
+
+Note that the APU_FC register shares the same memory-mapped address as JOY2, which works because APU_FC is write-only and JOY2 is read-only. For more information on all of the CPU's registers, see the NESDev wiki page on the [2A03 chip](https://www.nesdev.org/wiki/2A03).
+
+Incidentally, the sound and music routines were written by David Whittaker, so this part of the codebase isn't by Bell and Braben.
+
+That concludes our whistlestop tour of the NES architecture. Hopefully all these NES deep dives will make sense now...
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+$0000-$07FF   Work RAM (WRAM)
+  $0800-$1FFF   Unused in Elite (contains mirrors of the work RAM)
+  $2000-$2007   PPU registers
+  $2008-$3FFF   Unused in Elite (contains mirrors of the PPU registers)
+  $4000-$401F   CPU registers (controllers and APU)
+  $4020-$5FFF   Unused in Elite (typically used for more cartridge space)
+  $6000-$7FFF   Battery-backed WRAM in cartridge
+  $8000-$BFFF   ROM banks 0 to 6
+  $C000-$FFFF   ROM bank 7
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+$00 = %00000000
+  $00 = %00000000 -- Bit 0 of each pixel ---+
+  $08 = %00001000                           |
+  $1C = %00011100                           |
+  $18 = %00011000                           v
+  $08 = %00001000        00 00 00 00 00 00 00 00          0 0 0 0 0 0 0 0
+  $00 = %00000000        00 00 00 00 00 00 00 00          0 0 0 0 0 0 0 0
+  $00 = %00000000        00 00 00 10 11 00 00 00          0 0 0 2 3 0 0 0
+                         00 00 10 01 11 11 00 00   --->   0 0 2 1 3 3 0 0
+                         00 00 10 01 01 10 00 00          0 0 2 1 1 2 0 0
+  $00 = %00000000        00 00 00 10 11 00 00 00          0 0 0 2 3 0 0 0
+  $00 = %00000000        00 00 00 00 00 00 00 00          0 0 0 0 0 0 0 0
+  $18 = %00011000        00 00 00 00 00 00 00 00          0 0 0 0 0 0 0 0
+  $2C = %00101100                          ^
+  $24 = %00100100                          |
+  $18 = %00011000                          |
+  $00 = %00000000 -- Bit 1 of each pixel --+
+  $00 = %00000000
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+$0000-$0FFF   Pattern table 0
+  $1000-$1FFF   Pattern table 1
+  $2000-$23BF   Nametable 0
+  $23C0-$23FF   Attribute table 0
+  $2400-$27BF   Nametable 1
+  $27C0-$27FF   Attribute table 1
+  $2800-$23FF   Unused in Elite (mirror of nametable 0)
+  $2C00-$2FFF   Unused in Elite (mirror of nametable 1)
+  $3000-$3EFF   Unused in Elite (mirror of $2000-$2EFF)
+  $3F00-$3F1F   Palette table
+  $3F20-$3FFF   Unused in Elite (mirror of $3F00-$3F1F)
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+$3F00         Background colour for all palettes
+  $3F01-$3F03   Background palette 0
+  $3F05-$3F07   Background palette 1
+  $3F09-$3F0B   Background palette 2
+  $3F0D-$3F0F   Background palette 3
+  $3F11-$3F13   Sprite palette 0
+  $3F15-$3F17   Sprite palette 1
+  $3F19-$3F1B   Sprite palette 2
+  $3F1D-$3F1F   Sprite palette 3
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+$2000   PPU_CTRL   = PPU control (write)
+  $2001   PPU_MASK   = PPU mask (write)
+  $2002   PPU_STATUS = PPU status (read)
+  $2003   OAM_ADDR   = OAM address (write)
+  $2004   OAM_DATA   = OAM data (write)
+  $2005   PPU_SCROLL = Scroll register (write)
+  $2006   PPU_ADDR   = VRAM address register (write)
+  $2007   PPU_DATA   = VRAM data register (read/write)
+  $4014   OAM_DMA    = OAM DMA register
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+$4000   SQ1_VOL    = Volume for square wave channel 1
+  $4001   SQ1_SWEEP  = Sweep control for square wave channel 1
+  $4002   SQ1_LO     = Period (low byte) for square wave channel 1
+  $4003   SQ1_HI     = Period (high byte) for square wave channel 1
+  $4004   SQ2_VOL    = Volume for square wave channel 2
+  $4005   SQ2_SWEEP  = Sweep control for square wave channel 2
+  $4006   SQ2_LO     = Period (low byte) for square wave channel 2
+  $4007   SQ2_HI     = Period (high byte) for square wave channel 2
+  $4008   TRI_LINEAR = Linear counter for the triangle wave channel
+  $400A   TRI_LO     = Period (low byte) for the triangle wave channel
+  $400B   TRI_HI     = Period (high byte) for the triangle wave channel
+  $400C   NOISE_VOL  = Volume for the noise channel
+  $400E   NOISE_LO   = Period (low byte) for the noise channel
+  $400F   NOISE_HI   = Period (high byte) for the noise channel
+  $4010   DMC_FREQ   = Not used in Elite (controls the DMC channel)
+  $4011   DMC_RAW    = Not used in Elite (controls the DMC channel's DAC)
+  $4012   DMC_START  = Not used in Elite (start address on the DMC channel)
+  $4013   DMC_LEN    = Not used in Elite (sample length on the DMC channel)
+  $4015   SND_CHN    = Sound channel enable/disable register
+  $4017   APU_FC     = APU frame counter control register (write-only)
+```
+
+
+
+---
+*Fonte originale: [https://elite.bbcelite.com/deep_dives/understanding_the_nes_for_elite.html](https://elite.bbcelite.com/deep_dives/understanding_the_nes_for_elite.html)*

@@ -1,0 +1,250 @@
+---
+title: STABLE RASTER ROUTINE
+source_url: https://codebase.c64.org/doku.php?id=base%3Astable_raster_routine
+category: tool
+topics:
+- raster interrupts
+- sprite programming
+- assembly
+difficulty: beginner
+language: mixed
+hardware:
+- SID
+- VIC-II
+- CPU
+- KERNAL
+related:
+- sprite-programming
+- sound-programming
+- memory-map
+- raster-interrupts
+- sid-registers
+- music-player
+- kernal-routines
+- vic-ii-registers
+scraped_at: '2026-07-14'
+---
+
+
+# STABLE RASTER ROUTINE
+
+base:stable_raster_routine
+
+                # STABLE RASTER ROUTINE
+
+A Raster Stabbing routine using the double IRQ principle. Insert this code after you have pushed your registers onto the stack inside your IRQ code. The routine doesen't care what the actual $d012 value is so it is flexible.
+
+Other Interrupts, $d012 = #$ff, Sprites, Badline and Badline-1 = fuckup.
+
+If you have the KERNAL banked in, you need to modify the IRQ-Vectors.
+
+Kickassembler format
+
+```
+//«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»
+// Raster Stabilizing Code
+//«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»
+    // A Raster Compare IRQ is triggered on cycle 0 on the current $d012 line
+    // The MPU needs to finish it's current OP code before starting the Interrupt Handler,
+    // meaning a 0 -> 7 cycles delay depending on OP code.
+    // Then a 7 cycle delay is spendt invoking the Interrupt Handler (Push SR/PC to stack++)
+    // Then 13 cycles for storing registers (pha, txa, pha, tya, pha)
+    // CYCLECOUNT: [20 -> 27] cycles after Raster IRQ occurred.
+    // Set up Wedge IRQ vector
+    lda #<WedgeIRQ
+    sta $fffe
+    lda #>WedgeIRQ
+    sta $ffff
+    // Set the Raster IRQ to trigger on the next Raster line
+    inc $d012
+    // Acknowlege current Raster IRQ
+    lda #$01
+    sta $d019
+    // Store current Stack Pointer (will be messed up when the next IRQ occurs)
+    tsx
+    // Allow IRQ to happen (Remeber the Interupt flag is set by the Interrupt Handler).
+    cli
+    // Execute NOPs untill the raster line changes and the Raster IRQ triggers
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    // Add one extra nop for 65 cycle NTSC machines
+    // CYCLECOUNT: [64 -> 71]
+WedgeIRQ:
+    // At this point the next Raster Compare IRQ has triggered and the jitter is max 1 cycle.
+    // CYCLECOUNT: [7 -> 8] (7 cycles for the interrupt handler + [0 -> 1] cycle Jitter for the NOP)
+    // Restore previous Stack Pointer (ignore the last Stack Manipulation by the IRQ)
+    txs
+    // PAL-63  // NTSC-64    // NTSC-65
+    //---------//------------//-----------
+    ldx #$08   // ldx #$08   // ldx #$09
+    dex        // dex        // dex
+    bne *-1    // bne *-1    // bne *-1
+    bit $00    // nop
+               // nop
+    // Check if $d012 is incremented and rectify with an aditional cycle if neccessary
+    lda $d012
+    cmp $d012  // <- critical instruction (ZERO-Flag will indicate if Jitter = 0 or 1)
+    // CYCLECOUNT: [61 -> 62] <- Will not work if this timing is wrong
+    // cmp $d012 is originally a 5 cycle instruction but due to piplining tech. the
+    // 5th cycle responsible for calculating the result is executed simultaniously
+    // with the next OP fetch cycle (first cycle of beq *+2).
+    // Add one cycle if $d012 wasn't incremented (Jitter / ZERO-Flag = 0)
+    beq *+2
+    // Stable code    
+    
+```
+Don't forget to set up the next IRQ-Vector before exiting the IRQ.
+
+If you want to make it more simple, you could store this as a pseudo or macro (STABILIZE) and just:
+
+```
+IRQ_Begin:
+    pha
+    txa
+    pha
+    tya
+    pha
+    :STABILIZE
+    
+    //..xxXX[Stable Code]XXxx..
+    
+    lda #<Next_IRQ
+    sta $fffe
+    lda #>Next_IRQ
+    sta $ffff
+    lda #$01
+    sta $d019
+    pla
+    tay
+    pla
+    tax
+    pla
+    rti
+```
+TWW/Creators
+
+base/stable_raster_routine.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+//«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»
+// Raster Stabilizing Code
+//«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»«»
+    // A Raster Compare IRQ is triggered on cycle 0 on the current $d012 line
+    // The MPU needs to finish it's current OP code before starting the Interrupt Handler,
+    // meaning a 0 -> 7 cycles delay depending on OP code.
+    // Then a 7 cycle delay is spendt invoking the Interrupt Handler (Push SR/PC to stack++)
+    // Then 13 cycles for storing registers (pha, txa, pha, tya, pha)
+
+    // CYCLECOUNT: [20 -> 27] cycles after Raster IRQ occurred.
+
+    // Set up Wedge IRQ vector
+    lda #<WedgeIRQ
+    sta $fffe
+    lda #>WedgeIRQ
+    sta $ffff
+
+    // Set the Raster IRQ to trigger on the next Raster line
+    inc $d012
+
+    // Acknowlege current Raster IRQ
+    lda #$01
+    sta $d019
+
+    // Store current Stack Pointer (will be messed up when the next IRQ occurs)
+    tsx
+
+    // Allow IRQ to happen (Remeber the Interupt flag is set by the Interrupt Handler).
+    cli
+
+    // Execute NOPs untill the raster line changes and the Raster IRQ triggers
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    // Add one extra nop for 65 cycle NTSC machines
+
+    // CYCLECOUNT: [64 -> 71]
+
+WedgeIRQ:
+    // At this point the next Raster Compare IRQ has triggered and the jitter is max 1 cycle.
+    // CYCLECOUNT: [7 -> 8] (7 cycles for the interrupt handler + [0 -> 1] cycle Jitter for the NOP)
+
+    // Restore previous Stack Pointer (ignore the last Stack Manipulation by the IRQ)
+    txs
+
+    // PAL-63  // NTSC-64    // NTSC-65
+    //---------//------------//-----------
+    ldx #$08   // ldx #$08   // ldx #$09
+    dex        // dex        // dex
+    bne *-1    // bne *-1    // bne *-1
+    bit $00    // nop
+               // nop
+
+    // Check if $d012 is incremented and rectify with an aditional cycle if neccessary
+    lda $d012
+    cmp $d012  // <- critical instruction (ZERO-Flag will indicate if Jitter = 0 or 1)
+
+    // CYCLECOUNT: [61 -> 62] <- Will not work if this timing is wrong
+
+    // cmp $d012 is originally a 5 cycle instruction but due to piplining tech. the
+    // 5th cycle responsible for calculating the result is executed simultaniously
+    // with the next OP fetch cycle (first cycle of beq *+2).
+
+    // Add one cycle if $d012 wasn't incremented (Jitter / ZERO-Flag = 0)
+    beq *+2
+
+    // Stable code
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+#### Routine Identificate:
+- **`IRQ_Begin`** (unknown): No description available
+
+```assembly
+IRQ_Begin:
+    pha
+    txa
+    pha
+    tya
+    pha
+    :STABILIZE
+    
+    //..xxXX[Stable Code]XXxx..
+    
+    lda #<Next_IRQ
+    sta $fffe
+    lda #>Next_IRQ
+    sta $ffff
+    lda #$01
+    sta $d019
+    pla
+    tay
+    pla
+    tax
+    pla
+    rti
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Astable_raster_routine](https://codebase.c64.org/doku.php?id=base%3Astable_raster_routine)*
+
+
+### Collegamenti e Riferimenti Hardware
+- **$D012 (Raster Counter)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d012).

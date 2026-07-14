@@ -1,0 +1,120 @@
+---
+title: Scheduling tasks with the main loop counter
+source_url: https://elite.bbcelite.com/deep_dives/scheduling_tasks_with_the_main_loop_counter.html
+category: deep-dive
+topics:
+- memory management
+- basic
+- assembly
+difficulty: beginner
+language: mixed
+hardware:
+- SID
+- KERNAL
+related:
+- music-player
+- sound-programming
+- memory-map
+- kernal-routines
+- sid-registers
+scraped_at: '2026-07-14'
+---
+
+# Scheduling tasks with the main loop counter
+
+## How the main loop counter controls what we do and when we do it
+
+Elite's program flow is based around a main loop that starts iterating as soon as you get past the title screen. At its simplest - when docked - the main loop does little more than listening for function key presses and calling the relevant routines for cargo, equipment, charts and so on, but out in space in the midst of a frenetic battle for survival, things get an awful lot busier.
+
+If this level of activity isn't controlled, then things can really start to slow down on an 2 MHz 8-bit CPU that's doing its best to keep up with Thargoids and missiles and suns and 3D graphics and ship AI and in-flight messages and complicated vector maths and all the other demands that a futuristic Cobra Mk III simulator makes on the hardware. Elite does a great job of maintaining a respectable frame rate amongst all this activity, and one of its coping mechanisms is the main loop counter in [MCNT](https://elite.bbcelite.com/cassette/main/workspace/zp.html#mcnt).
+
+The idea behind the main loop counter is simple: on any particular iteration round the main loop, it lets the game decide whether or not to perform each specific action, depending on the counter value. Some actions are vital and have to be done on every iteration round the loop, so they just ignore the value of MCNT, but some actions don't need such regular attention. The loop counter lets us do what's important all of the time, while doing what's less important (or more difficult) only some of the time.
+
+Let's see how this works.
+
+## Using MCNT to control what we do...
+
+													 -----------------------------------
+
+						The main loop counter is stored in location MCNT. It gets decremented every time the main loop restarts, just after routine TT100 is entered. Some routines set the counter to specific values to ensure certain actions will or won't happen (see below), but for the most part the counter decrements from 255 down to 0 and back up to 255 again.
+
+At various points in the code, we check the counter value to determine what we need to do. One way of doing this is to use a logical AND to implement a modulo operation, as follows. Consider the following code:
+
+LDA MCNT AND #7 BNE skip ... code gets run once every 8 iterations ... .skip
+
+In binary, 7 is %00000111, so we perform the skip if any of the three lowest bits of MCNT are non-zero. In other words, we run the code only when the three lowest bits are all zero, which happens once every 8 iterations. This is the same as saying "do the action when MCNT mod 8 = 0".
+
+In general, if n is a power of 2, we can use AND #n-1 to calculate modulo n, so we could use AND #31 to do something every 32 iterations, for example.
+
+Another approach is to calculate the modulo and then compare the value to a fixed number, to spread operations out within a specific batch of iterations. For example:
+
+LDA MCNT AND #31 CMP #10 BNE skip1 ... code gets run once at iteration 10 out of every 32 iterations ... .skip1 CMP #20 BNE skip2 ... code gets run once at iteration 20 out of every 32 iterations ... .skip2
+
+There are some minor variations on the above in the game code, but the basic approach is the same: check the counter and perform actions accordingly. Let's take a look at how the main loop counter is used to determine what happens when in the main loop's iterations.
+
+## ...and when we do it
+
+													 --------------------
+
+						Here's a breakdown of all events that are dependent on the value of MCNT. The counts are given within each iteration batch, so "every 4 iterations on count 0/4" means we do the action when MCNT is 0, 4, 8, 12 and so on, while "every 32 iterations on count 10/32" means we do it when MCNT is 10, 42, 74 and so on.
+
+- Every 4 iterations on count 0/4: Update the non-essential dashboard bar indicators (i.e. everything except speed, pitch and roll, scanner and compass, which update every iteration)
+- Every 8 iterations on count 0/8: Regenerate ship energy and shields
+- Every 8 iterations on counts 0-3 (2 ships) and 4-7 (1 ship): Apply tactics to 1 or 2 ships per iteration, working through all 12 slots every 8 iterations
+- Every 16 iterations on counts 0/16 and 8/16: If configured, flash the dashboard dials on and off, with 8 iterations on, and 8 off
+- Every 16 iterations on counts 0/16 to 11/16: Tidy one ship's orientation vectors for 12 out every 16 iterations
+- Every 32 iterations on count 0/32: Check whether we are near a space station, and spawn one if we are
+- Every 32 iterations on count 10/32: Calculate the ship's altitude above the planet, and die if we crash land
+- Every 32 iterations on count 10/32: If our energy is low, print "ENERGY LOW" as an in-flight message and beep
+- Every 32 iterations on count 20/32: Calculate the ship's altitude above the sun, set the cabin temperature accordingly (and die if it's too hot), and if we are scooping, add the relevant amount of fuel
+- Every 256 iterations on count 0/256: Consider spawning a ship
+
+## Resetting the counter
+
+													 ---------------------
+
+						The MCNT counter is reset in various ways, to affect the state of the various actions it triggers:
+
+- It gets set to 0 when we buy fuel, launch from a space station, arrive in a new system, or launch an escape pod, so the main loop won't consider spawning new ships for at least 256 iterations (as the counter will be decremented to 255 as soon as the main loop is entered)
+- It gets set to 1 after completing an in-system jump, so the next iteration through the main loop will potentially spawn ships (as the counter will be decremented to 0 as soon as the main loop is entered)
+- It gets set to 255 while the death screen is showing, so nothing gets spawned during the death sequence, and then it's set to 0 once it's finished
+
+## Codice Estratto
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+LDA MCNT
+  AND #7
+  BNE skip
+
+  ... code gets run once every 8 iterations ...
+
+  .skip
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+LDA MCNT
+  AND #31
+
+  CMP #10
+  BNE skip1
+
+  ... code gets run once at iteration 10 out of every 32 iterations ...
+
+  .skip1
+
+  CMP #20
+  BNE skip2
+
+  ... code gets run once at iteration 20 out of every 32 iterations ...
+
+  .skip2
+```
+
+
+
+---
+*Fonte originale: [https://elite.bbcelite.com/deep_dives/scheduling_tasks_with_the_main_loop_counter.html](https://elite.bbcelite.com/deep_dives/scheduling_tasks_with_the_main_loop_counter.html)*

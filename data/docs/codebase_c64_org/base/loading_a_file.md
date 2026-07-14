@@ -1,0 +1,186 @@
+---
+title: Loading a file to memory at address stored in file
+source_url: https://codebase.c64.org/doku.php?id=base%3Aloading_a_file
+category: tool
+topics:
+- basic
+- assembly
+difficulty: intermediate
+language: assembly
+hardware:
+- CPU
+related: []
+scraped_at: '2026-07-14'
+---
+
+# Loading a file to memory at address stored in file
+
+base:loading_a_file
+
+                ### Table of Contents
+
+# Loading a file to memory at address stored in file
+
+BASIC code:
+
+LOAD "JUST A FILENAME",8,1
+
+Assembler code:
+
+```
+        LDA #fname_end-fname
+        LDX #<fname
+        LDY #>fname
+        JSR $FFBD     ; call SETNAM
+        LDA #$01
+        LDX $BA       ; last used device number
+        BNE .skip
+        LDX #$08      ; default to device 8
+.skip   LDY #$01      ; not $01 means: load to address stored in file
+        JSR $FFBA     ; call SETLFS
+        LDA #$00      ; $00 means: load to memory (not verify)
+        JSR $FFD5     ; call LOAD
+        BCS .error    ; if carry set, a load error has happened
+        RTS
+.error
+        ; Accumulator contains BASIC error code
+        ; most likely errors:
+        ; A = $05 (DEVICE NOT PRESENT)
+        ; A = $04 (FILE NOT FOUND)
+        ; A = $1D (LOAD ERROR)
+        ; A = $00 (BREAK, RUN/STOP has been pressed during loading)
+        ... error handling ...
+        RTS
+fname:  .TEXT "JUST A FILENAME"
+fname_end:
+```
+# Loading a file to memory at a specified address
+
+BASIC code:
+
+LOAD "JUST A FILENAME",8
+
+Assembler code:
+
+```
+load_address = $2000  ; just an example
+        LDA #fname_end-fname
+        LDX #<fname
+        LDY #>fname
+        JSR $FFBD     ; call SETNAM
+        LDA #$01
+        LDX $BA       ; last used device number
+        BNE .skip
+        LDX #$08      ; default to device 8
+.skip   LDY #$00      ; $00 means: load to new address
+        JSR $FFBA     ; call SETLFS
+        LDX #<load_address
+        LDY #>load_address
+        LDA #$00      ; $00 means: load to memory (not verify)
+        JSR $FFD5     ; call LOAD
+        BCS .error    ; if carry set, a load error has happened
+        RTS
+.error
+        ; Accumulator contains BASIC error code
+        ; most likely errors:
+        ; A = $05 (DEVICE NOT PRESENT)
+        ; A = $04 (FILE NOT FOUND)
+        ; A = $1D (LOAD ERROR)
+        ; A = $00 (BREAK, RUN/STOP has been pressed during loading)
+        ... error handling ...
+        RTS
+fname:  .TEXT "JUST A FILENAME"
+fname_end:
+```
+base/loading_a_file.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+LOAD "JUST A FILENAME",8,1
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+LDA #fname_end-fname
+        LDX #<fname
+        LDY #>fname
+        JSR $FFBD     ; call SETNAM
+        LDA #$01
+        LDX $BA       ; last used device number
+        BNE .skip
+        LDX #$08      ; default to device 8
+.skip   LDY #$01      ; not $01 means: load to address stored in file
+        JSR $FFBA     ; call SETLFS
+
+        LDA #$00      ; $00 means: load to memory (not verify)
+        JSR $FFD5     ; call LOAD
+        BCS .error    ; if carry set, a load error has happened
+        RTS
+.error
+        ; Accumulator contains BASIC error code
+
+        ; most likely errors:
+        ; A = $05 (DEVICE NOT PRESENT)
+        ; A = $04 (FILE NOT FOUND)
+        ; A = $1D (LOAD ERROR)
+        ; A = $00 (BREAK, RUN/STOP has been pressed during loading)
+
+        ... error handling ...
+        RTS
+
+fname:  .TEXT "JUST A FILENAME"
+fname_end:
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+LOAD "JUST A FILENAME",8
+```
+
+### Snippet Codice (BASIC)
+
+```basic
+load_address = $2000  ; just an example
+
+        LDA #fname_end-fname
+        LDX #<fname
+        LDY #>fname
+        JSR $FFBD     ; call SETNAM
+        LDA #$01
+        LDX $BA       ; last used device number
+        BNE .skip
+        LDX #$08      ; default to device 8
+.skip   LDY #$00      ; $00 means: load to new address
+        JSR $FFBA     ; call SETLFS
+
+        LDX #<load_address
+        LDY #>load_address
+        LDA #$00      ; $00 means: load to memory (not verify)
+        JSR $FFD5     ; call LOAD
+        BCS .error    ; if carry set, a load error has happened
+        RTS
+.error
+        ; Accumulator contains BASIC error code
+
+        ; most likely errors:
+        ; A = $05 (DEVICE NOT PRESENT)
+        ; A = $04 (FILE NOT FOUND)
+        ; A = $1D (LOAD ERROR)
+        ; A = $00 (BREAK, RUN/STOP has been pressed during loading)
+
+        ... error handling ...
+        RTS
+
+fname:  .TEXT "JUST A FILENAME"
+fname_end:
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Aloading_a_file](https://codebase.c64.org/doku.php?id=base%3Aloading_a_file)*

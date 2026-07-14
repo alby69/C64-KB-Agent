@@ -1,0 +1,358 @@
+---
+title: base:simple_sprite-multiplexing_using_sprite_1 [Codebase64 wiki]
+source_url: https://codebase.c64.org/doku.php?id=base%3Asimple_sprite-multiplexing_using_sprite_1
+category: reference
+topics:
+- graphics
+- assembly
+- raster interrupts
+- sprite programming
+- basic
+difficulty: beginner
+language: assembly
+hardware:
+- VIC-II
+- CIA
+- CPU
+- KERNAL
+related:
+- sprite-programming
+- keyboard-handling
+- cia-registers
+- memory-map
+- raster-interrupts
+- kernal-routines
+- vic-ii-registers
+- joystick-reading
+scraped_at: '2026-07-14'
+---
+
+
+# base:simple_sprite-multiplexing_using_sprite_1 [Codebase64 wiki]
+
+base:simple_sprite-multiplexing_using_sprite_1
+
+                ```
+ !to "multiplexer.prg",cbm
+ 
+;---------------------------------------------------------------------------
+;
+;
+;
+; Basics : IRQ
+; @L       Wait for Y-Pos
+;          write (new) Y-Position            
+;          write (new) Sprite-Pointer 
+;          set some other registers according to the sprite
+;          wait 21+1 (Spriteheight+1) Rasterlines 
+;          JMP @L
+;
+;
+;
+; Compiler : ACME  
+;
+; Michael Sachse, 20. Maerz 2007 
+;
+;---------------------------------------------------------------------------
+ 
+;-- Basicstart
+*= $0800
+!byte $00,$0c,$08,$0a,$00,$9e,$32,$30,$36,$34,$00,$00,$00,$00
+     
+ *= $0810
+  
+;--------------------------------------------------   
+         
+         lda #00
+         sta $d020
+         sta $d021        
+         lda #147
+         jsr $ffd2        
+         jsr setup_sprite ; init Sprite 1 
+;--------------------------------------------------
+;  New Raster-IRQ
+;--------------------------------------------------
+         
+         sei  
+         lda #<int
+         sta $0314
+         lda #>int
+         sta $0315        ; new IRQ
+         lda #$00
+         sta $d012        
+         lda #$7f
+         sta $dc0d        ; Timer off
+         lda #$01
+         sta $d019
+         sta $d01a        
+         cli
+         jmp *
+;--------------------------------------------------
+int      lda $d019
+         and #$01
+         sta $d019        
+         bne irq
+         jmp $ea81
+          
+;--------------------------------------------------           
+irq      lda #$00
+         sta $d012
+         jsr animate      ; move on x-axis
+l0       lda $d012
+         cmp #78          ; y = 78
+         bne l0     
+         sta $d001
+         lda #$28         ; Spritepointer Sprite 1 
+         sta $07f8        ; $0a00 = $28*$40
+l1       lda $d012
+         cmp #100         ; y = 100
+         bne l1
+         sta $d001          
+         lda #$29         ; write Sprite-Pointer again
+         sta $07f8
+         lda #6           ; a new color
+         sta $d026
+l2       lda $d012
+         cmp #122         ; y = 122      
+         bne l2
+         sta $d001          
+         lda #$28         ; write Sprite-Pointer again
+         sta $07f8
+         lda #3
+         sta $d026
+l3       lda $d012
+         cmp #144          ; y =144     
+         bne l3
+         sta $d001            
+         lda #$29          ; write Sprite-Pointer again
+         sta $07f8
+         lda #2
+         sta $d026         ; a new color
+le       lda $d012
+         cmp #255
+         bne le        
+         jmp $ea81
+         
+;--------------------------------------------------
+;   move sprite
+;--------------------------------------------------    
+animate   inc $d000
+          lda $d000
+          bne ex
+          lda #50
+          sta $d000        
+ex        rts
+;--------------------------------------------------
+;   Sprite 1 init
+;--------------------------------------------------
+setup_sprite
+          lda #1           ; Colors
+          sta $d025
+          lda #11
+          sta $d026
+          lda #15
+          sta $d027        ; 
+          lda #64
+          sta $d000        ; X-Position
+          lda #$01         ;
+          sta $d015        ; Sprite 1 on
+          sta $d01c        ; Multicolor
+          rts
+;--------------------------------------------------
+;   2 Sprites 
+;--------------------------------------------------
+*=$0a00
+ 
+!byte $ff,$ff,$ff,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$f0 
+!byte $00,$00,$b0,$00,$00,$A0,$00,$00,$AC,$00,$00,$F8,$00,$00,$FE,$0E 
+!byte $f0,$aa,$a9,$7c,$aa,$aa,$5b,$ab,$ea,$aa,$eb,$fa,$ab,$03,$f0,$00 
+!byte $03,$f0,$00,$03,$c0,$00,$03,$00,$00,$00,$00,$00,$ff,$ff,$ff,$ff 
+; $0a40
+ 
+!byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+!byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  
+!byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  
+!byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+```
+                    
+                                    base/simple_sprite-multiplexing_using_sprite_1.txt · Last modified:  by 127.0.0.1
+
+## Codice Estratto
+
+### Snippet Codice (BASIC)
+
+```basic
+!to "multiplexer.prg",cbm
+ 
+;---------------------------------------------------------------------------
+;
+;
+;
+; Basics : IRQ
+; @L       Wait for Y-Pos
+;          write (new) Y-Position            
+;          write (new) Sprite-Pointer 
+;          set some other registers according to the sprite
+;          wait 21+1 (Spriteheight+1) Rasterlines 
+;          JMP @L
+;
+;
+;
+; Compiler : ACME  
+;
+; Michael Sachse, 20. Maerz 2007 
+;
+;---------------------------------------------------------------------------
+ 
+
+;-- Basicstart
+
+*= $0800
+!byte $00,$0c,$08,$0a,$00,$9e,$32,$30,$36,$34,$00,$00,$00,$00
+     
+ *= $0810
+  
+;--------------------------------------------------   
+         
+         lda #00
+         sta $d020
+         sta $d021        
+         lda #147
+         jsr $ffd2        
+         jsr setup_sprite ; init Sprite 1 
+;--------------------------------------------------
+;  New Raster-IRQ
+;--------------------------------------------------
+         
+         sei  
+         lda #<int
+         sta $0314
+         lda #>int
+         sta $0315        ; new IRQ
+         lda #$00
+         sta $d012        
+         lda #$7f
+         sta $dc0d        ; Timer off
+         lda #$01
+         sta $d019
+         sta $d01a        
+         cli
+         jmp *
+
+;--------------------------------------------------
+
+int      lda $d019
+         and #$01
+         sta $d019        
+         bne irq
+         jmp $ea81
+          
+;--------------------------------------------------           
+
+irq      lda #$00
+         sta $d012
+
+         jsr animate      ; move on x-axis
+
+
+l0       lda $d012
+         cmp #78          ; y = 78
+         bne l0     
+         sta $d001
+         lda #$28         ; Spritepointer Sprite 1 
+         sta $07f8        ; $0a00 = $28*$40
+
+l1       lda $d012
+         cmp #100         ; y = 100
+         bne l1
+         sta $d001          
+         lda #$29         ; write Sprite-Pointer again
+         sta $07f8
+         lda #6           ; a new color
+         sta $d026
+
+l2       lda $d012
+         cmp #122         ; y = 122      
+         bne l2
+         sta $d001          
+         lda #$28         ; write Sprite-Pointer again
+         sta $07f8
+         lda #3
+         sta $d026
+
+l3       lda $d012
+         cmp #144          ; y =144     
+         bne l3
+         sta $d001            
+         lda #$29          ; write Sprite-Pointer again
+         sta $07f8
+         lda #2
+         sta $d026         ; a new color
+
+le       lda $d012
+         cmp #255
+         bne le        
+         jmp $ea81
+         
+;--------------------------------------------------
+;   move sprite
+;--------------------------------------------------    
+
+animate   inc $d000
+          lda $d000
+          bne ex
+          lda #50
+          sta $d000        
+ex        rts
+
+;--------------------------------------------------
+;   Sprite 1 init
+;--------------------------------------------------
+
+setup_sprite
+
+          lda #1           ; Colors
+          sta $d025
+          lda #11
+          sta $d026
+          lda #15
+          sta $d027        ; 
+          lda #64
+          sta $d000        ; X-Position
+          lda #$01         ;
+          sta $d015        ; Sprite 1 on
+          sta $d01c        ; Multicolor
+          rts
+
+;--------------------------------------------------
+;   2 Sprites 
+;--------------------------------------------------
+
+*=$0a00
+ 
+!byte $ff,$ff,$ff,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$f0 
+!byte $00,$00,$b0,$00,$00,$A0,$00,$00,$AC,$00,$00,$F8,$00,$00,$FE,$0E 
+!byte $f0,$aa,$a9,$7c,$aa,$aa,$5b,$ab,$ea,$aa,$eb,$fa,$ab,$03,$f0,$00 
+!byte $03,$f0,$00,$03,$c0,$00,$03,$00,$00,$00,$00,$00,$ff,$ff,$ff,$ff 
+
+; $0a40
+ 
+!byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+!byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  
+!byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  
+!byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Asimple_sprite-multiplexing_using_sprite_1](https://codebase.c64.org/doku.php?id=base%3Asimple_sprite-multiplexing_using_sprite_1)*
+
+
+### Collegamenti e Riferimenti Hardware
+- **$D020 (Border Color)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d020).
+- **$D021 (Background Color)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d021).
+- **$D012 (Raster Counter)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d012).
+- **$D015 (Sprite Enable Register)**: Associato al chip VIC-II. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#d015).
+- **$FFD2 (CHROUT (Output Character))**: Associato al chip KERNAL. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#ffd2).
+- **$0314 (IRQ Vector)**: Associato al chip KERNAL. Vedere [Mappa di Memoria](../sta_c64/cbm64mem.md#0314).

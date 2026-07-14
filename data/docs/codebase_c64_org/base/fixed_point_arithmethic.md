@@ -1,0 +1,101 @@
+---
+title: Fixed point arithmethic
+source_url: https://codebase.c64.org/doku.php?id=base%3Afixed_point_arithmethic
+category: reference
+topics:
+- memory management
+- assembly
+difficulty: beginner
+language: assembly
+hardware:
+- KERNAL
+related:
+- memory-map
+- kernal-routines
+scraped_at: '2026-07-14'
+---
+
+# Fixed point arithmethic
+
+# Fixed point arithmethic
+
+A fixed-point number representation is a number that has a fixed number of digits before and after the radix point (e.g. “.” in English decimal notation).
+
+In terms of binary numbers, each magnitude bit represents a power of two, while each fractional bit represents an inverse power of two. Thus the first fractional bit is ½, the second is ¼, the third is ⅛ and so on.
+
+8:8 Fixed Point representation is the most straightforward approach (in fact the only sane approach when coding on the c64).
+
+for example:
+
+integer.fractional
+
+00001101.01010000
+
+represents the number:
+
+integer part:
+
+1*2^3+1*2^2+0*2^1+1*2^0
+
+fractional part:
+
+0*(2^-1)+1*(2^-2)+0*(2^-3)+1*(2^-4)
+
+giving us:
+
+1*2^3+1*2^2+0*2^1+1*2^0 + 0*(2^-1)+1*(2^-2)+0*(2^-3)+1*(2^-4) = 13.3125
+
+It's easyer to think of a 8.8 fixed number in a way that you have a 1 byte integer part, and a 1 byte fractional part where the fractional part represents a number which is: fractional part* 1/256.
+
+Repeating the example above:
+
+integer.fractional
+
+00001101.01010000
+
+%01010000 = 80 decimal => 80*1/256 = 0.3125
+
+You may totally forget about fractional parts and just threat the two 8 bit numbers as a straight representation of numbers from 0-65536: a 16 bit number when working with numbers like this. In reality a fixed point number will be always just a bunch of bits, and what makes it fixed point is only how you think about it. :)
+
+## Codice Estratto
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+00001101.01010000
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+1*2^3+1*2^2+0*2^1+1*2^0
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+0*(2^-1)+1*(2^-2)+0*(2^-3)+1*(2^-4)
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+1*2^3+1*2^2+0*2^1+1*2^0  +  0*(2^-1)+1*(2^-2)+0*(2^-3)+1*(2^-4) = 13.3125
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+00001101.01010000
+```
+
+### Snippet Codice (Dialetto: Generic Assembly)
+
+```assembly
+%01010000 = 80 decimal => 80*1/256 = 0.3125
+```
+
+
+
+---
+*Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Afixed_point_arithmethic](https://codebase.c64.org/doku.php?id=base%3Afixed_point_arithmethic)*
