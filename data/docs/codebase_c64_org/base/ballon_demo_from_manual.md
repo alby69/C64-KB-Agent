@@ -4,21 +4,21 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Aballon_demo_from_manual
 category: manual
 topics:
 - basic
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
-- CPU
 - KERNAL
+- CPU
+- VIC-II
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Balloon demo from the C64 manual

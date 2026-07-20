@@ -3,20 +3,20 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/working-without-dust-environment
 category: tutorial
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CIA
+- KERNAL
 related:
-- kernal-routines
 - keyboard-handling
+- kernal-routines
 - joystick-reading
 - cia-registers
 - memory-map
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # 

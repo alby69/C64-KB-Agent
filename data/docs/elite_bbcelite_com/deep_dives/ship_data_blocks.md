@@ -3,25 +3,25 @@ title: Ship data blocks
 source_url: https://elite.bbcelite.com/deep_dives/ship_data_blocks.html
 category: source-code
 topics:
-- sprite programming
 - memory management
 - assembly
+- sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
 - SID
 - CIA
 related:
-- cia-registers
-- keyboard-handling
-- sound-programming
-- music-player
-- raster-interrupts
-- joystick-reading
-- sprite-programming
-- vic-ii-registers
 - sid-registers
-scraped_at: '2026-07-14'
+- sound-programming
+- vic-ii-registers
+- joystick-reading
+- keyboard-handling
+- music-player
+- sprite-programming
+- raster-interrupts
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # Ship data blocks

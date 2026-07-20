@@ -3,17 +3,17 @@ title: base:simple_hardware_sprite_to_background_collision [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Asimple_hardware_sprite_to_background_collision
 category: reference
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: assembly
 hardware:
 - VIC-II
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-20'
 ---
 
 # base:simple_hardware_sprite_to_background_collision [Codebase64 wiki]

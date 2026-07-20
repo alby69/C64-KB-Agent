@@ -8,18 +8,18 @@ topics:
 difficulty: intermediate
 language: none
 hardware:
-- SID
 - KERNAL
+- SID
 related:
+- sid-registers
+- memory-map
+- music-player
 - sprite-programming
 - sound-programming
-- memory-map
-- raster-interrupts
-- sid-registers
-- music-player
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

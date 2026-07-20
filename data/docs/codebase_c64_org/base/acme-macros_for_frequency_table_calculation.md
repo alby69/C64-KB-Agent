@@ -3,20 +3,20 @@ title: ACME-macros for frequency table calculation
 source_url: https://codebase.c64.org/doku.php?id=base%3Aacme-macros_for_frequency_table_calculation
 category: reference
 topics:
-- assembly
 - sound generation
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # ACME-macros for frequency table calculation

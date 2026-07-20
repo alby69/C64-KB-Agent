@@ -4,26 +4,26 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Across_development_using_
 category: source-code
 topics:
 - graphics
-- basic
-- sprite programming
 - assembly
+- sprite programming
+- basic
 difficulty: beginner
 language: assembly
 hardware:
-- SID
-- VIC-II
 - CIA
+- VIC-II
+- SID
 related:
-- sprite-programming
+- sid-registers
 - keyboard-handling
+- joystick-reading
+- music-player
+- sprite-programming
 - sound-programming
 - cia-registers
-- raster-interrupts
-- sid-registers
-- music-player
 - vic-ii-registers
-- joystick-reading
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Cross Development using Makefile

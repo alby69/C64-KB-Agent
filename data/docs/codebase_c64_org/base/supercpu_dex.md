@@ -9,10 +9,10 @@ language: none
 hardware:
 - CIA
 related:
-- cia-registers
 - keyboard-handling
+- cia-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # DEX

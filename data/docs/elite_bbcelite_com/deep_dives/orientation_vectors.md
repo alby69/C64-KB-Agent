@@ -8,15 +8,15 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- music-player
+- sid-registers
 - sound-programming
 - memory-map
 - kernal-routines
-- sid-registers
-scraped_at: '2026-07-14'
+- music-player
+scraped_at: '2026-07-20'
 ---
 
 # Orientation vectors

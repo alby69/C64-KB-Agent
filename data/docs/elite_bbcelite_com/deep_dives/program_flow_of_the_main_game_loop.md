@@ -3,20 +3,20 @@ title: Program flow of the main game loop
 source_url: https://elite.bbcelite.com/deep_dives/program_flow_of_the_main_game_loop.html
 category: source-code
 topics:
-- sprite programming
 - basic
 - assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 related:
-- raster-interrupts
+- vic-ii-registers
 - memory-map
 - kernal-routines
 - sprite-programming
-- vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Program flow of the main game loop

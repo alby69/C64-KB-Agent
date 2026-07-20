@@ -4,20 +4,20 @@ source_url: https://elite.bbcelite.com/deep_dives/scheduling_tasks_with_the_main
 category: deep-dive
 topics:
 - memory management
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- music-player
+- sid-registers
 - sound-programming
 - memory-map
 - kernal-routines
-- sid-registers
-scraped_at: '2026-07-14'
+- music-player
+scraped_at: '2026-07-20'
 ---
 
 # Scheduling tasks with the main loop counter

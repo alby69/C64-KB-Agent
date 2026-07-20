@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Rotate byte and perform an action on each bit set to 1

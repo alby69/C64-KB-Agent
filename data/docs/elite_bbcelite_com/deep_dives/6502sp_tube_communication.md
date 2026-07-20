@@ -3,28 +3,28 @@ title: 6502 Second Processor Tube communication
 source_url: https://elite.bbcelite.com/deep_dives/6502sp_tube_communication.html
 category: deep-dive
 topics:
-- sprite programming
-- basic
-- assembly
 - memory management
+- basic
 - graphics
+- assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
 - KERNAL
+- CPU
 - CIA
 - VIC-II
 related:
-- keyboard-handling
+- vic-ii-registers
 - joystick-reading
-- raster-interrupts
+- keyboard-handling
+- kernal-routines
 - memory-map
 - sprite-programming
-- vic-ii-registers
-- kernal-routines
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # 6502 Second Processor Tube communication

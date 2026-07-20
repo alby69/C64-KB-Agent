@@ -4,22 +4,22 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Amandelbrot
 category: tool
 topics:
 - raster interrupts
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: assembly
 hardware:
-- VIC-II
-- CPU
-- KERNAL
 - BASIC ROM
+- KERNAL
+- CPU
+- VIC-II
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # base:mandelbrot [Codebase64 wiki]

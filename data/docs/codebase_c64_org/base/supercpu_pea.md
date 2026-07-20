@@ -4,20 +4,20 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_pea
 category: tool
 topics:
 - basic
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
 - SID
 related:
-- sprite-programming
-- sound-programming
-- raster-interrupts
 - sid-registers
 - music-player
+- sprite-programming
+- sound-programming
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # PEA

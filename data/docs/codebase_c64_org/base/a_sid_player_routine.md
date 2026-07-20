@@ -3,25 +3,25 @@ title: A SID player routine
 source_url: https://codebase.c64.org/doku.php?id=base%3Aa_sid_player_routine
 category: source-code
 topics:
-- assembly
 - sound generation
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - CPU
-- CIA
 - KERNAL
+- CIA
+- SID
 related:
-- keyboard-handling
-- sound-programming
-- cia-registers
-- memory-map
 - sid-registers
-- music-player
-- kernal-routines
+- keyboard-handling
+- memory-map
 - joystick-reading
-scraped_at: '2026-07-14'
+- music-player
+- sound-programming
+- kernal-routines
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # A SID player routine

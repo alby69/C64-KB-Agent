@@ -4,26 +4,26 @@ source_url: https://elite.bbcelite.com/deep_dives/drawing_pixels_in_the_apple_ii
 category: manual
 topics:
 - basic
-- sound generation
 - assembly
+- sound generation
 - graphics
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
 - KERNAL
+- SID
+- CPU
 - CIA
 related:
-- keyboard-handling
-- music-player
+- sid-registers
 - sound-programming
 - joystick-reading
-- memory-map
+- keyboard-handling
 - kernal-routines
-- sid-registers
+- memory-map
+- music-player
 - cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Drawing pixels in the Apple II version

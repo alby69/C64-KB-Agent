@@ -3,19 +3,19 @@ title: PLD
 source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_pld
 category: reference
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
 - KERNAL
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # PLD

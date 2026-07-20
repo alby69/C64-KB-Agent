@@ -3,26 +3,26 @@ title: The 3D scanner
 source_url: https://elite.bbcelite.com/deep_dives/the_3d_scanner.html
 category: manual
 topics:
-- sprite programming
 - assembly
+- sprite programming
 - graphics
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
 - KERNAL
+- SID
+- CPU
 - VIC-II
 related:
-- sound-programming
-- music-player
-- raster-interrupts
-- memory-map
-- sprite-programming
-- vic-ii-registers
-- kernal-routines
 - sid-registers
-scraped_at: '2026-07-14'
+- sound-programming
+- vic-ii-registers
+- memory-map
+- kernal-routines
+- music-player
+- sprite-programming
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # The 3D scanner

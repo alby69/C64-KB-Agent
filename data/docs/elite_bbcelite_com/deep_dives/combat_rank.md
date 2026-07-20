@@ -4,21 +4,21 @@ source_url: https://elite.bbcelite.com/deep_dives/combat_rank.html
 category: deep-dive
 topics:
 - memory management
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
 - KERNAL
+- SID
+- CPU
 related:
-- music-player
+- sid-registers
 - sound-programming
 - memory-map
 - kernal-routines
-- sid-registers
-scraped_at: '2026-07-14'
+- music-player
+scraped_at: '2026-07-20'
 ---
 
 # Combat rank

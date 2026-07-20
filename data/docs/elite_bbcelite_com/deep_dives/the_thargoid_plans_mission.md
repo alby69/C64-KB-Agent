@@ -8,17 +8,17 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
-- BASIC ROM
 - KERNAL
+- SID
+- CPU
+- BASIC ROM
 related:
-- music-player
+- sid-registers
 - sound-programming
 - memory-map
 - kernal-routines
-- sid-registers
-scraped_at: '2026-07-14'
+- music-player
+scraped_at: '2026-07-20'
 ---
 
 # The Thargoid Plans mission

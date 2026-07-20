@@ -1,6 +1,6 @@
 # Indice — Manuale di programmazione per Commodore 64
 
-> Documentazione aggiornata il 1784025419.7010305
+> Documentazione aggiornata il 1784537839.730012
 
 ## deep-dive
 
@@ -500,8 +500,8 @@
 - [Frameskipping, interpolation and re-entrant IRQ code by Cadaver](codebase_c64_org/base/rant9.md)
 - [GitHub Repo: B3rndK/C64Neo6502](github_com/B3rndK/C64Neo6502.md)
 - [GitHub Repo: Dennis1000/mos6502-delphi](github_com/Dennis1000/mos6502-delphi.md)
-- [GitHub Repo: Esshahn/c64-prods-by-awsm](github_com/Esshahn/c64-prods-by-awsm.md)
 - [GitHub Repo: Esshahn/pydisass6502](github_com/Esshahn/pydisass6502.md)
+- [GitHub Repo: Ian-McG-1970/c64](github_com/Ian-McG-1970/c64.md)
 - [GitHub Repo: MartinGalway/C64_music](github_com/MartinGalway/C64_music.md)
 - [GitHub Repo: NardJ/esp8266-C64](github_com/NardJ/esp8266-C64.md)
 - [GitHub Repo: Pinacolada64/ImageBBS](github_com/Pinacolada64/ImageBBS.md)

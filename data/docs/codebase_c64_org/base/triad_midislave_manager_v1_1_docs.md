@@ -3,26 +3,26 @@ title: 1. What is the triad midislave manager?
 source_url: https://codebase.c64.org/doku.php?id=base%3Atriad_midislave_manager_v1.1_docs
 category: tutorial
 topics:
-- input handling
-- basic
-- assembly
 - sound generation
+- input handling
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - KERNAL
 - CIA
+- SID
 related:
-- keyboard-handling
-- sound-programming
-- cia-registers
-- memory-map
 - sid-registers
-- music-player
-- kernal-routines
+- keyboard-handling
+- memory-map
 - joystick-reading
-scraped_at: '2026-07-14'
+- music-player
+- sound-programming
+- kernal-routines
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # 1. What is the triad midislave manager?

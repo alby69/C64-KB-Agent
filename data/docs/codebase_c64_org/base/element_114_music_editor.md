@@ -7,16 +7,16 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
 - CPU
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # base:element_114_music_editor [Codebase64 wiki]

@@ -3,31 +3,31 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-3-did-i-interrupt-you
 category: tutorial
 topics:
-- assembly
-- basic
-- raster interrupts
 - sprite programming
+- basic
+- assembly
+- raster interrupts
 difficulty: beginner
 language: mixed
 hardware:
 - SID
 - KERNAL
-- CPU
-- VIC-II
 - CIA
+- VIC-II
+- CPU
 related:
-- kernal-routines
-- keyboard-handling
-- sprite-programming
 - sound-programming
-- joystick-reading
-- raster-interrupts
-- sid-registers
-- cia-registers
 - music-player
-- memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- sprite-programming
+- sid-registers
+- keyboard-handling
+- kernal-routines
+- joystick-reading
+- cia-registers
+- memory-map
+scraped_at: '2026-07-20'
 ---
 
 

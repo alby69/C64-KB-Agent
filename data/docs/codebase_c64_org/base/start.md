@@ -4,26 +4,26 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Astart
 category: tutorial
 topics:
 - input handling
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- SID
 - CIA
-- KERNAL
-- BASIC ROM
+- SID
 - CPU
+- BASIC ROM
+- KERNAL
 related:
-- keyboard-handling
-- sound-programming
-- cia-registers
-- memory-map
 - sid-registers
-- music-player
-- kernal-routines
+- keyboard-handling
+- memory-map
 - joystick-reading
-scraped_at: '2026-07-14'
+- music-player
+- sound-programming
+- kernal-routines
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # The Codebase: Sourcecode, Articles & Tutorials

@@ -3,9 +3,9 @@ title: Prologue
 source_url: https://codebase.c64.org/doku.php?id=base%3Amathematics_in_assembly_part_1
 category: tutorial
 topics:
-- memory management
 - basic
 - assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
@@ -14,7 +14,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Prologue

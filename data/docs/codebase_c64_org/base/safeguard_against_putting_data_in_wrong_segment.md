@@ -9,10 +9,10 @@ language: assembly
 hardware:
 - CIA
 related:
-- cia-registers
 - keyboard-handling
+- cia-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # base:safeguard_against_putting_data_in_wrong_segment [Codebase64 wiki]

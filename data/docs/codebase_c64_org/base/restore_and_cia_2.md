@@ -9,18 +9,18 @@ difficulty: beginner
 language: assembly
 hardware:
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
-- sprite-programming
 - keyboard-handling
-- cia-registers
 - memory-map
-- raster-interrupts
-- kernal-routines
-- vic-ii-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+- sprite-programming
+- kernal-routines
+- cia-registers
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Surviving Restore key presses while using CIA 2 timer NMIs

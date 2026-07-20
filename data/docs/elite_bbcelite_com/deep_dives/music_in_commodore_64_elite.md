@@ -3,31 +3,31 @@ title: Music in Commodore 64 Elite
 source_url: https://elite.bbcelite.com/deep_dives/music_in_commodore_64_elite.html
 category: source-code
 topics:
-- basic
-- sound generation
 - raster interrupts
 - assembly
+- sound generation
+- basic
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
 - CIA
 - SID
 - CPU
+- VIC-II
 - KERNAL
 related:
-- cia-registers
-- keyboard-handling
-- sound-programming
-- music-player
-- raster-interrupts
-- joystick-reading
-- memory-map
-- sprite-programming
-- vic-ii-registers
-- kernal-routines
 - sid-registers
-scraped_at: '2026-07-14'
+- sound-programming
+- vic-ii-registers
+- joystick-reading
+- keyboard-handling
+- kernal-routines
+- memory-map
+- music-player
+- sprite-programming
+- raster-interrupts
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # Music in Commodore 64 Elite

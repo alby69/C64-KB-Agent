@@ -3,8 +3,8 @@ title: Machine Language Tutorial Part 4 - Logical Operations and Math
 source_url: https://codebase.c64.org/doku.php?id=base%3Amachine_language_tutorial_part_4
 category: tutorial
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: intermediate
 language: assembly
 hardware:
@@ -13,7 +13,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Machine Language Tutorial Part 4 - Logical Operations and Math

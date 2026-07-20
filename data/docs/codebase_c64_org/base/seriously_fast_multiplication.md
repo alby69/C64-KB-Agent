@@ -11,7 +11,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Seriously fast multiplication (8-bit and 16-bit)

@@ -4,24 +4,24 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Aacme-macro-tut
 category: tutorial
 topics:
 - raster interrupts
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - KERNAL
 - CPU
+- SID
 related:
+- sid-registers
+- memory-map
+- music-player
 - sprite-programming
 - sound-programming
-- memory-map
-- raster-interrupts
-- sid-registers
-- music-player
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # ACME macro tutorial

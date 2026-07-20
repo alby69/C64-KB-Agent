@@ -3,26 +3,26 @@ title: Bolting NES controllers onto the key logger
 source_url: https://elite.bbcelite.com/deep_dives/bolting_nes_controllers_onto_the_key_logger.html
 category: deep-dive
 topics:
-- sprite programming
 - basic
 - assembly
+- sprite programming
 - input handling
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
 - KERNAL
+- CPU
 - CIA
 related:
-- keyboard-handling
+- vic-ii-registers
 - joystick-reading
-- raster-interrupts
+- keyboard-handling
+- kernal-routines
 - memory-map
 - sprite-programming
-- vic-ii-registers
-- kernal-routines
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Bolting NES controllers onto the key logger

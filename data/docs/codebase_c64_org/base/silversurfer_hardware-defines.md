@@ -7,7 +7,7 @@ difficulty: intermediate
 language: none
 hardware: []
 related: []
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # base:silversurfer_hardware-defines [Codebase64 wiki]

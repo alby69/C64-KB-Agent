@@ -3,25 +3,25 @@ title: CRT - CaRTridge Images (from the CCS64 emulator)
 source_url: https://codebase.c64.org/doku.php?id=base%3Acrt_file_format
 category: tool
 topics:
-- memory management
 - basic
 - assembly
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
-- SID
 - KERNAL
 - CIA
+- SID
 related:
-- keyboard-handling
-- sound-programming
-- cia-registers
-- memory-map
 - sid-registers
-- music-player
-- kernal-routines
+- keyboard-handling
+- memory-map
 - joystick-reading
-scraped_at: '2026-07-14'
+- music-player
+- sound-programming
+- kernal-routines
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # CRT - CaRTridge Images (from the CCS64 emulator)

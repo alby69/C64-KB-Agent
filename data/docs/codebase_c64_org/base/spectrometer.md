@@ -3,24 +3,24 @@ title: base:spectrometer [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Aspectrometer
 category: reference
 topics:
+- sound generation
 - raster interrupts
 - assembly
-- sound generation
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
+- sid-registers
+- memory-map
+- music-player
 - sprite-programming
 - sound-programming
-- memory-map
-- raster-interrupts
-- sid-registers
-- music-player
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # base:spectrometer [Codebase64 wiki]

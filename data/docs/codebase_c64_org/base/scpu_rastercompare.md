@@ -4,18 +4,18 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_rastercompare
 category: reference
 topics:
 - raster interrupts
+- assembly
 - memory management
 - basic
-- assembly
 difficulty: advanced
 language: assembly
 hardware:
 - VIC-II
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-20'
 ---
 
 

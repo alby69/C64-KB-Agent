@@ -10,19 +10,19 @@ topics:
 difficulty: advanced
 language: mixed
 hardware:
+- KERNAL
 - SID
 - CIA
-- KERNAL
 related:
-- keyboard-handling
 - sid-registers
 - sound-programming
+- cia-registers
+- joystick-reading
+- memory-map
+- keyboard-handling
 - music-player
 - kernal-routines
-- memory-map
-- joystick-reading
-- cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 last_modified: Wed, 13 Nov 2024 00:00:00 GMT
 ---
 

@@ -3,25 +3,25 @@ title: Machine Language Tutorial Part 1 - Preparations
 source_url: https://codebase.c64.org/doku.php?id=base%3Amachine_language_tutorial_part_1
 category: tutorial
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: assembly
 hardware:
-- SID
+- BASIC ROM
 - KERNAL
 - CPU
-- BASIC ROM
+- SID
 related:
+- sid-registers
+- memory-map
+- music-player
 - sprite-programming
 - sound-programming
-- memory-map
-- raster-interrupts
-- sid-registers
-- music-player
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Machine Language Tutorial Part 1 - Preparations

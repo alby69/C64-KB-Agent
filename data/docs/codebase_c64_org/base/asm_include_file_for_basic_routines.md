@@ -8,12 +8,12 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
 - BASIC ROM
+- KERNAL
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # base:asm_include_file_for_basic_routines [Codebase64 wiki]

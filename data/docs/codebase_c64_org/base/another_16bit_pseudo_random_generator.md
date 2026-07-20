@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # base:another_16bit_pseudo_random_generator [Codebase64 wiki]

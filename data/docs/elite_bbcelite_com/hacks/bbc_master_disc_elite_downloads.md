@@ -11,7 +11,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Playing BBC Micro disc Elite on the BBC Master

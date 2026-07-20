@@ -8,16 +8,16 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
-- SID
 - KERNAL
+- SID
+- BASIC ROM
 related:
-- music-player
+- sid-registers
 - sound-programming
 - memory-map
 - kernal-routines
-- sid-registers
-scraped_at: '2026-07-14'
+- music-player
+scraped_at: '2026-07-20'
 ---
 
 # The Encyclopedia Galactica

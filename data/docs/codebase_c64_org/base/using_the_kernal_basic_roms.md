@@ -3,25 +3,25 @@ title: KERNAL and BASIC ROMs
 source_url: https://codebase.c64.org/doku.php?id=base%3Ausing_the_kernal_basic_roms
 category: reference
 topics:
-- memory management
 - basic
+- memory management
 difficulty: intermediate
 language: basic
 hardware:
-- SID
+- BASIC ROM
 - KERNAL
 - CIA
-- BASIC ROM
+- SID
 related:
-- keyboard-handling
-- sound-programming
-- cia-registers
-- memory-map
 - sid-registers
-- music-player
-- kernal-routines
+- keyboard-handling
+- memory-map
 - joystick-reading
-scraped_at: '2026-07-14'
+- music-player
+- sound-programming
+- kernal-routines
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # KERNAL and BASIC ROMs

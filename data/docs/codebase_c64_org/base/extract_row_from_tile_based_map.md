@@ -3,19 +3,19 @@ title: Extract row from tile based map
 source_url: https://codebase.c64.org/doku.php?id=base%3Aextract_row_from_tile_based_map
 category: reference
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: assembly
 hardware:
 - KERNAL
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Extract row from tile based map

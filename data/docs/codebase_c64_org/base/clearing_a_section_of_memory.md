@@ -3,20 +3,20 @@ title: Clearing a Section of Memory
 source_url: https://codebase.c64.org/doku.php?id=base%3Aclearing_a_section_of_memory
 category: manual
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 - CPU
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Clearing a Section of Memory

@@ -3,8 +3,8 @@ title: 'GitHub Repo: Dennis1000/mos6502-delphi'
 source_url: https://github.com/Dennis1000/mos6502-delphi
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
@@ -12,9 +12,9 @@ hardware:
 - VIC-II
 related:
 - sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 last_modified: '2025-05-02T08:16:21Z'
 ---
 

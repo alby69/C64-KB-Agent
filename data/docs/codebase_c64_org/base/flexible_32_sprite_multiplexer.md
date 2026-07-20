@@ -5,22 +5,22 @@ category: reference
 topics:
 - input handling
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
 difficulty: advanced
 language: assembly
 hardware:
-- VIC-II
-- CIA
 - CPU
+- CIA
+- VIC-II
 related:
-- sprite-programming
 - keyboard-handling
-- cia-registers
-- raster-interrupts
-- vic-ii-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+- sprite-programming
+- cia-registers
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

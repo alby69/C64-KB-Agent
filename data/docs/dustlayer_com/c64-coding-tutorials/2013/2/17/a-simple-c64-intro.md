@@ -3,24 +3,24 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro
 category: tutorial
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
 - SID
-- KERNAL
 - VIC-II
+- KERNAL
 related:
-- kernal-routines
-- sprite-programming
 - sound-programming
-- raster-interrupts
-- sid-registers
 - music-player
-- memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- sprite-programming
+- sid-registers
+- kernal-routines
+- memory-map
+scraped_at: '2026-07-20'
 ---
 
 

@@ -7,15 +7,15 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # Modplay 128

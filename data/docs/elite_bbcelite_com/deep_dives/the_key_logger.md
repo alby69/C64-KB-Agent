@@ -9,16 +9,16 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
 - KERNAL
+- CPU
 - CIA
 related:
-- keyboard-handling
 - joystick-reading
-- memory-map
+- keyboard-handling
 - kernal-routines
+- memory-map
 - cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # The key logger

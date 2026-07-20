@@ -3,31 +3,31 @@ title: Technical information for Elite 3D
 source_url: https://elite.bbcelite.com/hacks/elite_3d_technical_information.html
 category: source-code
 topics:
-- sprite programming
-- basic
 - raster interrupts
 - assembly
+- sprite programming
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - CIA
 - SID
 - CPU
+- VIC-II
 - KERNAL
 related:
-- cia-registers
-- keyboard-handling
-- sound-programming
-- music-player
-- raster-interrupts
-- joystick-reading
-- memory-map
-- sprite-programming
-- vic-ii-registers
-- kernal-routines
 - sid-registers
-scraped_at: '2026-07-14'
+- sound-programming
+- vic-ii-registers
+- joystick-reading
+- keyboard-handling
+- kernal-routines
+- memory-map
+- music-player
+- sprite-programming
+- raster-interrupts
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # Technical information for Elite 3D

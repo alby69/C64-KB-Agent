@@ -3,13 +3,13 @@ title: Prologue
 source_url: https://codebase.c64.org/doku.php?id=base%3Amathematics_in_assembly_part_3
 category: tutorial
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Prologue

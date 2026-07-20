@@ -9,9 +9,9 @@ language: none
 hardware: []
 related:
 - music-player
-- sound-programming
 - sid-registers
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # NTSC A440 frequency table

@@ -7,19 +7,19 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 - CIA
 related:
-- keyboard-handling
-- music-player
+- sid-registers
 - sound-programming
 - joystick-reading
-- memory-map
+- keyboard-handling
 - kernal-routines
-- sid-registers
+- memory-map
+- music-player
 - cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Program flow of the tactics routine

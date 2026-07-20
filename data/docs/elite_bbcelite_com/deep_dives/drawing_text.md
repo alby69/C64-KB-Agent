@@ -3,29 +3,29 @@ title: Drawing text
 source_url: https://elite.bbcelite.com/deep_dives/drawing_text.html
 category: source-code
 topics:
-- basic
-- assembly
-- graphics
 - memory management
+- basic
+- graphics
+- assembly
 - input handling
 difficulty: beginner
 language: mixed
 hardware:
-- BASIC ROM
 - CIA
 - SID
 - CPU
 - KERNAL
+- BASIC ROM
 related:
-- keyboard-handling
-- music-player
+- sid-registers
 - sound-programming
 - joystick-reading
-- memory-map
+- keyboard-handling
 - kernal-routines
-- sid-registers
+- memory-map
+- music-player
 - cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Drawing text

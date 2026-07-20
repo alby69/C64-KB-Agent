@@ -3,29 +3,29 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-4-flying-the-space-ship-off-course
 category: tutorial
 topics:
+- sprite programming
 - assembly
 - raster interrupts
-- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
 - CIA
 - SID
-- KERNAL
 - VIC-II
+- KERNAL
 related:
-- kernal-routines
-- keyboard-handling
-- sprite-programming
 - sound-programming
-- joystick-reading
-- raster-interrupts
-- sid-registers
-- cia-registers
 - music-player
-- memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- sprite-programming
+- sid-registers
+- keyboard-handling
+- kernal-routines
+- joystick-reading
+- cia-registers
+- memory-map
+scraped_at: '2026-07-20'
 ---
 
 

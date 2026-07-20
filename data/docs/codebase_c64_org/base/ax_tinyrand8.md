@@ -11,7 +11,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # AX+ Tinyrand8 - a fast 8-bit random generator with internal 16bit state

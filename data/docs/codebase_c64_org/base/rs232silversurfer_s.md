@@ -4,19 +4,19 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Ars232silversurfer.s
 category: reference
 topics:
 - raster interrupts
-- memory management
 - assembly
+- memory management
 difficulty: advanced
 language: assembly
 hardware:
 - KERNAL
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # silver surfer polling mode driver for cc65

@@ -3,21 +3,21 @@ title: Packing bitfields evenly into bytes
 source_url: https://codebase.c64.org/doku.php?id=base%3Astreaming_1_2_4_8-bit_numbers_without_spanning_bytes
 category: reference
 topics:
-- memory management
 - basic
+- memory management
 difficulty: beginner
 language: basic
 hardware:
-- SID
-- KERNAL
 - BASIC ROM
+- KERNAL
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # Packing bitfields evenly into bytes

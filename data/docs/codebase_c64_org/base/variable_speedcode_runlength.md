@@ -4,23 +4,23 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Avariable_speedcode_runle
 category: reference
 topics:
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: assembly
 hardware:
 - KERNAL
 - CIA
 related:
-- sprite-programming
 - keyboard-handling
-- cia-registers
 - memory-map
-- raster-interrupts
-- kernal-routines
-- vic-ii-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+- sprite-programming
+- kernal-routines
+- cia-registers
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Variable speedcode runlength

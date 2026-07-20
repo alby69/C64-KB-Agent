@@ -3,31 +3,31 @@ title: Without Cartridges
 source_url: https://codebase.c64.org/doku.php?id=base%3Amemory_management
 category: reference
 topics:
-- memory management
 - basic
 - assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
-- SID
-- VIC-II
 - CIA
-- KERNAL
-- BASIC ROM
+- SID
 - CPU
+- BASIC ROM
+- KERNAL
+- VIC-II
 related:
-- sprite-programming
-- keyboard-handling
-- sound-programming
-- cia-registers
-- memory-map
-- raster-interrupts
 - sid-registers
-- music-player
-- kernal-routines
-- vic-ii-registers
+- keyboard-handling
+- memory-map
 - joystick-reading
-scraped_at: '2026-07-14'
+- music-player
+- sprite-programming
+- sound-programming
+- kernal-routines
+- cia-registers
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Without Cartridges

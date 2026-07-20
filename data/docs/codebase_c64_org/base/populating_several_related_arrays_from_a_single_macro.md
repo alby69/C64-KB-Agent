@@ -10,11 +10,11 @@ hardware:
 - CIA
 related:
 - keyboard-handling
-- cia-registers
 - memory-map
-- kernal-routines
 - joystick-reading
-scraped_at: '2026-07-14'
+- kernal-routines
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # base:populating_several_related_arrays_from_a_single_macro [Codebase64 wiki]

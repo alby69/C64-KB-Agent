@@ -4,24 +4,24 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Astable_irq_with_dma
 category: reference
 topics:
 - raster interrupts
-- basic
 - assembly
+- basic
 difficulty: advanced
 language: assembly
 hardware:
-- VIC-II
-- CIA
 - KERNAL
+- CIA
+- VIC-II
 related:
-- sprite-programming
 - keyboard-handling
-- cia-registers
 - memory-map
-- raster-interrupts
-- kernal-routines
-- vic-ii-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+- sprite-programming
+- kernal-routines
+- cia-registers
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

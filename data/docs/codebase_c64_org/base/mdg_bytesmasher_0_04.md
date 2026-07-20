@@ -4,22 +4,22 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Amdg_bytesmasher_0.04
 category: reference
 topics:
 - input handling
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: assembly
 hardware:
-- VIC-II
-- CIA
 - CPU
+- CIA
+- VIC-II
 related:
-- sprite-programming
 - keyboard-handling
-- cia-registers
-- raster-interrupts
-- vic-ii-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+- sprite-programming
+- cia-registers
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

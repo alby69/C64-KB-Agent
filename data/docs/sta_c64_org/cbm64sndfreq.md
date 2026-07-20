@@ -10,9 +10,9 @@ hardware:
 - SID
 related:
 - sid-registers
-- music-player
 - sound-programming
-scraped_at: '2026-07-14'
+- music-player
+scraped_at: '2026-07-20'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

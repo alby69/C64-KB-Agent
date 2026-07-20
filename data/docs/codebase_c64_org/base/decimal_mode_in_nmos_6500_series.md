@@ -7,20 +7,20 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- VIC-II
-- CIA
 - CPU
 - KERNAL
+- CIA
+- VIC-II
 related:
-- sprite-programming
 - keyboard-handling
-- cia-registers
 - memory-map
-- raster-interrupts
-- kernal-routines
-- vic-ii-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+- sprite-programming
+- kernal-routines
+- cia-registers
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Decimal mode in NMOS 6500 series

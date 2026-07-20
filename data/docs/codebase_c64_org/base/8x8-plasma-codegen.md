@@ -3,20 +3,20 @@ title: base:8x8-plasma-codegen [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-codegen
 category: reference
 topics:
-- graphics
+- basic
 - assembly
+- graphics
 - raster interrupts
 - sprite programming
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
 - VIC-II
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-20'
 ---
 
 

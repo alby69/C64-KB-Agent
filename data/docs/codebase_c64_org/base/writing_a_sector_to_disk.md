@@ -4,23 +4,23 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Awriting_a_sector_to_disk
 category: tool
 topics:
 - basic
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 - CIA
 related:
-- sprite-programming
 - keyboard-handling
-- cia-registers
 - memory-map
-- raster-interrupts
-- kernal-routines
-- vic-ii-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+- sprite-programming
+- kernal-routines
+- cia-registers
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

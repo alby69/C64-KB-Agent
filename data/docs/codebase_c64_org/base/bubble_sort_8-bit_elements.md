@@ -3,22 +3,22 @@ title: Bubble Sort (for 8-Bit Elements)
 source_url: https://codebase.c64.org/doku.php?id=base%3Abubble_sort_8-bit_elements
 category: reference
 topics:
-- memory management
 - basic
 - assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - KERNAL
 - CPU
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # Bubble Sort (for 8-Bit Elements)

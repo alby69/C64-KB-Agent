@@ -4,18 +4,18 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_mirror
 category: tool
 topics:
 - graphics
-- memory management
-- sprite programming
 - assembly
+- sprite programming
+- memory management
 difficulty: beginner
 language: assembly
 hardware:
 - VIC-II
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-20'
 ---
 
 # base:sprite_mirror [Codebase64 wiki]

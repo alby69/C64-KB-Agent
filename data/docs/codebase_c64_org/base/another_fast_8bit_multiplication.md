@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Fast 8bit * 8bit = 16bit multiply

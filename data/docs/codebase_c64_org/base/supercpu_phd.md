@@ -3,16 +3,16 @@ title: PHD
 source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_phd
 category: reference
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: assembly
 hardware: []
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-20'
 ---
 
 # PHD

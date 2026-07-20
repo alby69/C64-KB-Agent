@@ -9,8 +9,8 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-14'
-last_modified: '2026-07-12T12:40:38Z'
+scraped_at: '2026-07-20'
+last_modified: '2026-07-19T09:55:39Z'
 ---
 
 # GitHub Repo: tebe6502/Mad-Pascal
@@ -21,7 +21,7 @@ last_modified: '2026-07-12T12:40:38Z'
 
 **GitHub URL:** https://github.com/tebe6502/Mad-Pascal
 **Stars:** 166
-**Last Updated:** 2026-07-12T12:40:38Z
+**Last Updated:** 2026-07-19T09:55:39Z
 
 
 ---

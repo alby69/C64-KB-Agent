@@ -3,27 +3,27 @@ title: Technical information for the Elite Universe Editor
 source_url: https://elite.bbcelite.com/hacks/elite_universe_editor_technical_information.html
 category: source-code
 topics:
-- sprite programming
 - basic
 - assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- BASIC ROM
-- VIC-II
 - SID
 - CPU
+- VIC-II
 - KERNAL
+- BASIC ROM
 related:
-- sound-programming
-- music-player
-- raster-interrupts
-- memory-map
-- sprite-programming
-- vic-ii-registers
-- kernal-routines
 - sid-registers
-scraped_at: '2026-07-14'
+- sound-programming
+- vic-ii-registers
+- memory-map
+- kernal-routines
+- music-player
+- sprite-programming
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Technical information for the Elite Universe Editor

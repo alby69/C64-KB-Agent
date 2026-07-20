@@ -4,21 +4,21 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Athreads_on_the_6502
 category: manual
 topics:
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: assembly
 hardware:
-- VIC-II
-- CPU
 - KERNAL
+- CPU
+- VIC-II
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

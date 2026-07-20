@@ -3,29 +3,29 @@ title: Fake Music Player
 source_url: https://codebase.c64.org/doku.php?id=base%3Afake_music_player
 category: tool
 topics:
-- memory management
+- basic
 - assembly
+- memory management
+- sound generation
 - raster interrupts
 - sprite programming
-- sound generation
-- basic
 difficulty: advanced
 language: mixed
 hardware:
-- SID
-- VIC-II
-- CPU
 - KERNAL
+- CPU
+- VIC-II
+- SID
 related:
+- sid-registers
+- memory-map
+- music-player
 - sprite-programming
 - sound-programming
-- memory-map
-- raster-interrupts
-- sid-registers
-- music-player
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

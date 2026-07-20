@@ -5,17 +5,17 @@ category: reference
 topics:
 - graphics
 - raster interrupts
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: assembly
 hardware:
 - VIC-II
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-20'
 ---
 
 

@@ -9,9 +9,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-14'
+- kernal-routines
+scraped_at: '2026-07-20'
 last_modified: '2026-04-05T22:33:00Z'
 ---
 

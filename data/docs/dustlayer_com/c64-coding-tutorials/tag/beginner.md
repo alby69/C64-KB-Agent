@@ -3,26 +3,26 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/tag/beginner
 category: tutorial
 topics:
-- assembly
-- basic
 - sprite programming
+- basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - SID
-- KERNAL
-- CPU
 - VIC-II
+- CPU
+- KERNAL
 related:
-- kernal-routines
-- sprite-programming
 - sound-programming
-- raster-interrupts
-- sid-registers
 - music-player
-- memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- sprite-programming
+- sid-registers
+- kernal-routines
+- memory-map
+scraped_at: '2026-07-20'
 ---
 
 # 

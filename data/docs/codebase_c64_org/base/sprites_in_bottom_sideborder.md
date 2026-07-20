@@ -4,22 +4,22 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Asprites_in_bottom_sidebo
 category: reference
 topics:
 - raster interrupts
-- memory management
-- sprite programming
 - assembly
+- sprite programming
+- memory management
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - VIC-II
+- SID
 related:
-- sprite-programming
-- sound-programming
-- raster-interrupts
 - sid-registers
 - music-player
+- sprite-programming
+- sound-programming
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

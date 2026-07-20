@@ -8,15 +8,15 @@ difficulty: beginner
 language: assembly
 hardware:
 - SID
-- KERNAL
 - CPU
+- KERNAL
 related:
-- kernal-routines
+- music-player
 - sound-programming
 - sid-registers
-- music-player
+- kernal-routines
 - memory-map
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # 

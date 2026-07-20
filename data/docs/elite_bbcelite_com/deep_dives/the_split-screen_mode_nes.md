@@ -3,30 +3,30 @@ title: The split-screen mode in NES Elite
 source_url: https://elite.bbcelite.com/deep_dives/the_split-screen_mode_nes.html
 category: deep-dive
 topics:
-- sprite programming
-- basic
 - raster interrupts
 - assembly
+- sprite programming
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - KERNAL
+- SID
 - CIA
 - VIC-II
 related:
-- cia-registers
-- keyboard-handling
-- sound-programming
-- music-player
-- raster-interrupts
-- joystick-reading
-- memory-map
-- sprite-programming
-- vic-ii-registers
-- kernal-routines
 - sid-registers
-scraped_at: '2026-07-14'
+- sound-programming
+- vic-ii-registers
+- joystick-reading
+- keyboard-handling
+- kernal-routines
+- memory-map
+- music-player
+- sprite-programming
+- raster-interrupts
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # The split-screen mode in NES Elite

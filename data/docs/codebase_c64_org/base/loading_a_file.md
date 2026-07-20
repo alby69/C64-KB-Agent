@@ -10,7 +10,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Loading a file to memory at address stored in file

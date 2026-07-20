@@ -4,20 +4,20 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Ascrolltext_using_sprites
 category: source-code
 topics:
 - memory management
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
-- VIC-II
 - KERNAL
+- VIC-II
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

@@ -3,21 +3,21 @@ title: Square Root calculation
 source_url: https://codebase.c64.org/doku.php?id=base%3Afast_sqrt
 category: tool
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - KERNAL
 - CPU
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # Square Root calculation

@@ -8,15 +8,15 @@ difficulty: beginner
 language: assembly
 hardware:
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
-- cia-registers
 - memory-map
-- kernal-routines
 - joystick-reading
-scraped_at: '2026-07-14'
+- kernal-routines
+- cia-registers
+scraped_at: '2026-07-20'
 ---
 
 # Shell Sort (for 16-bit Elements)

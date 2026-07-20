@@ -4,17 +4,17 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Afastest_multiplication
 category: reference
 topics:
 - memory management
-- sprite programming
 - assembly
+- sprite programming
 difficulty: advanced
 language: mixed
 hardware:
 - CPU
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-20'
 ---
 
 # Fastest 16x16 unsigned multiplication

@@ -5,26 +5,26 @@ category: tutorial
 topics:
 - graphics
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- SID
-- VIC-II
-- CIA
 - CPU
+- CIA
+- VIC-II
+- SID
 related:
-- sprite-programming
+- sid-registers
 - keyboard-handling
+- joystick-reading
+- music-player
+- sprite-programming
 - sound-programming
 - cia-registers
-- raster-interrupts
-- sid-registers
-- music-player
 - vic-ii-registers
-- joystick-reading
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

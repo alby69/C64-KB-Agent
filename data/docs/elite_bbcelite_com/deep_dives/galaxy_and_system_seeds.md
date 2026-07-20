@@ -4,18 +4,18 @@ source_url: https://elite.bbcelite.com/deep_dives/galaxy_and_system_seeds.html
 category: deep-dive
 topics:
 - memory management
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
+- KERNAL
 - CPU
 - BASIC ROM
-- KERNAL
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Galaxy and system seeds

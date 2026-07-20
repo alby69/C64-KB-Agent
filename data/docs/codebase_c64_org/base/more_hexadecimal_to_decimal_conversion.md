@@ -3,8 +3,8 @@ title: More Hexadecimal to Decimal Conversion
 source_url: https://codebase.c64.org/doku.php?id=base%3Amore_hexadecimal_to_decimal_conversion
 category: manual
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: beginner
 language: assembly
 hardware:
@@ -13,7 +13,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # More Hexadecimal to Decimal Conversion

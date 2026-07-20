@@ -3,23 +3,23 @@ title: Theory
 source_url: https://codebase.c64.org/doku.php?id=base%3Areu_read_and_write
 category: source-code
 topics:
-- memory management
 - basic
 - assembly
+- memory management
 difficulty: advanced
 language: mixed
 hardware:
-- SID
+- BASIC ROM
 - KERNAL
 - CPU
-- BASIC ROM
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # Theory

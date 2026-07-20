@@ -4,16 +4,16 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Afreedirectional_scrollin
 category: tool
 topics:
 - graphics
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: assembly
 hardware: []
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-20'
 ---
 
 

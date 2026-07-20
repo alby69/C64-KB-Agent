@@ -5,20 +5,20 @@ category: reference
 topics:
 - graphics
 - raster interrupts
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
+- VIC-II
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 

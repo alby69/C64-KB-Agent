@@ -3,8 +3,8 @@ title: base:fast_8bit_multiplication_16bit_product [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Afast_8bit_multiplication_16bit_product
 category: reference
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: intermediate
 language: assembly
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # base:fast_8bit_multiplication_16bit_product [Codebase64 wiki]

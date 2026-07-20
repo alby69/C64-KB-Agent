@@ -3,21 +3,21 @@ title: Technical information for Teletext Elite
 source_url: https://elite.bbcelite.com/hacks/teletext_elite_technical_information.html
 category: source-code
 topics:
-- basic
 - raster interrupts
 - assembly
 - graphics
+- basic
 difficulty: advanced
 language: mixed
 hardware:
 - KERNAL
 related:
-- raster-interrupts
+- vic-ii-registers
 - memory-map
 - kernal-routines
 - sprite-programming
-- vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Technical information for Teletext Elite

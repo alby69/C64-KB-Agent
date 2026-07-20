@@ -10,9 +10,9 @@ hardware:
 - SID
 related:
 - music-player
-- sound-programming
 - sid-registers
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # Tidying orthonormal vectors

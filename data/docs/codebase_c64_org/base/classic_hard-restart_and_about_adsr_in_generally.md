@@ -3,21 +3,21 @@ title: ADSR Discussion Notes
 source_url: https://codebase.c64.org/doku.php?id=base%3Aclassic_hard-restart_and_about_adsr_in_generally
 category: reference
 topics:
-- assembly
 - sound generation
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
 - CPU
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # ADSR Discussion Notes

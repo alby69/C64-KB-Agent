@@ -3,21 +3,21 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-4-reading-from-a-data-table
 category: tutorial
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - SID
-- KERNAL
 - CPU
+- KERNAL
 related:
-- kernal-routines
+- music-player
 - sound-programming
 - sid-registers
-- music-player
+- kernal-routines
 - memory-map
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # 

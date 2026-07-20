@@ -7,12 +7,12 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- CPU
 - KERNAL
+- CPU
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # The space station safe zone

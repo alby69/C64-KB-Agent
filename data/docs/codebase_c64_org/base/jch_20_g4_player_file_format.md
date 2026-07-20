@@ -3,23 +3,23 @@ title: JCH 20.G4 Player File Format
 source_url: https://codebase.c64.org/doku.php?id=base%3Ajch_20.g4_player_file_format
 category: reference
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
+- sid-registers
+- memory-map
+- music-player
 - sprite-programming
 - sound-programming
-- memory-map
-- raster-interrupts
-- sid-registers
-- music-player
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # JCH 20.G4 Player File Format

@@ -3,20 +3,20 @@ title: How to calculate SID frequency tables
 source_url: https://codebase.c64.org/doku.php?id=base%3Ahow_to_calculate_your_own_sid_frequency_table
 category: tool
 topics:
-- assembly
 - sound generation
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # How to calculate SID frequency tables

@@ -4,19 +4,19 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_per
 category: tool
 topics:
 - basic
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # PER

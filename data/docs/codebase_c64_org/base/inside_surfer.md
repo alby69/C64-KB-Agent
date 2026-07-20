@@ -3,27 +3,27 @@ title: Programming docs for the Silversurfer serial port
 source_url: https://codebase.c64.org/doku.php?id=base%3Ainside_surfer
 category: reference
 topics:
-- memory management
-- assembly
-- raster interrupts
-- sound generation
 - basic
+- assembly
+- memory management
+- sound generation
+- raster interrupts
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
 - CPU
+- SID
 related:
+- sid-registers
+- memory-map
+- music-player
 - sprite-programming
 - sound-programming
-- memory-map
-- raster-interrupts
-- sid-registers
-- music-player
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Programming docs for the Silversurfer serial port

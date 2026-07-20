@@ -4,13 +4,13 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_setbitmapmode
 category: reference
 topics:
 - graphics
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 

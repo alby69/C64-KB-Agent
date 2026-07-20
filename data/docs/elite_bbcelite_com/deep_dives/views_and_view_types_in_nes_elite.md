@@ -11,12 +11,12 @@ hardware:
 - KERNAL
 - CIA
 related:
-- keyboard-handling
 - joystick-reading
-- memory-map
+- keyboard-handling
 - kernal-routines
+- memory-map
 - cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Views and view types in NES Elite

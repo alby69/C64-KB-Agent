@@ -3,17 +3,17 @@ title: base:small_fast_16-bit_prng [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Asmall_fast_16-bit_prng
 category: reference
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: intermediate
 language: assembly
 hardware:
 - CIA
 related:
-- cia-registers
 - keyboard-handling
+- cia-registers
 - joystick-reading
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # base:small_fast_16-bit_prng [Codebase64 wiki]

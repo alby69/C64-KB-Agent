@@ -3,21 +3,21 @@ title: Practical Memory Move Routines
 source_url: https://codebase.c64.org/doku.php?id=base%3Apractical_memory_move_routines
 category: reference
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
-- SID
 - KERNAL
 - CPU
+- SID
 related:
-- sound-programming
-- memory-map
 - sid-registers
+- memory-map
 - music-player
 - kernal-routines
-scraped_at: '2026-07-14'
+- sound-programming
+scraped_at: '2026-07-20'
 ---
 
 # Practical Memory Move Routines

@@ -9,7 +9,7 @@ difficulty: intermediate
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Detect Retro Replay hardware

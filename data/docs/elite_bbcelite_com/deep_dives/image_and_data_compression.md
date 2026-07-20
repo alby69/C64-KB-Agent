@@ -8,17 +8,17 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- BASIC ROM
 - KERNAL
+- CPU
 - CIA
+- BASIC ROM
 related:
-- keyboard-handling
 - joystick-reading
-- memory-map
+- keyboard-handling
 - kernal-routines
+- memory-map
 - cia-registers
-scraped_at: '2026-07-14'
+scraped_at: '2026-07-20'
 ---
 
 # Image and data compression

@@ -3,20 +3,20 @@ title: Part 6 - The Stack
 source_url: https://codebase.c64.org/doku.php?id=base%3Amachine_language_tutorial_part_6
 category: tutorial
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 - CPU
 related:
-- sprite-programming
 - memory-map
-- raster-interrupts
+- sprite-programming
 - kernal-routines
 - vic-ii-registers
-scraped_at: '2026-07-14'
+- raster-interrupts
+scraped_at: '2026-07-20'
 ---
 
 # Part 6 - The Stack

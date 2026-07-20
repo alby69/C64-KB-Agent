@@ -8,8 +8,8 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-14'
-last_modified: '2026-07-13T02:49:42Z'
+scraped_at: '2026-07-20'
+last_modified: '2026-07-16T15:56:48Z'
 ---
 
 # GitHub Repo: llvm-mos/llvm-mos-sdk
@@ -20,7 +20,7 @@ last_modified: '2026-07-13T02:49:42Z'
 
 **GitHub URL:** https://github.com/llvm-mos/llvm-mos-sdk
 **Stars:** 372
-**Last Updated:** 2026-07-13T02:49:42Z
+**Last Updated:** 2026-07-16T15:56:48Z
 
 
 ---
