@@ -3,8 +3,8 @@ title: Playing the Elite Universe Editor
 source_url: https://elite.bbcelite.com/hacks/elite_universe_editor_downloads.html
 category: manual
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: assembly
 hardware:
@@ -12,12 +12,12 @@ hardware:
 - SID
 - CPU
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Playing the Elite Universe Editor

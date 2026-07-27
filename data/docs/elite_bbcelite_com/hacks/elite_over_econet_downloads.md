@@ -3,26 +3,26 @@ title: Playing Elite over Econet
 source_url: https://elite.bbcelite.com/hacks/elite_over_econet_downloads.html
 category: reference
 topics:
-- basic
-- assembly
 - input handling
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - SID
-- CPU
 - CIA
+- CPU
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Playing Elite over Econet

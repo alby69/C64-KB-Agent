@@ -3,30 +3,30 @@ title: Filling the vectors
 source_url: https://codebase.c64.org/doku.php?id=base%3Afilling_the_vectors
 category: reference
 topics:
+- sprite programming
 - graphics
 - assembly
-- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
+- VIC-II
+- KERNAL
 - CIA
 - SID
 - CPU
-- KERNAL
-- VIC-II
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- keyboard-handling
+- joystick-reading
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Filling the vectors

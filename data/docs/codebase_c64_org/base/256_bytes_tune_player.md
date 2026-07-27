@@ -3,27 +3,27 @@ title: 256 bytes tune+player by FTC/HT
 source_url: https://codebase.c64.org/doku.php?id=base%3A256_bytes_tune_player
 category: tool
 topics:
-- raster interrupts
-- assembly
-- memory management
 - basic
+- raster interrupts
+- memory management
+- assembly
 difficulty: advanced
 language: mixed
 hardware:
 - BASIC ROM
-- KERNAL
 - VIC-II
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

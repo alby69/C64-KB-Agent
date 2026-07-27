@@ -3,18 +3,18 @@ title: Extended system descriptions
 source_url: https://elite.bbcelite.com/deep_dives/extended_system_descriptions.html
 category: manual
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CPU
 - BASIC ROM
+- CPU
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Extended system descriptions

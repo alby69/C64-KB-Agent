@@ -3,21 +3,21 @@ title: Commodore 64 PETSCII codes
 source_url: https://sta.c64.org/cbm64pet.html
 category: reference
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: assembly
 hardware:
+- CIA
 - KERNAL
 - BASIC ROM
-- CIA
 related:
-- cia-registers
 - joystick-reading
 - memory-map
 - keyboard-handling
 - kernal-routines
-scraped_at: '2026-07-20'
+- cia-registers
+scraped_at: '2026-07-27'
 last_modified: Sat, 13 Mar 2021 23:00:00 GMT
 ---
 

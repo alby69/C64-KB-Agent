@@ -3,21 +3,21 @@ title: Rotating the universe
 source_url: https://elite.bbcelite.com/deep_dives/rotating_the_universe.html
 category: deep-dive
 topics:
-- assembly
 - input handling
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
 - KERNAL
-- CPU
 - CIA
+- CPU
 related:
-- joystick-reading
-- keyboard-handling
 - kernal-routines
+- keyboard-handling
 - memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Rotating the universe

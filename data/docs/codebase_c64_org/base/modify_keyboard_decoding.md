@@ -3,23 +3,23 @@ title: Modify Keyboard Decoding
 source_url: https://codebase.c64.org/doku.php?id=base%3Amodify_keyboard_decoding
 category: reference
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
 - CIA
+- KERNAL
 related:
-- keyboard-handling
-- memory-map
-- joystick-reading
-- sprite-programming
-- kernal-routines
-- cia-registers
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- keyboard-handling
+- joystick-reading
+- kernal-routines
+- memory-map
+- sprite-programming
+- cia-registers
+scraped_at: '2026-07-27'
 ---
 
 # Modify Keyboard Decoding

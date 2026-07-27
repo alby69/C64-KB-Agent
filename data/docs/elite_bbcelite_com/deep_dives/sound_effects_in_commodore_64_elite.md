@@ -3,9 +3,9 @@ title: Sound effects in Commodore 64 Elite
 source_url: https://elite.bbcelite.com/deep_dives/sound_effects_in_commodore_64_elite.html
 category: deep-dive
 topics:
-- raster interrupts
 - assembly
 - sound generation
+- raster interrupts
 - basic
 difficulty: beginner
 language: mixed
@@ -14,18 +14,18 @@ hardware:
 - SID
 - CIA
 related:
-- sid-registers
-- sound-programming
-- vic-ii-registers
-- joystick-reading
-- keyboard-handling
-- kernal-routines
-- memory-map
-- music-player
-- sprite-programming
 - raster-interrupts
+- sound-programming
+- sprite-programming
+- sid-registers
+- kernal-routines
+- keyboard-handling
+- music-player
+- memory-map
+- joystick-reading
+- vic-ii-registers
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Sound effects in Commodore 64 Elite

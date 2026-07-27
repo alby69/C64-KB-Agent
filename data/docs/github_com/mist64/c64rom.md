@@ -3,16 +3,16 @@ title: 'GitHub Repo: mist64/c64rom'
 source_url: https://github.com/mist64/c64rom
 category: source-code
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: assembly
 hardware:
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 last_modified: '2026-04-05T22:56:30Z'
 ---
 

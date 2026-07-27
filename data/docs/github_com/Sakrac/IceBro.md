@@ -7,13 +7,13 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- CPU
 - VIC-II
+- CPU
 related:
+- raster-interrupts
 - sprite-programming
 - vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 last_modified: '2021-01-03T15:36:46Z'
 ---
 
@@ -24,7 +24,7 @@ last_modified: '2021-01-03T15:36:46Z'
 **Description:** 6502 Debugger with connectivity to VICE C64 and Vic20
 
 **GitHub URL:** https://github.com/Sakrac/IceBro
-**Stars:** 54
+**Stars:** 53
 **Last Updated:** 2021-01-03T15:36:46Z
 
 

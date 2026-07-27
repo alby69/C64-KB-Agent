@@ -3,22 +3,22 @@ title: The key logger
 source_url: https://elite.bbcelite.com/deep_dives/the_key_logger.html
 category: deep-dive
 topics:
-- basic
-- assembly
 - input handling
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CPU
 - CIA
+- CPU
 related:
-- joystick-reading
-- keyboard-handling
 - kernal-routines
+- keyboard-handling
 - memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # The key logger

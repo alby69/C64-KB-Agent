@@ -3,9 +3,9 @@ title: Exomizer - Adding PETSCII decrunch screens
 source_url: https://codebase.c64.org/doku.php?id=base%3Aexomizer_adding_decrunch_splash_screens_during_sfx_decrunch
 category: tutorial
 topics:
+- sprite programming
 - graphics
 - assembly
-- sprite programming
 difficulty: beginner
 language: assembly
 hardware:
@@ -14,7 +14,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

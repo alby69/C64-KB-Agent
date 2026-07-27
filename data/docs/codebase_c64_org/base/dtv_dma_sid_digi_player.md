@@ -3,33 +3,33 @@ title: DTV DMA SID digi player experiment
 source_url: https://codebase.c64.org/doku.php?id=base%3Adtv_dma_sid_digi_player
 category: source-code
 topics:
-- basic
-- assembly
-- memory management
-- sound generation
 - raster interrupts
+- memory management
+- basic
 - sprite programming
+- assembly
+- sound generation
 difficulty: beginner
 language: mixed
 hardware:
+- VIC-II
+- KERNAL
 - CIA
 - SID
 - CPU
-- KERNAL
-- VIC-II
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- keyboard-handling
+- joystick-reading
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

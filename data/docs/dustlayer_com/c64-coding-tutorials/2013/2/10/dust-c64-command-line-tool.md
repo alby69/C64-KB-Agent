@@ -3,26 +3,26 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool
 category: tutorial
 topics:
-- sprite programming
 - basic
 - assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- SID
-- VIC-II
-- CPU
 - KERNAL
+- SID
+- CPU
+- VIC-II
 related:
-- sound-programming
-- music-player
-- raster-interrupts
 - vic-ii-registers
-- sprite-programming
-- sid-registers
+- music-player
 - kernal-routines
+- sound-programming
 - memory-map
-scraped_at: '2026-07-20'
+- sid-registers
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-07-27'
 ---
 
 # 

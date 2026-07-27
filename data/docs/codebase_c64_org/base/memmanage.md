@@ -3,36 +3,36 @@ title: Memory Management
 source_url: https://codebase.c64.org/doku.php?id=base%3Amemmanage
 category: reference
 topics:
-- input handling
-- basic
-- assembly
-- memory management
-- sound generation
-- graphics
 - raster interrupts
+- memory management
+- basic
+- input handling
 - sprite programming
+- graphics
+- assembly
+- sound generation
 difficulty: beginner
 language: mixed
 hardware:
+- VIC-II
+- BASIC ROM
+- KERNAL
 - CIA
 - SID
 - CPU
-- BASIC ROM
-- KERNAL
-- VIC-II
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- keyboard-handling
+- joystick-reading
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

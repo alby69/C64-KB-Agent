@@ -3,21 +3,21 @@ title: 16-Bit Comparison
 source_url: https://codebase.c64.org/doku.php?id=base%3A16-bit_comparison
 category: reference
 topics:
-- assembly
 - memory management
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
 - CIA
 - SID
 related:
-- sid-registers
+- music-player
 - keyboard-handling
 - joystick-reading
-- music-player
+- sid-registers
 - sound-programming
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # 16-Bit Comparison

@@ -9,7 +9,7 @@ language: basic
 hardware:
 - BASIC ROM
 related: []
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 last_modified: Mon, 03 Mar 2025 00:00:00 GMT
 ---
 

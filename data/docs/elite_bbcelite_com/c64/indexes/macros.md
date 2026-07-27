@@ -3,18 +3,18 @@ title: List of all macros in the Commodore 64 version of Elite
 source_url: https://elite.bbcelite.com/c64/indexes/macros.html
 category: source-code
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- BASIC ROM
 - VIC-II
+- BASIC ROM
 related:
 - raster-interrupts
-- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-07-20'
+- vic-ii-registers
+scraped_at: '2026-07-27'
 ---
 
 # List of all macros in the Commodore 64 version of Elite

@@ -3,27 +3,27 @@ title: 'The Codebase: Sourcecode, Articles & Tutorials'
 source_url: https://codebase.c64.org/doku.php?id=base%3Astart
 category: tutorial
 topics:
+- basic
 - input handling
 - assembly
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
+- BASIC ROM
+- KERNAL
 - CIA
 - SID
 - CPU
-- BASIC ROM
-- KERNAL
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
 - music-player
-- sound-programming
+- keyboard-handling
+- joystick-reading
+- sid-registers
 - kernal-routines
+- memory-map
+- sound-programming
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # The Codebase: Sourcecode, Articles & Tutorials

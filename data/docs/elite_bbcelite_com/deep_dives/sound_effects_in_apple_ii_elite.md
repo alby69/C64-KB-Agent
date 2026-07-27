@@ -12,18 +12,18 @@ language: mixed
 hardware:
 - KERNAL
 - SID
-- CPU
 - CIA
+- CPU
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Sound effects in Apple II Elite

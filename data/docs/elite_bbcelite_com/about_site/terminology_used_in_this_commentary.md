@@ -3,30 +3,30 @@ title: Terminology used in this commentary
 source_url: https://elite.bbcelite.com/about_site/terminology_used_in_this_commentary.html
 category: source-code
 topics:
-- basic
-- assembly
-- sprite programming
 - input handling
+- sprite programming
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - SID
-- CPU
 - CIA
+- CPU
 related:
-- sid-registers
-- sound-programming
-- vic-ii-registers
-- joystick-reading
-- keyboard-handling
-- kernal-routines
-- memory-map
-- music-player
-- sprite-programming
 - raster-interrupts
+- sound-programming
+- sprite-programming
+- sid-registers
+- kernal-routines
+- keyboard-handling
+- music-player
+- memory-map
+- joystick-reading
+- vic-ii-registers
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Terminology used in this commentary

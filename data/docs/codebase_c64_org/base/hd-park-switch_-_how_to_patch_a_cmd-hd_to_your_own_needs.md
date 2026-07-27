@@ -8,16 +8,16 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
 - music-player
+- sid-registers
 - kernal-routines
+- memory-map
 - sound-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

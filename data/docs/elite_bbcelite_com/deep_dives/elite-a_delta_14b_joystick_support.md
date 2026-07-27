@@ -3,9 +3,9 @@ title: Delta 14B joystick support
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_delta_14b_joystick_support.html
 category: deep-dive
 topics:
-- memory management
-- assembly
 - input handling
+- assembly
+- memory management
 - basic
 difficulty: intermediate
 language: mixed
@@ -14,15 +14,15 @@ hardware:
 - SID
 - CIA
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Delta 14B joystick support

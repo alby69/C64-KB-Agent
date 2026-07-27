@@ -3,25 +3,25 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-5-understanding-and-including-music
 category: tutorial
 topics:
-- sound generation
 - assembly
+- sound generation
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
+- KERNAL
 - SID
 - CPU
-- KERNAL
+- CIA
 related:
-- music-player
-- sound-programming
-- sid-registers
 - keyboard-handling
+- music-player
 - kernal-routines
+- sound-programming
+- memory-map
+- sid-registers
 - joystick-reading
 - cia-registers
-- memory-map
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # 

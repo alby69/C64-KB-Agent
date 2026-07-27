@@ -3,11 +3,11 @@ title: Handling IRQs macros
 source_url: https://codebase.c64.org/doku.php?id=base%3Ahandling_irqs_with_some_simple_macros
 category: reference
 topics:
-- basic
-- assembly
-- graphics
 - raster interrupts
 - sprite programming
+- graphics
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
@@ -16,7 +16,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

@@ -6,15 +6,15 @@ topics: []
 difficulty: beginner
 language: none
 hardware:
-- KERNAL
 - CIA
+- KERNAL
 related:
 - keyboard-handling
-- memory-map
 - joystick-reading
 - kernal-routines
+- memory-map
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # base:populating_several_related_arrays_from_a_single_macro [Codebase64 wiki]

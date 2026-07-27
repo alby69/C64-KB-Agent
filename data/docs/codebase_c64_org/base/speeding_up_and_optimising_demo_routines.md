@@ -3,29 +3,29 @@ title: Speeding up & Optimising demo routines
 source_url: https://codebase.c64.org/doku.php?id=base%3Aspeeding_up_and_optimising_demo_routines
 category: source-code
 topics:
-- basic
-- assembly
-- memory management
-- graphics
 - raster interrupts
+- memory management
 - sprite programming
+- graphics
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - VIC-II
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

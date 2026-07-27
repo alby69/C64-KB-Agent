@@ -9,9 +9,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # base:16bit_and_24bit_sqrt [Codebase64 wiki]

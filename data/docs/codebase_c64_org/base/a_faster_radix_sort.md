@@ -3,8 +3,8 @@ title: A Faster Radix Sort
 source_url: https://codebase.c64.org/doku.php?id=base%3Aa_faster_radix_sort
 category: reference
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
@@ -14,7 +14,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # A Faster Radix Sort

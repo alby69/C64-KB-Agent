@@ -8,7 +8,7 @@ difficulty: intermediate
 language: basic
 hardware: []
 related: []
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Shift-and-subtract division

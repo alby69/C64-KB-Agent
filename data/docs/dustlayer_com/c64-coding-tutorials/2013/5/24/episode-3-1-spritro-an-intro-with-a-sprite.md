@@ -3,30 +3,30 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite
 category: tutorial
 topics:
-- sprite programming
 - basic
 - assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - KERNAL
+- CPU
 - CIA
 - VIC-II
-- CPU
+- SID
 related:
-- sound-programming
-- music-player
-- raster-interrupts
-- vic-ii-registers
-- sprite-programming
-- sid-registers
 - keyboard-handling
+- vic-ii-registers
+- music-player
 - kernal-routines
-- joystick-reading
+- sound-programming
 - cia-registers
 - memory-map
-scraped_at: '2026-07-20'
+- sid-registers
+- raster-interrupts
+- joystick-reading
+- sprite-programming
+scraped_at: '2026-07-27'
 ---
 
 # 

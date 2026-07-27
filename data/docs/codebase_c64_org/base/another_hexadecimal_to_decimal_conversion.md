@@ -3,14 +3,14 @@ title: base:another_hexadecimal_to_decimal_conversion [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Aanother_hexadecimal_to_decimal_conversion
 category: reference
 topics:
-- assembly
 - memory management
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # base:another_hexadecimal_to_decimal_conversion [Codebase64 wiki]

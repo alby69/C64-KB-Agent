@@ -3,25 +3,25 @@ title: Drawing Saturn on the loading screen
 source_url: https://elite.bbcelite.com/deep_dives/drawing_saturn_on_the_loading_screen.html
 category: deep-dive
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - SID
-- CPU
 - CIA
+- CPU
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Drawing Saturn on the loading screen

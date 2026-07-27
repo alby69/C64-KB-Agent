@@ -3,23 +3,23 @@ title: The Trumbles mission
 source_url: https://elite.bbcelite.com/deep_dives/the_trumbles_mission.html
 category: deep-dive
 topics:
-- basic
-- assembly
 - sprite programming
+- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- CPU
-- BASIC ROM
 - VIC-II
+- KERNAL
+- BASIC ROM
+- CPU
 related:
-- vic-ii-registers
-- memory-map
-- kernal-routines
-- sprite-programming
 - raster-interrupts
-scraped_at: '2026-07-20'
+- sprite-programming
+- kernal-routines
+- memory-map
+- vic-ii-registers
+scraped_at: '2026-07-27'
 ---
 
 # The Trumbles mission

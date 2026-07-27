@@ -3,26 +3,26 @@ title: Commodore 64 standard KERNAL functions
 source_url: https://sta.c64.org/cbm64krnfunc.html
 category: reference
 topics:
-- basic
-- memory management
 - graphics
+- memory management
 - assembly
+- basic
 difficulty: advanced
 language: mixed
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sid-registers
-- sound-programming
-- cia-registers
 - joystick-reading
 - memory-map
 - keyboard-handling
-- music-player
 - kernal-routines
-scraped_at: '2026-07-20'
+- cia-registers
+- music-player
+- sound-programming
+scraped_at: '2026-07-27'
 last_modified: Wed, 13 Nov 2024 00:00:00 GMT
 ---
 

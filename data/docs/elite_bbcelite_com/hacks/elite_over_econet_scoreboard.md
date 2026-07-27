@@ -3,8 +3,8 @@ title: The Elite multiplayer scoreboard
 source_url: https://elite.bbcelite.com/hacks/elite_over_econet_scoreboard.html
 category: manual
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
@@ -12,12 +12,12 @@ hardware:
 - SID
 - CPU
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # The Elite multiplayer scoreboard

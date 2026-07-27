@@ -4,22 +4,22 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Arunasmfrombasic
 category: tool
 topics:
 - basic
-- assembly
 - sprite programming
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- BASIC ROM
-- KERNAL
 - CPU
 - VIC-II
+- BASIC ROM
+- KERNAL
 related:
-- memory-map
-- sprite-programming
-- kernal-routines
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- kernal-routines
+- memory-map
+- sprite-programming
+scraped_at: '2026-07-27'
 ---
 
 

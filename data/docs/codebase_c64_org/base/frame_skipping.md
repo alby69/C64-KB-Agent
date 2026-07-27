@@ -10,13 +10,13 @@ language: assembly
 hardware:
 - SID
 related:
-- sid-registers
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
 - sprite-programming
 - sound-programming
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Frame skipping

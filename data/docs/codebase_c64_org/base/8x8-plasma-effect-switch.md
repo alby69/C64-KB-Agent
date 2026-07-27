@@ -3,24 +3,24 @@ title: 8x8 Plasma / Speedcode / Effect Switching
 source_url: https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-effect-switch
 category: reference
 topics:
-- basic
-- assembly
-- graphics
 - raster interrupts
 - sprite programming
+- graphics
+- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
 - VIC-II
+- CIA
 related:
+- vic-ii-registers
+- raster-interrupts
 - keyboard-handling
 - joystick-reading
 - sprite-programming
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

@@ -9,7 +9,7 @@ difficulty: beginner
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Trigonometric Functions

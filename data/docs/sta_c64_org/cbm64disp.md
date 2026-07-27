@@ -11,12 +11,12 @@ hardware:
 - KERNAL
 - VIC-II
 related:
-- vic-ii-registers
 - memory-map
-- raster-interrupts
-- kernal-routines
 - sprite-programming
-scraped_at: '2026-07-20'
+- kernal-routines
+- vic-ii-registers
+- raster-interrupts
+scraped_at: '2026-07-27'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

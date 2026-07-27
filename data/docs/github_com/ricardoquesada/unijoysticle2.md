@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 last_modified: '2026-03-30T16:54:22Z'
 ---
 
@@ -19,7 +19,7 @@ last_modified: '2026-03-30T16:54:22Z'
 **Description:** Bluetooth gamepad support for the Commodore 64 / Atari / Amiga, etc.
 
 **GitHub URL:** https://github.com/ricardoquesada/unijoysticle2
-**Stars:** 60
+**Stars:** 61
 **Last Updated:** 2026-03-30T16:54:22Z
 
 

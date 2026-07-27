@@ -3,21 +3,21 @@ title: An tiny, fast, 8-bit pseudo-random number generator in 6502 assembly
 source_url: https://codebase.c64.org/doku.php?id=base%3Asmall_fast_8-bit_prng
 category: reference
 topics:
-- assembly
 - memory management
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
 - CPU
-- KERNAL
 - CIA
+- KERNAL
 related:
 - keyboard-handling
-- memory-map
 - joystick-reading
 - kernal-routines
+- memory-map
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # An tiny, fast, 8-bit pseudo-random number generator in 6502 assembly

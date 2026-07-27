@@ -3,8 +3,8 @@ title: Technical information for BBC Micro disc Elite on the BBC Master
 source_url: https://elite.bbcelite.com/hacks/bbc_master_disc_elite_technical_information.html
 category: source-code
 topics:
-- basic
 - graphics
+- basic
 difficulty: intermediate
 language: basic
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Technical information for BBC Micro disc Elite on the BBC Master

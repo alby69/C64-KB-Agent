@@ -4,24 +4,24 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Acrt_file_format
 category: tool
 topics:
 - basic
-- assembly
 - memory management
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
 - CIA
 - SID
+- KERNAL
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
 - music-player
-- sound-programming
+- keyboard-handling
+- joystick-reading
+- sid-registers
 - kernal-routines
+- memory-map
+- sound-programming
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # CRT - CaRTridge Images (from the CCS64 emulator)

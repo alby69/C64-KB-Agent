@@ -3,27 +3,27 @@ title: NMI lock
 source_url: https://codebase.c64.org/doku.php?id=base%3Anmi_lock
 category: source-code
 topics:
-- graphics
-- raster interrupts
 - input handling
+- raster interrupts
+- graphics
 - assembly
 difficulty: advanced
 language: mixed
 hardware:
 - CPU
-- KERNAL
-- CIA
 - VIC-II
+- CIA
+- KERNAL
 related:
-- keyboard-handling
-- memory-map
-- joystick-reading
-- sprite-programming
-- kernal-routines
-- cia-registers
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- keyboard-handling
+- joystick-reading
+- kernal-routines
+- memory-map
+- sprite-programming
+- cia-registers
+scraped_at: '2026-07-27'
 ---
 
 

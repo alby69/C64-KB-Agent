@@ -3,28 +3,28 @@ title: Assembling your own cart ROM image
 source_url: https://codebase.c64.org/doku.php?id=base%3Aassembling_your_own_cart_rom_image
 category: tool
 topics:
-- basic
-- assembly
-- memory management
 - raster interrupts
+- memory management
 - sprite programming
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
+- VIC-II
+- CIA
 - BASIC ROM
 - KERNAL
-- CIA
-- VIC-II
 related:
-- keyboard-handling
-- memory-map
-- joystick-reading
-- sprite-programming
-- kernal-routines
-- cia-registers
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- keyboard-handling
+- joystick-reading
+- kernal-routines
+- memory-map
+- sprite-programming
+- cia-registers
+scraped_at: '2026-07-27'
 ---
 
 

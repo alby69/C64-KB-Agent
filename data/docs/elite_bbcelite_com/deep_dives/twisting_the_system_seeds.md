@@ -3,8 +3,8 @@ title: Twisting the system seeds
 source_url: https://elite.bbcelite.com/deep_dives/twisting_the_system_seeds.html
 category: deep-dive
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Twisting the system seeds

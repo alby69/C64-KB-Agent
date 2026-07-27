@@ -3,20 +3,20 @@ title: Mathematics in Assembly - Part 4
 source_url: https://codebase.c64.org/doku.php?id=base%3Amathematics_in_assembly_part_4
 category: tutorial
 topics:
-- assembly
 - memory management
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
 - music-player
+- sid-registers
 - kernal-routines
+- memory-map
 - sound-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Mathematics in Assembly - Part 4

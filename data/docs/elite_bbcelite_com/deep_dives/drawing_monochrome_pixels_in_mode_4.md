@@ -3,9 +3,9 @@ title: Drawing monochrome pixels on the BBC Micro
 source_url: https://elite.bbcelite.com/deep_dives/drawing_monochrome_pixels_in_mode_4.html
 category: deep-dive
 topics:
-- memory management
-- assembly
 - graphics
+- assembly
+- memory management
 - basic
 difficulty: beginner
 language: mixed
@@ -13,12 +13,12 @@ hardware:
 - KERNAL
 - SID
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Drawing monochrome pixels on the BBC Micro

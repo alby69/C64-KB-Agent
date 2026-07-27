@@ -3,15 +3,15 @@ title: SetGraphicsBank
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_setgraphicsbank
 category: reference
 topics:
-- graphics
-- assembly
-- memory management
 - basic
+- graphics
+- memory management
+- assembly
 difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

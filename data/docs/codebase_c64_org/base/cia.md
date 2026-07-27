@@ -9,16 +9,16 @@ topics:
 difficulty: advanced
 language: none
 hardware:
-- CIA
 - VIC-II
+- CIA
 related:
+- vic-ii-registers
+- raster-interrupts
 - keyboard-handling
 - joystick-reading
 - sprite-programming
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # CIA (6526) Programming

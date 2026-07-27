@@ -3,11 +3,11 @@ title: Technical information for musical Acornsoft Elite
 source_url: https://elite.bbcelite.com/hacks/bbc_elite_with_music_technical_information.html
 category: source-code
 topics:
-- raster interrupts
-- memory management
-- basic
 - assembly
+- memory management
+- raster interrupts
 - sound generation
+- basic
 difficulty: beginner
 language: mixed
 hardware:
@@ -15,15 +15,15 @@ hardware:
 - SID
 - CPU
 related:
-- sid-registers
+- raster-interrupts
 - sound-programming
-- vic-ii-registers
-- memory-map
+- sprite-programming
+- sid-registers
 - kernal-routines
 - music-player
-- sprite-programming
-- raster-interrupts
-scraped_at: '2026-07-20'
+- memory-map
+- vic-ii-registers
+scraped_at: '2026-07-27'
 ---
 
 # Technical information for musical Acornsoft Elite

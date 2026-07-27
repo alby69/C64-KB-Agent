@@ -3,16 +3,16 @@ title: Fixed point arithmethic
 source_url: https://codebase.c64.org/doku.php?id=base%3Afixed_point_arithmethic
 category: reference
 topics:
-- assembly
 - memory management
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Fixed point arithmethic

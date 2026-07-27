@@ -10,12 +10,12 @@ hardware:
 - KERNAL
 - SID
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Calculating vertex coordinates

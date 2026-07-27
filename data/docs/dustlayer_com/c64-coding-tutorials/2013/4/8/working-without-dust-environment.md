@@ -8,15 +8,15 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
 - kernal-routines
+- memory-map
 - joystick-reading
 - cia-registers
-- memory-map
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # 

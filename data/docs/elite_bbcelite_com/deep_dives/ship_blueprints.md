@@ -3,8 +3,8 @@ title: Ship blueprints
 source_url: https://elite.bbcelite.com/deep_dives/ship_blueprints.html
 category: source-code
 topics:
-- assembly
 - graphics
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
@@ -12,12 +12,12 @@ hardware:
 - SID
 - CPU
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Ship blueprints

@@ -3,21 +3,21 @@ title: Using KickAss to include .gif sprite data
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_data_and_kickassembler
 category: tool
 topics:
+- sprite programming
 - graphics
 - assembly
-- sprite programming
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
 - VIC-II
+- KERNAL
 related:
-- memory-map
-- sprite-programming
-- kernal-routines
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- kernal-routines
+- memory-map
+- sprite-programming
+scraped_at: '2026-07-27'
 ---
 
 # Using KickAss to include .gif sprite data

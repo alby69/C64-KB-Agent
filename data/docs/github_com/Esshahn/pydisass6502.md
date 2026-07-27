@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 last_modified: '2023-01-17T02:28:49Z'
 ---
 
@@ -20,7 +20,7 @@ last_modified: '2023-01-17T02:28:49Z'
 **Description:** A simple 6502 machine language disassembler written in Python.
 
 **GitHub URL:** https://github.com/Esshahn/pydisass6502
-**Stars:** 19
+**Stars:** 20
 **Last Updated:** 2023-01-17T02:28:49Z
 
 

@@ -3,27 +3,27 @@ title: Sprite usage in Commodore 64 Elite
 source_url: https://elite.bbcelite.com/deep_dives/sprite_usage_in_commodore_64_elite.html
 category: deep-dive
 topics:
-- basic
-- assembly
-- sprite programming
 - graphics
+- sprite programming
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
+- VIC-II
 - KERNAL
 - SID
 - CPU
-- VIC-II
 related:
-- sid-registers
+- raster-interrupts
 - sound-programming
-- vic-ii-registers
-- memory-map
+- sprite-programming
+- sid-registers
 - kernal-routines
 - music-player
-- sprite-programming
-- raster-interrupts
-scraped_at: '2026-07-20'
+- memory-map
+- vic-ii-registers
+scraped_at: '2026-07-27'
 ---
 
 # Sprite usage in Commodore 64 Elite

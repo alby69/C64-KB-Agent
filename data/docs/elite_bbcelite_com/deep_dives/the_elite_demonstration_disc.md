@@ -3,9 +3,9 @@ title: The Elite Demonstration Disc
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_demonstration_disc.html
 category: deep-dive
 topics:
-- basic
-- assembly
 - input handling
+- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,15 +13,15 @@ hardware:
 - SID
 - CIA
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # The Elite Demonstration Disc

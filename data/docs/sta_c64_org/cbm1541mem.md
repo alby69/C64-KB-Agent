@@ -4,30 +4,30 @@ source_url: https://sta.c64.org/cbm1541mem.html
 category: reference
 topics:
 - memory management
-- basic
 - sprite programming
 - assembly
+- basic
 difficulty: advanced
 language: mixed
 hardware:
-- KERNAL
-- VIC-II
 - CIA
+- VIC-II
 - CPU
 - SID
+- KERNAL
 related:
 - sid-registers
-- sound-programming
-- vic-ii-registers
-- cia-registers
 - joystick-reading
 - memory-map
-- raster-interrupts
-- keyboard-handling
-- music-player
 - sprite-programming
+- keyboard-handling
 - kernal-routines
-scraped_at: '2026-07-20'
+- cia-registers
+- music-player
+- vic-ii-registers
+- sound-programming
+- raster-interrupts
+scraped_at: '2026-07-27'
 last_modified: Mon, 15 May 2023 22:00:00 GMT
 ---
 

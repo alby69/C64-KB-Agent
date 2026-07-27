@@ -3,23 +3,23 @@ title: base:mandelbrot [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Amandelbrot
 category: tool
 topics:
+- basic
 - raster interrupts
 - assembly
-- basic
 difficulty: beginner
 language: assembly
 hardware:
-- BASIC ROM
-- KERNAL
 - CPU
 - VIC-II
+- BASIC ROM
+- KERNAL
 related:
-- memory-map
-- sprite-programming
-- kernal-routines
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- kernal-routines
+- memory-map
+- sprite-programming
+scraped_at: '2026-07-27'
 ---
 
 # base:mandelbrot [Codebase64 wiki]

@@ -3,8 +3,8 @@ title: Commander save files
 source_url: https://elite.bbcelite.com/deep_dives/commander_save_files.html
 category: manual
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Commander save files

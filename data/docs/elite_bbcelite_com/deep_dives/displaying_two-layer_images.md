@@ -3,29 +3,29 @@ title: Displaying two-layer images
 source_url: https://elite.bbcelite.com/deep_dives/displaying_two-layer_images.html
 category: source-code
 topics:
-- basic
-- assembly
 - sprite programming
+- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
+- VIC-II
 - KERNAL
 - SID
 - CIA
-- VIC-II
 related:
-- sid-registers
-- sound-programming
-- vic-ii-registers
-- joystick-reading
-- keyboard-handling
-- kernal-routines
-- memory-map
-- music-player
-- sprite-programming
 - raster-interrupts
+- sound-programming
+- sprite-programming
+- sid-registers
+- kernal-routines
+- keyboard-handling
+- music-player
+- memory-map
+- joystick-reading
+- vic-ii-registers
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Displaying two-layer images

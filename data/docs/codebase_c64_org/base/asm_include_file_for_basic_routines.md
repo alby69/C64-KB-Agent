@@ -11,9 +11,9 @@ hardware:
 - BASIC ROM
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # base:asm_include_file_for_basic_routines [Codebase64 wiki]

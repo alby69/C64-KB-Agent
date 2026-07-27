@@ -3,28 +3,28 @@ title: Examination of SID noise waveform
 source_url: https://codebase.c64.org/doku.php?id=base%3Anoise_waveform
 category: tool
 topics:
-- basic
-- assembly
 - memory management
-- sound generation
+- basic
 - sprite programming
+- assembly
+- sound generation
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - VIC-II
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

@@ -4,8 +4,8 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Asimple_hardware_sprite_t
 category: reference
 topics:
 - basic
-- assembly
 - sprite programming
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
@@ -14,7 +14,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

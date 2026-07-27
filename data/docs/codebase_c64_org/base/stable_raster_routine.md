@@ -3,26 +3,26 @@ title: STABLE RASTER ROUTINE
 source_url: https://codebase.c64.org/doku.php?id=base%3Astable_raster_routine
 category: tool
 topics:
+- sprite programming
 - raster interrupts
 - assembly
-- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - VIC-II
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

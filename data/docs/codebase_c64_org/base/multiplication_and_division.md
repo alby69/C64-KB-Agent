@@ -4,16 +4,16 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Amultiplication_and_divis
 category: tool
 topics:
 - basic
-- assembly
 - memory management
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Multiplication

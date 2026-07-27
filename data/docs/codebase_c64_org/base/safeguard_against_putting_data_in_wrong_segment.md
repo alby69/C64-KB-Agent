@@ -10,9 +10,9 @@ hardware:
 - CIA
 related:
 - keyboard-handling
-- cia-registers
 - joystick-reading
-scraped_at: '2026-07-20'
+- cia-registers
+scraped_at: '2026-07-27'
 ---
 
 # base:safeguard_against_putting_data_in_wrong_segment [Codebase64 wiki]

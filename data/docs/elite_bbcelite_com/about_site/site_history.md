@@ -8,16 +8,16 @@ difficulty: intermediate
 language: assembly
 hardware:
 - SID
-- CPU
 - CIA
+- CPU
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
+- sid-registers
 - keyboard-handling
 - music-player
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Site history

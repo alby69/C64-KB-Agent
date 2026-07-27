@@ -10,9 +10,9 @@ hardware:
 - CIA
 related:
 - cia-registers
-- keyboard-handling
 - joystick-reading
-scraped_at: '2026-07-20'
+- keyboard-handling
+scraped_at: '2026-07-27'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

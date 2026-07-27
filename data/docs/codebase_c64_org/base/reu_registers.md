@@ -4,24 +4,24 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Areu_registers
 category: reference
 topics:
 - sound generation
-- assembly
 - sprite programming
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # REU registers

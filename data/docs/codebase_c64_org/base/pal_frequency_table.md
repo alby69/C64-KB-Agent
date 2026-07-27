@@ -9,9 +9,9 @@ language: none
 hardware: []
 related:
 - music-player
-- sid-registers
 - sound-programming
-scraped_at: '2026-07-20'
+- sid-registers
+scraped_at: '2026-07-27'
 ---
 
 # PAL A440 frequency table

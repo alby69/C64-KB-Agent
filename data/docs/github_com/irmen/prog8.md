@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 last_modified: '2026-07-16T21:04:23Z'
 ---
 

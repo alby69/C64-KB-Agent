@@ -3,8 +3,8 @@ title: Acknowledgements
 source_url: https://elite.bbcelite.com/about_site/acknowledgements.html
 category: source-code
 topics:
-- raster interrupts
 - assembly
+- raster interrupts
 - basic
 difficulty: advanced
 language: mixed
@@ -13,15 +13,15 @@ hardware:
 - SID
 - CPU
 related:
-- sid-registers
+- raster-interrupts
 - sound-programming
-- vic-ii-registers
-- memory-map
+- sprite-programming
+- sid-registers
 - kernal-routines
 - music-player
-- sprite-programming
-- raster-interrupts
-scraped_at: '2026-07-20'
+- memory-map
+- vic-ii-registers
+scraped_at: '2026-07-27'
 ---
 
 # Acknowledgements

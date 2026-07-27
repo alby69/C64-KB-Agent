@@ -3,8 +3,8 @@ title: base:simple_software_sprite_to_sprite_collision [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Asimple_software_sprite_to_sprite_collision
 category: reference
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
@@ -13,7 +13,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

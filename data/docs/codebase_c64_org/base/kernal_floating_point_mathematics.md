@@ -3,27 +3,27 @@ title: Floating Point Math
 source_url: https://codebase.c64.org/doku.php?id=base%3Akernal_floating_point_mathematics
 category: manual
 topics:
+- basic
+- sprite programming
 - memory management
 - assembly
-- sprite programming
-- basic
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
+- CIA
 - BASIC ROM
 - KERNAL
-- CIA
 related:
-- keyboard-handling
-- memory-map
-- joystick-reading
-- sprite-programming
-- kernal-routines
-- cia-registers
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- keyboard-handling
+- joystick-reading
+- kernal-routines
+- memory-map
+- sprite-programming
+- cia-registers
+scraped_at: '2026-07-27'
 ---
 
 # Floating Point Math

@@ -3,9 +3,9 @@ title: Code changes in the Demonstration Disc
 source_url: https://elite.bbcelite.com/deep_dives/code_changes_in_the_demonstration_disc.html
 category: source-code
 topics:
-- basic
-- assembly
 - input handling
+- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,12 +13,12 @@ hardware:
 - CIA
 - BASIC ROM
 related:
-- joystick-reading
-- keyboard-handling
 - kernal-routines
+- keyboard-handling
 - memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Code changes in the Demonstration Disc

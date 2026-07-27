@@ -3,26 +3,26 @@ title: base:8_sprite_starfield [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3A8_sprite_starfield
 category: reference
 topics:
+- basic
+- sprite programming
 - raster interrupts
 - assembly
-- sprite programming
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - VIC-II
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

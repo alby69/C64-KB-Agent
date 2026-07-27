@@ -3,26 +3,26 @@ title: Technical information for flicker-free Elite
 source_url: https://elite.bbcelite.com/hacks/flicker-free_elite_technical_information.html
 category: source-code
 topics:
-- memory management
-- assembly
 - input handling
+- assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - SID
-- CPU
 - CIA
+- CPU
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Technical information for flicker-free Elite

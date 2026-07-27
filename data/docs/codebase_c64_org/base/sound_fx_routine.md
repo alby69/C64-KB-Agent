@@ -3,33 +3,33 @@ title: Sound Fx Routine (From Prince of Persia (C64))
 source_url: https://codebase.c64.org/doku.php?id=base%3Asound_fx_routine
 category: source-code
 topics:
-- input handling
-- assembly
-- memory management
-- sound generation
 - raster interrupts
+- memory management
+- input handling
 - sprite programming
+- assembly
+- sound generation
 difficulty: beginner
 language: assembly
 hardware:
+- VIC-II
+- KERNAL
 - CIA
 - SID
 - CPU
-- KERNAL
-- VIC-II
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- keyboard-handling
+- joystick-reading
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

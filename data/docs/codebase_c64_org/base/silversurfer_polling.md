@@ -3,16 +3,16 @@ title: SilverSurfer polling mode driver
 source_url: https://codebase.c64.org/doku.php?id=base%3Asilversurfer_polling
 category: reference
 topics:
-- assembly
 - memory management
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # SilverSurfer polling mode driver

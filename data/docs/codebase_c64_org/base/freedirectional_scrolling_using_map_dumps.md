@@ -3,9 +3,9 @@ title: Freedirectional scrolling using map dumps
 source_url: https://codebase.c64.org/doku.php?id=base%3Afreedirectional_scrolling_using_map_dumps
 category: tool
 topics:
+- sprite programming
 - graphics
 - assembly
-- sprite programming
 difficulty: beginner
 language: assembly
 hardware: []
@@ -13,7 +13,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

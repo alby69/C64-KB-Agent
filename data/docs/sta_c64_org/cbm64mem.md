@@ -3,36 +3,36 @@ title: Commodore 64 memory map
 source_url: https://sta.c64.org/cbm64mem.html
 category: reference
 topics:
-- basic
+- memory management
+- raster interrupts
+- sound generation
 - input handling
 - sprite programming
 - graphics
-- memory management
 - assembly
-- sound generation
-- raster interrupts
+- basic
 difficulty: advanced
 language: mixed
 hardware:
-- KERNAL
+- CIA
 - BASIC ROM
 - VIC-II
-- CIA
 - CPU
 - SID
+- KERNAL
 related:
 - sid-registers
-- sound-programming
-- vic-ii-registers
-- cia-registers
 - joystick-reading
 - memory-map
-- raster-interrupts
-- keyboard-handling
-- music-player
 - sprite-programming
+- keyboard-handling
 - kernal-routines
-scraped_at: '2026-07-20'
+- cia-registers
+- music-player
+- vic-ii-registers
+- sound-programming
+- raster-interrupts
+scraped_at: '2026-07-27'
 last_modified: Tue, 30 Mar 2021 22:00:00 GMT
 ---
 

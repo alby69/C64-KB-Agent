@@ -3,17 +3,17 @@ title: More Hexadecimal to Decimal Conversion
 source_url: https://codebase.c64.org/doku.php?id=base%3Amore_hexadecimal_to_decimal_conversion
 category: manual
 topics:
-- assembly
 - memory management
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # More Hexadecimal to Decimal Conversion

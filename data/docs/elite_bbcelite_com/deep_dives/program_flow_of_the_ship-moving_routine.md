@@ -3,8 +3,8 @@ title: Program flow of the ship-moving routine
 source_url: https://elite.bbcelite.com/deep_dives/program_flow_of_the_ship-moving_routine.html
 category: deep-dive
 topics:
-- assembly
 - graphics
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Program flow of the ship-moving routine

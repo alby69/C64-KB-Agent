@@ -3,29 +3,29 @@ title: Developing Commodore 64 Elite on a BBC Micro
 source_url: https://elite.bbcelite.com/deep_dives/developing_commodore_64_elite_on_a_bbc_micro.html
 category: source-code
 topics:
-- raster interrupts
 - assembly
+- raster interrupts
 - basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - SID
-- CPU
 - CIA
+- CPU
 related:
-- sid-registers
-- sound-programming
-- vic-ii-registers
-- joystick-reading
-- keyboard-handling
-- kernal-routines
-- memory-map
-- music-player
-- sprite-programming
 - raster-interrupts
+- sound-programming
+- sprite-programming
+- sid-registers
+- kernal-routines
+- keyboard-handling
+- music-player
+- memory-map
+- joystick-reading
+- vic-ii-registers
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Developing Commodore 64 Elite on a BBC Micro

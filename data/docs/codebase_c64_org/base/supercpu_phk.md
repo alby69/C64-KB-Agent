@@ -3,8 +3,8 @@ title: PHK
 source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_phk
 category: reference
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: intermediate
 language: assembly
 hardware: []
@@ -12,7 +12,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # PHK

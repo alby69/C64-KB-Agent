@@ -3,28 +3,28 @@ title: base:simple_sprite-multiplexing_using_sprite_1 [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Asimple_sprite-multiplexing_using_sprite_1
 category: reference
 topics:
-- basic
-- assembly
-- graphics
 - raster interrupts
 - sprite programming
+- graphics
+- assembly
+- basic
 difficulty: beginner
 language: assembly
 hardware:
 - CPU
-- KERNAL
-- CIA
 - VIC-II
+- CIA
+- KERNAL
 related:
-- keyboard-handling
-- memory-map
-- joystick-reading
-- sprite-programming
-- kernal-routines
-- cia-registers
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- keyboard-handling
+- joystick-reading
+- kernal-routines
+- memory-map
+- sprite-programming
+- cia-registers
+scraped_at: '2026-07-27'
 ---
 
 

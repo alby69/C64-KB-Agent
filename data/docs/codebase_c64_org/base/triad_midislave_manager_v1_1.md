@@ -3,33 +3,33 @@ title: Sources for MIDISLAVE V1.1
 source_url: https://codebase.c64.org/doku.php?id=base%3Atriad_midislave_manager_v1.1
 category: reference
 topics:
-- input handling
-- basic
-- assembly
-- memory management
-- sound generation
 - raster interrupts
+- memory management
+- basic
+- input handling
 - sprite programming
+- assembly
+- sound generation
 difficulty: advanced
 language: mixed
 hardware:
-- KERNAL
-- CIA
 - VIC-II
+- CIA
 - SID
+- KERNAL
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- keyboard-handling
+- joystick-reading
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

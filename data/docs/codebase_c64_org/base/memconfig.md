@@ -3,22 +3,22 @@ title: Memory configuration
 source_url: https://codebase.c64.org/doku.php?id=base%3Amemconfig
 category: reference
 topics:
-- graphics
-- sprite programming
 - basic
+- sprite programming
+- graphics
 - memory management
 difficulty: intermediate
 language: none
 hardware:
-- KERNAL
 - VIC-II
+- KERNAL
 related:
-- memory-map
-- sprite-programming
-- kernal-routines
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- kernal-routines
+- memory-map
+- sprite-programming
+scraped_at: '2026-07-27'
 ---
 
 # Memory configuration

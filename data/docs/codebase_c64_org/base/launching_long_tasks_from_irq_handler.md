@@ -3,27 +3,27 @@ title: Launching long tasks from inside a IRQ handler
 source_url: https://codebase.c64.org/doku.php?id=base%3Alaunching_long_tasks_from_irq_handler
 category: reference
 topics:
-- graphics
-- raster interrupts
-- assembly
 - basic
+- raster interrupts
+- graphics
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
 - CPU
 - VIC-II
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

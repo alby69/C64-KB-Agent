@@ -3,28 +3,28 @@ title: base:2mhz_time_crunch_v5_disassembled [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3A2mhz_time_crunch_v5_disassembled
 category: reference
 topics:
-- basic
-- assembly
 - memory management
 - input handling
 - sprite programming
+- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
+- VIC-II
+- CIA
 - BASIC ROM
 - KERNAL
-- CIA
-- VIC-II
 related:
-- keyboard-handling
-- memory-map
-- joystick-reading
-- sprite-programming
-- kernal-routines
-- cia-registers
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- keyboard-handling
+- joystick-reading
+- kernal-routines
+- memory-map
+- sprite-programming
+- cia-registers
+scraped_at: '2026-07-27'
 ---
 
 

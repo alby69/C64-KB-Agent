@@ -3,23 +3,23 @@ title: base:mdg_bytesmasher_0.04 [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Amdg_bytesmasher_0.04
 category: reference
 topics:
+- basic
 - input handling
 - assembly
-- basic
 difficulty: beginner
 language: assembly
 hardware:
 - CPU
-- CIA
 - VIC-II
+- CIA
 related:
+- vic-ii-registers
+- raster-interrupts
 - keyboard-handling
 - joystick-reading
 - sprite-programming
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

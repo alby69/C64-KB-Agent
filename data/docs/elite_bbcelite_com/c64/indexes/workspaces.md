@@ -11,13 +11,13 @@ hardware:
 - SID
 - CIA
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
+- sid-registers
 - keyboard-handling
 - music-player
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # List of all workspaces in the Commodore 64 version of Elite

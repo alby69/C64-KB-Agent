@@ -3,8 +3,8 @@ title: The Encyclopedia Galactica
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_the_encyclopedia_galactica.html
 category: manual
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,12 +12,12 @@ hardware:
 - SID
 - BASIC ROM
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # The Encyclopedia Galactica

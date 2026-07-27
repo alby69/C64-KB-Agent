@@ -9,8 +9,8 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-20'
-last_modified: '2026-07-19T09:55:39Z'
+scraped_at: '2026-07-27'
+last_modified: '2026-07-27T07:25:32Z'
 ---
 
 # GitHub Repo: tebe6502/Mad-Pascal
@@ -20,8 +20,8 @@ last_modified: '2026-07-19T09:55:39Z'
 **Description:** Mad Pascal Compiler for 6502 (Atari XE/XL, C64, C4Plus, Neo6502)
 
 **GitHub URL:** https://github.com/tebe6502/Mad-Pascal
-**Stars:** 166
-**Last Updated:** 2026-07-19T09:55:39Z
+**Stars:** 167
+**Last Updated:** 2026-07-27T07:25:32Z
 
 
 ---

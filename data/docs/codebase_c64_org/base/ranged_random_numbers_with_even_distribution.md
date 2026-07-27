@@ -4,21 +4,21 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Aranged_random_numbers_wi
 category: reference
 topics:
 - graphics
-- assembly
 - memory management
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
 - music-player
+- sid-registers
 - kernal-routines
+- memory-map
 - sound-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Ranged Random Numbers with Even Distribution

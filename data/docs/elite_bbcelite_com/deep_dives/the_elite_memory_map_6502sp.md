@@ -3,24 +3,24 @@ title: 6502 Second Processor Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_6502sp.html
 category: deep-dive
 topics:
-- memory management
-- assembly
 - graphics
+- assembly
+- memory management
 - basic
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 - SID
-- CPU
 - BASIC ROM
+- CPU
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # 6502 Second Processor Elite memory map

@@ -3,18 +3,18 @@ title: Quick start guide
 source_url: https://elite.bbcelite.com/about_site/quick_start_guide.html
 category: source-code
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: assembly
 hardware:
 - KERNAL
-- CPU
 - BASIC ROM
+- CPU
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Quick start guide

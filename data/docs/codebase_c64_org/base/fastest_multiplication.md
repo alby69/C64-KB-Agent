@@ -3,9 +3,9 @@ title: Fastest 16x16 unsigned multiplication
 source_url: https://codebase.c64.org/doku.php?id=base%3Afastest_multiplication
 category: reference
 topics:
+- sprite programming
 - memory management
 - assembly
-- sprite programming
 difficulty: advanced
 language: mixed
 hardware:
@@ -14,7 +14,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Fastest 16x16 unsigned multiplication

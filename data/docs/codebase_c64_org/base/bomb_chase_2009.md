@@ -3,29 +3,29 @@ title: base:bomb_chase_2009 [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Abomb_chase_2009
 category: source-code
 topics:
+- sprite programming
 - graphics
 - assembly
-- sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
-- KERNAL
-- CIA
 - VIC-II
+- CIA
 - SID
+- KERNAL
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- keyboard-handling
+- joystick-reading
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # base:bomb_chase_2009 [Codebase64 wiki]

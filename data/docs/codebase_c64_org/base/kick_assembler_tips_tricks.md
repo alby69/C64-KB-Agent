@@ -3,24 +3,24 @@ title: Kick Assembler tips & tricks
 source_url: https://codebase.c64.org/doku.php?id=base%3Akick_assembler_tips_tricks
 category: manual
 topics:
+- sprite programming
 - raster interrupts
 - assembly
-- sprite programming
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

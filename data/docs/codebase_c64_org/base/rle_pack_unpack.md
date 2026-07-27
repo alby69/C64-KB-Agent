@@ -3,19 +3,19 @@ title: RLE Toolkit for CC65 v 1.0
 source_url: https://codebase.c64.org/doku.php?id=base%3Arle_pack_unpack
 category: tool
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 related:
-- memory-map
-- sprite-programming
-- kernal-routines
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- kernal-routines
+- memory-map
+- sprite-programming
+scraped_at: '2026-07-27'
 ---
 
 # RLE Toolkit for CC65 v 1.0

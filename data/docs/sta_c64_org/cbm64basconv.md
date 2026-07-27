@@ -3,8 +3,8 @@ title: Commodore 64 BASIC data conversion functions
 source_url: https://sta.c64.org/cbm64basconv.html
 category: reference
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - kernal-routines
 - memory-map
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

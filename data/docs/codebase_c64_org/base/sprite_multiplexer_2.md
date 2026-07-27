@@ -3,10 +3,10 @@ title: Multiplexer 2
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_multiplexer_2
 category: tool
 topics:
-- raster interrupts
-- assembly
 - sprite programming
+- raster interrupts
 - memory management
+- assembly
 difficulty: advanced
 language: assembly
 hardware:
@@ -15,7 +15,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

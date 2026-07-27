@@ -3,9 +3,9 @@ title: Playing the Compendium version of Acorn Electron Elite
 source_url: https://elite.bbcelite.com/hacks/elite_compendium_acorn_electron_downloads.html
 category: reference
 topics:
-- basic
-- assembly
 - input handling
+- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,15 +13,15 @@ hardware:
 - SID
 - CIA
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Playing the Compendium version of Acorn Electron Elite

@@ -3,26 +3,26 @@ title: About this project
 source_url: https://elite.bbcelite.com/about_site/about_this_project.html
 category: source-code
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- SID
 - CPU
 - KERNAL
+- CIA
 - BASIC ROM
+- SID
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # About this project

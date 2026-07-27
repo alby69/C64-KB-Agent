@@ -7,13 +7,13 @@ topics:
 difficulty: intermediate
 language: basic
 hardware:
-- BASIC ROM
 - CIA
+- BASIC ROM
 related:
 - cia-registers
-- keyboard-handling
 - joystick-reading
-scraped_at: '2026-07-20'
+- keyboard-handling
+scraped_at: '2026-07-27'
 last_modified: Mon, 03 Mar 2025 00:00:00 GMT
 ---
 

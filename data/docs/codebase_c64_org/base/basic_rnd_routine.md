@@ -8,19 +8,19 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
 - CIA
 - SID
+- KERNAL
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
 - music-player
-- sound-programming
+- keyboard-handling
+- joystick-reading
+- sid-registers
 - kernal-routines
+- memory-map
+- sound-programming
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # base:basic_rnd_routine [Codebase64 wiki]

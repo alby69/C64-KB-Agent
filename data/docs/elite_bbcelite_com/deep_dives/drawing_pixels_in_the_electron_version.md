@@ -3,21 +3,21 @@ title: Drawing pixels in the Electron version
 source_url: https://elite.bbcelite.com/deep_dives/drawing_pixels_in_the_electron_version.html
 category: deep-dive
 topics:
-- basic
-- assembly
 - graphics
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - SID
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Drawing pixels in the Electron version

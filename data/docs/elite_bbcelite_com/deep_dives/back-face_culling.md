@@ -3,20 +3,20 @@ title: Back-face culling
 source_url: https://elite.bbcelite.com/deep_dives/back-face_culling.html
 category: deep-dive
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - SID
 related:
-- sid-registers
 - sound-programming
-- memory-map
 - kernal-routines
+- sid-registers
 - music-player
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Back-face culling

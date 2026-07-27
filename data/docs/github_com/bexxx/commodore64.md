@@ -9,8 +9,8 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-20'
-last_modified: '2026-06-23T07:37:58Z'
+scraped_at: '2026-07-27'
+last_modified: '2026-07-21T08:23:13Z'
 ---
 
 # GitHub Repo: bexxx/commodore64
@@ -21,7 +21,7 @@ last_modified: '2026-06-23T07:37:58Z'
 
 **GitHub URL:** https://github.com/bexxx/commodore64
 **Stars:** 18
-**Last Updated:** 2026-06-23T07:37:58Z
+**Last Updated:** 2026-07-21T08:23:13Z
 
 
 ---

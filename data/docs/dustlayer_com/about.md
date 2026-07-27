@@ -7,16 +7,16 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
+- KERNAL
 - SID
 - CPU
-- KERNAL
 related:
+- kernal-routines
 - music-player
 - sound-programming
-- sid-registers
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-20'
+- sid-registers
+scraped_at: '2026-07-27'
 ---
 
 # 

@@ -9,10 +9,10 @@ language: assembly
 hardware:
 - SID
 related:
+- sound-programming
 - music-player
 - sid-registers
-- sound-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Pitching and rolling by a fixed angle

@@ -3,21 +3,21 @@ title: Drawing explosion clouds
 source_url: https://elite.bbcelite.com/deep_dives/drawing_explosion_clouds.html
 category: deep-dive
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
+- VIC-II
 - KERNAL
 - CPU
-- VIC-II
 related:
-- vic-ii-registers
-- memory-map
-- kernal-routines
-- sprite-programming
 - raster-interrupts
-scraped_at: '2026-07-20'
+- sprite-programming
+- kernal-routines
+- memory-map
+- vic-ii-registers
+scraped_at: '2026-07-27'
 ---
 
 # Drawing explosion clouds

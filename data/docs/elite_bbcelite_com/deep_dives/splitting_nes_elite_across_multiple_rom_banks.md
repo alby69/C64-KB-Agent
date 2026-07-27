@@ -3,9 +3,9 @@ title: Splitting NES Elite across multiple ROM banks
 source_url: https://elite.bbcelite.com/deep_dives/splitting_nes_elite_across_multiple_rom_banks.html
 category: source-code
 topics:
-- raster interrupts
-- assembly
 - memory management
+- assembly
+- raster interrupts
 - basic
 difficulty: advanced
 language: mixed
@@ -14,15 +14,15 @@ hardware:
 - SID
 - CPU
 related:
-- sid-registers
+- raster-interrupts
 - sound-programming
-- vic-ii-registers
-- memory-map
+- sprite-programming
+- sid-registers
 - kernal-routines
 - music-player
-- sprite-programming
-- raster-interrupts
-scraped_at: '2026-07-20'
+- memory-map
+- vic-ii-registers
+scraped_at: '2026-07-27'
 ---
 
 # Splitting NES Elite across multiple ROM banks

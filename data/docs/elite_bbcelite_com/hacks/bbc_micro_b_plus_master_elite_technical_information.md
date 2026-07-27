@@ -3,27 +3,27 @@ title: Technical information for BBC Master Elite on the BBC Micro B+
 source_url: https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite_technical_information.html
 category: source-code
 topics:
-- memory management
-- assembly
 - graphics
+- assembly
+- memory management
 - basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - SID
-- CPU
 - CIA
+- CPU
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Technical information for BBC Master Elite on the BBC Micro B+

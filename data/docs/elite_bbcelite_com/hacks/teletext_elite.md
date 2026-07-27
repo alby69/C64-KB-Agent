@@ -3,8 +3,8 @@ title: About Teletext Elite
 source_url: https://elite.bbcelite.com/hacks/teletext_elite.html
 category: reference
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # About Teletext Elite

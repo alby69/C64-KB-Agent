@@ -3,31 +3,31 @@ title: Detecting 6526 vs 6526A CIA Chips
 source_url: https://codebase.c64.org/doku.php?id=base%3Adetecting_6526_vs_6526a_cia_chips
 category: reference
 topics:
-- basic
-- assembly
-- memory management
 - raster interrupts
+- memory management
 - sprite programming
+- assembly
+- basic
 difficulty: advanced
 language: mixed
 hardware:
-- KERNAL
-- CIA
 - VIC-II
+- CIA
 - SID
+- KERNAL
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- keyboard-handling
+- joystick-reading
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Detecting 6526 vs 6526A CIA Chips

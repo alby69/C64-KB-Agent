@@ -4,21 +4,21 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Abubble_sort_8-bit_elemen
 category: reference
 topics:
 - basic
-- assembly
 - memory management
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
 - music-player
+- sid-registers
 - kernal-routines
+- memory-map
 - sound-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Bubble Sort (for 8-Bit Elements)

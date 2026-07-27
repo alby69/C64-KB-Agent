@@ -3,30 +3,30 @@ title: Decoding bitstreams for fun and profit
 source_url: https://codebase.c64.org/doku.php?id=base%3Adecoding_bitstreams
 category: manual
 topics:
+- sprite programming
 - memory management
 - assembly
-- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
+- BASIC ROM
+- KERNAL
 - CIA
 - SID
 - CPU
-- BASIC ROM
-- KERNAL
 related:
-- sid-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- keyboard-handling
+- joystick-reading
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
 - cia-registers
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Decoding bitstreams for fun and profit

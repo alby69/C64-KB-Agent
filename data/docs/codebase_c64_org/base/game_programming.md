@@ -3,28 +3,28 @@ title: Game Programming
 source_url: https://codebase.c64.org/doku.php?id=base%3Agame_programming
 category: tutorial
 topics:
-- basic
-- assembly
 - raster interrupts
 - input handling
 - sprite programming
+- assembly
+- basic
 difficulty: beginner
 language: assembly
 hardware:
 - CPU
-- KERNAL
-- CIA
 - VIC-II
+- CIA
+- KERNAL
 related:
-- keyboard-handling
-- memory-map
-- joystick-reading
-- sprite-programming
-- kernal-routines
-- cia-registers
 - vic-ii-registers
 - raster-interrupts
-scraped_at: '2026-07-20'
+- keyboard-handling
+- joystick-reading
+- kernal-routines
+- memory-map
+- sprite-programming
+- cia-registers
+scraped_at: '2026-07-27'
 ---
 
 # Game Programming

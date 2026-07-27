@@ -3,8 +3,8 @@ title: Instructions for the Commodore 64 version of the Elite Universe Editor
 source_url: https://elite.bbcelite.com/hacks/elite_universe_editor_instructions_commodore_64.html
 category: manual
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
@@ -12,15 +12,15 @@ hardware:
 - SID
 - CIA
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Instructions for the Commodore 64 version of the Elite Universe Editor

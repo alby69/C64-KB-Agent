@@ -3,10 +3,10 @@ title: base:8x8-plasma-looped [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-looped
 category: reference
 topics:
-- graphics
-- raster interrupts
-- assembly
 - basic
+- raster interrupts
+- graphics
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
@@ -15,7 +15,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

@@ -4,24 +4,24 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Aplaying_music_a000-_ffff
 category: reference
 topics:
 - sound generation
+- basic
 - raster interrupts
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - SID
+- KERNAL
 related:
-- sid-registers
-- memory-map
+- vic-ii-registers
 - music-player
+- raster-interrupts
+- sid-registers
+- kernal-routines
+- memory-map
 - sprite-programming
 - sound-programming
-- kernal-routines
-- vic-ii-registers
-- raster-interrupts
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 

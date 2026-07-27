@@ -3,10 +3,10 @@ title: Scoring points
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascoring_points
 category: reference
 topics:
-- graphics
-- raster interrupts
-- assembly
 - sprite programming
+- raster interrupts
+- graphics
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
@@ -16,7 +16,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Scoring points

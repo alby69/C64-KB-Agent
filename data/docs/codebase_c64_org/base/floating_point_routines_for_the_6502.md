@@ -8,12 +8,12 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Floating Point Routines for the 6502

@@ -10,12 +10,12 @@ hardware:
 - SID
 - KERNAL
 related:
-- memory-map
 - music-player
 - sid-registers
-- sound-programming
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+- sound-programming
+scraped_at: '2026-07-27'
 last_modified: '2026-05-12T18:59:43Z'
 ---
 

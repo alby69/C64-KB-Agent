@@ -3,8 +3,8 @@ title: GIF to sprites
 source_url: https://codebase.c64.org/doku.php?id=base%3Agif_to_sprites
 category: tool
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: intermediate
 language: none
 hardware:
@@ -13,7 +13,7 @@ related:
 - vic-ii-registers
 - raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # GIF to sprites

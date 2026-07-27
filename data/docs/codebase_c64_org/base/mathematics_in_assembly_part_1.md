@@ -4,17 +4,17 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Amathematics_in_assembly_
 category: tutorial
 topics:
 - basic
-- assembly
 - memory management
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-07-20'
+- memory-map
+scraped_at: '2026-07-27'
 ---
 
 # Prologue

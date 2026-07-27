@@ -3,20 +3,20 @@ title: Views and view types in NES Elite
 source_url: https://elite.bbcelite.com/deep_dives/views_and_view_types_in_nes_elite.html
 category: deep-dive
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 - CIA
 related:
-- joystick-reading
-- keyboard-handling
 - kernal-routines
+- keyboard-handling
 - memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Views and view types in NES Elite

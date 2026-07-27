@@ -3,27 +3,27 @@ title: Building Apple II Elite from the source disk
 source_url: https://elite.bbcelite.com/deep_dives/building_apple_ii_elite_from_the_source_disk.html
 category: source-code
 topics:
-- basic
-- assembly
 - graphics
+- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
-- SID
 - CPU
 - KERNAL
+- CIA
 - BASIC ROM
+- SID
 related:
-- sid-registers
 - sound-programming
-- joystick-reading
-- keyboard-handling
 - kernal-routines
-- memory-map
+- sid-registers
+- keyboard-handling
 - music-player
+- memory-map
+- joystick-reading
 - cia-registers
-scraped_at: '2026-07-20'
+scraped_at: '2026-07-27'
 ---
 
 # Building Apple II Elite from the source disk
