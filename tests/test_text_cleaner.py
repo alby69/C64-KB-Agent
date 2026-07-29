@@ -10,7 +10,7 @@ from cleaners.text_cleaner import clean_text, advanced_clean, clean_file
 
 class TestCleanText:
     def test_remove_control_chars(self):
-        result = clean_text("hello\x00world\x01\test")
+        result = clean_text("hello\x00world\x01\x15test")
         assert result == "helloworldtest"
 
     def test_normalize_whitespace(self):

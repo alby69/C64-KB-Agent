@@ -1,0 +1,3 @@
+[submodule "data/sources/c64ref"]
+	path = data/sources/c64ref
+	url = https://github.com/mist64/c64ref.git

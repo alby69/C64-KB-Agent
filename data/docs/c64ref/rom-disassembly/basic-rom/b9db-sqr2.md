@@ -1,0 +1,41 @@
+---
+title: SQR(2)
+source_url: https://github.com/mist64/c64ref/blob/main/src/c64disasm/marko_mäkelä.txt
+category: source-code
+topics:
+- rom-disassembly
+- basic-rom
+difficulty: advanced
+language: assembly
+hardware:
+- C64
+related: []
+scraped_at: '2026-07-29'
+c64ref:
+  module: c64disasm
+  source_files:
+  - marko_mäkelä.txt
+  address: $B9DB
+  address_end: $B9DB
+  symbol: sqr2
+  sources:
+  - name: Marko Mäkelä
+    author: Marko Mäkelä
+    description: Nessun commento disponibile.
+---
+
+# $B9DB — SQR(2)
+
+## Disassemblatura
+```assembly
+.B9DB  81 35 04 F3 34
+```
+
+
+## Commenti
+
+### Marko Mäkelä (Marko Mäkelä)
+Nessun commento disponibile.
+
+---
+*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*
