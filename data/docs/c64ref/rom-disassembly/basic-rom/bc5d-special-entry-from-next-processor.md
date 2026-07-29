@@ -1,0 +1,100 @@
+---
+title: SPECIAL ENTRY FROM "NEXT" PROCESSOR
+source_url: https://github.com/mist64/c64ref/blob/main/src/c64disasm/bob_sander-cederlof.txt
+category: source-code
+topics:
+- rom-disassembly
+- basic-rom
+difficulty: advanced
+language: assembly
+hardware:
+- C64
+related:
+- bc5b-fac
+- bit
+- eor
+- return
+- ror
+scraped_at: '2026-07-29'
+c64ref:
+  module: c64disasm
+  source_files:
+  - bob_sander-cederlof.txt
+  address: $BC5D
+  address_end: $BC98
+  symbol: special-entry-from-next-processor
+  sources:
+  - name: Bob Sander-Cederlof
+    author: Bob Sander-Cederlof
+    description: '- **$BC5F**: GET EXPONENT OF COMPARAND'
+---
+
+# $BC5D — SPECIAL ENTRY FROM "NEXT" PROCESSOR
+
+## Disassemblatura
+```assembly
+.BC5D  84 25    STY $25
+.BC5F  A0 00    LDY #$00   ; GET EXPONENT OF COMPARAND
+.BC61  B1 24    LDA ($24),Y
+.BC63  C8       INY   ; POINT AT NEXT BYTE
+.BC64  AA       TAX   ; EXPONENT TO X-REG
+.BC65  F0 C4    BEQ $BC2B   ; IF COMPARAND=0, "SIGN" COMPARES FAC
+.BC67  B1 24    LDA ($24),Y   ; GET HI-BYTE OF MANTISSA
+.BC69  45 66    EOR $66   ; COMPARE WITH FAC SIGN
+.BC6B  30 C2    BMI $BC2F   ; DIFFERENT SIGNS, "SIGN" GIVES ANSWER
+.BC6D  E4 61    CPX $61   ; SAME SIGN, SO COMPARE EXPONENTS
+.BC6F  D0 21    BNE $BC92   ; DIFFERENT, SO SUFFICIENT TEST
+.BC71  B1 24    LDA ($24),Y   ; SAME EXPONENT, COMPARE MANTISSA
+.BC73  09 80    ORA #$80   ; SET INVISIBLE NORMALIZED BIT
+.BC75  C5 62    CMP $62
+.BC77  D0 19    BNE $BC92   ; NOT SAME, SO SUFFICIENT
+.BC79  C8       INY   ; SAME, COMPARE MORE MANTISSA
+.BC7A  B1 24    LDA ($24),Y
+.BC7C  C5 63    CMP $63
+.BC7E  D0 12    BNE $BC92   ; NOT SAME, SO SUFFICIENT
+.BC80  C8       INY   ; SAME, COMPARE MORE MANTISSA
+.BC81  B1 24    LDA ($24),Y
+.BC83  C5 64    CMP $64
+.BC85  D0 0B    BNE $BC92   ; NOT SAME, SO SUFFICIENT
+.BC87  C8       INY   ; SAME, COMPARE REST OF MANTISSA
+.BC88  A9 7F    LDA #$7F   ; ARTIFICIAL EXTENSION BYTE FOR COMPARAND
+.BC8A  C5 70    CMP $70
+.BC8C  B1 24    LDA ($24),Y
+.BC8E  E5 65    SBC $65
+.BC90  F0 28    BEQ $BCBA   ; NUMBERS ARE EQUAL, RETURN (A)=0
+.BC92  A5 66    LDA $66   ; NUMBERS ARE DIFFERENT
+.BC94  90 02    BCC $BC98   ; FAC IS LARGER MAGNITUDE
+.BC96  49 FF    EOR #$FF   ; FAC IS SMALLER MAGNITUDE <<<  NOTE THAT ABOVE THREE LINES CAN BE SHORTENED: >>> <<<  .1  ROR              PUT CARRY INTO SIGN BIT  >>> <<<      EOR FAC.SIGN     TOGGLE WITH SIGN OF FAC  >>>
+.BC98  4C 31 BC JMP $BC31   ; CONVERT +1 OR -1
+```
+
+
+## Commenti
+
+### Bob Sander-Cederlof (Bob Sander-Cederlof)
+- **$BC5F**: GET EXPONENT OF COMPARAND
+- **$BC63**: POINT AT NEXT BYTE
+- **$BC64**: EXPONENT TO X-REG
+- **$BC65**: IF COMPARAND=0, "SIGN" COMPARES FAC
+- **$BC67**: GET HI-BYTE OF MANTISSA
+- **$BC69**: COMPARE WITH FAC SIGN
+- **$BC6B**: DIFFERENT SIGNS, "SIGN" GIVES ANSWER
+- **$BC6D**: SAME SIGN, SO COMPARE EXPONENTS
+- **$BC6F**: DIFFERENT, SO SUFFICIENT TEST
+- **$BC71**: SAME EXPONENT, COMPARE MANTISSA
+- **$BC73**: SET INVISIBLE NORMALIZED BIT
+- **$BC77**: NOT SAME, SO SUFFICIENT
+- **$BC79**: SAME, COMPARE MORE MANTISSA
+- **$BC7E**: NOT SAME, SO SUFFICIENT
+- **$BC80**: SAME, COMPARE MORE MANTISSA
+- **$BC85**: NOT SAME, SO SUFFICIENT
+- **$BC87**: SAME, COMPARE REST OF MANTISSA
+- **$BC88**: ARTIFICIAL EXTENSION BYTE FOR COMPARAND
+- **$BC90**: NUMBERS ARE EQUAL, RETURN (A)=0
+- **$BC92**: NUMBERS ARE DIFFERENT
+- **$BC94**: FAC IS LARGER MAGNITUDE
+- **$BC96**: FAC IS SMALLER MAGNITUDE <<<  NOTE THAT ABOVE THREE LINES CAN BE SHORTENED: >>> <<<  .1  ROR              PUT CARRY INTO SIGN BIT  >>> <<<      EOR FAC.SIGN     TOGGLE WITH SIGN OF FAC  >>>
+- **$BC98**: CONVERT +1 OR -1
+
+---
+*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*

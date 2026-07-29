@@ -1,0 +1,87 @@
+---
+title: FOUND A DECIMAL POINT
+source_url: https://github.com/mist64/c64ref/blob/main/src/c64disasm/bob_sander-cederlof.txt
+category: source-code
+topics:
+- rom-disassembly
+- basic-rom
+difficulty: advanced
+language: assembly
+hardware:
+- C64
+related:
+- 00a5-count
+- aa2c-string
+- ab45-print
+- bc5b-fac
+- bd41-found-a-decimal-point
+- bd67-do-fac1-and-return
+- check
+- dec
+- return
+- second
+scraped_at: '2026-07-29'
+c64ref:
+  module: c64disasm
+  source_files:
+  - bob_sander-cederlof.txt
+  address: $BD41
+  address_end: $BD67
+  symbol: found-a-decimal-point
+  sources:
+  - name: Bob Sander-Cederlof
+    author: Bob Sander-Cederlof
+    description: '- **$BD41**: C=1, SET DPFLG FOR DECIMAL POINT'
+---
+
+# $BD41 — FOUND A DECIMAL POINT
+
+## Disassemblatura
+```assembly
+.BD41  66 5F    ROR $5F   ; C=1, SET DPFLG FOR DECIMAL POINT
+.BD43  24 5F    BIT $5F   ; CHECK IF PREVIOUS DEC. PT.
+.BD45  50 C3    BVC $BD0A   ; NO PREVIOUS DECIMAL POINT A SECOND DECIMAL POINT IS TAKEN AS A TERMINATOR TO THE NUMERIC STRING. "A=11..22" WILL GIVE A SYNTAX ERROR, BECAUSE IT IS TWO NUMBERS WITH NO OPERATOR BETWEEN. "PRINT 11..22" GIVES NO ERROR, BECAUSE IT IS JUST THE CONCATENATION OF TWO NUMBERS. NUMBER TERMINATED, ADJUST EXPONENT NOW
+.BD47  A5 5E    LDA $5E   ; E-VALUE
+.BD49  38       SEC   ; MODIFY WITH COUNT OF DIGITS
+.BD4A  E5 5D    SBC $5D   ; AFTER THE DECIMAL POINT
+.BD4C  85 5E    STA $5E   ; COMPLETE CURRENT EXPONENT
+.BD4E  F0 12    BEQ $BD62   ; NO ADJUST NEEDED IF EXP=0
+.BD50  10 09    BPL $BD5B   ; EXP>0, MULTIPLY BY TEN
+.BD52  20 FE BA JSR $BAFE   ; EXP<0, DIVIDE BY TEN
+.BD55  E6 5E    INC $5E   ; UNTIL EXP=0
+.BD57  D0 F9    BNE $BD52
+.BD59  F0 07    BEQ $BD62   ; ...ALWAYS, WE ARE FINISHED
+.BD5B  20 E2 BA JSR $BAE2   ; EXP>0, MULTIPLY BKY TEN
+.BD5E  C6 5E    DEC $5E   ; UNTIL EXP=0
+.BD60  D0 F9    BNE $BD5B
+.BD62  A5 67    LDA $67   ; IS WHOLE NUMBER NEGATIVE?
+.BD64  30 01    BMI $BD67   ; YES
+.BD66  60       RTS   ; NO, RETURN, WHOLE JOB DONE!
+.BD67  4C B4 BF JMP $BFB4   ; NEGATIVE NUMBER, SO NEGATE FAC
+```
+
+
+## Commenti
+
+### Bob Sander-Cederlof (Bob Sander-Cederlof)
+- **$BD41**: C=1, SET DPFLG FOR DECIMAL POINT
+- **$BD43**: CHECK IF PREVIOUS DEC. PT.
+- **$BD45**: NO PREVIOUS DECIMAL POINT A SECOND DECIMAL POINT IS TAKEN AS A TERMINATOR TO THE NUMERIC STRING. "A=11..22" WILL GIVE A SYNTAX ERROR, BECAUSE IT IS TWO NUMBERS WITH NO OPERATOR BETWEEN. "PRINT 11..22" GIVES NO ERROR, BECAUSE IT IS JUST THE CONCATENATION OF TWO NUMBERS. NUMBER TERMINATED, ADJUST EXPONENT NOW
+- **$BD47**: E-VALUE
+- **$BD49**: MODIFY WITH COUNT OF DIGITS
+- **$BD4A**: AFTER THE DECIMAL POINT
+- **$BD4C**: COMPLETE CURRENT EXPONENT
+- **$BD4E**: NO ADJUST NEEDED IF EXP=0
+- **$BD50**: EXP>0, MULTIPLY BY TEN
+- **$BD52**: EXP<0, DIVIDE BY TEN
+- **$BD55**: UNTIL EXP=0
+- **$BD59**: ...ALWAYS, WE ARE FINISHED
+- **$BD5B**: EXP>0, MULTIPLY BKY TEN
+- **$BD5E**: UNTIL EXP=0
+- **$BD62**: IS WHOLE NUMBER NEGATIVE?
+- **$BD64**: YES
+- **$BD66**: NO, RETURN, WHOLE JOB DONE!
+- **$BD67**: NEGATIVE NUMBER, SO NEGATE FAC
+
+---
+*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*
