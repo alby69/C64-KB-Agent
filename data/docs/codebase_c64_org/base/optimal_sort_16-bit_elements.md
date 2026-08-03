@@ -10,21 +10,21 @@ language: mixed
 hardware:
 - CPU
 - CIA
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Optimal Sort for any number of 16-bit elements
@@ -146,7 +146,15 @@ The calling program has to set the pointers ZPADL and ZPADH pointing to the star
 
 In addition the following 9 bytes are needed internally
 
-WORK1L WORK1LH WORK1HH WORK2L WORK2H WORK3L WORK3H WORK4L WORK4H
+WORK1L
+WORK1LH
+WORK1HH
+WORK2L
+WORK2H
+WORK3L
+WORK3H
+WORK4L
+WORK4H
 
 The following is a template for a program calling the routine:
 

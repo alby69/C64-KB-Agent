@@ -7,12 +7,12 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # In the crosshairs
@@ -23,7 +23,7 @@ During combat, one of the most important calculations we need to perform is whet
 
 ![Firing at a ship in 6502 Second Processor Elite](https://elite.bbcelite.com/images/6502sp/crosshairs.png) 
 
-						In both cases, we use the [HITCH](https://elite.bbcelite.com/cassette/main/subroutine/hitch.html) routine to work out just how close to the crosshairs that ship really is. Let's take a look at how the HITCH routine works.
+In both cases, we use the [HITCH](https://elite.bbcelite.com/cassette/main/subroutine/hitch.html) routine to work out just how close to the crosshairs that ship really is. Let's take a look at how the HITCH routine works.
 
 There are a number of steps we have to take to work out whether a ship is in our crosshairs. They are as follows.
 
@@ -39,7 +39,7 @@ The key to the calculation is the observation that the ship's x- and y-coordinat
 
 We've already confirmed in the checks above that x_hi and y_hi are both zero, so we calculate this:
 
-(S R) = x_lo^2 + y_lo^2
+  (S R) = x_lo^2 + y_lo^2
 
 which, using Pythagoras, is the same as the square of the distance from our crosshairs to the ship.
 

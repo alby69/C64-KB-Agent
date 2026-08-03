@@ -3,74 +3,43 @@ title: List of all subroutines in the Commodore 64 version of Elite
 source_url: https://elite.bbcelite.com/c64/indexes/subroutines.html
 category: source-code
 topics:
-- graphics
-- input handling
-- assembly
 - memory management
+- basic
+- sound generation
+- graphics
+- assembly
+- input handling
 - raster interrupts
 - sprite programming
-- sound generation
-- basic
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
-- CPU
 - KERNAL
-- CIA
 - BASIC ROM
 - SID
+- VIC-II
+- CPU
+- CIA
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # List of all subroutines in the Commodore 64 version of Elite
 
 This index contains every subroutine and entry point that appears in the source code for the Commodore 64 version of Elite, grouped by category. An entry points is a label within a subroutine that is called from outside the subroutine, which typically implements a subset or variation of the functionality of the parent subroutine.
 
-- [Charts](https://elite.bbcelite.com#charts)
-- [Copy protection](https://elite.bbcelite.com#copy-protection)
-- [Dashboard](https://elite.bbcelite.com#dashboard)
-- [Drawing circles](https://elite.bbcelite.com#drawing-circles)
-- [Drawing lines](https://elite.bbcelite.com#drawing-lines)
-- [Drawing pixels](https://elite.bbcelite.com#drawing-pixels)
-- [Drawing planets](https://elite.bbcelite.com#drawing-planets)
-- [Drawing ships](https://elite.bbcelite.com#drawing-ships)
-- [Drawing suns](https://elite.bbcelite.com#drawing-suns)
-- [Drawing the screen](https://elite.bbcelite.com#drawing-the-screen)
-- [Equipment](https://elite.bbcelite.com#equipment)
-- [Flight](https://elite.bbcelite.com#flight)
-- [Keyboard](https://elite.bbcelite.com#keyboard)
-- [Loader](https://elite.bbcelite.com#loader)
-- [Main loop](https://elite.bbcelite.com#main-loop)
-- [Market](https://elite.bbcelite.com#market)
-- [Maths (Arithmetic)](https://elite.bbcelite.com#maths-arithmetic)
-- [Maths (Geometry)](https://elite.bbcelite.com#maths-geometry)
-- [Missions](https://elite.bbcelite.com#missions)
-- [Moving](https://elite.bbcelite.com#moving)
-- [Save and load](https://elite.bbcelite.com#save-and-load)
-- [Sound](https://elite.bbcelite.com#sound)
-- [Stardust](https://elite.bbcelite.com#stardust)
-- [Start and end](https://elite.bbcelite.com#start-and-end)
-- [Status](https://elite.bbcelite.com#status)
-- [Tactics](https://elite.bbcelite.com#tactics)
-- [Text](https://elite.bbcelite.com#text)
-- [Tube](https://elite.bbcelite.com#tube)
-- [Universe](https://elite.bbcelite.com#universe)
-- [Utility routines](https://elite.bbcelite.com#utility-routines)
-
-| ## Charts | |
+| Charts ------ |  | 
 | [hm](https://elite.bbcelite.com/c64/main/subroutine/hm.html) | Select the closest system and redraw the chart crosshairs | 
 | [HME2](https://elite.bbcelite.com/c64/main/subroutine/hme2.html) | Search the galaxy for a system | 
 | [TT103](https://elite.bbcelite.com/c64/main/subroutine/tt103.html) | Draw a small set of crosshairs on a chart | 
@@ -81,9 +50,9 @@ This index contains every subroutine and entry point that appears in the source 
 | [TT180](https://elite.bbcelite.com/c64/main/subroutine/tt123.html) | Contains an RTS | 
 | [TT22](https://elite.bbcelite.com/c64/main/subroutine/tt22.html) | Show the Long-range Chart | 
 | [TT23](https://elite.bbcelite.com/c64/main/subroutine/tt23.html) | Show the Short-range Chart | 
-| ## Copy protection | |
+| Copy protection --------------- |  | 
 | [Checksum](https://elite.bbcelite.com/c64/main/subroutine/checksum.html) | Checksum the code from $1000 to $9FFF and check against S%-1 | 
-| ## Dashboard | |
+| Dashboard --------- |  | 
 | [ABORT](https://elite.bbcelite.com/c64/main/subroutine/abort.html) | Unarm missiles and update the dashboard indicators | 
 | [ABORT2](https://elite.bbcelite.com/c64/main/subroutine/abort2.html) | Set/unset the lock target for a missile and update the dashboard | 
 | [BUMP2](https://elite.bbcelite.com/c64/main/subroutine/bump2.html) | Bump up the value of the pitch or roll dashboard indicator | 
@@ -113,7 +82,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [SP2](https://elite.bbcelite.com/c64/main/subroutine/sp2.html) | Draw a dot on the compass, given the planet/station vector | 
 | [SPBLB](https://elite.bbcelite.com/c64/main/subroutine/spblb.html) | Light up the space station indicator ("S") on the dashboard | 
 | [WPSHPS](https://elite.bbcelite.com/c64/main/subroutine/wpshps.html) | Clear the scanner, reset the ball line and sun line heaps | 
-| ## Drawing circles | |
+| Drawing circles --------------- |  | 
 | [BLINE](https://elite.bbcelite.com/c64/main/subroutine/bline.html) | Draw a circle segment and add it to the ball line heap | 
 | [CHKON](https://elite.bbcelite.com/c64/main/subroutine/chkon.html) | Check whether any part of a circle appears on the extended screen | 
 | [CIRCLE](https://elite.bbcelite.com/c64/main/subroutine/circle.html) | Draw a circle for the planet | 
@@ -125,7 +94,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [LL164](https://elite.bbcelite.com/c64/main/subroutine/ll164.html) | Make the hyperspace sound and draw the hyperspace tunnel | 
 | [TT128](https://elite.bbcelite.com/c64/main/subroutine/tt128.html) | Draw a circle on a chart | 
 | [TT14](https://elite.bbcelite.com/c64/main/subroutine/tt14.html) | Draw a circle with crosshairs on a chart | 
-| ## Drawing lines | |
+| Drawing lines ------------- |  | 
 | [EDGES](https://elite.bbcelite.com/c64/main/subroutine/edges.html) | Draw a horizontal line given a centre and a half-width | 
 | [HL6](https://elite.bbcelite.com/c64/main/subroutine/loin_part_7_of_7.html) | Contains an RTS | 
 | [HLOIN](https://elite.bbcelite.com/c64/main/subroutine/hloin.html) | Draw a horizontal line from (X1, Y1) to (X2, Y1) | 
@@ -153,13 +122,13 @@ This index contains every subroutine and entry point that appears in the source 
 | [NLIN3](https://elite.bbcelite.com/c64/main/subroutine/nlin3.html) | Print a title and draw a horizontal line at row 19 to box it in | 
 | [NLIN4](https://elite.bbcelite.com/c64/main/subroutine/nlin4.html) | Draw a horizontal line at pixel row 19 to box in a title | 
 | [TT15](https://elite.bbcelite.com/c64/main/subroutine/tt15.html) | Draw a set of crosshairs | 
-| ## Drawing pixels | |
+| Drawing pixels -------------- |  | 
 | [CPIX2](https://elite.bbcelite.com/c64/main/subroutine/cpix2.html) | Draw a single-height dash on the dashboard | 
 | [CPIX4](https://elite.bbcelite.com/c64/main/subroutine/cpix4.html) | Draw a double-height dot on the dashboard | 
 | [PIXEL](https://elite.bbcelite.com/c64/main/subroutine/pixel.html) | Draw a one-pixel dot, two-pixel dash or four-pixel square | 
 | [PIXEL2](https://elite.bbcelite.com/c64/main/subroutine/pixel2.html) | Draw a stardust particle relative to the screen centre | 
 | [PX4](https://elite.bbcelite.com/c64/main/subroutine/pixel.html) | Contains an RTS | 
-| ## Drawing planets | |
+| Drawing planets --------------- |  | 
 | [PL2](https://elite.bbcelite.com/c64/main/subroutine/pl2.html) | Remove the planet or sun from the screen | 
 | [PL2-1](https://elite.bbcelite.com/c64/main/subroutine/pl2.html) | Contains an RTS | 
 | [PL21](https://elite.bbcelite.com/c64/main/subroutine/pl21.html) | Return from a planet/sun-drawing routine with a failure flag | 
@@ -178,7 +147,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [PLS6](https://elite.bbcelite.com/c64/main/subroutine/pls6.html) | Calculate (X K) = (A P+1 P) / (z_sign z_hi z_lo) | 
 | [WP1](https://elite.bbcelite.com/c64/main/subroutine/wp1.html) | Reset the ball line heap | 
 | [WPLS2](https://elite.bbcelite.com/c64/main/subroutine/wpls2.html) | Remove the planet from the screen | 
-| ## Drawing ships | |
+| Drawing ships ------------- |  | 
 | [DOEXP](https://elite.bbcelite.com/c64/main/subroutine/doexp.html) | Draw an exploding ship | 
 | [EE51](https://elite.bbcelite.com/c64/main/subroutine/ll9_part_1_of_12.html) | Remove the current ship from the screen, called from SHPPT before drawing the ship as a point | 
 | [EXS1](https://elite.bbcelite.com/c64/main/subroutine/doexp.html) | Set (A X) = (A R) +/- random * cloud size | 
@@ -200,7 +169,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [LL9 (Part 12 of 12)](https://elite.bbcelite.com/c64/main/subroutine/ll9_part_12_of_12.html) | Draw ship: Draw all the visible edges from the ship line heap | 
 | [PTCLS2](https://elite.bbcelite.com/c64/main/subroutine/ptcls2.html) | Draw the explosion along with an explosion sprite | 
 | [SHPPT](https://elite.bbcelite.com/c64/main/subroutine/shppt.html) | Draw a distant ship as a point rather than a full wireframe | 
-| ## Drawing suns | |
+| Drawing suns ------------ |  | 
 | [FLFLLS](https://elite.bbcelite.com/c64/main/subroutine/flflls.html) | Reset the sun line heap | 
 | [RTS2](https://elite.bbcelite.com/c64/main/subroutine/sun_part_4_of_4.html) | Contains an RTS | 
 | [SUN (Part 1 of 4)](https://elite.bbcelite.com/c64/main/subroutine/sun_part_1_of_4.html) | Draw the sun: Set up all the variables needed to draw the sun | 
@@ -209,7 +178,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [SUN (Part 4 of 4)](https://elite.bbcelite.com/c64/main/subroutine/sun_part_4_of_4.html) | Draw the sun: Continue to the top of the screen, erasing the old sun line by line | 
 | [WPLS](https://elite.bbcelite.com/c64/main/subroutine/wpls.html) | Remove the sun from the screen | 
 | [WPLS-1](https://elite.bbcelite.com/c64/main/subroutine/wpls.html) | Contains an RTS | 
-| ## Drawing the screen | |
+| Drawing the screen ------------------ |  | 
 | [BLUEBAND](https://elite.bbcelite.com/c64/main/subroutine/blueband.html) | Clear two four-character borders along each side of the space view | 
 | [BLUEBANDS](https://elite.bbcelite.com/c64/main/subroutine/bluebands.html) | Clear a four-character border along one side of the space view | 
 | [BOMBOFF](https://elite.bbcelite.com/c64/main/subroutine/bomboff.html) | Switch off the energy bomb effect | 
@@ -230,7 +199,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [wantdials](https://elite.bbcelite.com/c64/main/subroutine/wantdials.html) | Show the dashboard on-screen | 
 | [WSCAN](https://elite.bbcelite.com/c64/main/subroutine/wscan.html) | Wait for the vertical sync | 
 | [zonkscanners](https://elite.bbcelite.com/c64/main/subroutine/zonkscanners.html) | Hide all ships on the scanner | 
-| ## Equipment | |
+| Equipment --------- |  | 
 | [c](https://elite.bbcelite.com/c64/main/subroutine/prx.html) | Contains an RTS | 
 | [eq](https://elite.bbcelite.com/c64/main/subroutine/eq.html) | Subtract the price of equipment from the cash pot | 
 | [EQSHP](https://elite.bbcelite.com/c64/main/subroutine/eqshp.html) | Show the Equip Ship screen | 
@@ -240,7 +209,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [prx-3](https://elite.bbcelite.com/c64/main/subroutine/prx.html) | Return the price of the item with number A - 1 | 
 | [qv](https://elite.bbcelite.com/c64/main/subroutine/qv.html) | Print a menu of the four space views, for buying lasers | 
 | [refund](https://elite.bbcelite.com/c64/main/subroutine/refund.html) | Install a new laser, processing a refund if applicable | 
-| ## Flight | |
+| Flight ------ |  | 
 | [DCS1](https://elite.bbcelite.com/c64/main/subroutine/dcs1.html) | Calculate the vector from the ideal docking position to the ship | 
 | [DENGY](https://elite.bbcelite.com/c64/main/subroutine/dengy.html) | Drain some energy from the energy banks | 
 | [dockEd](https://elite.bbcelite.com/c64/main/subroutine/docked.html) | Print a message to say there is no hyperspacing allowed inside the station | 
@@ -276,7 +245,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [wW](https://elite.bbcelite.com/c64/main/subroutine/ww.html) | Start a hyperspace countdown | 
 | [wW2](https://elite.bbcelite.com/c64/main/subroutine/ww.html) | Start the hyperspace countdown, starting the countdown from the value in A | 
 | [zZ+1](https://elite.bbcelite.com/c64/main/subroutine/ghy.html) | Contains an RTS | 
-| ## Keyboard | |
+| Keyboard -------- |  | 
 | [CTRL](https://elite.bbcelite.com/c64/main/subroutine/ctrl.html) | Scan the keyboard to see if CTRL is currently pressed | 
 | [DK4](https://elite.bbcelite.com/c64/main/subroutine/dk4.html) | Scan for pause, configuration and secondary flight keys | 
 | [DKJ1](https://elite.bbcelite.com/c64/main/subroutine/dkj1.html) | Read joystick and flight controls | 
@@ -299,7 +268,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [U%](https://elite.bbcelite.com/c64/main/subroutine/u_per_cent.html) | Clear the key logger and reset a number of flight variables | 
 | [YESNO](https://elite.bbcelite.com/c64/main/subroutine/yesno.html) | Wait until either "Y" or "N" is pressed | 
 | [ZEKTRAN](https://elite.bbcelite.com/c64/main/subroutine/zektran.html) | Clear the key logger | 
-| ## Loader | |
+| Loader ------ |  | 
 | [BEGIN](https://elite.bbcelite.com/c64/main/subroutine/begin.html) | Initialise the configuration variables and start the game | 
 | [COLD](https://elite.bbcelite.com/c64/main/subroutine/cold.html) | Configure memory, set up interrupt handlers and configure the VIC-II, SID and CIA chips | 
 | [CopyZeroPage (Disk Loader 2)](https://elite.bbcelite.com/c64/disk_loader_2/subroutine/copyzeropage.html) | Copy a page of data in a specified direction between zero page and the page at $CE00, omitting the first two bytes | 
@@ -331,7 +300,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [SetUpGMAFile (Disk Loader 2)](https://elite.bbcelite.com/c64/disk_loader_2/subroutine/setupgmafile.html) | Configure the filename parameters to load a specific GMA file | 
 | [SHIPS (Game Loader)](https://elite.bbcelite.com/c64/game_loader/subroutine/ships.html) | The binaries for the ship blueprints | 
 | [STARTUP](https://elite.bbcelite.com/c64/main/subroutine/startup.html) | Set the various vectors, interrupts and timers | 
-| ## Main loop | |
+| Main loop --------- |  | 
 | [FRCE](https://elite.bbcelite.com/c64/main/subroutine/main_game_loop_part_6_of_6.html) | The entry point for the main game loop if we want to jump straight to a specific screen, by pretending to "press" a key, in which case A contains the internal key number of the key we want to "press" | 
 | [GOIN](https://elite.bbcelite.com/c64/main/subroutine/main_flight_loop_part_9_of_16.html) | We jump here from part 3 of the main flight loop if the docking computer is activated by pressing "C" | 
 | [M%](https://elite.bbcelite.com/c64/main/subroutine/main_flight_loop_part_1_of_16.html) | The entry point for the main flight loop | 
@@ -362,7 +331,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [MLOOP](https://elite.bbcelite.com/c64/main/subroutine/main_game_loop_part_5_of_6.html) | The entry point for the main game loop. This entry point comes after the call to the main flight loop and spawning routines, so it marks the start of the main game loop for when we are docked (as we don't need to call the main flight loop or spawning routines if we aren't in space) | 
 | [NOMVETR](https://elite.bbcelite.com/c64/main/subroutine/main_flight_loop_part_1_of_16.html) | The re-entry point in the main game loop for when there are no sprites to move | 
 | [TT100](https://elite.bbcelite.com/c64/main/subroutine/main_game_loop_part_2_of_6.html) | The entry point for the start of the main game loop, which calls the main flight loop and the moves into the spawning routine | 
-| ## Market | |
+| Market ------ |  | 
 | [BAY2](https://elite.bbcelite.com/c64/main/subroutine/tt219.html) | Jump into the main loop at FRCE, setting the key "pressed" to the Inventory key | 
 | [dn](https://elite.bbcelite.com/c64/main/subroutine/dn.html) | Print the amount of money we have left in the cash pot, then make a short, high beep and delay for 1 second | 
 | [gnum](https://elite.bbcelite.com/c64/main/subroutine/gnum.html) | Get a number from the keyboard | 
@@ -381,8 +350,8 @@ This index contains every subroutine and entry point that appears in the source 
 | [TT210](https://elite.bbcelite.com/c64/main/subroutine/tt210.html) | Show a list of current cargo in our hold, optionally to sell | 
 | [TT213](https://elite.bbcelite.com/c64/main/subroutine/tt213.html) | Show the Inventory screen | 
 | [TT219](https://elite.bbcelite.com/c64/main/subroutine/tt219.html) | Show the Buy Cargo screen | 
-| [var](https://elite.bbcelite.com/c64/main/subroutine/var.html) | Calculate QQ19+3 = economy * |economic_factor| | 
-| ## Maths (Arithmetic) | |
+| [var](https://elite.bbcelite.com/c64/main/subroutine/var.html) | Calculate QQ19+3 = economy * \|economic_factor\| | 
+| Maths (Arithmetic) ------------------ |  | 
 | [ADD](https://elite.bbcelite.com/c64/main/subroutine/add.html) | Calculate (A X) = (A P) + (S R) | 
 | [DORND](https://elite.bbcelite.com/c64/main/subroutine/dornd.html) | Generate random numbers | 
 | [DORND2](https://elite.bbcelite.com/c64/main/subroutine/dornd.html) | Make sure the C flag doesn't affect the outcome | 
@@ -402,7 +371,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [LL122](https://elite.bbcelite.com/c64/main/subroutine/ll120.html) | Calculate (Y X) = (S R) * Q and set the sign to the opposite of the top byte on the stack | 
 | [LL123](https://elite.bbcelite.com/c64/main/subroutine/ll123.html) | Calculate (Y X) = (S R) / XX12+2 or (S R) * XX12+2 | 
 | [LL128](https://elite.bbcelite.com/c64/main/subroutine/ll123.html) | Contains an RTS | 
-| [LL129](https://elite.bbcelite.com/c64/main/subroutine/ll129.html) | Calculate Q = XX12+2, A = S EOR XX12+3 and (S R) = |S R| | 
+| [LL129](https://elite.bbcelite.com/c64/main/subroutine/ll129.html) | Calculate Q = XX12+2, A = S EOR XX12+3 and (S R) = \|S R\| | 
 | [LL133](https://elite.bbcelite.com/c64/main/subroutine/ll123.html) | Negate (Y X) and return from the subroutine | 
 | [LL28](https://elite.bbcelite.com/c64/main/subroutine/ll28.html) | Calculate R = 256 * A / Q | 
 | [LL28+4](https://elite.bbcelite.com/c64/main/subroutine/ll28.html) | Skips the A >= Q check and always returns with C flag cleared, so this can be called if we know the division will work | 
@@ -418,8 +387,8 @@ This index contains every subroutine and entry point that appears in the source 
 | [MLS2](https://elite.bbcelite.com/c64/main/subroutine/mls2.html) | Calculate (S R) = XX(1 0) and (A P) = A * ALP1 | 
 | [MLTU2](https://elite.bbcelite.com/c64/main/subroutine/mltu2.html) | Calculate (A P+1 P) = (A ~P) * Q | 
 | [MLTU2-2](https://elite.bbcelite.com/c64/main/subroutine/mltu2.html) | Set Q to X, so this calculates (A P+1 P) = (A ~P) * X | 
-| [MLU1](https://elite.bbcelite.com/c64/main/subroutine/mlu1.html) | Calculate Y1 = y_hi and (A P) = |y_hi| * Q for Y-th stardust | 
-| [MLU2](https://elite.bbcelite.com/c64/main/subroutine/mlu2.html) | Calculate (A P) = |A| * Q | 
+| [MLU1](https://elite.bbcelite.com/c64/main/subroutine/mlu1.html) | Calculate Y1 = y_hi and (A P) = \|y_hi\| * Q for Y-th stardust | 
+| [MLU2](https://elite.bbcelite.com/c64/main/subroutine/mlu2.html) | Calculate (A P) = \|A\| * Q | 
 | [MU1](https://elite.bbcelite.com/c64/main/subroutine/mu1.html) | Copy X into P and A, and clear the C flag | 
 | [MU11](https://elite.bbcelite.com/c64/main/subroutine/mu11.html) | Calculate (A P) = P * X | 
 | [MU5](https://elite.bbcelite.com/c64/main/subroutine/mu5.html) | Set K(3 2 1 0) = (A A A A) and clear the C flag | 
@@ -443,7 +412,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [TT113](https://elite.bbcelite.com/c64/main/subroutine/mcash.html) | Contains an RTS | 
 | [VCSU1](https://elite.bbcelite.com/c64/main/subroutine/vcsu1.html) | Calculate vector K3(8 0) = [x y z] - coordinates of the sun or space station | 
 | [VCSUB](https://elite.bbcelite.com/c64/main/subroutine/vcsub.html) | Calculate vector K3(8 0) = [x y z] - coordinates in (A V) | 
-| ## Maths (Geometry) | |
+| Maths (Geometry) ---------------- |  | 
 | [ARCTAN](https://elite.bbcelite.com/c64/main/subroutine/arctan.html) | Calculate A = arctan(P / Q) | 
 | [FAROF](https://elite.bbcelite.com/c64/main/subroutine/farof.html) | Compare x_hi, y_hi and z_hi with 224 | 
 | [FAROF2](https://elite.bbcelite.com/c64/main/subroutine/farof2.html) | Compare x_hi, y_hi and z_hi with A | 
@@ -466,7 +435,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [TAS4](https://elite.bbcelite.com/c64/main/subroutine/tas4.html) | Calculate the dot product of XX15 and one of the space station's orientation vectors | 
 | [TAS6](https://elite.bbcelite.com/c64/main/subroutine/tas6.html) | Negate the vector in XX15 so it points in the opposite direction | 
 | [TIDY](https://elite.bbcelite.com/c64/main/subroutine/tidy.html) | Orthonormalise the orientation vectors for a ship | 
-| ## Missions | |
+| Missions -------- |  | 
 | [BAYSTEP](https://elite.bbcelite.com/c64/main/subroutine/brp.html) | Go to the docking bay (i.e. show the Status Mode screen) | 
 | [BRIEF](https://elite.bbcelite.com/c64/main/subroutine/brief.html) | Start mission 1 and show the mission briefing | 
 | [BRIEF2](https://elite.bbcelite.com/c64/main/subroutine/brief2.html) | Start mission 2 | 
@@ -482,7 +451,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [PAUSE](https://elite.bbcelite.com/c64/main/subroutine/pause.html) | Display a rotating ship, waiting until a key is pressed, then remove the ship from the screen | 
 | [TBRIEF](https://elite.bbcelite.com/c64/main/subroutine/tbrief.html) | Start mission 3 | 
 | [THERE](https://elite.bbcelite.com/c64/main/subroutine/there.html) | Check whether we are in the Constrictor's system in mission 1 | 
-| ## Moving | |
+| Moving ------ |  | 
 | [MV40](https://elite.bbcelite.com/c64/main/subroutine/mv40.html) | Rotate the planet or sun's location in space by the amount of pitch and roll of our ship | 
 | [MV45](https://elite.bbcelite.com/c64/main/subroutine/mveit_part_6_of_9.html) | Rejoin the MVEIT routine after the rotation, tactics and scanner code | 
 | [MVEIT (Part 1 of 9)](https://elite.bbcelite.com/c64/main/subroutine/mveit_part_1_of_9.html) | Move current ship: Tidy the orientation vectors | 
@@ -501,7 +470,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [MVT3](https://elite.bbcelite.com/c64/main/subroutine/mvt3.html) | Calculate K(3 2 1) = (x_sign x_hi x_lo) + K(3 2 1) | 
 | [MVT6](https://elite.bbcelite.com/c64/main/subroutine/mvt6.html) | Calculate (A P+2 P+1) = (x_sign x_hi x_lo) + (A P+2 P+1) | 
 | [SFS2](https://elite.bbcelite.com/c64/main/subroutine/sfs2.html) | Move a ship in space along one of the coordinate axes | 
-| ## Save and load | |
+| Save and load ------------- |  | 
 | [BRKBK](https://elite.bbcelite.com/c64/main/subroutine/brkbk.html) | Set the standard BRKV handler for the game | 
 | [CHECK](https://elite.bbcelite.com/c64/main/subroutine/check.html) | Calculate the checksum for the last saved commander data block | 
 | [CHECK2](https://elite.bbcelite.com/c64/main/subroutine/check2.html) | Calculate the third checksum for the last saved commander data block (Commodore 64 and Apple II versions only) | 
@@ -518,7 +487,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [tapeerror](https://elite.bbcelite.com/c64/main/subroutine/tapeerror.html) | Print either "TAPE ERROR" or "DISK ERROR" | 
 | [TR1](https://elite.bbcelite.com/c64/main/subroutine/tr1.html) | Copy the last saved commander's name from NA% to INWK | 
 | [TRNME](https://elite.bbcelite.com/c64/main/subroutine/trnme.html) | Copy the last saved commander's name from INWK to NA% | 
-| ## Sound | |
+| Sound ----- |  | 
 | [april16](https://elite.bbcelite.com/c64/main/subroutine/startbd.html) | Start playing the docking music, irrespective of the current configuration settings | 
 | [BDENTRY](https://elite.bbcelite.com/c64/main/subroutine/bdentry.html) | Start playing a new tune as background music | 
 | [BDirqhere](https://elite.bbcelite.com/c64/main/subroutine/bdirqhere.html) | The interrupt routine for playing background music | 
@@ -570,7 +539,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [startbd](https://elite.bbcelite.com/c64/main/subroutine/startbd.html) | Start playing the docking music, if configured | 
 | [stopat](https://elite.bbcelite.com/c64/main/subroutine/stopbd.html) | Stop playing the current music | 
 | [stopbd](https://elite.bbcelite.com/c64/main/subroutine/stopbd.html) | Stop playing the docking music | 
-| ## Stardust | |
+| Stardust -------- |  | 
 | [FLIP](https://elite.bbcelite.com/c64/main/subroutine/flip.html) | Reflect the stardust particles in the screen diagonal and redraw the stardust field | 
 | [nWq](https://elite.bbcelite.com/c64/main/subroutine/nwq.html) | Create a random cloud of stardust | 
 | [NWSTARS](https://elite.bbcelite.com/c64/main/subroutine/nwstars.html) | Initialise the stardust field | 
@@ -578,7 +547,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [STARS1](https://elite.bbcelite.com/c64/main/subroutine/stars1.html) | Process the stardust for the front view | 
 | [STARS2](https://elite.bbcelite.com/c64/main/subroutine/stars2.html) | Process the stardust for the left or right view | 
 | [STARS6](https://elite.bbcelite.com/c64/main/subroutine/stars6.html) | Process the stardust for the rear view | 
-| ## Start and end | |
+| Start and end ------------- |  | 
 | [BR1 (Part 1 of 2)](https://elite.bbcelite.com/c64/main/subroutine/br1_part_1_of_2.html) | Show the "Load New Commander (Y/N)?" screen and start the game | 
 | [BR1 (Part 2 of 2)](https://elite.bbcelite.com/c64/main/subroutine/br1_part_2_of_2.html) | Show the "Press Fire or Space, Commander" screen and start the game | 
 | [DEATH](https://elite.bbcelite.com/c64/main/subroutine/death.html) | Display the death screen | 
@@ -589,7 +558,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [RESET](https://elite.bbcelite.com/c64/main/subroutine/reset.html) | Reset most variables | 
 | [TITLE](https://elite.bbcelite.com/c64/main/subroutine/title.html) | Display a title screen with a rotating ship and prompt | 
 | [TT170](https://elite.bbcelite.com/c64/main/subroutine/tt170.html) | Main entry point for the Elite game code | 
-| ## Status | |
+| Status ------ |  | 
 | [BAD](https://elite.bbcelite.com/c64/main/subroutine/bad.html) | Calculate how bad we have been | 
 | [BAY](https://elite.bbcelite.com/c64/main/subroutine/bay.html) | Go to the docking bay (i.e. show the Status Mode screen) | 
 | [cmn](https://elite.bbcelite.com/c64/main/subroutine/cmn.html) | Print the commander's name | 
@@ -598,7 +567,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [EXNO2](https://elite.bbcelite.com/c64/main/subroutine/exno2.html) | Process us making a kill | 
 | [fwl](https://elite.bbcelite.com/c64/main/subroutine/fwl.html) | Print fuel and cash levels | 
 | [STATUS](https://elite.bbcelite.com/c64/main/subroutine/status.html) | Show the Status Mode screen | 
-| ## Tactics | |
+| Tactics ------- |  | 
 | [ANGRY](https://elite.bbcelite.com/c64/main/subroutine/angry.html) | Make a ship or station hostile, and if this is a ship then enable the ship's AI and give it a kick of speed | 
 | [fq1](https://elite.bbcelite.com/c64/main/subroutine/frs1.html) | Used to add a cargo canister to the universe | 
 | [FR1](https://elite.bbcelite.com/c64/main/subroutine/fr1.html) | Display the "missile jammed" message | 
@@ -619,7 +588,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [TACTICS (Part 6 of 7)](https://elite.bbcelite.com/c64/main/subroutine/tactics_part_6_of_7.html) | Apply tactics: Consider firing a laser at us, if aim is true | 
 | [TACTICS (Part 7 of 7)](https://elite.bbcelite.com/c64/main/subroutine/tactics_part_7_of_7.html) | Apply tactics: Set pitch, roll, and acceleration | 
 | [yetanotherrts](https://elite.bbcelite.com/c64/main/subroutine/yetanotherrts.html) | Contains an RTS | 
-| ## Text | |
+| Text ---- |  | 
 | [BPRNT](https://elite.bbcelite.com/c64/main/subroutine/bprnt.html) | Print a 32-bit number, left-padded to a specific number of digits, with an optional decimal point | 
 | [CHPR](https://elite.bbcelite.com/c64/main/subroutine/chpr.html) | Print a character at the text cursor by poking into screen memory | 
 | [CHPR2](https://elite.bbcelite.com/c64/main/subroutine/chpr2.html) | Character print vector handler | 
@@ -694,10 +663,10 @@ This index contains every subroutine and entry point that appears in the source 
 | [TTX69](https://elite.bbcelite.com/c64/main/subroutine/ttx69.html) | Print a paragraph break | 
 | [VOWEL](https://elite.bbcelite.com/c64/main/subroutine/vowel.html) | Test whether a character is a vowel | 
 | [WHITETEXT](https://elite.bbcelite.com/c64/main/subroutine/whitetext.html) | Switch to white text | 
-| ## Tube | |
+| Tube ---- |  | 
 | [newosrdch](https://elite.bbcelite.com/c64/main/subroutine/newosrdch.html) | The custom OSRDCH routine for reading characters | 
 | [PUTBACK](https://elite.bbcelite.com/c64/main/subroutine/putback.html) | Reset the OSWRCH vector in WRCHV to point to USOSWRCH | 
-| ## Universe | |
+| Universe -------- |  | 
 | [cpl](https://elite.bbcelite.com/c64/main/subroutine/cpl.html) | Print the selected system name | 
 | [GINF](https://elite.bbcelite.com/c64/main/subroutine/ginf.html) | Fetch the address of a ship's data block into INF | 
 | [GTHG](https://elite.bbcelite.com/c64/main/subroutine/gthg.html) | Spawn a Thargoid ship and a Thargon companion | 
@@ -739,7 +708,7 @@ This index contains every subroutine and entry point that appears in the source 
 | [ypl-1](https://elite.bbcelite.com/c64/main/subroutine/ypl.html) | Contains an RTS | 
 | [Ze](https://elite.bbcelite.com/c64/main/subroutine/ze.html) | Initialise the INWK workspace to a fairly aggressive ship | 
 | [ZINF](https://elite.bbcelite.com/c64/main/subroutine/zinf.html) | Reset the INWK workspace and orientation vectors | 
-| ## Utility routines | |
+| Utility routines ---------------- |  | 
 | [backtonormal](https://elite.bbcelite.com/c64/main/subroutine/backtonormal.html) | Disable the keyboard, set the SVN flag to 0, and return with A = 0 | 
 | [BRBR](https://elite.bbcelite.com/c64/main/subroutine/brbr.html) | The standard BRKV handler for the game | 
 | [CLDELAY](https://elite.bbcelite.com/c64/main/subroutine/cldelay.html) | Delay by iterating through 5 * 256 (1280) empty loops | 

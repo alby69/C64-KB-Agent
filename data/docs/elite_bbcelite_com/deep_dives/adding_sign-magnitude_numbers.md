@@ -3,22 +3,22 @@ title: Adding sign-magnitude numbers
 source_url: https://elite.bbcelite.com/deep_dives/adding_sign-magnitude_numbers.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - assembly
-- basic
 difficulty: intermediate
 language: assembly
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Adding sign-magnitude numbers
@@ -37,22 +37,24 @@ For example, let's try adding 127 and -1 as sign-magnitude numbers, first using 
            = 0 1111110
            = 126
 ```
-						However, if we use the built-in ADC instruction, we get the following:
+						
+However, if we use the built-in ADC instruction, we get the following:
 
 ```
   127 + -1 = 01111111 + 10000001
            = 00000000
 ```
-						which is a completely different result.
+						
+which is a completely different result.
 
 Elite's [ADD](https://elite.bbcelite.com/cassette/main/subroutine/add.html) routine implements sign-magnitude addition using the following algorithm. We want to add A and S, so:
 
 - If both A and S are positive, just add them as normal
 - If both A and S are negative, then add them and make sure the result is negative
 - If A and S have different signs, then we can use the absolute values of A and S to work out the sum, as follows:
-								- Subtract the smaller absolute value from the larger absolute value
-- Give the answer the same sign as the argument with the larger absolute value
- 
+								
+  - Subtract the smaller absolute value from the larger absolute value
+  - Give the answer the same sign as the argument with the larger absolute value
 
 To see why this works, try visualising a number line containing the two numbers A and S, with one to the left of zero and one to the right. Adding the numbers is a bit like moving the number with the larger absolute value towards zero on the number line, moving it by the amount of the smaller absolute number; so it's like subtracting the smaller absolute value from the larger one. You can also see that the sum of the two numbers will be on the same side of zero as the number that is furthest from zero, so that's why the answer should have the same sign as the argument with the larger absolute value.
 

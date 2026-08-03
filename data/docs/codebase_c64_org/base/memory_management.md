@@ -3,31 +3,31 @@ title: Without Cartridges
 source_url: https://codebase.c64.org/doku.php?id=base%3Amemory_management
 category: reference
 topics:
-- basic
 - memory management
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
-- BASIC ROM
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
+- BASIC ROM
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Without Cartridges
@@ -41,7 +41,7 @@ The low 3 bits of $01 control the mapping of specific regions of memory. When a 
 | Name | Bit | Region | 0 | 1 | Notes | 
 |---|---|---|---|---|---|
 | LORAM | 0 | $A000-BFFF | RAM | BASIC | If KERNAL isn't mapped in, then BASIC won't map in either and this region stays mapped to RAM. | 
-| HIRAM | 1 | $E000-FFFF | RAM | KERNAL | |
+| HIRAM | 1 | $E000-FFFF | RAM | KERNAL |  | 
 | CHAREN | 2 | $D000-DFFF | CHARROM | I/O | If HIRAM and LORAM are both set to 0, then this bit is ignored and the area also maps to RAM. This allows for 3 mappings of this region: RAM, CHARROM, or I/O. | 
 
 - All other memory locations ($0002-9FFF, $C000-CFFF) always map to RAM.
@@ -53,13 +53,13 @@ The mappings from combining these 3 bits are listed below. Higher bits of locati
 
 | $01 value | $A000-BFFF | $D000-DFFF | $E000-FFFF | Notes | 
 |---|---|---|---|---|
-| $30 +48 %000 | RAM | RAM | RAM | |
-| $31 +49 %001 | RAM | CHARROM | RAM | |
-| $32 +50 %010 | RAM | CHARROM | KERNAL | |
-| $33 +51 %011 | BASIC | CHARROM | KERNAL | |
-| $34 +52 %100 | RAM | RAM | RAM | |
-| $35 +53 %101 | RAM | I/O | RAM | |
-| $36 +54 %110 | RAM | I/O | KERNAL | |
+| $30 +48 %000 | RAM | RAM | RAM |  | 
+| $31 +49 %001 | RAM | CHARROM | RAM |  | 
+| $32 +50 %010 | RAM | CHARROM | KERNAL |  | 
+| $33 +51 %011 | BASIC | CHARROM | KERNAL |  | 
+| $34 +52 %100 | RAM | RAM | RAM |  | 
+| $35 +53 %101 | RAM | I/O | RAM |  | 
+| $36 +54 %110 | RAM | I/O | KERNAL |  | 
 | $37 +55 %111 | BASIC | I/O | KERNAL | Default | 
 
 ***WARNING***: Don't use INC $01 to switch modes from %111 to %000, as that will turn on the tape write head on the next bit up and do bad/unintentional things if there's stuff attached to the tape port.
@@ -81,14 +81,14 @@ The simplest C64-mode cartridge configuration, only using ROML. Any time the BAS
 
 | $01 value | $8000-9FFF | $A000-BFFF | $D000-DFFF | $E000-FFFF | Notes | 
 |---|---|---|---|---|---|
-| $30 +48 %000 | RAM | RAM | RAM | RAM | |
-| $31 +49 %001 | RAM | RAM | CHARROM | RAM | |
-| $32 +50 %010 | RAM | RAM | CHARROM | KERNAL | |
-| $33 +51 %011 | ROML | BASIC | CHARROM | KERNAL | |
-| $34 +52 %100 | RAM | RAM | RAM | RAM | |
-| $35 +53 %101 | RAM | RAM | I/O | RAM | |
-| $36 +54 %110 | RAM | RAM | I/O | KERNAL | |
-| $37 +55 %111 | ROML | BASIC | I/O | KERNAL | Default | 
+| $30 +48 %000 | RAM | RAM | RAM | RAM |  | 
+| $31 +49 %001 | RAM | RAM | CHARROM | RAM |  | 
+| $32 +50 %010 | RAM | RAM | CHARROM | KERNAL |  | 
+| $33 +51 %011 | ***ROML*** | BASIC | CHARROM | KERNAL |  | 
+| $34 +52 %100 | RAM | RAM | RAM | RAM |  | 
+| $35 +53 %101 | RAM | RAM | I/O | RAM |  | 
+| $36 +54 %110 | RAM | RAM | I/O | KERNAL |  | 
+| $37 +55 %111 | ***ROML*** | BASIC | I/O | KERNAL | Default | 
 
 ## Cart pulls /EXROM + /GAME low
 
@@ -96,14 +96,14 @@ ROML is before BASIC, and is swapped out with the LORAM bit in $01. ROMH replace
 
 | $01 value | $8000-9FFF | $A000-BFFF | $D000-DFFF | $E000-FFFF | Notes | 
 |---|---|---|---|---|---|
-| $30 +48 %000 | RAM | RAM | RAM | RAM | |
-| $31 +49 %001 | RAM | RAM | CHARROM | RAM | |
-| $32 +50 %010 | RAM | ROMH | CHARROM | KERNAL | |
-| $33 +51 %011 | ROML | ROMH | CHARROM | KERNAL | |
-| $34 +52 %100 | RAM | RAM | RAM | RAM | |
-| $35 +53 %101 | RAM | RAM | I/O | RAM | |
-| $36 +54 %110 | RAM | ROMH | I/O | KERNAL | |
-| $37 +55 %111 | ROML | ROMH | I/O | KERNAL | Default | 
+| $30 +48 %000 | RAM | RAM | RAM | RAM |  | 
+| $31 +49 %001 | RAM | RAM | CHARROM | RAM |  | 
+| $32 +50 %010 | RAM | ***ROMH*** | CHARROM | KERNAL |  | 
+| $33 +51 %011 | ***ROML*** | ***ROMH*** | CHARROM | KERNAL |  | 
+| $34 +52 %100 | RAM | RAM | RAM | RAM |  | 
+| $35 +53 %101 | RAM | RAM | I/O | RAM |  | 
+| $36 +54 %110 | RAM | ***ROMH*** | I/O | KERNAL |  | 
+| $37 +55 %111 | ***ROML*** | ***ROMH*** | I/O | KERNAL | Default | 
 
 ## Cart pulls only /GAME low (Ultimax mode)
 
@@ -111,7 +111,7 @@ ROMH replaces the KERNAL at $E000, ROML is still at $8000. Only the lowest 4kB o
 
 | $0002-0FFF | $1000-7FFF | $8000-9FFF | $A000-CFFF | $D000-DFFF | $E000-FFFF | 
 |---|---|---|---|---|---|
-| RAM | unmapped | ROML | unmapped | I/O | ROMH | 
+| RAM | unmapped | ***ROML*** | unmapped | I/O | ***ROMH*** | 
 
 The VIC-II will also see the first 4kB of ROMH at $3000-3FFF in all of its 16kB banks, with no access to CHARROM.
 
@@ -125,7 +125,14 @@ The port can be accessed through memory adresses $0000 and $0001, while $0001 is
 
 Explanation for the bits of $0001:
 
-7 - unused (Flash 8: 0=8MHz/1=1MHz) 6 - unused (C128: ASCII/DIN sense/switch (1=ASCII/0=DIN)) 5 - Cassette motor control (0 = motor on) 4 - Cassette switch sense (0 = PLAY pressed) 3 - Cassette write line 2 - CHAREN (0=Character ROM instead of I/O area) 1 - HIRAM ($E000-$FFFF) 0 - LORAM ($A000-$BFFF)
+7 - unused (Flash 8: 0=8MHz/1=1MHz)
+6 - unused (C128: ASCII/DIN sense/switch (1=ASCII/0=DIN))
+5 - Cassette motor control (0 = motor on)
+4 - Cassette switch sense (0 = PLAY pressed)
+3 - Cassette write line
+2 - CHAREN (0=Character ROM instead of I/O area)
+1 - HIRAM ($E000-$FFFF)
+0 - LORAM ($A000-$BFFF)
 
 If HIRAM or LORAM is set, the I/O area is mapped to $D000-$DFFF.
 

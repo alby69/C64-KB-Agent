@@ -3,37 +3,35 @@ title: Documentation for the Retro Replay freezer cartridge for the C-64
 source_url: https://codebase.c64.org/doku.php?id=base%3Ainside_retro_replay
 category: tool
 topics:
-- raster interrupts
 - basic
+- sound generation
+- raster interrupts
 - sprite programming
 - assembly
-- sound generation
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Documentation for the Retro Replay freezer cartridge for the C-64
-
-### Table of Contents
 
 # Documentation for the Retro Replay freezer cartridge for the C-64
 
@@ -46,32 +44,32 @@ last update: December 6th, 2001
 – 
 
 
-- December 6th:- Added 29F010B section.
- 
-- October 5th:- Corrected typos in “accessory connector” chapter.
- 
-- September 28th:- Last-minute change: The Freeze button of my pre-series prototype failed today! This brought me to the decision to send the MT250 type buttons back and use Monacor MT412 buttons instead. They are much more expensive (more than twice as much!), but they make a much better impression. I know my MT250 button on the pre-series board had to take a lot since june this year, but I don't want to risk returns from all over the world because of bad buttons. SMD and conventional production is finished, quality control will follow this weekend, first shipments on monday, october 1st! (fortunately, the buttons are mounted after QC, so this does not cause additional work). 
-- Corrected the “accessory connector” chapter of this document.
-- Corrected the “hints” chapter of this document.
- 
-- September 26th, 11:30am:- Decided to leave bit 0 of $de01 register “write-always”, so the UART can be switched on and off during operation. This ensures higher compatibility with other hardware. Last chance to change something in the behavior of the Retro Replay is over now, programming the MACHs will begin in a few minutes!
- 
-- September 26th, 2:00am:- Accessory connector was only available in REU compatible mode. Nonsens! Don't ask me why I did this, now the accessory connector can be switched on regardless of the REU compatibility bit. Decision pending: set/reset accessory enable bit regardless of first write to $de01? Right now it's “write once and suffer from your decision”. Could be changed for the final version, we have about 12 hours left for the decision!
- 
-- September 19th:- Removed another glitch in the logic that kept the Flash from accepting the “magic” sequences such as “Autoselect” and “Read/Reset”. The problem was an interruption of the write cycle of about 5 nanoseconds after about 250ns. This caused the 29F010 Flashrom to recognize two write cycles instead of one, so an error in the sequence was detected, and the device stayed in read mode forever. Problem solved by generating the signal with a T-Flipflop instead of a combinatoric equation. Thanks to my Agilent 54622D mixed-signal scope for being such a precise device. Now I know why I decided for the 100Mhz version instead of the cheaper 60Mhz version, but I did not expect it to be useful on the slowest computer that I ever developed for. All other combinatoric equations of the design do not cause glitches like this (either uncritical, or they form RS-flipflops that are stable by default). No further problems expected from this cause. Further, the memory map changes possible with the lower two bits of the $de00 register have been cut to a minimum. You can only alter the $8000-$9fff area with the GAME and EXROM lines if the Flashmode jumer is set. This ensures IRQs and NMIs to be served correctly, even if the GAME line is asserted, which usually also disables the kernal rom in the $e000-$ffff area. With this improvement, you can write basic programs with small assembler-subroutines for the magic sequences. Don't try POKE-ing the magic sequences, as the POKE command also reads from the location you want to write, so you'll never produce a proper magic sequence. Updating will not have to be done, the September 18th version never left this house!
-- Software compatibility is not affected by these changes.
- 
-- September 18th:- In preparation for mass production, some changes in RAM and FLASH timing have been done. Certain combinations of MACH and RAM had problems with data loss in the memory. This is also the cause for the failure of earlier Flash programs. Sorry Count0!
-- Write cycles have now an earlier end, this ensures data hold times for both, Ram and Flash chips. This improvement also applies to the accessory connector. A write cycle is now exactly three dot-clock cycles long, which is about 380 nanoseconds on PAL machines. Both edges of the signal occur during the data-valid window of the CPU write cycle, so a secure takeover of data into the receiving chip is ensured for all vendors of memory chips and Amiga-clockport expansions. This change cannot be implemented on the beta board (green board) due to routing limitations in the MACH chip. Pins had to be swapped and glue logic had to be added to the final board in order to make the design fit. If you have one of the four beta boards, keep it as a collector's item. Two of them are back at individual Computers, maybe we will auction them on eBay (anybody interested?). Software compatibility is not affected by these changes.
- 
-- May 17th:- Changed interrupt level of 22-pin port to NMI. Thanks to Ninja for the suggestion, this will ensure safe serial data transfer also at high baudrates.
-- 22-pin port will now be equipped on all boards. Found a good supplier of raster-2 pin headers, so now this can be financially justified. Still looking for case supplier. We want black or transparent cases!
-- Printed circuit board (PCB) finalized. The board will have black solderstop and golden connectors. We want it to be durable!
- 
-- April 21st:- Added passage to “Flashing Rom” section, added hardware options of final board.
- 
-- April 19th:- Updated after the Ma Baker conference at McDonalds Fallingbostel on April 15th, 2001. Thanks to these scene members: Danzig, Deekay, Doc Bacardi, Ninja, Checky and Count0 (no special order!). Each of them has done his part in improving the cartridge with suggestions.
- 
+- December 6th:
+  - Added 29F010B section.
+- October 5th:
+  - Corrected typos in “accessory connector” chapter.
+- September 28th:
+  - Last-minute change: The Freeze button of my pre-series prototype failed today! This brought me to the decision to send the MT250 type buttons back and use Monacor MT412 buttons instead. They are much more expensive (more than twice as much!), but they make a much better impression. I know my MT250 button on the pre-series board had to take a lot since june this year, but I don't want to risk returns from all over the world because of bad buttons. SMD and conventional production is finished, quality control will follow this weekend, first shipments on monday, october 1st! (fortunately, the buttons are mounted after QC, so this does not cause additional work![:-)](/lib/images/smileys/smile.svg) ).
+  - Corrected the “accessory connector” chapter of this document.
+  - Corrected the “hints” chapter of this document.
+- September 26th, 11:30am:
+  - Decided to leave bit 0 of $de01 register “write-always”, so the UART can be switched on and off during operation. This ensures higher compatibility with other hardware. Last chance to change something in the behavior of the Retro Replay is over now, programming the MACHs will begin in a few minutes!
+- September 26th, 2:00am:
+  - Accessory connector was only available in REU compatible mode. Nonsens! Don't ask me why I did this, now the accessory connector can be switched on regardless of the REU compatibility bit. Decision pending: set/reset accessory enable bit regardless of first write to $de01? Right now it's “write once and suffer from your decision”. Could be changed for the final version, we have about 12 hours left for the decision!
+- September 19th:
+  - Removed another glitch in the logic that kept the Flash from accepting the “magic” sequences such as “Autoselect” and “Read/Reset”. The problem was an interruption of the write cycle of about 5 nanoseconds after about 250ns. This caused the 29F010 Flashrom to recognize two write cycles instead of one, so an error in the sequence was detected, and the device stayed in read mode forever. Problem solved by generating the signal with a T-Flipflop instead of a combinatoric equation. Thanks to my Agilent 54622D mixed-signal scope for being such a precise device. Now I know why I decided for the 100Mhz version instead of the cheaper 60Mhz version, but I did not expect it to be useful on the slowest computer that I ever developed for. All other combinatoric equations of the design do not cause glitches like this (either uncritical, or they form RS-flipflops that are stable by default). No further problems expected from this cause. Further, the memory map changes possible with the lower two bits of the $de00 register have been cut to a minimum. You can only alter the $8000-$9fff area with the GAME and EXROM lines if the Flashmode jumer is set. This ensures IRQs and NMIs to be served correctly, even if the GAME line is asserted, which usually also disables the kernal rom in the $e000-$ffff area. With this improvement, you can write basic programs with small assembler-subroutines for the magic sequences. Don't try POKE-ing the magic sequences, as the POKE command also reads from the location you want to write, so you'll never produce a proper magic sequence. Updating will not have to be done, the September 18th version never left this house!
+  - Software compatibility is not affected by these changes.
+- September 18th:
+  - In preparation for mass production, some changes in RAM and FLASH timing have been done. Certain combinations of MACH and RAM had problems with data loss in the memory. This is also the cause for the failure of earlier Flash programs. Sorry Count0!
+  - Write cycles have now an earlier end, this ensures data hold times for both, Ram and Flash chips. This improvement also applies to the accessory connector. A write cycle is now exactly three dot-clock cycles long, which is about 380 nanoseconds on PAL machines. Both edges of the signal occur during the data-valid window of the CPU write cycle, so a secure takeover of data into the receiving chip is ensured for all vendors of memory chips and Amiga-clockport expansions. This change cannot be implemented on the beta board (green board) due to routing limitations in the MACH chip. Pins had to be swapped and glue logic had to be added to the final board in order to make the design fit. If you have one of the four beta boards, keep it as a collector's item. Two of them are back at individual Computers, maybe we will auction them on eBay (anybody interested?). Software compatibility is not affected by these changes.
+- May 17th:
+  - Changed interrupt level of 22-pin port to NMI. Thanks to Ninja for the suggestion, this will ensure safe serial data transfer also at high baudrates.
+  - 22-pin port will now be equipped on all boards. Found a good supplier of raster-2 pin headers, so now this can be financially justified. Still looking for case supplier. We want black or transparent cases!
+  - Printed circuit board (PCB) finalized. The board will have black solderstop and golden connectors. We want it to be durable!
+- April 21st:
+  - Added passage to “Flashing Rom” section, added hardware options of final board.
+- April 19th:
+  - Updated after the Ma Baker conference at McDonalds Fallingbostel on April 15th, 2001. Thanks to these scene members: Danzig, Deekay, Doc Bacardi, Ninja, Checky and Count0 (no special order!). Each of them has done his part in improving the cartridge with suggestions.
 
 ## Implemented suggestions
 
@@ -90,8 +88,8 @@ own loaders that do not work with a harddrive, and there are simply not
 enough customers with such a harddrive to justify such a major change in
 hard- and software. Period.
 –
-** No further changes to the hardware will be made. This is nealry a
-** non-profit project, I will not spend more time with it.
+ **No further changes to the hardware will be made. This is nealry a**
+ non-profit project, I will not spend more time with it.
 (unless you have a really good suggestion that increases the value by far!)
 
 # General
@@ -203,13 +201,63 @@ computer to start a possibly garbled ROM. Ideal for development
 
 ## Read/Reset command
 
-LDA #$10 STA $de01 ;set bank LDA #$aa STA $9555 ;this is a write to $5555 of the chip LDA #$08 STA $de01 ;set bank LDA #$55 STA $8aaa ;this is a write to $2aaa of the chip LDA #$10 STA $de01 ;set bank LDA #$f0 STA $9555 ;write $F0 to $5555 LDA #$xx STA $de01 ;set bank you desire LDA $xxxx ;read address you desire Autoselect command: LDA #$10 STA $de01 ;set bank LDA #$aa STA $9555 ;this is a write to $5555 of the chip LDA #$08 STA $de01 ;set bank LDA #$55 STA $8aaa ;this is a write to $2aaa of the chip LDA #$10 STA $de01 ;set bank LDA #$90 STA $9555 ;write $90 to $5555 LDA #$xx STA $de01 ;set bank you wish to read status from (one of eigt) LDA $8000 ;read manufacturer code ($01 for AMD) ;do something with the value just read LDA $8001 ;read device code ($20 for 29F010) ;do something with the value just read LDA $8002 ;read sector protect information in bit 0. 1=sector protected ;do something with the value just read
+LDA #$10
+STA $de01  ;set bank
+LDA #$aa
+STA $9555  ;this is a write to $5555 of the chip
+LDA #$08
+STA $de01  ;set bank
+LDA #$55
+STA $8aaa  ;this is a write to $2aaa of the chip
+LDA #$10
+STA $de01  ;set bank
+LDA #$f0
+STA $9555  ;write $F0 to $5555
+LDA #$xx
+STA $de01  ;set bank you desire
+LDA $xxxx  ;read address you desire
+Autoselect command:
+LDA #$10
+STA $de01  ;set bank
+LDA #$aa
+STA $9555  ;this is a write to $5555 of the chip
+LDA #$08
+STA $de01  ;set bank
+LDA #$55
+STA $8aaa  ;this is a write to $2aaa of the chip
+LDA #$10
+STA $de01  ;set bank
+LDA #$90
+STA $9555  ;write $90 to $5555
+LDA #$xx
+STA $de01  ;set bank you wish to read status from (one of eigt)
+LDA $8000  ;read manufacturer code ($01 for AMD)
+;do something with the value just read
+LDA $8001  ;read device code ($20 for 29F010)
+;do something with the value just read
+LDA $8002  ;read sector protect information in bit 0. 1=sector protected
+;do something with the value just read
 
 Note: Once in Autoselect mode, you can do as many reads from the sectors as you want. Leaving this mode is only possible with the read/reset command, or with power-down. Bringing the device into Autoselect mode and then resetting the machine will let your Retro Replay appear as an empty cartridge. Nothing to worry about, just power-cycle the computer, and you're back to normal.
 
 ## Byte program
 
-LDA #$10 STA $de01 ;set bank LDA #$aa STA $9555 ;this is a write to $5555 of the chip LDA #$08 STA $de01 ;set bank LDA #$55 STA $8aaa ;this is a write to $2aaa of the chip LDA #$10 STA $de01 ;set bank LDA #$a0 STA $9555 ;write $a0 to $5555 LDA #$xx STA $de01 ;set bank you desire LDA #$xx ;content you wish to write STA $xxxx ;write to address you wish to write
+LDA #$10
+STA $de01  ;set bank
+LDA #$aa
+STA $9555  ;this is a write to $5555 of the chip
+LDA #$08
+STA $de01  ;set bank
+LDA #$55
+STA $8aaa  ;this is a write to $2aaa of the chip
+LDA #$10
+STA $de01  ;set bank
+LDA #$a0
+STA $9555  ;write $a0 to $5555
+LDA #$xx
+STA $de01  ;set bank you desire
+LDA #$xx   ;content you wish to write
+STA $xxxx  ;write to address you wish to write
 
 Note: Programming means resetting bits from 1 to 0. Programming a 1 into a bit that already contains a 0 is not possible. The 29F010 chip will give an error condition in this case, which is not a chip failure - the user has made the mistake! Consult the AMD document for this case.
 
@@ -224,7 +272,35 @@ more than 136 years. Pretty much for a computer product .
 
 ## Sector erase
 
-LDA #$10 STA $de01 ;set bank LDA #$aa STA $9555 ;this is a write to $5555 of the chip LDA #$08 STA $de01 ;set bank LDA #$55 STA $8aaa ;this is a write to $2aaa of the chip LDA #$10 STA $de01 ;set bank LDA #$80 STA $9555 ;write $80 to $5555 LDA #$10 STA $de01 ;set bank LDA #$aa STA $9555 ;this is a write to $5555 of the chip LDA #$08 STA $de01 ;set bank LDA #$55 STA $8aaa ;this is a write to $2aaa of the chip LDA #$xx STA $de01 ;set sector you wish to erase LDA #$30 STA $8000 ;erase the sector ;the following sequence is optional, called "multiple sector erase". LDA #$xx STA $de01 ;set another sector you wish to erase at the same time LDA #$30 STA $8000 ;erase the sector
+LDA #$10
+STA $de01  ;set bank
+LDA #$aa
+STA $9555  ;this is a write to $5555 of the chip
+LDA #$08
+STA $de01  ;set bank
+LDA #$55
+STA $8aaa  ;this is a write to $2aaa of the chip
+LDA #$10
+STA $de01  ;set bank
+LDA #$80
+STA $9555  ;write $80 to $5555
+LDA #$10
+STA $de01  ;set bank
+LDA #$aa
+STA $9555  ;this is a write to $5555 of the chip
+LDA #$08
+STA $de01  ;set bank
+LDA #$55
+STA $8aaa  ;this is a write to $2aaa of the chip
+LDA #$xx
+STA $de01  ;set sector you wish to erase
+LDA #$30
+STA $8000  ;erase the sector
+;the following sequence is optional, called "multiple sector erase".
+LDA #$xx
+STA $de01  ;set another sector you wish to erase at the same time
+LDA #$30
+STA $8000  ;erase the sector
 
 then timeout 80 microseconds, and do not access the chip during this period (your code must be in the 64 memory for this). Then the sector erase operation will start inside the chip. After the 80 microsecond pause, start polling $8000 for the results of the erase operation. For closer information on this, consult the 29F010 datasheet, the /DATA poll section, page 15. A sector erase may take up to 30 seconds, sometimes even longer, because the sector is programmed to $00 prior to erase (an empty byte contains $ff). I'd suggest a timeout of 60 seconds for a 16K sector.
 

@@ -3,29 +3,29 @@ title: Raw Frame for Generic 16 KB cart images
 source_url: https://codebase.c64.org/doku.php?id=base%3Acode_frame_for_16_kb_crt-images
 category: reference
 topics:
-- basic
-- raster interrupts
 - memory management
+- raster interrupts
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CIA
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -35,9 +35,37 @@ base:code_frame_for_16_kb_crt-images
 
                 # Raw Frame for Generic 16 KB cart images
 
-; raw frame for generic 16 KB cartridge images ; v 1.0 enthusi 04/2012 ; this 16 KB Cartridge framework was written for http://www.rgcd.co.uk ; feel free to use/change this code and give credits :) ; you will find this document also at http://codebase64.net ; this is a VERY simple but efficient approach, you can make more ; sophisticated usage of ROM using an own depacker routine etc.... ; sources are in XA format but no special features are used ; I strongly recommend the usage of cartconv which comes with vice ; you can as well set up your own crt-header, which will look ; more or less like this:
+; raw frame for generic 16 KB cartridge images
+; v 1.0 enthusi 04/2012
+; this 16 KB Cartridge framework was written for http://www.rgcd.co.uk
+; feel free to use/change this code and give credits :)
+; you will find this document also at http://codebase64.net
+; this is a VERY simple but efficient approach, you can make more 
+; sophisticated usage of ROM using an own depacker routine etc....
+; sources are in XA format but no special features are used
+; I strongly recommend the usage of cartconv which comes with vice
+; you can as well set up your own crt-header, which will look 
+; more or less like this:
 
-;.asc "C64 CARTRIDGE " ;.byte $00,$00 ;header length ;.byte $00,$40 ;header length ;.word $0001 ;version ;.word $0000 ;crt type ;.byte $00 ;extrom line ;.byte $00 ;game line ;.byte $00,$00,$00,$00,$00,$00 ;unused ;.asc "MY NAME" ;name ;.dsb ($0040-name),0 ;;chip packets ;.asc "CHIP" ;.byte $00,$00,$40,$10 ;chip length? ;.byte $00,$00 ;chip type ;.byte $00,$00 ;bank ;.byte $80,$00 ;adress ;.byte $40,$00 ;length ;ROM part follows...
+;.asc "C64 CARTRIDGE   "
+;.byte $00,$00   ;header length
+;.byte $00,$40   ;header length
+;.word $0001     ;version
+;.word $0000     ;crt type
+;.byte $00       ;extrom line
+;.byte $00       ;game line
+;.byte $00,$00,$00,$00,$00,$00 ;unused
+;.asc "MY NAME"
+;name
+;.dsb ($0040-name),0
+;;chip packets
+;.asc "CHIP"
+;.byte $00,$00,$40,$10   ;chip length?
+;.byte $00,$00   ;chip type
+;.byte $00,$00   ;bank
+;.byte $80,$00   ;adress
+;.byte $40,$00 ;length
+;ROM part follows...
 
 The following is for creating a .bin file of 16384 Bytes length as you would burn it onto EPROM, or to use as input for cartconv and alike.
 

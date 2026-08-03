@@ -3,36 +3,34 @@ title: Kick Assembler Macros
 source_url: https://codebase.c64.org/doku.php?id=base%3Akick_assembler_macros
 category: tool
 topics:
-- sprite programming
 - graphics
 - memory management
+- sprite programming
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
 # Kick Assembler Macros
-
-### Table of Contents
 
 # Kick Assembler Macros
 
@@ -52,7 +50,7 @@ This macro takes a .PNG file and converts it into a 2×2 tile based bitmap(koala
 
 You need to set the **Palette and the background color** inside the macro (make sure these are correct) and then call the macro with the filname and output location of the data in memory as follows:
 
-`    :BitmapPack("map.png", $8000)`
+    `:BitmapPack("map.png", $8000)`
 Here follows the Macro:
 
 ```
@@ -169,7 +167,7 @@ Here follows the Macro:
 
 The routine is called as follows:
 
-`    :PNGtoKOALA("320x200.png", $2000, $5000, $6000, $7000)`
+    `:PNGtoKOALA("320x200.png", $2000, $5000, $6000, $7000)`
 First, the palette needs to defined as follows (One could consolidate this into one list like done below in the hires routine):
 
 ```
@@ -622,7 +620,8 @@ Pseudo commands are macros that take assembler arguments. This means they know t
 
 Every body who have programmed c64 assembler language have tried to repeat the same command several time. If you want to divide by 8 you type 3 lsr commands or if you want to create a pause you can do alot of nop's. To save alot of typing, you can create repetitive pseudo commands.
 
-:lsr #3 // divide by 8 :nop #8 // Do 8 nops
+:lsr #3  // divide by 8
+:nop #8  // Do 8 nops
 
 The commands (+ some extra) are defined like this:
 
@@ -662,7 +661,8 @@ The commands (+ some extra) are defined like this:
 
 Often you want to time your code precisely. To make things a little easier you can create a pause command that pause a given amount of cycles. Eg:
 
-:pause #10 // Waits 10 cycles :pause2 #63 // Waits 63 cycles
+:pause #10  // Waits 10 cycles 
+:pause2 #63 // Waits 63 cycles
 
 Here you will see two versions of the pause command. The first one only uses bit and nops. Both are based on some of the pseudo commands defined in earlier sections:
 

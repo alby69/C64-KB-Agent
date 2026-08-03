@@ -3,31 +3,31 @@ title: base:for_speed_we_need [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Afor_speed_we_need
 category: tool
 topics:
+- graphics
 - raster interrupts
 - input handling
 - sprite programming
-- graphics
 - assembly
 difficulty: beginner
 language: assembly
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

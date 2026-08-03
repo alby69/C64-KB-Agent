@@ -7,24 +7,24 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # 6510/8502 Undocumented Commands
@@ -33,7 +33,7 @@ base:6510_8502_undocumented_commands
 
                 # 6510/8502 Undocumented Commands
 
-```
+```````````````
          -- A brief explanation about what may happen while
                 using don't care states.
         ANE $8B         A = (A | #$EE) & X & #byte
@@ -249,7 +249,7 @@ Thus, the value to be stored by SAX, for example, is in fact (A & X &
 (ADDR_HI + 1)).  On page boundary crossing the same value is copied
 also to high byte of the effective address.
 RELIGION_MODE_OFF
-```
+```````````````
 base/6510_8502_undocumented_commands.txt · Last modified:  by 127.0.0.1
 
 ## Codice Estratto

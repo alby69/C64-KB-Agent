@@ -3,27 +3,27 @@ title: Drawing pixels in the Apple II version
 source_url: https://elite.bbcelite.com/deep_dives/drawing_pixels_in_the_apple_ii_version.html
 category: manual
 topics:
-- graphics
-- assembly
 - sound generation
+- graphics
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Drawing pixels in the Apple II version
@@ -34,38 +34,40 @@ When the Apple II came out in 1977, its high-resolution colour graphics were gen
 
 ![A space station in Apple II Elite](https://elite.bbcelite.com/images/apple/station.png) 
 
-						I won't re-hash any of that here: it's mind-bending stuff and is better covered elsewhere. Instead, I'll look at how Elite draws high-resolution pixels on-screen by poking data into the Apple's intriguing screen memory layout, giving us an almost (but not quite) monochrome space view and a very colourful dashboard.
+I won't re-hash any of that here: it's mind-bending stuff and is better covered elsewhere. Instead, I'll look at how Elite draws high-resolution pixels on-screen by poking data into the Apple's intriguing screen memory layout, giving us an almost (but not quite) monochrome space view and a very colourful dashboard.
 
 ## Text vs graphics
 
 													 ----------------
 
-						Before we talk about pixels in the high-resolution screen mode, I should mention the game's text screens. They look like this:
+						
+Before we talk about pixels in the high-resolution screen mode, I should mention the game's text screens. They look like this:
 
 ![The Status Mode screen in Apple II Elite](https://elite.bbcelite.com/images/apple/status.png) 
 
-						while the rest of the game looks like this:
+while the rest of the game looks like this:
 
 ![The short-range Chart in Apple II Elite](https://elite.bbcelite.com/images/apple/short-range_chart.png) 
 
-						This is because the text-based screens use the Apple's built-in text mode rather than the high-resolution graphics mode, and that's a result of the Apple version's space view not being tall enough to fit all of the text into the portion of the screen above the dashboard.
+This is because the text-based screens use the Apple's built-in text mode rather than the high-resolution graphics mode, and that's a result of the Apple version's space view not being tall enough to fit all of the text into the portion of the screen above the dashboard.
 
 
 The Commodore 64 version has the exact same problem, which it solves by removing the dashboard and using the whole screen for displaying text. This works well, and there's enough memory to store a copy of the dashboard image that we can put back into screen memory when we return to the space view.
 
 ![The Status Mode screen in Commodore 64 Elite](https://elite.bbcelite.com/images/c64/status.png) 
 
-						But the Apple II version doesn't have enough spare memory to store a copy of the dashboard, and besides, drawing letters on-screen in the high-resolution screen mode produces text that can be difficult to read, due to the colour fringes that we'll be talking about later. So the Apple version takes a different approach, and uses the text screen mode to display the text-based screens like the Market Prices view:
+But the Apple II version doesn't have enough spare memory to store a copy of the dashboard, and besides, drawing letters on-screen in the high-resolution screen mode produces text that can be difficult to read, due to the colour fringes that we'll be talking about later. So the Apple version takes a different approach, and uses the text screen mode to display the text-based screens like the Market Prices view:
 
 ![The Market Prices screen in Apple II Elite](https://elite.bbcelite.com/images/apple/market_prices.png) 
 
-						For the rest of this article, we're going to be talking about high-resolution graphics screens, rather than the text screens.
+For the rest of this article, we're going to be talking about high-resolution graphics screens, rather than the text screens.
 
 ## Drawing monochrome pixels in the space view
 
 													 -------------------------------------------
 
-						We'll talk about colour graphics on the Apple II in a moment, but for now let's pretend that the Apple's high-resolution screen mode is monochrome, and that we are drawing pixels in the space view into this monochrome screen mode. (This isn't inaccurate, as the high-resolution graphics mode *is* actually a monochrome screen mode... but let's leave that discussion until later.)
+						
+We'll talk about colour graphics on the Apple II in a moment, but for now let's pretend that the Apple's high-resolution screen mode is monochrome, and that we are drawing pixels in the space view into this monochrome screen mode. (This isn't inaccurate, as the high-resolution graphics mode *is* actually a monochrome screen mode... but let's leave that discussion until later.)
 
 In this monochrome screen mode, each bit represents one pixel. A set bit (1) represents a filled foreground pixel, and a clear bit (0) represents a black background pixel. On an old-school green screen, the filled pixel would be green and the background would be black, while on an old-school amber screen the filled pixel would be amber and the gap would be black.
 
@@ -79,11 +81,12 @@ So let's break this down into three stages: pixel lines, then the pixel bytes wi
 
 													 -----------
 
-						The Apple's high-resolution screen layout is described in this oft-quoted diagram from [page 21 of the 1981 edition of the Apple II Reference Manual](https://archive.org/details/apple-ii-ref-manual/page/n29/mode/2up):
+						
+The Apple's high-resolution screen layout is described in this oft-quoted diagram from [page 21 of the 1981 edition of the Apple II Reference Manual](https://archive.org/details/apple-ii-ref-manual/page/n29/mode/2up):
 
 ![The Apple high-resolution screen memory layout](https://elite.bbcelite.com/images/apple/screen_layout.jpg) 
 
-						This shows 24 eight-pixel high character rows, each of which contains 40 eight-pixel wide character blocks, and that is indeed what the screen looks like. But if you look more closely at the addresses down the left side, and the breakdown of each character block in the bottom-right, then it's apparent that screen memory is laid out in a very different manner.
+This shows 24 eight-pixel high character rows, each of which contains 40 eight-pixel wide character blocks, and that is indeed what the screen looks like. But if you look more closely at the addresses down the left side, and the breakdown of each character block in the bottom-right, then it's apparent that screen memory is laid out in a very different manner.
 
 It's probably easier just to think of the Apple's screen memory as being made up of pixel lines, each of which stretches from the left side of the screen to the right. Despite what it says in the above diagram, there aren't really any character blocks on the Apple, just pixel rows, although it is useful to think of these pixel rows as being conceptually grouped into 24 eight-pixel high character rows, like the character rows of the BBC Micro and Commodore 64.
 
@@ -116,7 +119,8 @@ So that's the first surprise dealt with, and we can now use these lookup tables 
 
 													 --------------------------
 
-						The second surprise is that although the pixel bytes in each pixel row contain eight bits each, those eight bits don't represent eight pixels. Instead, each pixel byte represents seven pixels, and bit 7 in each pixel byte is reserved (we'll see why later). So taking the very first pixel row on the screen, at address $2000, we have seven pixels in the first byte, seven pixels in the second byte, seven pixels in the third byte, and so on until we reach the 40th byte, which contains the last seven pixels, giving a total horizontal resolution of 40 * 7 = 280 pixels. Compared to the more common eight pixels per byte of screen memory, this is very strange indeed.
+						
+The second surprise is that although the pixel bytes in each pixel row contain eight bits each, those eight bits don't represent eight pixels. Instead, each pixel byte represents seven pixels, and bit 7 in each pixel byte is reserved (we'll see why later). So taking the very first pixel row on the screen, at address $2000, we have seven pixels in the first byte, seven pixels in the second byte, seven pixels in the third byte, and so on until we reach the 40th byte, which contains the last seven pixels, giving a total horizontal resolution of 40 * 7 = 280 pixels. Compared to the more common eight pixels per byte of screen memory, this is very strange indeed.
 
 The challenge, then, is to work out which byte in the pixel row contains the pixel that we want to update. The maths is simple enough: if we want to plot a pixel at x-coordinate x, then we need byte number x div 7. But while this calculation is easy to write down, it's a pig to implement in assembly language (unlike the equivalent calculation for the BBC Micro's screen layout, x div 8, which can be implemented in just three right shifts).
 
@@ -124,7 +128,7 @@ The third (and final) surprise is how the bits within each pixel byte map to the
 
 Luckily we can hide all the complexity of the last two surprises in lookup tables - in this case the [SCTBX1](https://elite.bbcelite.com/apple/main/variable/sctbx1.html) and [SCTBX2](https://elite.bbcelite.com/apple/main/variable/sctbx2.html) tables. These can be used to convert a pixel x-coordinate into the number of the corresponding pixel byte on the pixel row, and the bit number within that byte of the pixel in screen memory. Specifically, given a pixel x-coordinate X in the range 0 to 255, the tables split this into factors of 7, as follows:
 
-X = (7 * SCTBX2,X) + SCTBX1,X - 8
+  X = (7 * SCTBX2,X) + SCTBX1,X - 8
 
 Because each byte in screen memory contains seven pixels, this means that SCTBX2,X gives us the byte number on the pixel row, and SCTBX1,X is the bit number within that byte. And because the Elite game screen is only 256 pixels across (with the border box flanking this playing area), we only need to convert x-coordinates in the range 0 to 255, making the lookup process easy to implement in 6502 assembler using indexed addressing.
 
@@ -138,16 +142,18 @@ Except this isn't the full story, so let's bite the bullet and talk about colour
 
 													 -----------------
 
-						You probably noticed that the space station in the screenshot above isn't actually monochrome. Take another look:
+						
+You probably noticed that the space station in the screenshot above isn't actually monochrome. Take another look:
 
 ![A space station in Apple II Elite](https://elite.bbcelite.com/images/apple/station.png) 
 
-						Some of the lines in the station are white, but most of them are definitely coloured in some way. Because although the Apple's high-resolution display is a monochrome display with a one-bit-per-pixel bitmap, it decides to display some of these monochrome pixels in colour when connected to an NTSC TV screen.
+Some of the lines in the station are white, but most of them are definitely coloured in some way. Because although the Apple's high-resolution display is a monochrome display with a one-bit-per-pixel bitmap, it decides to display some of these monochrome pixels in colour when connected to an NTSC TV screen.
 
 The colours aren't set in a traditional way, but they are inferred from the pattern of monochrome pixels. If the computer has a monochrome screen, then the space view will appear in monochrome, with set bits being filled and clear bits being black. But the exact same screen in memory, when shown on an NTSC television, will appear in colour. It's completely different to the way most home computers work, and it's all part of the genius of Steve Wozniak, that he managed to coax colour graphics out of a monochrome computer.
 
 The rules that determine how the NTSC screen displays our monochrome bitmap in colour are a bit strange, but by this point that's probably not a surprise. Here they are, taken from [page 19 of the 1981 edition of the Apple II Reference Manual](https://archive.org/details/apple-ii-ref-manual/page/n27/mode/2up) (where "off" bits are clear, "on" bits are set and the "undisplayed bit" is bit 7 in each pixel byte):
 
+							
 A total of 280 dots are displayed on each of the 192 lines of the screen.
 
 If a bit is "off", its corresponding dot will always be black.
@@ -171,9 +177,9 @@ I found this pretty difficult to follow on first read, and it also omits a cruci
 - Whenever you see a sequence of two or more set bits (i.e. 11, 111, 1111 and so on), then all those set pixels are always white.
 - Whenever you see a single set bit that's surrounded by zeroes (i.e. 010), then the pixel in the middle is coloured (i.e. violet, green, blue or red) while the pixels on either side are black (though see the last point below).
 - The colour of the single set bit depends on two things: whether the pixel's x-coordinate is odd or even, and the value of bit 7 in the pixel byte where the set bit appears:
-								- If bit 7 is clear (i.e. 0), then pixels with even x-coordinates are violet and pixels with odd x-coordinates are green.
-- If bit 7 is set (i.e. 1), then pixels with even x-coordinates are blue and pixels with odd x-coordinates are red.
- 
+								
+  - If bit 7 is clear (i.e. 0), then pixels with even x-coordinates are violet and pixels with odd x-coordinates are green.
+  - If bit 7 is set (i.e. 1), then pixels with even x-coordinates are blue and pixels with odd x-coordinates are red.
 - Whenever you get two or more single pixels of the same colour in a sequence (e.g. 01010 for black-violet-black-violet-black, say), then the colour from those pixels "bleeds" into the black pixels that are "trapped" between them, so in this sequence, the middle black pixel would appear on-screen as violet, thus producing a line of continuous colour.
 
 The colour-bleed and banding in the last point is caused by the TV set not being quick enough to turn its beam intensity on and off cleanly at that frequency, so the two colour pixels blur together, even though they are separated by a black pixel (i.e. a clear bit) in screen memory; as a result, the "trapped" black bits tend to appear on-screen as light-dark bands of the bleeding colour. For more detail on this, see [page 8-19 of Understanding the Apple II](https://archive.org/details/understanding_the_apple_ii/page/n213/mode/2up) by Jim Sather, which digs really deep into the whole colour-generation system.
@@ -184,11 +190,12 @@ These rules explain why some of the pixels in the space station appear in violet
 
 													 -------------
 
-						The violet and green colour scheme doesn't apply to the sun, though, which is a glorious orangey red. This is because the sun-drawing routine sets bit 7 in each of the sun's pixel bytes and draws the sun lines using the pattern 1010, making sure that the set bits appear in odd columns. This produces a red colour, with the red pixels (from the set bits) bleeding into the adjacent black pixels (from the clear bits) to create a red sun with a distinctive banding effect:
+						
+The violet and green colour scheme doesn't apply to the sun, though, which is a glorious orangey red. This is because the sun-drawing routine sets bit 7 in each of the sun's pixel bytes and draws the sun lines using the pattern 1010, making sure that the set bits appear in odd columns. This produces a red colour, with the red pixels (from the set bits) bleeding into the adjacent black pixels (from the clear bits) to create a red sun with a distinctive banding effect:
 
 ![The sun in Apple II Elite](https://elite.bbcelite.com/images/apple/sun.png) 
 
-						You can see some interesting effects where the white laser sights overlap the sun. For example, when they're in front of the sun, the vertical sight lines appear as two white pixels followed by two black pixels. This seems odd, but it's an example of the EOR logic in action. The vertical sight line is made up of two set pixels so that it appears in white, so that's a pattern of 0110 when it's drawn on the normal black background of the space view (and this four-bit sequence happens to be drawn with it starting in an odd column). The sun, meanwhile, has a bit pattern of 1010, with this also starting on an odd column (so the first set bit is red).
+You can see some interesting effects where the white laser sights overlap the sun. For example, when they're in front of the sun, the vertical sight lines appear as two white pixels followed by two black pixels. This seems odd, but it's an example of the EOR logic in action. The vertical sight line is made up of two set pixels so that it appears in white, so that's a pattern of 0110 when it's drawn on the normal black background of the space view (and this four-bit sequence happens to be drawn with it starting in an odd column). The sun, meanwhile, has a bit pattern of 1010, with this also starting on an odd column (so the first set bit is red).
 
 When these two are combined together on-screen using EOR logic, they combine into 0110 EOR 1010 = 1100, which gives us two white pixels followed by two black pixels. And because the 1100 starts on an odd column, the red pixels around each side fit in nicely without any gaps or other fringe colours. Finally, because the pixel byte showing the vertical sight changes from 0110 to 1100, the vertical line moves left by one pixel compared to when it isn't in front of the sun.
 

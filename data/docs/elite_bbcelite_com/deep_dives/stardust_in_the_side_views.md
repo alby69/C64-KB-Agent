@@ -4,29 +4,29 @@ source_url: https://elite.bbcelite.com/deep_dives/stardust_in_the_side_views.htm
 category: deep-dive
 topics:
 - input handling
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
+- KERNAL
+- SID
 - VIC-II
 - CPU
-- KERNAL
 - CIA
-- SID
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Stardust in the side views
@@ -49,11 +49,13 @@ Let's look at this process in more detail. It breaks down into three stages:
 
 													 ----------------------------
 
-						First, we want to move the stardust sideways, in the correct direction for the current view. The further away the stardust particle (i.e. with a higher value of z) the slower it should move, to give a sense of perspective.
+						
+First, we want to move the stardust sideways, in the correct direction for the current view. The further away the stardust particle (i.e. with a higher value of z) the slower it should move, to give a sense of perspective.
 
 These are the calculations:
 
-1. delta_x = 8 * 256 * speed / z_hi 2. x = x + delta_x
+  1. delta_x = 8 * 256 * speed / z_hi
+  2. x = x + delta_x
 
 We sign the delta_x value as negative for the left view, where particles go from right to left, and positive for the right view, where particles go from left to right, and then we add the delta to the x-coordinate to move the stardust particle past our side window as we speed along.
 
@@ -61,9 +63,11 @@ We sign the delta_x value as negative for the left view, where particles go from
 
 													 -----------------------------------------
 
-						The following calculations apply the current pitch angle beta to the stardust:
+						
+The following calculations apply the current pitch angle beta to the stardust:
 
-3. x = x + beta * y 4. y = y - beta * x
+  3. x = x + beta * y
+  4. y = y - beta * x
 
 These are essentially the same as the roll equations from MVS4, just using the pitch angle beta, because when we are looking out of the side views, when the ship pitches, the side views rotate around the middle, just like the front view does when we roll.
 
@@ -71,9 +75,11 @@ These are essentially the same as the roll equations from MVS4, just using the p
 
 													 ---------------------------------------
 
-						The following calculations apply the current roll angle alpha to the stardust:
+						
+The following calculations apply the current roll angle alpha to the stardust:
 
-5. x = x - alpha * x * y 6. y = y + alpha * y * y + alpha
+  5. x = x - alpha * x * y
+  6. y = y + alpha * y * y + alpha
 
 The significant part here is adding alpha to y (or, more specifically, ALPHA * 256). This means that as we roll the ship and alpha increases, the stardust out of the side view goes up and down, which is pretty intuitive.
 

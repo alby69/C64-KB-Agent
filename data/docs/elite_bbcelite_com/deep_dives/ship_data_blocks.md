@@ -3,25 +3,25 @@ title: Ship data blocks
 source_url: https://elite.bbcelite.com/deep_dives/ship_data_blocks.html
 category: source-code
 topics:
+- assembly
 - memory management
 - sprite programming
-- assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - CIA
+- SID
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
 - keyboard-handling
+- cia-registers
 - music-player
 - joystick-reading
+- raster-interrupts
+- sid-registers
 - vic-ii-registers
-- cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Ship data blocks
@@ -36,13 +36,14 @@ For example, here's a screenshot of the [Elite Universe Editor](https://elite.bb
 
 ![The ship ID poster in Elite Universe Editor](https://elite.bbcelite.com/images/elite_universe_editor/ship_id.png) 
 
-						Each of these ships, including the planet, has its own data block that describes where the ship is in space, the direction it's pointing in, and so on. But before we go any further, let's talk about the terminology we're going to use when describing ships and ship data blocks.
+Each of these ships, including the planet, has its own data block that describes where the ship is in space, the direction it's pointing in, and so on. But before we go any further, let's talk about the terminology we're going to use when describing ships and ship data blocks.
 
 ## Ship data terminology
 
 													 ---------------------
 
-						Throughout this documentation, we're going to refer to "ships" and "ship data blocks" for all the different object types in the vicinity, not just ships. The same blocks, pointers and data structures are used not only for ships, but also for cargo canisters, missiles, escape pods, asteroids, space stations, planets and suns, but that's a bit of a mouthful compared to "ships", so "ships" it is.
+						
+Throughout this documentation, we're going to refer to "ships" and "ship data blocks" for all the different object types in the vicinity, not just ships. The same blocks, pointers and data structures are used not only for ships, but also for cargo canisters, missiles, escape pods, asteroids, space stations, planets and suns, but that's a bit of a mouthful compared to "ships", so "ships" it is.
 
 When working with a ship's data - such as when we move a ship in MVEIT, or spawn a child ship in SFS1 - we normally work with the data in the [INWK](https://elite.bbcelite.com/cassette/main/workspace/zp.html#inwk) workspace, as INWK is in zero page and is therefore faster and more memory efficient to manipulate. The ship data blocks in the K% workspace are therefore copied into INWK before they are worked on, and new ship blocks are created in INWK before being copied to K%. As a result, the layout of the INWK data block is identical the layout of each ship data block in K%.
 
@@ -58,7 +59,8 @@ Let's take a look at the format of a typical ship data block.
 
 													 -------------------------------------
 
-						The bytes in each ship data block are arranged as follows:
+						
+The bytes in each ship data block are arranged as follows:
 
 | Byte # | Description | 
 |---|---|
@@ -78,7 +80,7 @@ Let's take a look at the format of a typical ship data block.
 | #33 | The number of the ship on the scanner (NES version) | 
 | #34 | The cloud counter for the explosion cloud (NES version) | 
 | #35 | Energy level | 
-| #36 | [NEWB flags](https://elite.bbcelite.com/deep_dives/advanced_tactics_with_the_newb_flags.html)(enhanced versions only) | 
+| #36 | [NEWB flags](https://elite.bbcelite.com/deep_dives/advanced_tactics_with_the_newb_flags.html) (enhanced versions only) | 
 
 Note that in the NES version, INWK+33 and INWK+34 are no longer used to store the ship line heap address, as the NES doesn't have a ship line heap (as ships don't need to be erased line-by-line in that version). Instead INWK+33 contains the number of the ship on the scanner, and INWK+34 contains the cloud counter for the explosion cloud.
 
@@ -88,7 +90,8 @@ Let's look at these in more detail.
 
 													 -----------------------------
 
-						These bytes contain the ship's location in space relative to our ship. The x-axis goes to the right, the y-axis goes up and the z-axis goes into the screen.
+						
+These bytes contain the ship's location in space relative to our ship. The x-axis goes to the right, the y-axis goes up and the z-axis goes into the screen.
 
 | Byte # | Description | 
 |---|---|
@@ -120,7 +123,8 @@ We can also write the coordinates like this:
 
 													 ---------------------------------
 
-						The ship's orientation vectors determine its orientation in space. There are three vectors, named according to the direction they point in (i.e. out of the ship's nose, the ship's roof, or the ship's right side):
+						
+The ship's orientation vectors determine its orientation in space. There are three vectors, named according to the direction they point in (i.e. out of the ship's nose, the ship's roof, or the ship's right side):
 
 | Byte # | Description | 
 |---|---|
@@ -155,16 +159,15 @@ The vector coordinates are stored as 16-bit sign-magnitude numbers, where the si
 
 													 ----------------------------
 
-						This block controls the ship's movement in space.
+						
+This block controls the ship's movement in space.
 
 | Byte # | Description | 
 |---|---|
 | #27 | Speed, in the range 1-40 | 
 | #28 | Acceleration, which gets added to the speed once, in MVEIT, before being zeroed again | 
-| #29 | Roll counter Bits 0-6 = The counter. If this is 127 (%1111111) then damping is disabled and the ship keeps rolling forever, otherwise damping is enabled and the counter reduces by 1 for every iteration of the main flight loop. The ship rolls by a fixed amount (1/16 radians, or 3.6 degrees) for every iteration where the counter is greater than 0.Bit 7 = The direction of roll (a positive roll counter rolls the ship clockwise, a negative roll counter rolls it anti-clockwise)
- | 
-| #30 | Pitch counter Bits 0-6 = The counter. If this is 127 (%1111111) then damping is disabled and the ship keeps pitching forever, otherwise damping is enabled and the counter reduces by 1 for every iteration of the main flight loop. The ship pitches by a fixed amount (1/16 radians, or 3.6 degrees) for every iteration where the counter is greater than 0.Bit 7 = The direction of pitch (a positive pitch counter makes the ship dive, a negative pitch counter makes the ship climb)
- | 
+| #29 | Roll counter Bits 0-6 = The counter. If this is 127 (%1111111) then damping is disabled and the ship keeps rolling forever, otherwise damping is enabled and the counter reduces by 1 for every iteration of the main flight loop. The ship rolls by a fixed amount (1/16 radians, or 3.6 degrees) for every iteration where the counter is greater than 0. Bit 7 = The direction of roll (a positive roll counter rolls the ship clockwise, a negative roll counter rolls it anti-clockwise) | 
+| #30 | Pitch counter Bits 0-6 = The counter. If this is 127 (%1111111) then damping is disabled and the ship keeps pitching forever, otherwise damping is enabled and the counter reduces by 1 for every iteration of the main flight loop. The ship pitches by a fixed amount (1/16 radians, or 3.6 degrees) for every iteration where the counter is greater than 0. Bit 7 = The direction of pitch (a positive pitch counter makes the ship dive, a negative pitch counter makes the ship climb) | 
 
 See the deep dive on [pitching and rolling by a fixed angle](https://elite.bbcelite.com/pitching_and_rolling_by_a_fixed_angle.html) for more details on the pitch and roll that the above counters apply to a ship.
 
@@ -172,41 +175,23 @@ See the deep dive on [pitching and rolling by a fixed angle](https://elite.bbcel
 
 													 -------------------------
 
-						These two flags contain a lot of information about the ship, and they are consulted often.
+						
+These two flags contain a lot of information about the ship, and they are consulted often.
 
 | Byte # | Description | 
 |---|---|
-| #31 | Exploding state Killed state "Is being drawn on-screen" flag "Is visible on the scanner" flag Missile count Bits 0-2: %nnn = number of missiles or Thargons (maximum 7)Bit 3: 0 = isn't currently being drawn on-screen1 = is currently being drawn on-screen
-Bit 4: 0 = don't show on scanner1 = do show on scanner
-Bit 5: 0 = ship is not exploding1 = ship is exploding
-Bit 6: 0 = ship is not firing lasers1 = ship is firing lasers
- 0 = explosion has not been drawn
- 1 = explosion has been drawn
-Bit 7: 0 = ship has not been killed1 = ship has been killed
- | 
-| #32 | AI flag Aggression level Hostility flag (stations and missiles only) E.C.M. flag For ships:
-										Bit 0: 0 = no E.C.M.1 = has E.C.M.
-Bits 1-6: %nnnnnn = aggression level (0 to 63)(see
- [TACTICS part 7](https://elite.bbcelite.com/cassette/main/subroutine/tactics_part_7_of_7.html))Bit 7: 0 = dumb1 = AI enabled (apply
- [TACTICS](https://elite.bbcelite.com/cassette/main/subroutine/tactics_part_2_of_7.html)to ship)
-Bit 0: 0 = no E.C.M.For the space station:
-										Bit 0: 1 = has E.C.M. (always set for the station)Bit 7: 0 = friendly (BBC cassette and Electron versions)dumb (enhanced versions)
- 1 = hostile (BBC cassette and Electron versions)
- AI enabled (enhanced versions, apply
- [TACTICS](https://elite.bbcelite.com/cassette/main/subroutine/tactics_part_2_of_7.html))
-For missiles:
-										Bit 0: 0 = no lock/launched1 = target locked
-Bits 1-5: %nnnnn = target's slot numberBit 6: 0 = friendly1 = hostile
-Bit 7: 0 = dumb1 = AI enabled (apply
- [TACTICS](https://elite.bbcelite.com/cassette/main/subroutine/tactics_part_2_of_7.html)to missile)
-Bit 0: 0 = no lock/launched
- | 
+| #31 | Exploding state Killed state "Is being drawn on-screen" flag "Is visible on the scanner" flag Missile count Bits 0-2: %nnn = number of missiles or Thargons (maximum 7) Bit 3: 0 = isn't currently being drawn on-screen 1 = is currently being drawn on-screen Bit 4: 0 = don't show on scanner 1 = do show on scanner Bit 5: 0 = ship is not exploding 1 = ship is exploding Bit 6: 0 = ship is not firing lasers 1 = ship is firing lasers 0 = explosion has not been drawn 1 = explosion has been drawn Bit 7: 0 = ship has not been killed 1 = ship has been killed | 
+| #32 | AI flag Aggression level Hostility flag (stations and missiles only) E.C.M. flag For ships: 										
+Bit 0: 0 = no E.C.M. 1 = has E.C.M. Bits 1-6: %nnnnnn = aggression level (0 to 63) (see [TACTICS part 7](https://elite.bbcelite.com/cassette/main/subroutine/tactics_part_7_of_7.html) ) Bit 7: 0 = dumb 1 = AI enabled (apply [TACTICS](https://elite.bbcelite.com/cassette/main/subroutine/tactics_part_2_of_7.html) to ship) Bit 0: 0 = no E.C.M. For the space station: 										
+Bit 0: 1 = has E.C.M. (always set for the station) Bit 7: 0 = friendly (BBC cassette and Electron versions) dumb (enhanced versions) 1 = hostile (BBC cassette and Electron versions) AI enabled (enhanced versions, apply [TACTICS](https://elite.bbcelite.com/cassette/main/subroutine/tactics_part_2_of_7.html) ) For missiles: 										
+Bit 0: 0 = no lock/launched 1 = target locked Bits 1-5: %nnnnn = target's slot number Bit 6: 0 = friendly 1 = hostile Bit 7: 0 = dumb 1 = AI enabled (apply [TACTICS](https://elite.bbcelite.com/cassette/main/subroutine/tactics_part_2_of_7.html) to missile) Bit 0: 0 = no lock/launched | 
 
 ## Heap pointer and energy (bytes #33-35)
 
 													 --------------------------------------
 
-						The final three bytes are as follows:
+						
+The final three bytes are as follows:
 
 | Byte # | Description | 
 |---|---|
@@ -225,7 +210,8 @@ In the NES version, there is no ship line heap, so the first two bytes are repur
 
 													 ---------------------
 
-						The enhanced versions of Elite have a much more sophisticated tactics routine than the original BBC Micro cassette and Acorn Electron versions. At the core of this advanced routine is the set of NEWB flags, which were added to the cassette version as it grew into the disc version. The NEWB flags live in byte #36 of the ship data block.
+						
+The enhanced versions of Elite have a much more sophisticated tactics routine than the original BBC Micro cassette and Acorn Electron versions. At the core of this advanced routine is the set of NEWB flags, which were added to the cassette version as it grew into the disc version. The NEWB flags live in byte #36 of the ship data block.
 
 For details of the NEWB flags, see the deep dive on [advanced tactics with the NEWB flags](https://elite.bbcelite.com/deep_dives/advanced_tactics_with_the_newb_flags.html).
 

@@ -9,12 +9,10 @@ difficulty: beginner
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Addition
-
-### Table of Contents
 
 # Addition
 
@@ -22,7 +20,7 @@ scraped_at: '2026-07-27'
 
 The addition of two numbers is very simple, because our CPU provides a command for it: ADC. This command adds the content of the accu to the value addressed by the ADC-command. Furthermore it adds the Carryflag (one or zero) to the result and stores it in the accu. To put it short:
 
-ADC value: accu = accu + value + carryflag
+ADC value:	accu = accu + value + carryflag
 
 After that the carryflag will be set if there was an overflow in the addition, or cleared otherwise.
 
@@ -39,21 +37,52 @@ For an example, let's add the numbers $0cc5 and $4872:
 - clear the carryflag with CLC
 - add the lowbytes:
 
-$c5 (lowbyte of summand 1) + $72 (lowbyte of summand 2) + 0 (carryflag) ----------- = $137 (lowbyte of the result is $37, carryflag is set)
+  	 $c5	(lowbyte of summand 1)
+  +	 $72	(lowbyte of summand 2)
+  +	   0	(carryflag)
+  -----------
+  =	$137	(lowbyte of the result is $37, carryflag is set)
+  
 
 - store the lowbyte of the result and add the highbytes:
 
-$0c (highbyte of summand 1) + $48 (highbyte of summand 2) + 1 (carryflag) ----------- = $055 (highbyte of the result, carryflag is cleared)
+  	 $0c	(highbyte of summand 1)
+  +	 $48	(highbyte of summand 2)
+  +	   1	(carryflag)
+  -----------
+  =	$055	(highbyte of the result, carryflag is cleared)
+  
 
 - store the highbyte of the result. this gives you the correct sum of $5537
 
 To put it in assembler:
 
-clc ; carryflag = 0 lda summand1 ; accu = lowbyte of summand1 adc summand2 ; accu = accu + lowbyte if summand2 + carryflag sta result ; store lowbyte of result, ; carryflag is now set if an overflow occured and cleared otherwise lda summand1+1 ; accu = highbyte of summand1 adc summand2+1 ; accu = accu + highbyte of summand2 + carryflag sta result+1 ; store highbyte of result ; again the carryflag is now set if an overflow occured and cleared otherwise rts summand1 !word $0cc5 summand2 !word $4872 result !word $0000 ; is $5537 afterwards
+		clc			; carryflag = 0
+		lda summand1		; accu = lowbyte of summand1
+		adc summand2		; accu = accu + lowbyte if summand2 + carryflag
+		sta result		; store lowbyte of result, 
+					; carryflag is now set if an overflow occured and cleared otherwise
+		lda summand1+1		; accu = highbyte of summand1
+		adc summand2+1		; accu = accu + highbyte of summand2 + carryflag
+		sta result+1		; store highbyte of result
+					; again the carryflag is now set if an overflow occured and cleared otherwise
+		rts
+summand1	!word $0cc5
+summand2	!word $4872
+result		!word $0000		; is $5537 afterwards	
 
 To handle larger numbers you may append more steps to this routine, but they are all the same. E. g. for 24-bit numbers your can write:
 
-clc lda summand1 adc summand2 sta result lda summand1+1 adc summand2+1 sta result+1 lda summand1+2 adc summand2+2 sta result+2
+		clc
+		lda summand1
+		adc summand2
+		sta result
+		lda summand1+1
+		adc summand2+1
+		sta result+1
+		lda summand1+2
+		adc summand2+2
+		sta result+2
 
 and so on.
 
@@ -63,13 +92,13 @@ and so on.
 
 The subtraction of two numbers is nearly the same as the addition. The main difference is that a *cleared* carryflag indicates an underrun. So before you start you have to *set* the flag to get a correct result. The function of the SBC-command is:
 
-SBC value: accu = accu - value - 1 + carryflag
+SBC value:	accu = accu - value - 1 + carryflag
 
 After that the carryflag will be *cleared* if there was an underrun, and *set* otherwise.
 
 You may wonder why there is a -1 in the above formula, and why the carryflag is handled in the opposite way than it's done in the addition. The reason is simple: To save some hardware in the CPU the add-circuits are used to perform the subtraction. What the SBC really does is:
 
-SBC value: accu = accu + (value EOR $ff) + carryflag
+SBC value:	accu = accu + (value EOR $ff) + carryflag
 
 As you see the only difference to the addition is that the subtrahend becomes inverted first. This trick works fine, but the result you get is one to short. So the carryflag has to be set to get the correct result, and a cleared flag can be used to handle an underrun.
 
@@ -77,7 +106,19 @@ As you see the only difference to the addition is that the subtrahend becomes in
 
 That works exactly like the addition, whith the only difference, that the carryflag has to be set at the start.
 
-sec ; carryflag = 1 lda minuend ; accu = lowbyte of minuend sbc subtrahend ; accu = accu - lowbyte if subtrahend - 1 + carryflag sta result ; store lowbyte of result ; carryflag is now cleared if an underrun occured and set otherwise lda minuend+1 ; accu = highbyte of minuend sbc subtrahend+1 ; accu = accu + highbyte of subtrahend - 1 + carryflag sta result+1 ; store highbyte of result ; again the carryflag is cleared if an underrun occured and set otherwise rts minuend !word $3872 subtrahend !word $0cc5 result !word $0000 ; is $2bad afterwards
+		sec			; carryflag = 1
+		lda minuend		; accu = lowbyte of minuend
+		sbc subtrahend		; accu = accu - lowbyte if subtrahend - 1 + carryflag
+		sta result		; store lowbyte of result
+					; carryflag is now cleared if an underrun occured and set otherwise
+		lda minuend+1		; accu = highbyte of minuend
+		sbc subtrahend+1	; accu = accu + highbyte of subtrahend - 1 + carryflag
+		sta result+1		; store highbyte of result
+					; again the carryflag is cleared if an underrun occured and set otherwise
+		rts
+minuend		!word $3872
+subtrahend	!word $0cc5
+result		!word $0000		; is $2bad afterwards	
 
 Of course also this routine can be extended to handle numbers of any length.
 

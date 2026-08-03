@@ -3,21 +3,21 @@ title: Drawing craters
 source_url: https://elite.bbcelite.com/deep_dives/drawing_craters.html
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Drawing craters
@@ -28,7 +28,7 @@ There is some debate around planets like Diso and Leesti. As Lave's closest neig
 
 ![A view of Leesti in BBC Micro Elite](https://elite.bbcelite.com/images/craters/leesti.png) 
 
-						Now, some people believe this circle that races around the planet is a giant storm cloud on a gaseous giant, like Jupiter's famous Red Spot. There isn't enough detail in the game's graphics to dispel this notion, and there are no clues in either the [source code](https://elite.bbcelite.com/cassette/articles/map_of_the_source_code.html), the [manual](http://www.elitehomepage.org/manual.htm), the [novella](http://www.elitehomepage.org/dkwheel.htm) or [Ian Bell's Elite website](http://www.elitehomepage.org/). But personally, I think this feature is a crater, because Diso is populated by Black Furry Felines enjoying an agricultural economy on a planet with a radius of just 6155km, while Leesti has a human population living on a tiny planet of radius 3085km. Jupiter, in contrast, is over twenty times the size, and even black cats would run out of lives in that kind of atmosphere.
+Now, some people believe this circle that races around the planet is a giant storm cloud on a gaseous giant, like Jupiter's famous Red Spot. There isn't enough detail in the game's graphics to dispel this notion, and there are no clues in either the [source code](https://elite.bbcelite.com/cassette/articles/map_of_the_source_code.html), the [manual](http://www.elitehomepage.org/manual.htm), the [novella](http://www.elitehomepage.org/dkwheel.htm) or [Ian Bell's Elite website](http://www.elitehomepage.org/). But personally, I think this feature is a crater, because Diso is populated by Black Furry Felines enjoying an agricultural economy on a planet with a radius of just 6155km, while Leesti has a human population living on a tiny planet of radius 3085km. Jupiter, in contrast, is over twenty times the size, and even black cats would run out of lives in that kind of atmosphere.
 
 Also, to my eyes, both planets look just like Saturn's moon Mimas that was so memorably photographed by Voyager 1 back in November 1980:
 
@@ -38,7 +38,7 @@ Also, to my eyes, both planets look just like Saturn's moon Mimas that was so me
 
 ![Saturn's moon Mimas, taken by Voyager 1](https://elite.bbcelite.com/images/craters/mimas.jpg) 
 
-						Surely Diso's design was inspired by this epic image, which came out at exactly the right time to influence the game's authors. And everyone who's seen Star Wars and has hyperspaced into Leesti has surely thought at some point, "That's no moon!" After all, Elite was developed during the classic Star Wars run between 1977 and 1983, and there must be an influence there; heck, the 6502 Second Processor version even includes a Star Wars scroll text (see the deep dive on the [6502 Second Processor demo mode](https://elite.bbcelite.com/deep_dives/6502sp_demo_mode.html) for the details).
+Surely Diso's design was inspired by this epic image, which came out at exactly the right time to influence the game's authors. And everyone who's seen Star Wars and has hyperspaced into Leesti has surely thought at some point, "That's no moon!" After all, Elite was developed during the classic Star Wars run between 1977 and 1983, and there must be an influence there; heck, the 6502 Second Processor version even includes a Star Wars scroll text (see the deep dive on the [6502 Second Processor demo mode](https://elite.bbcelite.com/deep_dives/6502sp_demo_mode.html) for the details).
 
 So, on this site at least, Diso and Leesti have craters rather than giant storms, so that's what we're going to look at here.
 
@@ -46,7 +46,8 @@ So, on this site at least, Diso and Leesti have craters rather than giant storms
 
 													 ------------
 
-						In the BBC version of Elite, planets come in two types - those with craters (like Diso and Leesti, as shown above) and those with meridians and equators (like Lave, as shown in the deep dive on [drawing meridians and equators](https://elite.bbcelite.com/drawing_meridians_and_equators.html)).
+						
+In the BBC version of Elite, planets come in two types - those with craters (like Diso and Leesti, as shown above) and those with meridians and equators (like Lave, as shown in the deep dive on [drawing meridians and equators](https://elite.bbcelite.com/drawing_meridians_and_equators.html)).
 
 The planet's type depends on its tech level, and it is set in the [SOS1](https://elite.bbcelite.com/cassette/main/subroutine/sos1.html) routine that creates the planet's ship data block. Each system has a procedurally generated tech level in the range 0 to 14, which is incremented by the [TT25](https://elite.bbcelite.com/cassette/main/subroutine/tt25.html) routine to give a final on-screen tech level in the range 1 to 15 (see the deep dive on [generating system data](https://elite.bbcelite.com/generating_system_data.html) for details). The rule is simple: if bit 1 of the generated tech level (0 to 14) is set then the planet has a crater, otherwise it has a meridian and an equator.
 						
@@ -57,7 +58,8 @@ This means that planets with a generated tech level ending in %10 or %11 will ha
 
 													 -------------------
 
-						Craters are drawn as complete ellipses on the planet's surface. To understand how these ellipses are calculated, we first need to talk about how planets are stored.
+						
+Craters are drawn as complete ellipses on the planet's surface. To understand how these ellipses are calculated, we first need to talk about how planets are stored.
 
 Just like ships, each planet has an orthogonal set of unit vectors - roofv, nosev and sidev - that describe its orientation (see the deep dive on [orientation vectors](https://elite.bbcelite.com/orientation_vectors.html) for details). It might seem odd at first why a spherical object such as a planet should need three orthogonal vectors, but they are used to project the circular crater efficiently into the required ellipse, and they also allow the same rotation and 3D projection routines to be used to rotate and display both planets and ships.
 
@@ -67,7 +69,8 @@ Let's see how the orientation vectors are used to calculate the planet's crater.
 
 													 -----------------------------------
 
-						The heavy lifting for calculating the crater's ellipse coordinates is done by [part 3 of the PL9 routine](https://elite.bbcelite.com/cassette/main/subroutine/pl9_part_3_of_3.html). This routine calculates the following, and then calls the ellipse routine at [PLS22](https://elite.bbcelite.com/cassette/main/subroutine/pls22.html) to do the actual plotting.
+						
+The heavy lifting for calculating the crater's ellipse coordinates is done by [part 3 of the PL9 routine](https://elite.bbcelite.com/cassette/main/subroutine/pl9_part_3_of_3.html). This routine calculates the following, and then calls the ellipse routine at [PLS22](https://elite.bbcelite.com/cassette/main/subroutine/pls22.html) to do the actual plotting.
 
 We start by calculating the centre of the on-screen ellipse, in pixel coordinates:
 
@@ -79,7 +82,8 @@ We start by calculating the centre of the on-screen ellipse, in pixel coordinate
                              -------
                                 z
 ```
-						In the above, z is the z-coordinate of the planet's centre in 3D space, i.e. how far in front of us the planet is, as the z-axis points into the screen (see the deep dive on [pitching and rolling](https://elite.bbcelite.com/deep_dives/pitching_and_rolling.html) for more on this). The planet's orientation vectors are in roofv, nosev and sidev, and they describe the orientation of the planet (see the deep dive on [orientation vectors](https://elite.bbcelite.com/orientation_vectors.html)).
+						
+In the above, z is the z-coordinate of the planet's centre in 3D space, i.e. how far in front of us the planet is, as the z-axis points into the screen (see the deep dive on [pitching and rolling](https://elite.bbcelite.com/deep_dives/pitching_and_rolling.html) for more on this). The planet's orientation vectors are in roofv, nosev and sidev, and they describe the orientation of the planet (see the deep dive on [orientation vectors](https://elite.bbcelite.com/orientation_vectors.html)).
 
 The centre of the ellipse is displaced by a factor of 0.87 of the planet's radius towards the centre of the planet, which is calculated by multiplying by 222 and dividing by 256. This means the crater's ellipse is always drawn just slightly inside the planet's two-dimensional circle outline, so it looks like it is on the planet's surface rather than floating above it.
 
@@ -91,13 +95,15 @@ As described in the deep-dive on [drawing ellipses](https://elite.bbcelite.com/d
   u = [  XX16   K2  ] = [ nosev_x / 2z ]
       [ XX16+1 K2+1 ]   [ nosev_y / 2z ]
 ```
-						and then the second conjugate radius vector in v:
+						
+and then the second conjugate radius vector in v:
 
 ```
   v = [ XX16+2 K2+2 ] = [ sidev_x / 2z ]
       [ XX16+3 K2+3 ]   [ sidev_y / 2z ]
 ```
-						Amazingly, these two simple calculations produce valid u and v vectors that define a realistic-looking elliptical crater on the planet's surface. The division by 2z ensures that the crater's diameter is half that of the planet.
+						
+Amazingly, these two simple calculations produce valid u and v vectors that define a realistic-looking elliptical crater on the planet's surface. The division by 2z ensures that the crater's diameter is half that of the planet.
 
 The results of the above calculations in K3, K4, XX16 and K2 are passed as arguments to the [PLS22](https://elite.bbcelite.com/cassette/main/subroutine/pls22.html) routine, which draws the ellipse. The argument TGT is set to 64, which tells the ellipse routine to plot a full ellipse with these details.
 
@@ -109,11 +115,12 @@ The end result looks like this:
 
 ![A rotating planet with crater](https://elite.bbcelite.com/images/craters/b_planet_crater.gif) 
 
-						## Further analysis
+## Further analysis
 
 													 ----------------
 
-						The crater ellipse is only drawn when the roofv vector is positive (i.e. when it is pointing away from us). This check is made at the very start of [part 3 of the PL9 routine](https://elite.bbcelite.com/cassette/main/subroutine/pl9_part_3_of_3.html), and when roofv is negative and pointing towards us, the crater code is skipped and the crater is therefore not drawn. The net effect of this logic is that the crater only appears on one side of the planet, as you would expect from a solid planet.
+						
+The crater ellipse is only drawn when the roofv vector is positive (i.e. when it is pointing away from us). This check is made at the very start of [part 3 of the PL9 routine](https://elite.bbcelite.com/cassette/main/subroutine/pl9_part_3_of_3.html), and when roofv is negative and pointing towards us, the crater code is skipped and the crater is therefore not drawn. The net effect of this logic is that the crater only appears on one side of the planet, as you would expect from a solid planet.
 
 To make the planet rotate forever, we set the pitch and roll counters to 127 in the [SOS1](https://elite.bbcelite.com/cassette/main/subroutine/sos1.html) routine. This ensures that the counters don't count down, so the planet rotates on every iteration around the main loop, pitching around the sidev vector and rolling around the nosev vector by the same small angle on each iteration. This rotation is handled by the exact same code that handles pitching and rolling of ships - see the deep dive on [pitching and rolling by a fixed angle](https://elite.bbcelite.com/deep_dives/pitching_and_rolling_by_a_fixed_angle.html) for details.
 
@@ -129,7 +136,7 @@ There is actually a degree of freedom in the choice of sidev and nosev here - we
 
 ![A circle projected onto an ellipse](https://elite.bbcelite.com/images/craters/b_orthographic_projection_circle.gif) 
 
-						The fact that the ellipse drawn is stable in the animation above - despite it being repeatedly redrawn in each animation frame with the [ellipse-drawing algorithm](https://elite.bbcelite.com/drawing_ellipses.html) - demonstrates the degree of freedom there is in rotating the green and yellow sidev and nosev vectors about the red roofv vector.
+The fact that the ellipse drawn is stable in the animation above - despite it being repeatedly redrawn in each animation frame with the [ellipse-drawing algorithm](https://elite.bbcelite.com/drawing_ellipses.html) - demonstrates the degree of freedom there is in rotating the green and yellow sidev and nosev vectors about the red roofv vector.
 
 The above animation also shows that the two valid points on the original circle's circumference (u and v) go through an orthographic projection, and so must end up as two valid points on the orthographically projected ellipse. Hence the ellipse required must pass through these two projected points (which it does!). The animation also shows that the bounding square of the original circle becomes a parallelogram in this projection. The parallelogram touches the ends of the u and v vectors, which confirms that those u and v vectors are valid conjugate radii of the ellipse. This means the u and v projections do indeed form two valid conjugate radii of the required ellipse; and hence the ellipse finally drawn is the correct projected ellipse.
 

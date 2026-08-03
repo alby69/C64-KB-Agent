@@ -3,9 +3,9 @@ title: Sprite Multiplexer
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_multiplexer_3
 category: tool
 topics:
-- sprite programming
-- raster interrupts
 - memory management
+- raster interrupts
+- sprite programming
 - assembly
 difficulty: advanced
 language: mixed
@@ -13,13 +13,13 @@ hardware:
 - VIC-II
 - SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- sprite-programming
+- music-player
+- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 

@@ -3,8 +3,8 @@ title: Kernal Reference
 source_url: https://codebase.c64.org/doku.php?id=base%3Akernalreference
 category: reference
 topics:
-- raster interrupts
 - memory management
+- raster interrupts
 - input handling
 - sprite programming
 - assembly
@@ -15,14 +15,14 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

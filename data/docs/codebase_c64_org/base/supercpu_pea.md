@@ -11,13 +11,13 @@ language: mixed
 hardware:
 - SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- sprite-programming
+- music-player
+- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # PEA

@@ -11,9 +11,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Part 5 - Addressing Modes
@@ -36,7 +36,9 @@ An addressing mode refers to the way the CPU obtains information from memory. He
 
 Instructions like ASL, INX, or DEY do not affect any address in memory. No operand is required.
 
-ASL INX DEY
+ASL
+INX
+DEY
 
 There is an odd instruction in this category though. The NOP instruction does nothing- no registers are changed.
 
@@ -44,25 +46,33 @@ There is an odd instruction in this category though. The NOP instruction does no
 
 The operand of an immediate instruction is only one byte, and denotes a constant value.
 
-LDA #$06 ORA #$9A AND #$7F
+LDA #$06
+ORA #$9A
+AND #$7F
 
 ## Absolute
 
 The operand of an absolute instruction is two bytes, and denotes an address in memory.
 
-LDA $1234 STA $4321 JMP $C000
+LDA $1234
+STA $4321
+JMP $C000
 
 ## Zeropage
 
 The operand of a zeropage instruction is one byte, and denotes an address in the zero page ($00xx).
 
-LDA $FB STA $FE CMP $FD
+LDA $FB
+STA $FE
+CMP $FD
 
 ## Indexed
 
 If an operand is indexed, then whatever index is specified is added to the address to get the real address.
 
-LDA $1234,X <- load A from $1234+the value in X STA $4321,Y <- store A to $4321+the value in Y LDA $FB,X <- load A from $00FB+the value in X
+LDA $1234,X <- load A from $1234+the value in X
+STA $4321,Y <- store A to $4321+the value in Y
+LDA $FB,X <- load A from $00FB+the value in X
 
 There is a bug regarding indexing from zeropage- say our X value is 4. We try LDA $FE,X. Instead of loading from $0102, the counter will roll over and load from $0002 instead.
 

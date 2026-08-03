@@ -8,15 +8,15 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # ACME-macros for frequency table calculation

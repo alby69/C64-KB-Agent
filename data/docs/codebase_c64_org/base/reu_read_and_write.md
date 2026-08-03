@@ -3,23 +3,23 @@ title: Theory
 source_url: https://codebase.c64.org/doku.php?id=base%3Areu_read_and_write
 category: source-code
 topics:
-- basic
 - memory management
+- basic
 - assembly
 difficulty: advanced
 language: mixed
 hardware:
 - CPU
-- BASIC ROM
-- SID
 - KERNAL
+- SID
+- BASIC ROM
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Theory
@@ -46,7 +46,25 @@ This limits this feature's use in, for example, feeding video or audio data. The
 
 Here is an example that copies the BASIC ROM into the expanded memory. To test that it actually does said task, change the command byte to $91 and C64 address to $4000 and run again. This will copy the BASIC interpreter back from the RAM expansion to $4000-$5FFF in your C64's address space.
 
-; example routine to read or write 17xx expanded memory by FMan/Tropyx !to "RAMExp.prg",cbm ; compile using ACME *=$2000 ; this is the easiest form of using the RAM Expansion: simply preset your arguments ; into the RECdata region and then copy it into the registers of the REC chip ; note that the copyloop must run backwards so that the control register is ; written last, because this will start the DMA, and addresses must be valid ldx #9 loop lda RECdata,x sta $df01,x ; $DF00 is a read-only status register dex bpl loop rts RECdata !byte $90 ; command byte (see text for detailed description) !word $a000 ; start address in C64 memory !word $6800 ; start address in RAM expansion !byte 1 ; RAM expansion bank number (0...7 max) !word $2000 ; length of DMA transfer !byte 0,0 ; clear flags and don't fix either address
+; example routine to read or write 17xx expanded memory by FMan/Tropyx
+	!to "RAMExp.prg",cbm		; compile using ACME
+	*=$2000
+; this is the easiest form of using the RAM Expansion: simply preset your arguments
+; into the RECdata region and then copy it into the registers of the REC chip
+; note that the copyloop must run backwards so that the control register is
+; written last, because this will start the DMA, and addresses must be valid
+	ldx #9
+loop	lda RECdata,x
+	sta $df01,x		; $DF00 is a read-only status register
+	dex
+	bpl loop
+	rts
+RECdata	!byte $90		; command byte (see text for detailed description)
+	!word $a000		; start address in C64 memory
+	!word $6800		; start address in RAM expansion
+	!byte 1			; RAM expansion bank number (0...7 max)
+	!word $2000		; length of DMA transfer
+	!byte 0,0		; clear flags and don't fix either address
 
 ## Useful example
 
@@ -56,7 +74,47 @@ The subroutine SetScr calls $B79B in the BASIC interpreter to read a comma-separ
 
 The control register stored in the initial setup has its bit 7 zero, because it is not intended that the initialization starts a DMA operation. However, this time bit 5 is set to keep the starting address from incrementing. This way the C64 base address will remain at $400 for each operation.
 
-; routines to save up to 256 text screens in REU by FMan/Tropyx !to "RAMExp2.prg",cbm ; compile using ACME *=$c350 temp = $fe jmp store jmp fetch ldx #9 ; initialize the REC loop lda RECdata,x sta $df01,x dex bpl loop rts store jsr SetScr lda #$b0 ; store from C64 into REU sta $df01 rts fetch jsr SetScr lda #$b1 ; fetch from REU into C64 sta $df01 rts ; this subroutine gets the screen index in the RAM expansion (0-255) ; and extends it to a 24-bit address that steps at $400 in the REU SetScr jsr $b79b ; get argument from BASIC line txa ldx #0 ; initialize high byte to zero stx temp asl ; multiply by two rol temp asl ; do same again rol temp sta $df05 ; MSB of address lda temp sta $df06 ; bits 16 and 17 of address rts ; preset REC chip register values RECdata !byte $20 ; command byte for autoload & no-operation !word $400 ; start address in C64 memory !word 0 ; start address in RAM expansion !byte 0 ; RAM expansion bank number (0...7 max) !word $3e8 ; length !byte 0,0 ; clear flags and don't fix either address
+; routines to save up to 256 text screens in REU by FMan/Tropyx
+	!to "RAMExp2.prg",cbm		; compile using ACME
+	*=$c350
+	temp = $fe
+	jmp store
+	jmp fetch
+	ldx #9			; initialize the REC
+loop	lda RECdata,x
+	sta $df01,x
+	dex
+	bpl loop
+	rts
+store	jsr SetScr
+	lda #$b0		; store from C64 into REU
+	sta $df01
+	rts
+fetch	jsr SetScr
+	lda #$b1		; fetch from REU into C64
+	sta $df01
+	rts
+; this subroutine gets the screen index in the RAM expansion (0-255)
+; and extends it to a 24-bit address that steps at $400 in the REU
+SetScr	jsr $b79b		; get argument from BASIC line
+	txa
+	ldx #0			; initialize high byte to zero
+	stx temp
+	asl			; multiply by two
+	rol temp
+	asl			; do same again
+	rol temp
+	sta $df05		; MSB of address
+	lda temp
+	sta $df06		; bits 16 and 17 of address
+	rts
+; preset REC chip register values
+RECdata	!byte $20		; command byte for autoload & no-operation
+	!word $400		; start address in C64 memory
+	!word 0			; start address in RAM expansion
+	!byte 0			; RAM expansion bank number (0...7 max)
+	!word $3e8		; length
+	!byte 0,0		; clear flags and don't fix either address
 
 Alternatively, you could be working on the local copy of the register set to create the expansion address. In that case, work out your parameters for the DMA transfer, including the command byte, and then call the setup routine. This would remove the need for a temporary variable and pre-initialization.
 

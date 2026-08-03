@@ -9,15 +9,15 @@ difficulty: beginner
 language: assembly
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Set a byte to non-zero
@@ -36,7 +36,7 @@ In this page, the “MNZ” operation means “Make Non-Zero”.
 
 If a register is known to contain a non-zero value (or is free to immediately set its value), then a basic STA/STX/STY will MNZ. This is the only way to perform this operation without affecting the N or Z processor flags.
 
-STA flag
+  STA flag
 
 However, sometimes our register values are unknown and must be preserved.
 
@@ -44,7 +44,8 @@ However, sometimes our register values are unknown and must be preserved.
 
 ROL/ROR'ing in a set (or known set) carry bit will guarantee a byte becomes non-zero without affecting the registers. This does destroy the carry bit, unless it is guaranteed that MNZ will not be performed on a flag more than 7 times before checking & resetting to zero.
 
-SEC ROL flag
+ SEC
+ ROL flag
 
 However, sometimes the carry state is unknown and must be preserved.
 
@@ -52,13 +53,14 @@ However, sometimes the carry state is unknown and must be preserved.
 
 Using INC or DEC to pull a value away from zero allows a flag to be MNZ'd up to 255 times, while preserving all of A, X, Y, and the Carry flag.
 
-INC flag
+ INC flag
 
 However, sometimes we do not know how often the MNZ operation will be done between resets.
 
 This final means ALWAYS guarantees a flag byte becomes non-zero without affecting A, X, Y, or C, no matter how often it's run between resets:
 
-: INC flag BEQ :-
+: INC flag
+  BEQ :-
 
 The branch will be taken incredibly rarely.
 

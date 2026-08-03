@@ -11,12 +11,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- keyboard-handling
 - joystick-reading
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # SuperCPU KickAssembler Library
@@ -74,13 +74,13 @@ The following opcodes does not need any special pseudocommands as they use the e
 ```
 ## Pseudocommands
 
-- [BRA / BRL](https://codebase.c64.org/doku.php?id=base:supercpu_bra)- Merged
-- [DEC](https://codebase.c64.org/doku.php?id=base:supercpu_dec)- Decreases A or M with 1
-- [DEX](https://codebase.c64.org/doku.php?id=base:supercpu_dex)- Decreases X with passed parameter
-- [DEY](https://codebase.c64.org/doku.php?id=base:supercpu_dey)- Decreases Y with passed parameter
-- [INC](https://codebase.c64.org/doku.php?id=base:supercpu_inc)- Increases A or M with 1
-- [INX](https://codebase.c64.org/doku.php?id=base:supercpu_inx)- Increases X with passed parameter
-- [INY](https://codebase.c64.org/doku.php?id=base:supercpu_iny)- Increases Y with passed parameter
+- [BRA / BRL](https://codebase.c64.org/doku.php?id=base:supercpu_bra) - Merged
+- [DEC](https://codebase.c64.org/doku.php?id=base:supercpu_dec) - Decreases A or M with 1
+- [DEX](https://codebase.c64.org/doku.php?id=base:supercpu_dex) - Decreases X with passed parameter
+- [DEY](https://codebase.c64.org/doku.php?id=base:supercpu_dey) - Decreases Y with passed parameter
+- [INC](https://codebase.c64.org/doku.php?id=base:supercpu_inc) - Increases A or M with 1
+- [INX](https://codebase.c64.org/doku.php?id=base:supercpu_inx) - Increases X with passed parameter
+- [INY](https://codebase.c64.org/doku.php?id=base:supercpu_iny) - Increases Y with passed parameter
 
 The following opcodes are not implemented:
 

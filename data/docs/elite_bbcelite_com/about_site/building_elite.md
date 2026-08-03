@@ -3,22 +3,22 @@ title: Building Elite from the source
 source_url: https://elite.bbcelite.com/about_site/building_elite.html
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - BASIC ROM
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Building Elite from the source
@@ -33,26 +33,27 @@ To keep things simple, let's concentrate on the build process for the BBC Micro 
 
 						                             ------------------------
 
-						The modern build process uses a multi-stage pipeline. This pipeline is based on the original build process from the source disc, but it uses the BeebAsm assembler and Python instead of BBC BASIC.
+						
+The modern build process uses a multi-stage pipeline. This pipeline is based on the original build process from the source disc, but it uses the BeebAsm assembler and Python instead of BBC BASIC.
 
 There are five main folders in each repository, which reflect the progress of the build process (the links will take you to the relevant folders on GitHub for the cassette version):
 
-- [1-source-files](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/1-source-files)contains all the different source files, such as the main assembler source files, image binaries, fonts, boot files and so on.
-- [2-build-files](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/2-build-files)contains build-related scripts, such as the checksum, encryption and crc32 verification scripts.
-- [3-assembled-output](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/3-assembled-output)contains the output from the assembly process, when the source files are assembled and the results processed by the build files.
-- [4-reference-binaries](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/4-reference-binaries)contains the correct binaries for each variant, so we can verify that our assembled output matches the reference.
-- [5-compiled-game-discs](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/5-compiled-game-discs)contains the final output of the build process: an SSD disc image that contains the compiled game and which can be run on real hardware or in an emulator.
+- [1-source-files](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/1-source-files) contains all the different source files, such as the main assembler source files, image binaries, fonts, boot files and so on.
+- [2-build-files](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/2-build-files) contains build-related scripts, such as the checksum, encryption and crc32 verification scripts.
+- [3-assembled-output](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/3-assembled-output) contains the output from the assembly process, when the source files are assembled and the results processed by the build files.
+- [4-reference-binaries](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/4-reference-binaries) contains the correct binaries for each variant, so we can verify that our assembled output matches the reference.
+- [5-compiled-game-discs](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/tree/main/5-compiled-game-discs) contains the final output of the build process: an SSD disc image that contains the compiled game and which can be run on real hardware or in an emulator.
 
 These folders are used in the multi-stage build process in the following manner: the 1-source-files are assembled, then encrypted and checksummed by the 2-build-files to create the 3-assembled-output, which is optionally verified against the 4-reference-binaries before being compiled into the final 5-compiled-game-discs.
 
 This build process is configured via the project's [Makefile](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/Makefile). Each version is subtly different, but the steps are the same in each case. For the cassette version, the specific build steps are as follows (the links will take you to the relevant source files on GitHub):
 
-- Assemble the main game with [elite-source.asm](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/1-source-files/main-sources/elite-source.asm)
-- Concatenate the game code and assemble the header with [elite-bcfs.asm](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/1-source-files/main-sources/elite-bcfs.asm)
-- Assemble the loader with [elite-loader.asm](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/1-source-files/main-sources/elite-loader.asm)
-- Calculate checksums and add encryption with [elite-checksum.py](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/2-build-files/elite-checksum.py)
-- Verify the assembled output with [crc32.py](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/2-build-files/crc32.py)
-- Assemble a bootable disc image with [elite-disc.asm](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/1-source-files/main-sources/elite-disc.asm)
+1. Assemble the main game with [elite-source.asm](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/1-source-files/main-sources/elite-source.asm)
+2. Concatenate the game code and assemble the header with [elite-bcfs.asm](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/1-source-files/main-sources/elite-bcfs.asm)
+3. Assemble the loader with [elite-loader.asm](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/1-source-files/main-sources/elite-loader.asm)
+4. Calculate checksums and add encryption with [elite-checksum.py](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/2-build-files/elite-checksum.py)
+5. Verify the assembled output with [crc32.py](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/2-build-files/crc32.py)
+6. Assemble a bootable disc image with [elite-disc.asm](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette/blob/main/1-source-files/main-sources/elite-disc.asm)
 
 This process broadly mirrors the build system on the original source discs. The original source code is split across a number of separate BBC BASIC files, each of which assembles and saves a binary file (the game itself isn't written in BASIC - the source code just uses BBC BASIC's built-in assembler to produce the game). In the cassette version there are ten BASIC source files in all: one for the text tokens, another for the ship blueprints, seven for the main game (A-G), and one for the game's loader.
 
@@ -68,7 +69,8 @@ Let's take a look at each of the pipeline stages in more detail.
 
 						                             -----------------------------------------------
 
-						BeebAsm loads elite-source.asm and creates the following files:
+						
+BeebAsm loads elite-source.asm and creates the following files:
 
 - ELTA.bin
 - ELTB.bin
@@ -100,7 +102,8 @@ So the BeebAsm process mirrors the original compilation steps pretty closely.
 
 						                             -----------------------------------------------------------------------
 
-						BeebAsm then loads elite-bcfs.asm, which reads the following files:
+						
+BeebAsm then loads elite-bcfs.asm, which reads the following files:
 
 - ELTA.bin
 - ELTB.bin
@@ -124,7 +127,8 @@ There is also a simple checksum test added to the start of the ELTcode file, but
 
 						                             --------------------------------------------
 
-						Next, BeebAsm loads elite-loader.asm, which reads the following files:
+						
+Next, BeebAsm loads elite-loader.asm, which reads the following files:
 
 - images/P.DIALS.bin
 - images/P.ELITE.bin
@@ -147,7 +151,8 @@ There are also a number of checksum and protection routines that EOR the code an
 
 						                             ----------------------------------------------------------------
 
-						Next, the pipeline runs the Python script elite-checksum.py, which reads the following files:
+						
+Next, the pipeline runs the Python script elite-checksum.py, which reads the following files:
 
 - ELTA.bin
 - ELTB.bin
@@ -196,11 +201,29 @@ At the end of all this we have two encrypted binaries, one for the loader and an
 
 						                             --------------------------------------------
 
-						By default the crc32.py script is run on the results, which compares the assembled output with the binaries from the original build process. This enables us to confirm that our output is correct.
+						
+By default the crc32.py script is run on the results, which compares the assembled output with the binaries from the original build process. This enables us to confirm that our output is correct.
 
 The verification output for the cassette version is as follows:
 
-[--originals--] [---output----] Checksum Size Checksum Size Match Filename ----------------------------------------------------------- a88ca82b 5426 a88ca82b 5426 Yes ELITE.bin f40816ec 5426 f40816ec 5426 Yes ELITE.unprot.bin 0f1ad255 2228 0f1ad255 2228 Yes ELTA.bin e725760a 2600 e725760a 2600 Yes ELTB.bin 97e338e8 2735 97e338e8 2735 Yes ELTC.bin 322b174c 2882 322b174c 2882 Yes ELTD.bin 29f7b8cb 2663 29f7b8cb 2663 Yes ELTE.bin 8a4cecc2 2721 8a4cecc2 2721 Yes ELTF.bin 7a6a5d1a 2340 7a6a5d1a 2340 Yes ELTG.bin 01a00dce 20712 01a00dce 20712 Yes ELTcode.bin 1e4466ec 20712 1e4466ec 20712 Yes ELTcode.unprot.bin 00d5bb7a 40 00d5bb7a 40 Yes ELThead.bin 99529ca8 256 99529ca8 256 Yes PYTHON.bin 49ee043c 2502 49ee043c 2502 Yes SHIPS.bin c4547e5e 1023 c4547e5e 1023 Yes WORDS9.bin
+  [--originals--]  [---output----]
+  Checksum   Size  Checksum   Size  Match  Filename
+  -----------------------------------------------------------
+  a88ca82b   5426  a88ca82b   5426   Yes   ELITE.bin
+  f40816ec   5426  f40816ec   5426   Yes   ELITE.unprot.bin
+  0f1ad255   2228  0f1ad255   2228   Yes   ELTA.bin
+  e725760a   2600  e725760a   2600   Yes   ELTB.bin
+  97e338e8   2735  97e338e8   2735   Yes   ELTC.bin
+  322b174c   2882  322b174c   2882   Yes   ELTD.bin
+  29f7b8cb   2663  29f7b8cb   2663   Yes   ELTE.bin
+  8a4cecc2   2721  8a4cecc2   2721   Yes   ELTF.bin
+  7a6a5d1a   2340  7a6a5d1a   2340   Yes   ELTG.bin
+  01a00dce  20712  01a00dce  20712   Yes   ELTcode.bin
+  1e4466ec  20712  1e4466ec  20712   Yes   ELTcode.unprot.bin
+  00d5bb7a     40  00d5bb7a     40   Yes   ELThead.bin
+  99529ca8    256  99529ca8    256   Yes   PYTHON.bin
+  49ee043c   2502  49ee043c   2502   Yes   SHIPS.bin
+  c4547e5e   1023  c4547e5e   1023   Yes   WORDS9.bin
 
 In this case all the assembled binaries match the original binaries, so our build process has worked.
 
@@ -208,7 +231,8 @@ In this case all the assembled binaries match the original binaries, so our buil
 
 						                             -----------------------------------------------------
 
-						Finally, BeebAsm loads elite-disc.asm, which reads the following files:
+						
+Finally, BeebAsm loads elite-disc.asm, which reads the following files:
 
 - boot-files/$.!BOOT.bin
 - basic-programs/$.ELITE.bin
@@ -232,21 +256,12 @@ Note that by default, the build process produces a version of the cassette game 
 
 The disc image can be loaded into an emulator, or into a real BBC Micro using a device like a Gotek.
 
+## 
 
 						                             ------------------------------------
 
-						For more details on how to run this process on a modern computer, and for all the sources and build files you need to run this on your PC, Mac or Linux box, see the accompanying GitHub repositories:
-
-- [Fully buildable source for the BBC Micro cassette version](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette)
-- [Fully buildable source for the BBC Micro disc version](https://github.com/markmoxon/elite-source-code-bbc-micro-disc)
-- [Fully buildable source for the Elite Demonstration Disc](https://github.com/markmoxon/elite-demo-source-code-bbc-micro)
-- [Fully buildable source for the Acorn Electron version](https://github.com/markmoxon/elite-source-code-acorn-electron)
-- [Fully buildable source for the 6502 Second Processor version](https://github.com/markmoxon/elite-source-code-6502-second-processor)
-- [Fully buildable source for the Commodore 64 version](https://github.com/markmoxon/elite-source-code-commodore-64)
-- [Fully buildable source for the Apple II version](https://github.com/markmoxon/elite-source-code-apple-ii)
-- [Fully buildable source for the BBC Master version](https://github.com/markmoxon/elite-source-code-bbc-master)
-- [Fully buildable source for the NES version](https://github.com/markmoxon/elite-source-code-nes)
-- [Fully buildable source for Elite-A](https://github.com/markmoxon/elite-a-source-code-bbc-micro)
+						
+For more details on how to run this process on a modern computer, and for all the sources and build files you need to run this on your PC, Mac or Linux box, see the accompanying GitHub repositories:
 
 In each case the source code on GitHub is identical to the code on this site (in fact, this website is generated from the GitHub repositories, so they are guaranteed to be identical).
 

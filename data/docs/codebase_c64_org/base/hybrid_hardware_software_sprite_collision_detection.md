@@ -3,8 +3,8 @@ title: base:hybrid_hardware_software_sprite_collision_detection [Codebase64 wiki
 source_url: https://codebase.c64.org/doku.php?id=base%3Ahybrid_hardware_software_sprite_collision_detection
 category: reference
 topics:
-- sprite programming
 - memory management
+- sprite programming
 - assembly
 difficulty: intermediate
 language: assembly
@@ -13,15 +13,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # base:hybrid_hardware_software_sprite_collision_detection [Codebase64 wiki]
@@ -30,7 +30,28 @@ base:hybrid_hardware_software_sprite_collision_detection
 
                 This code checks which sprite triggered the hardware sprite collision detection when bit 1 of $D01E is turned on. Assuming sprite 0 is the player sprite and sprites 1…7 are the “enemies”. A collision is considered TRUE if a sprite is within +/-20px on the Y axis and +/-23px on X axis from the player sprite. SPR_COLL_DETECT returns in .X the sprite number which is in that area. If multiple collisions are in “TRUE” condition, the higher sprite value is returned first. If you need to check multiple collisions, you should continue the SPR_COLL_DETECT code calling SPR_COLL_LOOP without altering .X register.
 
-|----->---->----->---------->24 pixels | | | |___________ ################## | ################## | ################## | ################## | ######xxxxxx######____________|-> 21 pixels ######x****x###### | ######x****x###### | ######x****x###### | ######x****x######____________| ######xxxxxx###### |-> 21 pixels ################## | ################## | ################## | ##################____________| | | | | |----->----->----->---------->24 pixels # = Detect area around player sprite x = Overlayed player/enemies pixels for checking purposes * = Player sprite central pixels ;---------------------------------------
+|----->---->----->---------->24 pixels
+|     |    |      |___________
+##################            |
+##################            |
+##################            |
+##################            |
+######xxxxxx######____________|-> 21 pixels
+######x****x######            |
+######x****x######            |
+######x****x######            |
+######x****x######____________|
+######xxxxxx######            |-> 21 pixels
+##################            |
+##################            |
+##################            |
+##################____________|
+|     |     |     |
+|----->----->----->---------->24 pixels
+# = Detect area around player sprite
+x = Overlayed player/enemies pixels for checking purposes
+* = Player sprite central pixels
+;---------------------------------------
 
 ```
 ;---------------------------------------

@@ -3,20 +3,20 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/working-without-dust-environment
 category: tutorial
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 - CIA
 related:
-- keyboard-handling
-- kernal-routines
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+- memory-map
+- kernal-routines
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 # 
@@ -36,11 +36,11 @@ If you want to work with the tutorials on dustlayer.com but have a system enviro
 
 ### Mandatory Tools
 
-**ACME Cross Assembler  **
+**ACME Cross Assembler**  
 
 You will need the ACME cross assembler. There are of course other cross assemblers but I use this one. I have not tried others so I don't know if they are better but then again I am too lazy to evaluate assemblers when ACME works just fine.[Download ACME](https://sourceforge.net/projects/acme-crossass/)
 
-**A C64 Emulator  **
+**A C64 Emulator**  
 
 Probably any C64 Emulator will do but I use Vice which is available on many systems. [Download Vice](http://sourceforge.net/projects/vice-emu/)
 

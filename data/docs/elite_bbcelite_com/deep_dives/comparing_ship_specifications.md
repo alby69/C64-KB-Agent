@@ -7,20 +7,20 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Comparing ship specifications
@@ -29,20 +29,16 @@ scraped_at: '2026-07-27'
 
 Here's a comparison of all the different ships in Elite, using the values from within the source code. There is a lot of information, so I have split it up into a number of tables (click a link to jump that table):
 
-- [Table 1: Ship hardware](https://elite.bbcelite.com#hardware)
-- [Table 2: Ship wireframes](https://elite.bbcelite.com#wireframes)
-- [Table 3: Ship dimensions](https://elite.bbcelite.com#dimensions)
-- [Table 4: Ship spawning](https://elite.bbcelite.com#spawning)
-- [Table 5: Ship colours](https://elite.bbcelite.com#colours)
-
 The tables include every ship that you can meet in-flight in the official game, so they don't include the Elite logo from the 6502 Second Processor version, the hanger blueprints from the docked code in the BBC Micro disc version, or any ships from Elite-A. To find out how large these ships are in-game, see the deep dive on [a sense of scale](https://elite.bbcelite.com/a_sense_of_scale.html).
 
 Note that the tables are pretty wide - to see all the different attributes, you may need to scroll the window to the right.
 
+## 
 
 													 ----------------------
 
-						The following table contains the hardware specifications for each ship. This data comes from the ship blueprints, which are described in more detail in the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html).
+						
+The following table contains the hardware specifications for each ship. This data comes from the ship blueprints, which are described in more detail in the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html).
 
 Click on the table headers to sort by that specification. The table shows the values from the BBC Master version of Elite, and footnotes point out any variations in the other versions.
 
@@ -62,7 +58,7 @@ Click on the table headers to sort by that specification. The table shows the va
 | [Constrictor](https://elite.bbcelite.com/master/game_data/variable/ship_constrictor.html) | 6 | 4 | 252 | 36 | 0 | 65 | 3 | 0 | 10 | 
 | [Coriolis station](https://elite.bbcelite.com/master/game_data/variable/ship_coriolis.html) | 0 | 6 | 240 | 0 | 0 | 160 | 0 | 0 | 12 | 
 | [Cougar](https://elite.bbcelite.com/master/game_data/variable/ship_cougar.html) | 6 | 4 | 252 | 40 | 0 | 70 | 3 | 0 | 9 | 
-| [Dodo station](https://elite.bbcelite.com/master/game_data/variable/ship_dodo.html) | 0 | 0 | 240 | 0 | 0 | 180 | 0 | 0 | 12 1 | 
+| [Dodo station](https://elite.bbcelite.com/master/game_data/variable/ship_dodo.html) | 0 | 0 | 240 | 0 | 0 | 180 | 0 | 0 | 12 [<sup>1</sup>](https://elite.bbcelite.com#footnote1) | 
 | [Escape pod](https://elite.bbcelite.com/master/game_data/variable/ship_escape_pod.html) | 0 | 0 | 17 | 8 | 0 | 16 | 0 | 0 | 4 | 
 | [Fer-de-Lance](https://elite.bbcelite.com/master/game_data/variable/ship_fer_de_lance.html) | 2 | 2 | 160 | 30 | 0 | 40 | 0 | 0 | 5 | 
 | [Gecko](https://elite.bbcelite.com/master/game_data/variable/ship_gecko.html) | 2 | 0 | 70 | 30 | 5.5 | 99 | 0 | 0 | 5 | 
@@ -70,7 +66,7 @@ Click on the table headers to sort by that specification. The table shows the va
 | [Mamba](https://elite.bbcelite.com/master/game_data/variable/ship_mamba.html) | 2 | 2 | 90 | 30 | 15 | 70 | 1 | 0 | 7 | 
 | [Missile](https://elite.bbcelite.com/master/game_data/variable/ship_missile.html) | 0 | 0 | 2 | 44 | 0 | 40 | 0 | 0 | 1 | 
 | [Moray](https://elite.bbcelite.com/master/game_data/variable/ship_moray.html) | 2 | 0 | 100 | 25 | 5 | 30 | 1 | 0 | 5 | 
-| [Python](https://elite.bbcelite.com/master/game_data/variable/ship_python.html) | 3 | 3 | 250 | 20 | 0 2 | 80 3 | 5 4 | 0 | 9 5 | 
+| [Python](https://elite.bbcelite.com/master/game_data/variable/ship_python.html) | 3 | 3 | 250 | 20 | 0 [<sup>2</sup>](https://elite.bbcelite.com#footnote2) | 80 [<sup>3</sup>](https://elite.bbcelite.com#footnote3) | 5 [<sup>4</sup>](https://elite.bbcelite.com#footnote4) | 0 | 9 [<sup>5</sup>](https://elite.bbcelite.com#footnote5) | 
 | [Python (pirate)](https://elite.bbcelite.com/master/game_data/variable/ship_python_p.html) | 3 | 3 | 250 | 20 | 20 | 80 | 2 | 0 | 9 | 
 | [Rock hermit](https://elite.bbcelite.com/master/game_data/variable/ship_rock_hermit.html) | 0 | 2 | 180 | 30 | 0 | 80 | 7 | 0 | 11 | 
 | [Shuttle](https://elite.bbcelite.com/master/game_data/variable/ship_shuttle.html) | 0 | 0 | 32 | 8 | 0 | 50 | 15 | 0 | 8 | 
@@ -79,32 +75,35 @@ Click on the table headers to sort by that specification. The table shows the va
 | [Thargoid](https://elite.bbcelite.com/master/game_data/variable/ship_thargoid.html) | 2 | 6 | 240 | 39 | 50 | 99 | 0 | 15 | 8 | 
 | [Thargon](https://elite.bbcelite.com/master/game_data/variable/ship_thargon.html) | 2 | 0 | 20 | 30 | 5 | 40 | 0 | 0 | 3 | 
 | [Transporter](https://elite.bbcelite.com/master/game_data/variable/ship_transporter.html) | 0 | 0 | 32 | 10 | 0 | 50 | 0 | 12 | 5 | 
-| [Viper](https://elite.bbcelite.com/master/game_data/variable/ship_viper.html) | 2 | 1 | 140 6 | 32 | 0 | 75 | 0 | 0 | 9 | 
+| [Viper](https://elite.bbcelite.com/master/game_data/variable/ship_viper.html) | 2 | 1 | 140 [<sup>6</sup>](https://elite.bbcelite.com#footnote6) | 32 | 0 | 75 | 0 | 0 | 9 | 
 | [Worm](https://elite.bbcelite.com/master/game_data/variable/ship_worm.html) | 1 | 0 | 30 | 23 | 0 | 99 | 0 | 0 | 3 | 
 
 ## Footnotes for table 1
 
 						                             ---------------------
 
-						- ^
-- ^
-- ^
-- ^
-- ^
-- ^
+						
+[<sup>^</sup>](https://elite.bbcelite.com#footnote1back) Dodo stations in the NES version have an explosion count of 0, though this makes no difference as stations can't explode.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote2back) All Pythons in the BBC Micro cassette and Acorn Electron versions have a bounty of 20 Cr, whereas other versions have two types of Python: traders (with no bounty) and pirates (with a bounty of 20 Cr).
+[<sup>^</sup>](https://elite.bbcelite.com#footnote3back) Pythons in the BBC Micro cassette and Acorn Electron versions have a larger targetable area (120 x 120) than in all other versions (80 x 80).
+[<sup>^</sup>](https://elite.bbcelite.com#footnote4back) Pythons in the BBC Micro cassette and Acorn Electron versions spawn up to 3 canisters on their demise, but this rises to 5 canisters in all other versions.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote5back) Pythons in the BBC Micro cassette and Acorn Electron versions have a slightly more glorious demise, with 10 expoding nodes compared to 9 nodes in all other versions.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote6back) Vipers have a different maximum energy in the BBC Micro disc version (100), and in the BBC Micro cassette and Acorn Electron versions (120). This means they are easiest to kill in the disc version, harder to kill in the cassette and Electron versions, and even harder to kill in the advanced versions.
 
+## 
 
 													 ------------------------
 
-						The following table contains statistics about the 3D wireframes defined for each ship. This data mainly comes from the ship blueprints, which are described in more detail in the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html). The kill points sre stored in the [KWH%](https://elite.bbcelite.com/master/game_data/variable/kwh_per_cent.html) and [KWL%](https://elite.bbcelite.com/master/game_data/variable/kwl_per_cent.html) variables.
+						
+The following table contains statistics about the 3D wireframes defined for each ship. This data mainly comes from the ship blueprints, which are described in more detail in the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html). The kill points sre stored in the [KWH%](https://elite.bbcelite.com/master/game_data/variable/kwh_per_cent.html) and [KWL%](https://elite.bbcelite.com/master/game_data/variable/kwl_per_cent.html) variables.
 
 Click on the table headers to sort by that specification. The table shows the values from the BBC Master version of Elite, and footnotes point out any variations in the other versions.
 
-| Ship name and blueprint | Maximum edge count 7 | Number of vertices | Number of edges | Number of faces | Visibility distance | Normals scaled by | Market item if scooped | Kill points 8 | Versions containing this ship 9 | 
+| Ship name and blueprint | Maximum edge count [<sup>7</sup>](https://elite.bbcelite.com#footnote7) | Number of vertices | Number of edges | Number of faces | Visibility distance | Normals scaled by | Market item if scooped | Kill points [<sup>8</sup>](https://elite.bbcelite.com#footnote8) | Versions containing this ship [<sup>9</sup>](https://elite.bbcelite.com#footnote9) | 
 |---|---|---|---|---|---|---|---|---|---|
-| [Adder](https://elite.bbcelite.com/master/game_data/variable/ship_adder.html) | 24 | 18 | 29 | 15 | 20 10 | 4 | - | 0.3515625 | Enhanced | 
+| [Adder](https://elite.bbcelite.com/master/game_data/variable/ship_adder.html) | 24 | 18 | 29 | 15 | 20 [<sup>10</sup>](https://elite.bbcelite.com#footnote10) | 4 | - | 0.3515625 | Enhanced | 
 | [Alloy plate](https://elite.bbcelite.com/master/game_data/variable/ship_plate.html) | 4 | 4 | 4 | 1 | 5 | 8 | Alloys | 0.0390625 | Enhanced | 
-| [Anaconda](https://elite.bbcelite.com/master/game_data/variable/ship_anaconda.html) | 22 | 15 | 25 | 12 | 36 11 | 2 | - | 1.0 | Enhanced | 
+| [Anaconda](https://elite.bbcelite.com/master/game_data/variable/ship_anaconda.html) | 22 | 15 | 25 | 12 | 36 [<sup>11</sup>](https://elite.bbcelite.com#footnote11) | 2 | - | 1.0 | Enhanced | 
 | [Asp Mk II](https://elite.bbcelite.com/master/game_data/variable/ship_asp_mk_2.html) | 25 | 19 | 28 | 12 | 40 | 2 | - | 1.08203125 | Enhanced | 
 | [Asteroid](https://elite.bbcelite.com/master/game_data/variable/ship_asteroid.html) | 16 | 9 | 21 | 14 | 50 | 2 | - | 0.03125 | All | 
 | [Boa](https://elite.bbcelite.com/master/game_data/variable/ship_boa.html) | 22 | 13 | 24 | 13 | 40 | 1 | - | 0.83203125 | Enhanced | 
@@ -115,12 +114,12 @@ Click on the table headers to sort by that specification. The table shows the va
 | [Cobra Mk III (pirate)](https://elite.bbcelite.com/master/game_data/variable/ship_cobra_mk_3_p.html) | 38 | 28 | 38 | 13 | 50 | 2 | - | 1.1640625 | Enhanced | 
 | [Constrictor](https://elite.bbcelite.com/master/game_data/variable/ship_constrictor.html) | 19 | 17 | 24 | 10 | 45 | 4 | - | 5.33203125 | Enhanced | 
 | [Coriolis station](https://elite.bbcelite.com/master/game_data/variable/ship_coriolis.html) | 21 | 16 | 28 | 14 | 120 | 1 | - | - | All | 
-| [Cougar](https://elite.bbcelite.com/master/game_data/variable/ship_cougar.html) | 25 | 19 | 25 | 6 | 34 | 4 | - | 5.33203125 | Advanced 12 | 
+| [Cougar](https://elite.bbcelite.com/master/game_data/variable/ship_cougar.html) | 25 | 19 | 25 | 6 | 34 | 4 | - | 5.33203125 | Advanced [<sup>12</sup>](https://elite.bbcelite.com#footnote12) | 
 | [Dodo station](https://elite.bbcelite.com/master/game_data/variable/ship_dodo.html) | 24 | 24 | 34 | 12 | 125 | 1 | - | - | Enhanced | 
-| [Escape pod](https://elite.bbcelite.com/master/game_data/variable/ship_escape_pod.html) | 6 | 4 | 6 | 4 | 8 | 16 13 | Slaves | 0.0625 | All | 
+| [Escape pod](https://elite.bbcelite.com/master/game_data/variable/ship_escape_pod.html) | 6 | 4 | 6 | 4 | 8 | 16 [<sup>13</sup>](https://elite.bbcelite.com#footnote13) | Slaves | 0.0625 | All | 
 | [Fer-de-Lance](https://elite.bbcelite.com/master/game_data/variable/ship_fer_de_lance.html) | 26 | 19 | 27 | 10 | 40 | 2 | - | 1.25 | Enhanced | 
 | [Gecko](https://elite.bbcelite.com/master/game_data/variable/ship_gecko.html) | 16 | 12 | 17 | 9 | 18 | 8 | - | 0.33203125 | Enhanced | 
-| [Krait](https://elite.bbcelite.com/master/game_data/variable/ship_krait.html) | 21 | 17 | 21 | 6 | 20 14 | 2 | - | 0.33203125 | Enhanced | 
+| [Krait](https://elite.bbcelite.com/master/game_data/variable/ship_krait.html) | 21 | 17 | 21 | 6 | 20 [<sup>14</sup>](https://elite.bbcelite.com#footnote14) | 2 | - | 0.33203125 | Enhanced | 
 | [Mamba](https://elite.bbcelite.com/master/game_data/variable/ship_mamba.html) | 23 | 25 | 28 | 5 | 25 | 4 | - | 0.5 | All | 
 | [Missile](https://elite.bbcelite.com/master/game_data/variable/ship_missile.html) | 20 | 17 | 24 | 9 | 14 | 4 | - | 0.58203125 | All | 
 | [Moray](https://elite.bbcelite.com/master/game_data/variable/ship_moray.html) | 17 | 14 | 19 | 9 | 40 | 4 | - | 0.75 | Enhanced | 
@@ -140,22 +139,25 @@ Click on the table headers to sort by that specification. The table shows the va
 
 						                             ---------------------
 
-						- ^
-- ^- [combat rank](https://elite.bbcelite.com/combat_rank.html)for details.
-- ^- Standard ships appear in the BBC Micro cassette version, plus all enhanced and advanced versions.
-- Enhanced ships appear in the BBC Micro disc version, plus all advanced versions.
-- Advanced ships appear in the 6502 Second Processor, Commodore 64, Apple II, BBC Master and NES versions.
- 
-- ^
-- ^
-- ^
-- ^
-- ^
+						
+[<sup>^</sup>](https://elite.bbcelite.com#footnote7back) The maximum edge count does not include the extra edge that is used to store the ship colour in the 6502 Second Processor and BBC Master versions.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote8back) Fractional kill points are supported in the Commodore 64, Apple II, BBC Master and NES versions. All other versions award one point for each kill, regardless of the target. See the deep dive on[combat rank](https://elite.bbcelite.com/combat_rank.html) for details.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote9back) This is how I classify the different versions of Elite for the purposes of this table:
+  - Standard ships appear in the BBC Micro cassette version, plus all enhanced and advanced versions.
+  - Enhanced ships appear in the BBC Micro disc version, plus all advanced versions.
+  - Advanced ships appear in the 6502 Second Processor, Commodore 64, Apple II, BBC Master and NES versions.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote10back) Adders in the BBC Micro disc version have a visibility distance of 23.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote11back) Anacondas in the BBC Micro disc version have a visibility distance of 50.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote12back) The Cougar is not included in the Apple II version.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote13back) Escape pods in the BBC Micro cassette and Acorn Electron versions store their faces with a scale factor of 8.
+[<sup>^</sup>](https://elite.bbcelite.com#footnote14back) Kraits in the BBC Micro disc version have a visibility distance of 25.
 
+## 
 
 													 ------------------------
 
-						The following table contains ship dimensions, in terms of space coordinates. The x-axis runs from left to right (width), the y-axis from down to up (height), and the z-axis points into the screen (depth). This data comes from the ship blueprints, which are described in more detail in the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html).
+						
+The following table contains ship dimensions, in terms of space coordinates. The x-axis runs from left to right (width), the y-axis from down to up (height), and the z-axis points into the screen (depth). This data comes from the ship blueprints, which are described in more detail in the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html).
 
 The volume is a simple calculation of the size of the ship's 3D bounding box. The last column shows the size of an equivalent cube that has the same volume.
 
@@ -172,7 +174,7 @@ Click on the table headers to sort by that specification.
 | [Asteroid](https://elite.bbcelite.com/master/game_data/variable/ship_asteroid.html) | -80 | 70 | 150 | -80 | 80 | 160 | -75 | 70 | 145 | 3,480,000 | 151.5 | 
 | [Boa](https://elite.bbcelite.com/master/game_data/variable/ship_boa.html) | -62 | 62 | 124 | -65 | 40 | 105 | -107 | 93 | 200 | 2,604,000 | 137.6 | 
 | [Boulder](https://elite.bbcelite.com/master/game_data/variable/ship_boulder.html) | -28 | 30 | 58 | -10 | 37 | 47 | -39 | 13 | 52 | 141,752 | 52.1 | 
-| [Cargo canister](https://elite.bbcelite.com/master/game_data/variable/ship_canister.html) | -24 | 24 | 48 | -13 | 16 | 29 | -15 | 15 | 30 | 41,760 15 | 34.7 | 
+| [Cargo canister](https://elite.bbcelite.com/master/game_data/variable/ship_canister.html) | -24 | 24 | 48 | -13 | 16 | 29 | -15 | 15 | 30 | 41,760 [<sup>15</sup>](https://elite.bbcelite.com#footnote15) | 34.7 | 
 | [Cobra Mk I](https://elite.bbcelite.com/master/game_data/variable/ship_cobra_mk_1.html) | -66 | 66 | 132 | -12 | 12 | 24 | -38 | 60 | 98 | 310,464 | 67.7 | 
 | [Cobra Mk III](https://elite.bbcelite.com/master/game_data/variable/ship_cobra_mk_3.html) | -128 | 128 | 256 | -24 | 26 | 50 | -40 | 90 | 130 | 1,664,000 | 118.5 | 
 | [Cobra Mk III (pirate)](https://elite.bbcelite.com/master/game_data/variable/ship_cobra_mk_3_p.html) | -128 | 128 | 256 | -24 | 26 | 50 | -40 | 90 | 130 | 1,664,000 | 118.5 | 
@@ -203,15 +205,18 @@ Click on the table headers to sort by that specification.
 
 						                             ---------------------
 
-						- ^- Looking at the pentagonal ends of the canister, we can work out the length of the bottom, horizontal edge of the pentagon by looking at the z-distance from point (24, -13, 9) to point (24, -13, -9), for example. This gives us an edge size of 18.
-- The area of a pentagon with side s is 5 * s^2 / 4 * tan(36), and plugging 18 into this gives us an area of 557.4.
-- The canister has a length of 48, so if we multiply this by the pentagon area of 557.4, we get a total volume of 26,756.9 cubic coordinates.
- 
+						
+[<sup>^</sup>](https://elite.bbcelite.com#footnote15back) This volume is the size of the bounding box for the canister wireframe, but what's the exact volume of the canister shape? It consists of an extruded pentagon, so this should be easy enough to calculate:
+  - Looking at the pentagonal ends of the canister, we can work out the length of the bottom, horizontal edge of the pentagon by looking at the z-distance from point (24, -13, 9) to point (24, -13, -9), for example. This gives us an edge size of 18.
+  - The area of a pentagon with side s is 5 * s^2 / 4 * tan(36), and plugging 18 into this gives us an area of 557.4.
+  - The canister has a length of 48, so if we multiply this by the pentagon area of 557.4, we get a total volume of 26,756.9 cubic coordinates.
 
+## 
 
 													 ----------------------
 
-						The following table contains details of when ships are spawned and how they behave.
+						
+The following table contains details of when ships are spawned and how they behave.
 
 The spawning code is in [part 1](https://elite.bbcelite.com/master/main/subroutine/main_game_loop_part_1_of_6.html), [part 3](https://elite.bbcelite.com/master/main/subroutine/main_game_loop_part_3_of_6.html) and [part 4](https://elite.bbcelite.com/master/main/subroutine/main_game_loop_part_4_of_6.html) of the main game loop. See the deep dive on [program flow of the main game loop](https://elite.bbcelite.com/program_flow_of_the_main_game_loop.html) for details.
 
@@ -255,10 +260,12 @@ Click on the table headers to sort by that specification.
 | [Viper](https://elite.bbcelite.com/master/game_data/variable/ship_viper.html) | No | No | No | No | Yes | Bounty hunter Cop Escape pod | 
 | [Worm](https://elite.bbcelite.com/master/game_data/variable/ship_worm.html) | No | Yes | No | No | No | Hostile Trader | 
 
+## 
 
 													 ---------------------
 
-						The following table shows ship colours. First, for the 6502 Second Processor and BBC Master versions of Elite only, it shows the colours of the 3D wireframes in the space view (all other versions have monochrome wireframes). Second, it also lists the colours used to show the different ship sticks on the 3D scanner. The data comes from the [shpcol](https://elite.bbcelite.com/master/main/variable/shpcol.html) and [scacol](https://elite.bbcelite.com/master/main/variable/scacol.html) tables.
+						
+The following table shows ship colours. First, for the 6502 Second Processor and BBC Master versions of Elite only, it shows the colours of the 3D wireframes in the space view (all other versions have monochrome wireframes). Second, it also lists the colours used to show the different ship sticks on the 3D scanner. The data comes from the [shpcol](https://elite.bbcelite.com/master/main/variable/shpcol.html) and [scacol](https://elite.bbcelite.com/master/main/variable/scacol.html) tables.
 
 Click on the table headers to sort by that specification.
 

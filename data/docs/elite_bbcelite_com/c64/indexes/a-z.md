@@ -3,36 +3,36 @@ title: A-Z index of the source code in the Commodore 64 version of Elite
 source_url: https://elite.bbcelite.com/c64/indexes/a-z.html
 category: source-code
 topics:
-- graphics
-- input handling
-- assembly
 - memory management
+- basic
+- sound generation
+- graphics
+- assembly
+- input handling
 - raster interrupts
 - sprite programming
-- sound generation
-- basic
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
-- CPU
 - KERNAL
-- CIA
 - BASIC ROM
 - SID
+- VIC-II
+- CPU
+- CIA
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # A-Z index of the source code in the Commodore 64 version of Elite
@@ -46,7 +46,7 @@ This index contains every subroutine, entry point, variable, workspace and macro
 | [abraxas](https://elite.bbcelite.com/c64/main/variable/abraxas.html) | Drawing the screen | The value for VIC register $18 to set the screen RAM address for a raster count of 1 in the interrupt routine (i.e. the dashboard) | 
 | [ACT (Game data)](https://elite.bbcelite.com/c64/game_data/variable/act.html) | Maths (Geometry) | Arctan table | 
 | [ADD](https://elite.bbcelite.com/c64/main/subroutine/add.html) | Maths (Arithmetic) | Calculate (A X) = (A P) + (S R) | 
-| [ALP1](https://elite.bbcelite.com/c64/main/workspace/zp.html#alp1) | Workspace variable | Magnitude of the roll angle alpha, i.e. |alpha|, which is a positive value between 0 and 31 | 
+| [ALP1](https://elite.bbcelite.com/c64/main/workspace/zp.html#alp1) | Workspace variable | Magnitude of the roll angle alpha, i.e. \|alpha\|, which is a positive value between 0 and 31 | 
 | [ALP2](https://elite.bbcelite.com/c64/main/workspace/zp.html#alp2) | Workspace variable | Bit 7 of ALP2 = sign of the roll angle in ALPHA | 
 | [ALPHA](https://elite.bbcelite.com/c64/main/workspace/zp.html#alpha) | Workspace variable | The current roll angle alpha, which is reduced from JSTX to a sign-magnitude value between -31 and +31 | 
 | [ALTIT](https://elite.bbcelite.com/c64/main/workspace/wp.html#altit) | Workspace variable | Our altitude above the surface of the planet or sun | 
@@ -105,7 +105,7 @@ This index contains every subroutine, entry point, variable, workspace and macro
 | [BEEP](https://elite.bbcelite.com/c64/main/subroutine/beep.html) | Sound | Make a short, high beep | 
 | [BEGIN](https://elite.bbcelite.com/c64/main/subroutine/begin.html) | Loader | Initialise the configuration variables and start the game | 
 | [BELL](https://elite.bbcelite.com/c64/main/subroutine/bell.html) | Sound | Make a standard system beep | 
-| [BET1](https://elite.bbcelite.com/c64/main/workspace/zp.html#bet1) | Workspace variable | The magnitude of the pitch angle beta, i.e. |beta|, which is a positive value between 0 and 8 | 
+| [BET1](https://elite.bbcelite.com/c64/main/workspace/zp.html#bet1) | Workspace variable | The magnitude of the pitch angle beta, i.e. \|beta\|, which is a positive value between 0 and 8 | 
 | [BET2](https://elite.bbcelite.com/c64/main/workspace/zp.html#bet2) | Workspace variable | Bit 7 of BET2 = sign of the pitch angle in BETA | 
 | [BETA](https://elite.bbcelite.com/c64/main/workspace/zp.html#beta) | Workspace variable | The current pitch angle beta, which is reduced from JSTY to a sign-magnitude value between -8 and +8 | 
 | [BLINE](https://elite.bbcelite.com/c64/main/subroutine/bline.html) | Drawing circles | Draw a circle segment and add it to the ball line heap | 
@@ -446,7 +446,7 @@ This index contains every subroutine, entry point, variable, workspace and macro
 | [LL122](https://elite.bbcelite.com/c64/main/subroutine/ll120.html) | Maths (Arithmetic) | Calculate (Y X) = (S R) * Q and set the sign to the opposite of the top byte on the stack | 
 | [LL123](https://elite.bbcelite.com/c64/main/subroutine/ll123.html) | Maths (Arithmetic) | Calculate (Y X) = (S R) / XX12+2 or (S R) * XX12+2 | 
 | [LL128](https://elite.bbcelite.com/c64/main/subroutine/ll123.html) | Maths (Arithmetic) | Contains an RTS | 
-| [LL129](https://elite.bbcelite.com/c64/main/subroutine/ll129.html) | Maths (Arithmetic) | Calculate Q = XX12+2, A = S EOR XX12+3 and (S R) = |S R| | 
+| [LL129](https://elite.bbcelite.com/c64/main/subroutine/ll129.html) | Maths (Arithmetic) | Calculate Q = XX12+2, A = S EOR XX12+3 and (S R) = \|S R\| | 
 | [LL133](https://elite.bbcelite.com/c64/main/subroutine/ll123.html) | Maths (Arithmetic) | Negate (Y X) and return from the subroutine | 
 | [LL145 (Part 1 of 4)](https://elite.bbcelite.com/c64/main/subroutine/ll145_part_1_of_4.html) | Drawing lines | Clip line: Work out which end-points are on-screen, if any | 
 | [LL145 (Part 2 of 4)](https://elite.bbcelite.com/c64/main/subroutine/ll145_part_2_of_4.html) | Drawing lines | Clip line: Work out if any part of the line is on-screen | 
@@ -549,8 +549,8 @@ This index contains every subroutine, entry point, variable, workspace and macro
 | [MLS2](https://elite.bbcelite.com/c64/main/subroutine/mls2.html) | Maths (Arithmetic) | Calculate (S R) = XX(1 0) and (A P) = A * ALP1 | 
 | [MLTU2](https://elite.bbcelite.com/c64/main/subroutine/mltu2.html) | Maths (Arithmetic) | Calculate (A P+1 P) = (A ~P) * Q | 
 | [MLTU2-2](https://elite.bbcelite.com/c64/main/subroutine/mltu2.html) | Maths (Arithmetic) | Set Q to X, so this calculates (A P+1 P) = (A ~P) * X | 
-| [MLU1](https://elite.bbcelite.com/c64/main/subroutine/mlu1.html) | Maths (Arithmetic) | Calculate Y1 = y_hi and (A P) = |y_hi| * Q for Y-th stardust | 
-| [MLU2](https://elite.bbcelite.com/c64/main/subroutine/mlu2.html) | Maths (Arithmetic) | Calculate (A P) = |A| * Q | 
+| [MLU1](https://elite.bbcelite.com/c64/main/subroutine/mlu1.html) | Maths (Arithmetic) | Calculate Y1 = y_hi and (A P) = \|y_hi\| * Q for Y-th stardust | 
+| [MLU2](https://elite.bbcelite.com/c64/main/subroutine/mlu2.html) | Maths (Arithmetic) | Calculate (A P) = \|A\| * Q | 
 | [moonflower](https://elite.bbcelite.com/c64/main/variable/moonflower.html) | Drawing the screen | Controls the energy bomb effect by switching between multicolour and standard mode | 
 | [MOS](https://elite.bbcelite.com/c64/main/workspace/option_variables.html#mos) | Workspace variable | This variable appears to be unused | 
 | [MSAR](https://elite.bbcelite.com/c64/main/workspace/up.html#msar) | Workspace variable | The targeting state of our leftmost missile | 
@@ -1049,7 +1049,7 @@ This index contains every subroutine, entry point, variable, workspace and macro
 | [value3](https://elite.bbcelite.com/c64/main/workspace/music_variables.html#value3) | Workspace variable | Stores the voice control register for voice 3 | 
 | [value4](https://elite.bbcelite.com/c64/main/workspace/music_variables.html#value4) | Workspace variable | Stores the rest length for commands #8 and #15 | 
 | [value5](https://elite.bbcelite.com/c64/main/workspace/music_variables.html#value5) | Workspace variable | The address before the start of the music data for the tune that is configured to play for docking, so this can be changed to alter the docking music | 
-| [var](https://elite.bbcelite.com/c64/main/subroutine/var.html) | Market | Calculate QQ19+3 = economy * |economic_factor| | 
+| [var](https://elite.bbcelite.com/c64/main/subroutine/var.html) | Market | Calculate QQ19+3 = economy * \|economic_factor\| | 
 | [VCSU1](https://elite.bbcelite.com/c64/main/subroutine/vcsu1.html) | Maths (Arithmetic) | Calculate vector K3(8 0) = [x y z] - coordinates of the sun or space station | 
 | [VCSUB](https://elite.bbcelite.com/c64/main/subroutine/vcsub.html) | Maths (Arithmetic) | Calculate vector K3(8 0) = [x y z] - coordinates in (A V) | 
 | [VERTEX (Game data)](https://elite.bbcelite.com/c64/game_data/macro/vertex.html) | Drawing ships | Macro definition for adding vertices to ship blueprints | 

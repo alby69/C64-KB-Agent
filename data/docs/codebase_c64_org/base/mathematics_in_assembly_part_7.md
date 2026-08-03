@@ -11,15 +11,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # Prologue
@@ -54,7 +54,16 @@ I'll just skip the mathematical explanation for this and tell it without any fur
 
 As one can see, each of the rising table values is present 5 times in a row. Now this table, which obviously is simple enough to quickly generate it instead of pre-calculating it, has to be read out correctly. In this example it's done like this:
 
-lda table+$00,x sta value1 lda table+$02,x sta value2 lda table+$04,x sta value3 lda table+$03,x sta value4 lda table+$01,x sta value5
+lda table+$00,x
+sta value1
+lda table+$02,x
+sta value2
+lda table+$04,x
+sta value3
+lda table+$03,x
+sta value4
+lda table+$01,x
+sta value5
 
 The x register contains the value to be divided by 5. Simple as that. Please note how to define the different table offsets: the middle (value 3) has got the biggest offset (constant-1), then this offset is decreased from the middle to the bounds, so to say. So with this routine it's possible to divide an arbitrary integer number by another integer number and get integer numbers that exactly add up to the original dividend. For other values than these example values, the table and the routine has to be altered accordingly, of course.
 

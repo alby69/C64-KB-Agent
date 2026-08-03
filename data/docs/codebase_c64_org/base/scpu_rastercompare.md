@@ -3,19 +3,19 @@ title: RasterCompare
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_rastercompare
 category: reference
 topics:
-- basic
-- raster interrupts
 - memory management
+- raster interrupts
+- basic
 - assembly
 difficulty: advanced
 language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 
@@ -27,8 +27,8 @@ base:scpu_rastercompare
 
 Sets $d011:$d012 to 9 bit value passed to the pseudocommand. Assumes 16 bit Acc.
 
-| SYNTAX: | RasterCompare RasterCompareValue | ||
-| EXAMPLE: | RasterCompare 52 | ||
+| SYNTAX: | RasterCompare RasterCompareValue |  |  | 
+| EXAMPLE: | RasterCompare 52 |  |  | 
 | PARAMETERS: | Type | Minimum | Maximum | 
 | RasterCompareValue | U9 | 0 | 312 | 
 

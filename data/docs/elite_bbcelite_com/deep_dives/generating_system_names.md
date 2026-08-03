@@ -3,18 +3,18 @@ title: Generating system names
 source_url: https://elite.bbcelite.com/deep_dives/generating_system_names.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - assembly
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
 - BASIC ROM
+- KERNAL
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Generating system names
@@ -25,13 +25,13 @@ There are 256 systems in each of the eight galaxies in Elite, and each of those 
 
 ![The Short-range Chart in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/cassette/short-range_chart.png) 
 
-						System names aren't stored as plain text, as there simply isn't enough memory in Elite. Instead they are generated from the three 16-bit seeds for that system, and in the case of the selected system, those seeds live at [QQ15](https://elite.bbcelite.com/cassette/main/workspace/zp.html#qq15). See the deep dive on [galaxy and system seeds](https://elite.bbcelite.com/galaxy_and_system_seeds.html) for more information about the seeds.
+System names aren't stored as plain text, as there simply isn't enough memory in Elite. Instead they are generated from the three 16-bit seeds for that system, and in the case of the selected system, those seeds live at [QQ15](https://elite.bbcelite.com/cassette/main/workspace/zp.html#qq15). See the deep dive on [galaxy and system seeds](https://elite.bbcelite.com/galaxy_and_system_seeds.html) for more information about the seeds.
 
 The process of printing the system name is done by the [cpl](https://elite.bbcelite.com/cassette/main/subroutine/cpl.html) routine. It works as follows, where s0, s1, s2 are the seeds for the system in question:
 
-- Check bit 6 of s0_lo. If it is set then we will generate four two-letter pairs for the name (8 characters in total), otherwise we will generate three pairs (6 characters).
-- Generate the first two letters by taking bits 0-4 of s2_hi. If this is zero, jump to the next step, otherwise we have a number in the range 1-31. Add 128 to get a number in the range 129-159, and convert this to a two-letter token (see variable [QQ16](https://elite.bbcelite.com/cassette/main/variable/qq16.html)for the list of two-letter tokens).
-- Twist the seeds by calling [TT54](https://elite.bbcelite.com/cassette/main/subroutine/tt54.html)and repeat the previous step, until we have processed three or four pairs, depending on step 1. The results of the final twist are ignored.
+1. Check bit 6 of s0_lo. If it is set then we will generate four two-letter pairs for the name (8 characters in total), otherwise we will generate three pairs (6 characters).
+2. Generate the first two letters by taking bits 0-4 of s2_hi. If this is zero, jump to the next step, otherwise we have a number in the range 1-31. Add 128 to get a number in the range 129-159, and convert this to a two-letter token (see variable [QQ16](https://elite.bbcelite.com/cassette/main/variable/qq16.html) for the list of two-letter tokens).
+3. Twist the seeds by calling [TT54](https://elite.bbcelite.com/cassette/main/subroutine/tt54.html) and repeat the previous step, until we have processed three or four pairs, depending on step 1. The results of the final twist are ignored.
 
 See the deep dive on [twisting the system seeds](https://elite.bbcelite.com/twisting_the_system_seeds.html) for an explanation of the twisting process.
 
@@ -43,7 +43,8 @@ Probably the best way to understand the process is to run through some examples,
 
 													 --------------------------
 
-						There is only one system in the whole game with a two-letter name: Ra in the first galaxy.
+						
+There is only one system in the whole game with a two-letter name: Ra in the first galaxy.
 
 To generate the letter pairs, we start with the system's seeds and twist them twice to generate three letter pairs. The twists are as follows:
 
@@ -66,7 +67,8 @@ And this gives us the following result:
 
 													 -----------------------------
 
-						There are two system in the whole game with three-letter names: Ara in the first galaxy and Rea in the third galaxy. Let's look at Ara here.
+						
+There are two system in the whole game with three-letter names: Ara in the first galaxy and Rea in the third galaxy. Let's look at Ara here.
 
 To generate the letter pairs, we start with the system's seeds and twist them twice to generate three letter pairs. The twists are as follows:
 
@@ -89,7 +91,8 @@ And this gives us the following result:
 
 													 -----------------------------
 
-						Lave is the iconic starting system in Elite, so let's see how this name is generated.
+						
+Lave is the iconic starting system in Elite, so let's see how this name is generated.
 
 To generate the letter pairs, we start with the system's seeds and twist them twice to generate three letter pairs. The twists are as follows:
 
@@ -112,8 +115,10 @@ And this gives us the following result:
 
 													 ------------------------------
 
-						Arexe is a key system in the Constrictor mission, as that's where the stolen ship jumps from the first to the second galaxy. The clue appears when you dock at Reesdice:
+						
+Arexe is a key system in the Constrictor mission, as that's where the stolen ship jumps from the first to the second galaxy. The clue appears when you dock at Reesdice:
 
+							
 A STRANGE LOOKING SHIP LEFT HERE A WHILE BACK. LOOKED BOUND FOR AREXE.
 
 
@@ -140,8 +145,10 @@ And this gives us the following result:
 
 													 ------------------------------
 
-						Also a key player in the Constrictor mission, Errius is the first clue we get when we arrive in the second galaxy - and its hint is certainly the most memorable:
+						
+Also a key player in the Constrictor mission, Errius is the first clue we get when we arrive in the second galaxy - and its hint is certainly the most memorable:
 
+							
 GET YOUR IRON ASS OVER TO ERRIUS.
 
 
@@ -166,7 +173,8 @@ And this gives us the following result:
 
 													 ---------------------------------
 
-						Let's look at a seven-letter name now - and how about picking the 42nd system in the first galaxy, as that's an auspicious number?
+						
+Let's look at a seven-letter name now - and how about picking the 42nd system in the first galaxy, as that's an auspicious number?
 
 To generate the letter pairs, we start with the system's seeds and twist them three times to generate four letter pairs. The twists are as follows:
 
@@ -191,7 +199,8 @@ And this gives us the following result:
 
 													 ----------------------------------
 
-						Tibedied is the first system in the first galaxy, so these are the only seeds that are hard-coded into the game. They are embedded into the default commander at [NA%](https://elite.bbcelite.com/cassette/main/variable/na_per_cent.html), in bytes #3 to #8.
+						
+Tibedied is the first system in the first galaxy, so these are the only seeds that are hard-coded into the game. They are embedded into the default commander at [NA%](https://elite.bbcelite.com/cassette/main/variable/na_per_cent.html), in bytes #3 to #8.
 
 To generate the letter pairs, we start with the system's seeds and twist them three times to generate four letter pairs. The twists are as follows:
 

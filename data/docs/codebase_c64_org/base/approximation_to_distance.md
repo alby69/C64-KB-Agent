@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Approximation to distance
@@ -32,7 +32,41 @@ The formula is d = max(|xd|, |yd|) + 1/2 × min(|xd|, |yd|) where xd = (x1-x2) a
 
 Note that for 6502 we will use a shift right to calculate the multiply by 1/2.
 
-; gives approximate distance from (x1,y1) to (x2,y2) ; with only overestimations, and then never by more ; than (9/8) + one bit uncertainty. ; input: x1,y1 x2,y2 ; uses: A xd,yd ; output: approximate distance between x1,y1 and x2,y2 in A + ninth bit in C ; If the actual distance is 228 or less the result estimate will fit in 8 bits Dist: lda x1 sec sbc x2 sta xd bcs posxdiff eor #$FF adc #1 posxdiff: sta xd lda y1 sec sbc y2 bcs posydiff eor #$FF adc #1 posydiff: cmp xd bcs ygreater lsr clc adc xd rts ygreater: lsr xd clc adc xd rts
+; gives approximate distance from (x1,y1) to (x2,y2)
+; with only overestimations, and then never by more
+; than (9/8) + one bit uncertainty.
+; input: x1,y1  x2,y2
+; uses: A xd,yd
+; output: approximate distance between x1,y1 and x2,y2 in A + ninth bit in C 
+; If the actual distance is 228 or less the result estimate will fit in 8 bits
+Dist:
+ lda x1
+ sec
+ sbc x2
+ sta xd
+ bcs posxdiff
+ eor #$FF
+ adc #1
+posxdiff:
+ sta xd
+ lda y1
+ sec
+ sbc y2
+ bcs posydiff
+ eor #$FF
+ adc #1
+posydiff:
+ cmp xd
+ bcs ygreater
+ lsr
+ clc
+ adc xd
+ rts
+ygreater:
+ lsr xd
+ clc
+ adc xd
+ rts
 
 derivation: A FAST APPROXIMATION TO THE HYPOTENUSE page 427 of Graphics Gems 1
 

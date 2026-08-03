@@ -7,12 +7,12 @@ topics:
 difficulty: advanced
 language: none
 hardware:
-- BASIC ROM
 - KERNAL
+- BASIC ROM
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # High level KERNAL examples

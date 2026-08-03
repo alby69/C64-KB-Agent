@@ -4,26 +4,26 @@ source_url: https://elite.bbcelite.com/deep_dives/printing_text_tokens.html
 category: source-code
 topics:
 - graphics
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
 - KERNAL
-- CIA
 - BASIC ROM
 - SID
+- CPU
+- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Printing text tokens
@@ -34,12 +34,12 @@ There are lots of routines that print text in Elite, covering everything from th
 
 ![The Status Mode screen in the BBC Micro disc version of Elite](https://elite.bbcelite.com/images/disc/status_mode.png) 
 
-						Under the hood, the game's text system boils down to the following core routines:
+Under the hood, the game's text system boils down to the following core routines:
 
-- [TT27](https://elite.bbcelite.com/cassette/main/subroutine/tt27.html), which prints recursive text tokens from the- [QQ18](https://elite.bbcelite.com/cassette/main/variable/qq18.html)table and two-letter tokens from the- [QQ16](https://elite.bbcelite.com/cassette/main/variable/qq16.html)table
-- [DETOK](https://elite.bbcelite.com/6502sp/main/subroutine/detok.html)and- [DETOK3](https://elite.bbcelite.com/6502sp/main/subroutine/detok3.html), which- [print extended text tokens](https://elite.bbcelite.com/extended_text_tokens.html)(in the enhanced disc, 6502 Second Processor and BBC Master versions only)
-- [BPRNT](https://elite.bbcelite.com/cassette/main/subroutine/bprnt.html), which- [prints decimal numbers](https://elite.bbcelite.com/printing_decimal_numbers.html)
-- [TT26](https://elite.bbcelite.com/cassette/main/subroutine/tt26.html), which- [pokes individual characters into screen memory](https://elite.bbcelite.com/drawing_text.html)
+- [TT27](https://elite.bbcelite.com/cassette/main/subroutine/tt27.html) , which prints recursive text tokens from the[QQ18](https://elite.bbcelite.com/cassette/main/variable/qq18.html) table and two-letter tokens from the[QQ16](https://elite.bbcelite.com/cassette/main/variable/qq16.html) table
+- [DETOK](https://elite.bbcelite.com/6502sp/main/subroutine/detok.html) and[DETOK3](https://elite.bbcelite.com/6502sp/main/subroutine/detok3.html) , which[print extended text tokens](https://elite.bbcelite.com/extended_text_tokens.html) (in the enhanced disc, 6502 Second Processor and BBC Master versions only)
+- [BPRNT](https://elite.bbcelite.com/cassette/main/subroutine/bprnt.html) , which[prints decimal numbers](https://elite.bbcelite.com/printing_decimal_numbers.html)
+- [TT26](https://elite.bbcelite.com/cassette/main/subroutine/tt26.html) , which[pokes individual characters into screen memory](https://elite.bbcelite.com/drawing_text.html)
 
 This deep dive looks at the first of these three routines, TT27, which forms the heart of Elite's text tokenisation system. There are three types of text token used by all versions of Elite - recursive tokens, two-letter tokens and control codes - so let's look at how they all work.
 
@@ -47,7 +47,8 @@ This deep dive looks at the first of these three routines, TT27, which forms the
 
 													 ------------
 
-						Elite uses a tokenisation system to store most of the text that it displays in the game. This enables the game to store strings more efficiently than would be the case if they were simply inserted into the source code using EQUS, and it also makes it possible to build text strings, like system names, using procedural generation.
+						
+Elite uses a tokenisation system to store most of the text that it displays in the game. This enables the game to store strings more efficiently than would be the case if they were simply inserted into the source code using EQUS, and it also makes it possible to build text strings, like system names, using procedural generation.
 
 To support tokenisation, characters are printed to the screen using a special subroutine, TT27, which not only supports the usual range of letters, numbers and punctuation, but also three different types of token. When printed, these tokens get expanded into longer strings, which enables the game to squeeze a lot of text into a small amount of storage.
 
@@ -81,17 +82,20 @@ We'll take a look at each of the three token types in more detail below, but fir
 
 													 -------------------------
 
-						As mentioned above, Elite contains a subroutine at TT27 that prints out the character code given in the accumulator, and if that number refers to a token, then the token is expanded before being printed. This is how almost all of the text in the game gets put on the screen. For example, the following code:
+						
+As mentioned above, Elite contains a subroutine at TT27 that prints out the character code given in the accumulator, and if that number refers to a token, then the token is expanded before being printed. This is how almost all of the text in the game gets put on the screen. For example, the following code:
 
-LDA #65 JSR TT27
+  LDA #65
+  JSR TT27
 
 prints a capital A, while this code:
 
-LDA #163 JSR TT27
+  LDA #163
+  JSR TT27
 
 prints recursive token number 3 (see below for more on why we pass a value of 163 instead of 3). This would produce the following if we were currently visiting the lore-heavy system of Tionisla:
 
-DATA ON TIONISLA
+  DATA ON TIONISLA
 
 This is because token 3 expands to the string "DATA ON {current system}". You can see this very call being used in routine TT25, which displays data on the selected system when red key f6 is pressed (this particular call prints the title at the top of the screen).
 
@@ -99,11 +103,13 @@ This is because token 3 expands to the string "DATA ON {current system}". You ca
 
 													 -----------------------
 
-						There are 149 recursive tokens in all, numbered from 0 to 148, but the TT27 routine can only print tokens 0 to 145. So how do we print recursive tokens 146, 147 and 148?
+						
+There are 149 recursive tokens in all, numbered from 0 to 148, but the TT27 routine can only print tokens 0 to 145. So how do we print recursive tokens 146, 147 and 148?
 
 Luckily there is another subroutine at ex that always prints the recursive token number given in the accumulator, so we can use that to print these tokens. So this, for example, is how we print "GAME OVER":
 
-LDA #146 JSR ex
+  LDA #146
+  JSR ex
 
 Incidentally, the ex subroutine is what TT27 calls when it has analysed the character code, determined that it is a recursive token, and subtracted 160 or added 114 as appropriate to get the token number, so calling ex directly with 146-148 in the accumulator is doing exactly the same thing, just without all the preamble.
 
@@ -111,7 +117,8 @@ Incidentally, the ex subroutine is what TT27 calls when it has analysed the char
 
 													 ------------------
 
-						Control codes are in the range 0 to 13, and expand to the following when printed via TT27:
+						
+Control codes are in the range 0 to 13, and expand to the following when printed via TT27:
 
 | Code | Shorthand in documentation | Expands to | 
 |---|---|---|
@@ -132,7 +139,8 @@ Incidentally, the ex subroutine is what TT27 calls when it has analysed the char
 
 So a value of 4 in a tokenised string will be expanded to the current commander's name, while a value of 5 will print the current fuel level in the format "FUEL: 5.3 LIGHT YEARS", followed by a newline, followed by "CASH: ", and then control code 0 - which shows the amount of cash to one significant figure, right-aligned to a width of 9 characters - before finishing off with " CR" and another newline. The result is something like this, when displayed in Sentence Case:
 
-Fuel: 6.7 Light Years Cash: 1234.5 Cr
+  Fuel: 6.7 Light Years
+  Cash:    1234.5 Cr
 
 If you press f8 to show the Status Mode screen, you can see control code 4 being used to show the commander's name in the title, while control code 5 is responsible for displaying the fuel and cash lines.
 
@@ -146,7 +154,8 @@ Note that control code 13 only represents a newline in the cassette versions of 
 
 													 ----------------------
 
-						Two-letter tokens expand to the following:
+						
+Two-letter tokens expand to the following:
 
 | Token number | Two-letter token | 
 |---|---|
@@ -193,7 +202,8 @@ Note that question marks in two-letter tokens are not printed, so token <143> ex
 
 													 ---------------------
 
-						The binary file that is generated by this part of the main source file (WORDS9.bin) contains 149 recursive tokens, numbered from 0 to 148, which are stored at [QQ18](https://elite.bbcelite.com/cassette/main/variable/qq18.html) (from &0400 to &06FF) in a tokenised form. These tokenised strings can include references to other tokens, hence "recursive".
+						
+The binary file that is generated by this part of the main source file (WORDS9.bin) contains 149 recursive tokens, numbered from 0 to 148, which are stored at [QQ18](https://elite.bbcelite.com/cassette/main/variable/qq18.html) (from &0400 to &06FF) in a tokenised form. These tokenised strings can include references to other tokens, hence "recursive".
 
 When talking about encoded strings in the code comments below, recursive tokens are shown as [n], so [111] expands to "FUEL SCOOPS", for example, and [110] expands to "[102][104]S", which in turn expands to "EXTRA BEAM LASERS" (as [102] expands to "EXTRA " and [104] to "BEAM LASER").
 
@@ -219,7 +229,8 @@ Note that, as described in the section on the ex routine above, you can't use TT
 
 													 -----------------------------------------
 
-						The 149 recursive tokens are stored one after the other in memory, starting at &0400, with each token being terminated by a null character (EQUB 0).
+						
+The 149 recursive tokens are stored one after the other in memory, starting at &0400, with each token being terminated by a null character (EQUB 0).
 
 To complicate matters, the strings themselves are all EOR'd with 35 before being stored, and this process is repeated when they are read from memory (as EOR is reversible). This is done in the routine at TT50.
 
@@ -242,26 +253,39 @@ Interestingly, there's no lookup table for each recursive token's starting point
 
 													 ----------
 
-						Given all this, let's consider recursive token 3 again, which is printed using the following code (remember, we have to add 160 to 3 to get the value to pass through to TT27):
+						
+Given all this, let's consider recursive token 3 again, which is printed using the following code (remember, we have to add 160 to 3 to get the value to pass through to TT27):
 
-LDA #163 JSR TT27
+  LDA #163
+  JSR TT27
 
 Token 3 is stored in the tokenised form:
 
 ```
   D<145>A[131]{3}
 ```
-						which we could store in memory using the following (adding in the null terminator at the end and knowing that two-letter token 145 is "AT"):
+						
+which we could store in memory using the following (adding in the null terminator at the end and knowing that two-letter token 145 is "AT"):
 
-CHAR 'D' TWOK 'A', 'T' CHAR 'A' RTOK 131 CONT 3 EQUB 0
+  CHAR 'D'
+  TWOK 'A', 'T'
+  CHAR 'A'
+  RTOK 131
+  CONT 3
+  EQUB 0
 
 As mentioned above, the values that are actually stored are EOR'd with 35, and token [131] has to have 114 taken off it before it's ready for TT27, so the bytes that are actually stored in memory for this token are:
 
-EQUB 'D' EOR 35 EQUB 145 EOR 35 EQUB 'A' EOR 35 EQUB (131 - 114) EOR 35 EQUB 3 EOR 35 EQUB 0
+  EQUB 'D' EOR 35
+  EQUB 145 EOR 35
+  EQUB 'A' EOR 35
+  EQUB (131 - 114) EOR 35
+  EQUB 3 EOR 35
+  EQUB 0
 
 or, as they would appear in the raw WORDS9.bin file, this:
 
-EQUB &67, &B2, &62, &32, &20, &00
+  EQUB &67, &B2, &62, &32, &20, &00
 
 These all produce the same output, but the first version is rather easier to understand.
 

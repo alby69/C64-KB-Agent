@@ -3,24 +3,24 @@ title: The ball line heap
 source_url: https://elite.bbcelite.com/deep_dives/the_ball_line_heap.html
 category: deep-dive
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CIA
 - CPU
+- CIA
 related:
-- raster-interrupts
 - sprite-programming
-- kernal-routines
 - keyboard-handling
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+- memory-map
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # The ball line heap
@@ -33,13 +33,13 @@ Not surprisingly, Elite has a solution - three of them, to be precise. Instead o
 
 ![A view of Diso in BBC Micro Elite](https://elite.bbcelite.com/images/ellipses/diso.png) 
 
-						(Note that the NES version is an exception, as it uses screen buffers for each frame and doesn't need to erase the screen contents, so it doesn't have any line heaps at all. See the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html) for details.)
+(Note that the NES version is an exception, as it uses screen buffers for each frame and doesn't need to erase the screen contents, so it doesn't have any line heaps at all. See the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html) for details.)
 
 There are three types of line heap used in Elite:
 
-- The ball line heap, which is used by the [BLINE](https://elite.bbcelite.com/cassette/main/subroutine/bline.html)routine when drawing circles (as well as polygonal rings like the launch and hyperspace tunnel)
-- The sun line heap, which is used by the SUN routine when drawing the sun (see the deep dive on [drawing the sun](https://elite.bbcelite.com/drawing_the_sun.html)for details)
-- The ship line heap, one per ship in the local bubble of universe, which is used by the LL9 routine when drawing ships (see the deep dive on [drawing ships](https://elite.bbcelite.com/drawing_ships.html)for details)
+- The ball line heap, which is used by the [BLINE](https://elite.bbcelite.com/cassette/main/subroutine/bline.html) routine when drawing circles (as well as polygonal rings like the launch and hyperspace tunnel)
+- The sun line heap, which is used by the SUN routine when drawing the sun (see the deep dive on [drawing the sun](https://elite.bbcelite.com/drawing_the_sun.html) for details)
+- The ship line heap, one per ship in the local bubble of universe, which is used by the LL9 routine when drawing ships (see the deep dive on [drawing ships](https://elite.bbcelite.com/drawing_ships.html) for details)
 
 Here we take a look at the ball line heap that's stored at [LSX2](https://elite.bbcelite.com/cassette/main/workspace/wp.html#lsx2) and [LSY2](https://elite.bbcelite.com/cassette/main/workspace/wp.html#lsy2), and with the pointer in [LSP](https://elite.bbcelite.com/cassette/main/workspace/zp.html#lsp).
 
@@ -47,7 +47,8 @@ Here we take a look at the ball line heap that's stored at [LSX2](https://elite.
 
 													 --------------------------------------
 
-						We draw a circle by repeated calls to BLINE, passing the next point around the circle with each subsequent call, until the circle (or half-circle) is drawn.
+						
+We draw a circle by repeated calls to BLINE, passing the next point around the circle with each subsequent call, until the circle (or half-circle) is drawn.
 
 Calling the routine with a value of &FF in FLAG initialises the line heap and stores the first point in memory rather than in the heap, so it's ready for the second call to BLINE, which is when we actually have a segment to draw and store in the line heap.
 
@@ -61,7 +62,8 @@ Keeping the points in the line heap lets us quickly redraw the circle without ne
 
 													 ------------------------------------------
 
-						The ball line heap is stored in 78 bytes at LSX2 and another 78 bytes at LSY2. The LSP variable points to the number of the first free entry at the end of the heap, so LSP = 1 indicates that the heap is empty.
+						
+The ball line heap is stored in 78 bytes at LSX2 and another 78 bytes at LSY2. The LSP variable points to the number of the first free entry at the end of the heap, so LSP = 1 indicates that the heap is empty.
 
 The first location at LSX2 has a special meaning:
 
@@ -70,11 +72,13 @@ The first location at LSX2 has a special meaning:
 
 Meanwhile, if a y-coordinate in LSY2 is &FF, then this means the next point in the heap represents the start of a new segment, rather than a continuation of the previous one. Specifically, this is the layout in the heap:
 
-LSX2 ... X1 X2 ... LSY2 ... &FF Y1 Y2 ...
+  LSX2  ...      X1  X2 ...
+  LSY2  ... &FF  Y1  Y2 ...
 
 The first entry in the table at LSY2 is always &FF, as the first point is always the start of a segment, so the start of a non-empty line heap looks like this:
 
-LSX2 0 X1 X2 X3 ... LSY2 &FF Y1 Y2 Y3 ...
+  LSX2  0    X1  X2  X3 ...
+  LSY2  &FF  Y1  Y2  Y3 ...
 
 When a planet is plotted for the second time to remove it from screen, the heaps are reset by setting LSP to 1 and inserting a &FF at the start of LSX2. See WPLS2 for details.
 

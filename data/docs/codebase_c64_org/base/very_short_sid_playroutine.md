@@ -3,27 +3,27 @@ title: Very short play routine
 source_url: https://codebase.c64.org/doku.php?id=base%3Avery_short_sid_playroutine
 category: reference
 topics:
-- basic
-- input handling
 - raster interrupts
+- input handling
+- basic
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

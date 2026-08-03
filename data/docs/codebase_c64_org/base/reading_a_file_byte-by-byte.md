@@ -10,9 +10,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Reading from a file byte-by-byte
@@ -23,7 +23,12 @@ base:reading_a_file_byte-by-byte
 
 BASIC code:
 
-10 LA=8192 20 OPEN 2,8,2,"JUST A FILENAME" 30 IF ST<>0 THEN GOTO 60 40 GET#2,A$:IF A$="" THEN A$=CHR$(0) 50 POKE LA,ASC(A$):LA=LA+1:GOTO 30 60 CLOSE 2
+10 LA=8192
+20 OPEN 2,8,2,"JUST A FILENAME"
+30 IF ST<>0 THEN GOTO 60
+40 GET#2,A$:IF A$="" THEN A$=CHR$(0)
+50 POKE LA,ASC(A$):LA=LA+1:GOTO 30
+60 CLOSE 2
 
 Assembler code:
 

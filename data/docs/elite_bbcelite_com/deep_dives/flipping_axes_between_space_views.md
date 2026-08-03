@@ -12,10 +12,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Flipping axes between space views
@@ -34,7 +34,8 @@ Let's see what axis-flipping actually means.
 
 													 -----------------
 
-						The solution to having multiple views is similar in concept to the way we process pitch and roll. When we rotate our ship, we don't actually move our ship at all - instead, we rotate the entire universe around us, in the opposite direction to our movement (see the deep dives on "Pitching and rolling" and "Rotating the universe" for more details on this process). We do a similar kind of thing when we switch views, but instead of rotating all the other ships and planets around us, we flip the axes instead, which is a much quicker process.
+						
+The solution to having multiple views is similar in concept to the way we process pitch and roll. When we rotate our ship, we don't actually move our ship at all - instead, we rotate the entire universe around us, in the opposite direction to our movement (see the deep dives on "Pitching and rolling" and "Rotating the universe" for more details on this process). We do a similar kind of thing when we switch views, but instead of rotating all the other ships and planets around us, we flip the axes instead, which is a much quicker process.
 
 How do we do this? First, we need to talk about the three axes. In terms of our relationship to the universe, the z-axis always points into the screen, the y-axis always points up, and the x-axis always points to the right, like this:
 
@@ -47,7 +48,8 @@ How do we do this? First, we need to talk about the three axes. In terms of our 
     |/
     +---------> x
 ```
-						This rule always applies, whichever view we are looking through. So when we're looking through the front view, the z-axis is into the screen, which is also the direction of travel - but if we switch to the left view, then the z-axis is still into the screen, but the direction of travel is now to our right, along the x-axis. So what was the z-axis is now the x-axis... so the axes just flipped. That flipping process is essentially what the PLUT routine does.
+						
+This rule always applies, whichever view we are looking through. So when we're looking through the front view, the z-axis is into the screen, which is also the direction of travel - but if we switch to the left view, then the z-axis is still into the screen, but the direction of travel is now to our right, along the x-axis. So what was the z-axis is now the x-axis... so the axes just flipped. That flipping process is essentially what the PLUT routine does.
 
 It's important to note that the local universe is stored in the ship data blocks at K% as if we are looking forward, so as far as the stored coordinates are concerned, the z-axis is always in the direction of travel. As part of the main flight loop, each ship data block is copied on turn into the INWK workspace, where the movement routines in MVEIT are applied, before the block is copied back into K% with the position of the ship updated.
 
@@ -63,7 +65,8 @@ For the front view, then, we change nothing. Let's look at the other views in mo
 
 													 ---------
 
-						For the rear view, this is what our original universe axes look like when we are looking backwards:
+						
+For the rear view, this is what our original universe axes look like when we are looking backwards:
 
 ```
                 y
@@ -76,9 +79,16 @@ For the front view, then, we change nothing. Let's look at the other views in mo
                /
               z (out of screen)
 ```
-						so to convert these axes into the standard "up, right, into-the-screen" set of axes we need for drawing to the screen, we need to do the changes on the left (with the original set of axes on the right for comparison):
+						
+so to convert these axes into the standard "up, right, into-the-screen" set of axes we need for drawing to the screen, we need to do the changes on the left (with the original set of axes on the right for comparison):
 
-y y ^ ^ | -z (into screen) | z (into screen) | / | / | / | / |/ |/ +---------> -x +---------> x
+  y                                           y
+  ^                                           ^
+  |   -z (into screen)                        |   z (into screen)
+  |  /                                        |  /
+  | /                                         | /
+  |/                                          |/
+  +---------> -x                              +---------> x
 
 So to change the INWK workspace from the original axes on the right to the new set on the left, we need to change the signs of the x and z coordinates and vectors in INWK, which we can do by flipping the signs of the following:
 
@@ -93,7 +103,8 @@ So this is what we do in the PLUT routine for the rear view.
 
 													 ---------
 
-						For the left view, this is what our original universe axes look like when we are looking to the left:
+						
+For the left view, this is what our original universe axes look like when we are looking to the left:
 
 ```
       y
@@ -108,9 +119,16 @@ So this is what we do in the PLUT routine for the rear view.
    /
   x (out of screen)
 ```
-						so to convert these axes into the standard "up, right, into-the-screen" set of axes we need for drawing to the screen, we need to do the changes on the left (with the original set of axes on the right for comparison):
+						
+so to convert these axes into the standard "up, right, into-the-screen" set of axes we need for drawing to the screen, we need to do the changes on the left (with the original set of axes on the right for comparison):
 
-y y ^ ^ | -x (into screen) | z (into screen) | / | / | / | / |/ |/ +---------> z +---------> x
+  y                                           y
+  ^                                           ^
+  |   -x (into screen)                        |   z (into screen)
+  |  /                                        |  /
+  | /                                         | /
+  |/                                          |/
+  +---------> z                               +---------> x
 
 In other words, to go from the original set of axes on the right to the new set of axes on the left, we need to swap the x- and z-axes around, and flip the sign of the one now going in and out of the screen (i.e. the new z-axis). In other words, we swap the following values in INWK:
 
@@ -134,7 +152,8 @@ So this is what we do in the PLUT routine for the left view.
 
 													 ---------
 
-						For the right view, this is what our original universe axes look like when we are looking to the right:
+						
+For the right view, this is what our original universe axes look like when we are looking to the right:
 
 ```
               y
@@ -145,9 +164,16 @@ So this is what we do in the PLUT routine for the left view.
               |/
   z <---------+
 ```
-						so to convert these axes into the standard "up, right, into-the-screen" set of axes we need for drawing to the screen, we need to do the changes on the left (with the original set of axes on the right for comparison):
+						
+so to convert these axes into the standard "up, right, into-the-screen" set of axes we need for drawing to the screen, we need to do the changes on the left (with the original set of axes on the right for comparison):
 
-y y ^ ^ | x (into screen) | z (into screen) | / | / | / | / |/ |/ +---------> -z +---------> x
+  y                                           y
+  ^                                           ^
+  |   x (into screen)                         |   z (into screen)
+  |  /                                        |  /
+  | /                                         | /
+  |/                                          |/
+  +---------> -z                              +---------> x
 
 In other words, to go from the original set of axes on the right to the new set of axes on the left, we need to swap the x- and z-axes around, and flip the sign of the one now going to the right (i.e. the new x-axis). In other words, we swap the following values in INWK:
 

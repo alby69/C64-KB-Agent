@@ -8,27 +8,14 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # base:sign_extension [Codebase64 wiki]
 
-base:sign_extension
-
-                Convert a signed 8-bit number to a signed 16-bit number, with .Y holding the high byte:
+Convert a signed 8-bit number to a signed 16-bit number, with .Y holding the high byte:
 
 ldy #$00 lda value bpl :+ dey :
-
-base/sign_extension.txt · Last modified:  by 127.0.0.1
-
-                
-                base:sign_extension
-
-                Convert a signed 8-bit number to a signed 16-bit number, with .Y holding the high byte:
-
-ldy #$00 lda value bpl :+ dey :
-
-base/sign_extension.txt · Last modified:  by 127.0.0.1
 
 ## Codice Estratto
 

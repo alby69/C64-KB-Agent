@@ -3,62 +3,42 @@ title: List of all variables in the Commodore 64 version of Elite
 source_url: https://elite.bbcelite.com/c64/indexes/variables.html
 category: source-code
 topics:
+- basic
+- sound generation
 - graphics
-- input handling
 - assembly
+- input handling
 - raster interrupts
 - sprite programming
-- sound generation
-- basic
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
-- CPU
 - KERNAL
-- CIA
 - BASIC ROM
 - SID
+- VIC-II
+- CPU
+- CIA
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # List of all variables in the Commodore 64 version of Elite
 
 This index contains every variable that appears in the source code for the Commodore 64 version of Elite, grouped by category. A variable is defined as a labelled memory location that is used for storing data, and this list includes both variables that are defined in workspaces, and variables that are declared within the body of the source code.
 
-- [Drawing lines](https://elite.bbcelite.com#drawing-lines)
-- [Drawing pixels](https://elite.bbcelite.com#drawing-pixels)
-- [Drawing ships](https://elite.bbcelite.com#drawing-ships)
-- [Drawing the screen](https://elite.bbcelite.com#drawing-the-screen)
-- [Equipment](https://elite.bbcelite.com#equipment)
-- [Keyboard](https://elite.bbcelite.com#keyboard)
-- [Loader](https://elite.bbcelite.com#loader)
-- [Market](https://elite.bbcelite.com#market)
-- [Maths (Arithmetic)](https://elite.bbcelite.com#maths-arithmetic)
-- [Maths (Geometry)](https://elite.bbcelite.com#maths-geometry)
-- [Missions](https://elite.bbcelite.com#missions)
-- [Save and load](https://elite.bbcelite.com#save-and-load)
-- [Sound](https://elite.bbcelite.com#sound)
-- [Sprites](https://elite.bbcelite.com#sprites)
-- [Status](https://elite.bbcelite.com#status)
-- [Text](https://elite.bbcelite.com#text)
-- [Universe](https://elite.bbcelite.com#universe)
-- [Utility routines](https://elite.bbcelite.com#utility-routines)
-- [Workspace variables](https://elite.bbcelite.com#workspace-variables)
-
-| ## Drawing lines | |
+| Drawing lines ------------- |  | 
 | [LIJT1](https://elite.bbcelite.com/c64/main/variable/lijt1.html) | Addresses for modifying the low byte of the JMP instruction at LI71 to support the unrolled algorithm in part 3 of LOIN | 
 | [LIJT2](https://elite.bbcelite.com/c64/main/variable/lijt2.html) | Addresses for modifying the high byte of the JMP instruction at LI71 to support the unrolled algorithm in part 3 of LOIN | 
 | [LIJT3](https://elite.bbcelite.com/c64/main/variable/lijt3.html) | Addresses for modifying the low byte of the JMP instruction at LI72 to support the unrolled algorithm in part 3 of LOIN | 
@@ -72,7 +52,7 @@ This index contains every variable that appears in the source code for the Commo
 | [sightcol](https://elite.bbcelite.com/c64/main/variable/sightcol.html) | Colours for the crosshair sights on the different laser types | 
 | [TWFL](https://elite.bbcelite.com/c64/main/variable/twfl.html) | Ready-made character rows for the left end of a horizontal line in the space view | 
 | [TWFR](https://elite.bbcelite.com/c64/main/variable/twfr.html) | Ready-made character rows for the right end of a horizontal line in the space view | 
-| ## Drawing pixels | |
+| Drawing pixels -------------- |  | 
 | [celllookh](https://elite.bbcelite.com/c64/main/variable/celllookh.html) | Lookup table for converting a text y-coordinate to the high byte of the address of the start of the character row in screen RAM | 
 | [celllookl](https://elite.bbcelite.com/c64/main/variable/celllookl.html) | Lookup table for converting a text y-coordinate to the low byte of the address of the start of the character row | 
 | [CTWOS](https://elite.bbcelite.com/c64/main/variable/ctwos.html) | Ready-made double-pixel character row bytes for the dashboard | 
@@ -82,7 +62,7 @@ This index contains every variable that appears in the source code for the Commo
 | [TWOS2](https://elite.bbcelite.com/c64/main/variable/twos2.html) | Ready-made double-pixel character row bytes for the space view | 
 | [ylookuph](https://elite.bbcelite.com/c64/main/variable/ylookuph.html) | Lookup table for converting a pixel y-coordinate to the high byte of a screen address (within the 256-pixel wide game screen) | 
 | [ylookupl](https://elite.bbcelite.com/c64/main/variable/ylookupl.html) | Lookup table for converting a pixel y-coordinate to the low byte of a screen address (within the 256-pixel wide game screen) | 
-| ## Drawing ships | |
+| Drawing ships ------------- |  | 
 | [E% (Game data)](https://elite.bbcelite.com/c64/game_data/variable/e_per_cent.html) | Ship blueprints default NEWB flags | 
 | [exlook](https://elite.bbcelite.com/c64/main/variable/exlook.html) | A table to shift X left by one place when X is 0 or 1 | 
 | [scacol](https://elite.bbcelite.com/c64/main/variable/scacol.html) | Ship colours on the scanner | 
@@ -120,7 +100,7 @@ This index contains every variable that appears in the source code for the Commo
 | [SHIP_VIPER (Game data)](https://elite.bbcelite.com/c64/game_data/variable/ship_viper.html) | Ship blueprint for a Viper | 
 | [SHIP_WORM (Game data)](https://elite.bbcelite.com/c64/game_data/variable/ship_worm.html) | Ship blueprint for a Worm | 
 | [XX21 (Game data)](https://elite.bbcelite.com/c64/game_data/variable/xx21.html) | Ship blueprints lookup table | 
-| ## Drawing the screen | |
+| Drawing the screen ------------------ |  | 
 | [abraxas](https://elite.bbcelite.com/c64/main/variable/abraxas.html) | The value for VIC register $18 to set the screen RAM address for a raster count of 1 in the interrupt routine (i.e. the dashboard) | 
 | [caravanserai](https://elite.bbcelite.com/c64/main/variable/caravanserai.html) | Controls whether multicolour or standard bitmap mode is used for the lower part of the screen (i.e. the dashboard) | 
 | [cdump (Game Loader)](https://elite.bbcelite.com/c64/game_loader/variable/cdump.html) | Colour RAM colour data for the dashboard | 
@@ -135,14 +115,14 @@ This index contains every variable that appears in the source code for the Commo
 | [spritp (Game Loader)](https://elite.bbcelite.com/c64/game_loader/variable/spritp.html) | Sprite definitions | 
 | [welcome](https://elite.bbcelite.com/c64/main/variable/welcome.html) | The background colour for the upper and lower parts of the screen, used by the energy bomb to flash the screen's background colour | 
 | [zebop](https://elite.bbcelite.com/c64/main/variable/zebop.html) | The value for VIC register $18 to set the screen RAM address for a raster count of 0 in the interrupt routine (i.e. the space view) | 
-| ## Equipment | |
+| Equipment --------- |  | 
 | [PRXS](https://elite.bbcelite.com/c64/main/variable/prxs.html) | Equipment prices | 
-| ## Keyboard | |
+| Keyboard -------- |  | 
 | [KTRAN](https://elite.bbcelite.com/c64/main/variable/ktran.html) | An unused key logger buffer that's left over from the 6502 Second Processor version of Elite | 
 | [KYTB](https://elite.bbcelite.com/c64/main/variable/kytb.html) | Lookup table for in-flight keyboard controls | 
 | [TGINT](https://elite.bbcelite.com/c64/main/variable/tgint.html) | The keys used to toggle configuration settings when the game is paused | 
 | [TRANTABLE](https://elite.bbcelite.com/c64/main/variable/trantable.html) | Translation table from internal key number to ASCII | 
-| ## Loader | |
+| Loader ------ |  | 
 | [basicBootstrap (Disk Loader 1)](https://elite.bbcelite.com/c64/disk_loader_1/variable/basicbootstrap.html) | Call the RelocateLoader routine even if the firebird file is loaded as a BASIC program | 
 | [basicVectors (Disk Loader 1)](https://elite.bbcelite.com/c64/disk_loader_1/variable/basicvectors.html) | Addresses that override the BASIC vectors for when the loader file is loaded at the address in its PRG header, $02A7 | 
 | [date (Game Loader)](https://elite.bbcelite.com/c64/game_loader/variable/date.html) | A date image that is included into the source disk binaries (this is just random noise in the released game) | 
@@ -153,23 +133,23 @@ This index contains every variable that appears in the source code for the Commo
 | [loaderScreens (Disk Loader 2)](https://elite.bbcelite.com/c64/disk_loader_2/variable/loaderscreens.html) | PETSCII codes for clearing the screen and displaying the fast loader prompt and loading screens | 
 | [RDLI](https://elite.bbcelite.com/c64/main/variable/rdli.html) | The OS command string for running the flight code in file D.CODE in the disc version of Elite | 
 | [trackSector (Disk Loader 2)](https://elite.bbcelite.com/c64/disk_loader_2/variable/tracksector.html) | Track and sector numbers for all the files on the disk, for use in the fast loader | 
-| ## Market | |
+| Market ------ |  | 
 | [QQ23](https://elite.bbcelite.com/c64/main/variable/qq23.html) | Market prices table | 
-| ## Maths (Arithmetic) | |
+| Maths (Arithmetic) ------------------ |  | 
 | [antilog](https://elite.bbcelite.com/c64/main/variable/antilog.html) | Binary antilogarithm table | 
 | [antilogODD](https://elite.bbcelite.com/c64/main/variable/antilogodd.html) | Binary antilogarithm table | 
 | [log](https://elite.bbcelite.com/c64/main/variable/log.html) | Binary logarithm table (high byte) | 
 | [logL](https://elite.bbcelite.com/c64/main/variable/logl.html) | Binary logarithm table (low byte) | 
-| ## Maths (Geometry) | |
+| Maths (Geometry) ---------------- |  | 
 | [ACT (Game data)](https://elite.bbcelite.com/c64/game_data/variable/act.html) | Arctan table | 
 | [SNE (Game data)](https://elite.bbcelite.com/c64/game_data/variable/sne.html) | Sine/cosine table | 
-| ## Missions | |
+| Missions -------- |  | 
 | [SPMASK](https://elite.bbcelite.com/c64/main/variable/spmask.html) | Masks for updating sprite bits in VIC+$10 for the top bit of the 9-bit x-coordinates of the Trumble sprites | 
 | [TRIBDIR](https://elite.bbcelite.com/c64/main/variable/tribdir.html) | The low byte of the four 16-bit directions in which Trumble sprites can move | 
 | [TRIBDIRH](https://elite.bbcelite.com/c64/main/variable/tribdirh.html) | The high byte of the four 16-bit directions in which Trumble sprites can move | 
 | [TRIBMA](https://elite.bbcelite.com/c64/main/variable/tribma.html) | A table for converting the number of Trumbles in the hold into a sprite-enable flag to use with VIC register $15 | 
 | [TRIBTA](https://elite.bbcelite.com/c64/main/variable/tribta.html) | A table for converting the number of Trumbles in the hold into a number of sprites in the range 0 to 6 | 
-| ## Save and load | |
+| Save and load ------------- |  | 
 | [CHK](https://elite.bbcelite.com/c64/main/variable/chk.html) | First checksum byte for the saved commander data file | 
 | [CHK2](https://elite.bbcelite.com/c64/main/variable/chk2.html) | Second checksum byte for the saved commander data file | 
 | [CHK3](https://elite.bbcelite.com/c64/main/variable/chk3.html) | Third checksum byte for the saved commander data file | 
@@ -179,7 +159,7 @@ This index contains every variable that appears in the source code for the Commo
 | [oldlong](https://elite.bbcelite.com/c64/main/variable/oldlong.html) | Contains the length of the last saved commander name | 
 | [S1%](https://elite.bbcelite.com/c64/main/variable/s1_per_cent.html) | The drive and directory number used when saving or loading a commander file | 
 | [thislong](https://elite.bbcelite.com/c64/main/variable/thislong.html) | Contains the length of the most recently entered commander name | 
-| ## Sound | |
+| Sound ----- |  | 
 | [BDJMPTBH](https://elite.bbcelite.com/c64/main/variable/bdjmptbh.html) | A jump table containing addresses for processing music commands 1 through 15 (high bytes) | 
 | [BDJMPTBL](https://elite.bbcelite.com/c64/main/variable/bdjmptbl.html) | A jump table containing addresses for processing music commands 1 through 15 (low bytes) | 
 | [COMUDAT](https://elite.bbcelite.com/c64/main/variable/comudat.html) | Music data from the C.COMUDAT file | 
@@ -192,12 +172,12 @@ This index contains every variable that appears in the source code for the Commo
 | [SFXPR](https://elite.bbcelite.com/c64/main/variable/sfxpr.html) | The priority level for each sound effect | 
 | [SFXSUS](https://elite.bbcelite.com/c64/main/variable/sfxsus.html) | The release length and sustain volume (SID+$6) for each sound effect | 
 | [SFXVCH](https://elite.bbcelite.com/c64/main/variable/sfxvch.html) | The volume change rate for each sound effect, i.e. how many frames need to pass before the sound effect's volume is reduced by one | 
-| ## Sprites | |
+| Sprites ------- |  | 
 | [spritp (Sprites)](https://elite.bbcelite.com/c64/sprites/variable/spritp.html) | Sprite definitions for four laser sights, the explosion sprite and two Trumbles | 
-| ## Status | |
+| Status ------ |  | 
 | [KWH% (Game data)](https://elite.bbcelite.com/c64/game_data/variable/kwh_per_cent.html) | Integer number of kills awarded for destroying each type of ship | 
 | [KWL% (Game data)](https://elite.bbcelite.com/c64/game_data/variable/kwl_per_cent.html) | Fractional number of kills awarded for destroying each type of ship | 
-| ## Text | |
+| Text ---- |  | 
 | [DTW1](https://elite.bbcelite.com/c64/main/variable/dtw1.html) | A mask for applying the lower case part of Sentence Case to extended text tokens | 
 | [DTW2](https://elite.bbcelite.com/c64/main/variable/dtw2.html) | A flag that indicates whether we are currently printing a word | 
 | [DTW3](https://elite.bbcelite.com/c64/main/variable/dtw3.html) | A flag for switching between standard and extended text tokens | 
@@ -216,10 +196,10 @@ This index contains every variable that appears in the source code for the Commo
 | [TENS](https://elite.bbcelite.com/c64/main/variable/tens.html) | A constant used when printing large numbers in BPRNT | 
 | [TKN1 (Game data)](https://elite.bbcelite.com/c64/game_data/variable/tkn1.html) | The first extended token table for recursive tokens 0-255 (DETOK) | 
 | [TKN2](https://elite.bbcelite.com/c64/main/variable/tkn2.html) | The extended two-letter token lookup table | 
-| ## Universe | |
+| Universe -------- |  | 
 | [spasto](https://elite.bbcelite.com/c64/main/variable/spasto.html) | Contains the address of the Coriolis space station's ship blueprint | 
 | [UNIV](https://elite.bbcelite.com/c64/main/variable/univ.html) | Table of pointers to the local universe's ship data blocks | 
-| ## Utility routines | |
+| Utility routines ---------------- |  | 
 | [brkd](https://elite.bbcelite.com/c64/main/variable/brkd.html) | A flag that indicates whether a system error has occurred | 
 | [F%](https://elite.bbcelite.com/c64/main/variable/f_per_cent.html) | Denotes the end of the main game code, from ELITE A to ELITE K | 
 | [G%](https://elite.bbcelite.com/c64/main/variable/g_per_cent.html) | Denotes the start of the main game code, from ELITE A to ELITE K | 
@@ -228,8 +208,8 @@ This index contains every variable that appears in the source code for the Commo
 | [V% (Game Loader)](https://elite.bbcelite.com/c64/game_loader/variable/v_per_cent.html) | Denotes the end of the second block of loader code, as used in the encryption/decryption process | 
 | [W% (Game Loader)](https://elite.bbcelite.com/c64/game_loader/variable/w_per_cent.html) | Denotes the start of the first block of loader code, as used in the encryption/decryption process | 
 | [X% (Game Loader)](https://elite.bbcelite.com/c64/game_loader/variable/x_per_cent.html) | Denotes the end of the first block of loader code, as used in the encryption/decryption process | 
-| ## Workspace variables | |
-| [ALP1](https://elite.bbcelite.com/c64/main/workspace/zp.html#alp1) | Magnitude of the roll angle alpha, i.e. |alpha|, which is a positive value between 0 and 31 | 
+| Workspace variables ------------------- |  | 
+| [ALP1](https://elite.bbcelite.com/c64/main/workspace/zp.html#alp1) | Magnitude of the roll angle alpha, i.e. \|alpha\|, which is a positive value between 0 and 31 | 
 | [ALP2](https://elite.bbcelite.com/c64/main/workspace/zp.html#alp2) | Bit 7 of ALP2 = sign of the roll angle in ALPHA | 
 | [ALPHA](https://elite.bbcelite.com/c64/main/workspace/zp.html#alpha) | The current roll angle alpha, which is reduced from JSTX to a sign-magnitude value between -31 and +31 | 
 | [ALTIT](https://elite.bbcelite.com/c64/main/workspace/wp.html#altit) | Our altitude above the surface of the planet or sun | 
@@ -242,7 +222,7 @@ This index contains every variable that appears in the source code for the Commo
 | [BDdataptr2](https://elite.bbcelite.com/c64/main/workspace/zp.html#bddataptr2) | The high byte of the address of the music data pointer in BDdataptr1(1 0), which points to the end of the music data currently being processed | 
 | [BDdataptr3](https://elite.bbcelite.com/c64/main/workspace/zp.html#bddataptr3) | The low byte of the address of the music data pointer in BDdataptr3(1 0), which is a backup of the initial value of the BDdataptr1(1 0) pointer, so music can be repeated | 
 | [BDdataptr4](https://elite.bbcelite.com/c64/main/workspace/zp.html#bddataptr4) | The high byte of the address of the music data pointer in BDdataptr3(1 0), which is a backup of the initial value of the BDdataptr1(1 0) pointer, so music can be repeated | 
-| [BET1](https://elite.bbcelite.com/c64/main/workspace/zp.html#bet1) | The magnitude of the pitch angle beta, i.e. |beta|, which is a positive value between 0 and 8 | 
+| [BET1](https://elite.bbcelite.com/c64/main/workspace/zp.html#bet1) | The magnitude of the pitch angle beta, i.e. \|beta\|, which is a positive value between 0 and 8 | 
 | [BET2](https://elite.bbcelite.com/c64/main/workspace/zp.html#bet2) | Bit 7 of BET2 = sign of the pitch angle in BETA | 
 | [BETA](https://elite.bbcelite.com/c64/main/workspace/zp.html#beta) | The current pitch angle beta, which is reduced from JSTY to a sign-magnitude value between -8 and +8 | 
 | [BOMB](https://elite.bbcelite.com/c64/main/workspace/up.html#bomb) | Energy bomb | 

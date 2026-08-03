@@ -9,18 +9,18 @@ language: mixed
 hardware:
 - CPU
 - CIA
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- keyboard-handling
 - joystick-reading
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - sound-programming
+- sid-registers
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # The $D000-$DFFF issues of music code/data
@@ -51,7 +51,17 @@ This, however, leads to another big problem. Most music routines out there write
 
 Luckily, some good coders out there thought up a way to bypass this. This is called “ghost-registers”. Ghost registers act the same way as a double-buffer. All you need to do is replace, for example, “STA $D400” with “STA $4000”… in other words, the SID register data is stored between $4000-$4018, rather than $D400-$D418. When you have finished calling the play subroutine, set $01 back to #$35/$37, then read the data from the “ghost” registers, and transfer the values to the SID registers, like so:
 
-lda #$30 ; Switch off I/O and ROM banks sta $01 jsr $d003 ; Play address of an example tune stored from $d000-$e000 lda #$37 ; Switch the I/O bank back on sta $01 ldx #$18 ; Transfer data from ghost-registers to SID-registers - lda $4000,x sta $d400,x dex bpl -
+   lda #$30     ; Switch off I/O and ROM banks
+   sta $01
+   
+   jsr $d003	; Play address of an example tune stored from $d000-$e000
+   lda #$37     ; Switch the I/O bank back on
+   sta $01
+   ldx #$18     ; Transfer data from ghost-registers to SID-registers
+-  lda $4000,x
+   sta $d400,x
+   dex
+   bpl -
 
 As far as I'm aware, the newest music editors, like SDI and Goat-Tracker, has this option to set “ghost registers”, saving you time and effort to go through the entire music routine code and replace the SID register addresses with ghost register addresses. Of course, ghost registers is kind of a new thing, therefore older tunes will require you to go through this painfull practise anyway.
 

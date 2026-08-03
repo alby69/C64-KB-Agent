@@ -3,27 +3,27 @@ title: Sprite usage in Commodore 64 Elite
 source_url: https://elite.bbcelite.com/deep_dives/sprite_usage_in_commodore_64_elite.html
 category: deep-dive
 topics:
-- graphics
-- sprite programming
-- assembly
 - basic
+- graphics
+- assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- SID
 - CPU
+- SID
+- VIC-II
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
 - kernal-routines
 - music-player
 - memory-map
+- raster-interrupts
+- sid-registers
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Sprite usage in Commodore 64 Elite
@@ -38,7 +38,8 @@ See the deep dive on [colouring the Commodore 64 bitmap screen](https://elite.bb
 
 													 ---------------
 
-						Here's a list of all seven sprite designs used in Commodore 64 Elite. These are defined in the [sprites source file](https://elite.bbcelite.com/c64/all/elite_sprites.html).
+						
+Here's a list of all seven sprite designs used in Commodore 64 Elite. These are defined in the [sprites source file](https://elite.bbcelite.com/c64/all/elite_sprites.html).
 
 | Sprite | Description | 
 |---|---|
@@ -65,11 +66,11 @@ There are eight hardware sprites supported by the Commodore 64's VIC-II chip. Th
 
 These sprites are configured and manipulated by the following parts of the codebase:
 
-- The correct laser crosshairs definition for the current view is allocated to sprite 0 by the [SIGHT](https://elite.bbcelite.com/c64/main/subroutine/sight.html)routine, using the colours in the[sightcol](https://elite.bbcelite.com/c64/main/variable/sightcol.html)variable.
-- The explosion sprite is shown briefly as a flash of colour when a ship explodes. The sprite is shown on-screen by the [PTCLS2](https://elite.bbcelite.com/c64/main/subroutine/ptcls2.html)routine, which is called once from the explosion routine at[DOEXP](https://elite.bbcelite.com/c64/main/subroutine/doexp.html)at the start of the explosion. The sprite is removed from the screen by the[RDKEY](https://elite.bbcelite.com/c64/main/subroutine/rdkey.html)routine.
-- The colours of the six Trumble sprites are set up in [part 4 of the game loader](https://elite.bbcelite.com/c64/game_loader/subroutine/elite_loader_part_4_of_7.html).
-- The sprite definitions are mapped to the relevant sprite numbers in [part 7 of the game loader](https://elite.bbcelite.com/c64/game_loader/subroutine/elite_loader_part_7_of_7.html). This is also where the direction of gaze for the Trumble sprites is set. Sprite definitions are mapped to sprite numbers by writing to the sprite pointers in the last eight bytes of screen RAM, so we have to do this twice, as we have two banks of screen RAM, one for the space view and another for the text view (see the deep dive on[colouring the Commodore 64 bitmap screen](https://elite.bbcelite.com/colouring_the_commodore_64_bitmap_screen.html)for details).
-- The Trumble sprites get moved around the screen in the [MVTRIBS](https://elite.bbcelite.com/c64/main/subroutine/mvtribs.html)routine, which moves one Trumble on each iteration of the main flight loop. It is only called if the Trumbles mission is in progress.
+- The correct laser crosshairs definition for the current view is allocated to sprite 0 by the [SIGHT](https://elite.bbcelite.com/c64/main/subroutine/sight.html) routine, using the colours in the[sightcol](https://elite.bbcelite.com/c64/main/variable/sightcol.html) variable.
+- The explosion sprite is shown briefly as a flash of colour when a ship explodes. The sprite is shown on-screen by the [PTCLS2](https://elite.bbcelite.com/c64/main/subroutine/ptcls2.html) routine, which is called once from the explosion routine at[DOEXP](https://elite.bbcelite.com/c64/main/subroutine/doexp.html) at the start of the explosion. The sprite is removed from the screen by the[RDKEY](https://elite.bbcelite.com/c64/main/subroutine/rdkey.html) routine.
+- The colours of the six Trumble sprites are set up in [part 4 of the game loader](https://elite.bbcelite.com/c64/game_loader/subroutine/elite_loader_part_4_of_7.html) .
+- The sprite definitions are mapped to the relevant sprite numbers in [part 7 of the game loader](https://elite.bbcelite.com/c64/game_loader/subroutine/elite_loader_part_7_of_7.html) . This is also where the direction of gaze for the Trumble sprites is set. Sprite definitions are mapped to sprite numbers by writing to the sprite pointers in the last eight bytes of screen RAM, so we have to do this twice, as we have two banks of screen RAM, one for the space view and another for the text view (see the deep dive on[colouring the Commodore 64 bitmap screen](https://elite.bbcelite.com/colouring_the_commodore_64_bitmap_screen.html) for details).
+- The Trumble sprites get moved around the screen in the [MVTRIBS](https://elite.bbcelite.com/c64/main/subroutine/mvtribs.html) routine, which moves one Trumble on each iteration of the main flight loop. It is only called if the Trumbles mission is in progress.
 
 Sprite operations work by updating the relevant registers in the VIC-II chip. The [MVTRIBS](https://elite.bbcelite.com/c64/main/subroutine/mvtribs.html) and [SIGHT](https://elite.bbcelite.com/c64/main/subroutine/sight.html) routines are good places to see this in action.
 

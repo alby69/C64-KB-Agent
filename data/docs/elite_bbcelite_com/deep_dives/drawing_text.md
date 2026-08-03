@@ -3,29 +3,29 @@ title: Drawing text
 source_url: https://elite.bbcelite.com/deep_dives/drawing_text.html
 category: source-code
 topics:
+- basic
+- memory management
 - graphics
 - assembly
 - input handling
-- memory management
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
 - KERNAL
-- CIA
 - BASIC ROM
 - SID
+- CPU
+- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Drawing text
@@ -36,7 +36,7 @@ There is a lot of text in Elite, so much so that it needs to be compressed (see 
 
 ![The first briefing screen for the Constrictor mission in BBC Micro Elite](https://elite.bbcelite.com/images/missions/mission_1a.png) 
 
-						For starters, Elite doesn't rely on the operating system to draw text; indeed, Elite uses hardly any operating system routines at all, choosing instead to implement almost everything itself in the search for speed and efficiency. In the main game code for the BBC Micro cassette version, there are just three calls to OSBYTE, two to OSWORD and one to OSFILE, and that's it for operating system calls. (For the curious, the OSBYTE calls flush all the buffers, read the joystick, and enable/disable BREAK and ESCAPE; the OSWORD calls read a line from the keyboard, and make a sound; and the OSFILE call saves or loads the commander file... and that's all.)
+For starters, Elite doesn't rely on the operating system to draw text; indeed, Elite uses hardly any operating system routines at all, choosing instead to implement almost everything itself in the search for speed and efficiency. In the main game code for the BBC Micro cassette version, there are just three calls to OSBYTE, two to OSWORD and one to OSFILE, and that's it for operating system calls. (For the curious, the OSBYTE calls flush all the buffers, read the joystick, and enable/disable BREAK and ESCAPE; the OSWORD calls read a line from the keyboard, and make a sound; and the OSFILE call saves or loads the commander file... and that's all.)
 
 It's the same on the Commodore 64 and NES versions, where text is also poked directly into the screen; this is also how text is drawn in the Apple II's space view, though the trading screens in this version use the Apple's text mode instead.
 
@@ -46,10 +46,11 @@ It's no surprise, then, that Elite has its very own text drawing routine at [TT2
 
 													 ---------------
 
-						The text printing routine at [TT26](https://elite.bbcelite.com/cassette/main/subroutine/tt26.html) has a lot in common with the [PIXEL](https://elite.bbcelite.com/cassette/main/subroutine/pixel.html) routine described in the deep dive on [drawing monochrome pixels on the BBC Micro](https://elite.bbcelite.com/drawing_monochrome_pixels_in_mode_4.html), not least of which is the calculation of the screen address where we need to poke our text. The PIXEL routine starts with pixel x-coordinate and y-coordinates for the pixel to draw, but for text, Elite maintains a text cursor in locations XC and YC:
+						
+The text printing routine at [TT26](https://elite.bbcelite.com/cassette/main/subroutine/tt26.html) has a lot in common with the [PIXEL](https://elite.bbcelite.com/cassette/main/subroutine/pixel.html) routine described in the deep dive on [drawing monochrome pixels on the BBC Micro](https://elite.bbcelite.com/drawing_monochrome_pixels_in_mode_4.html), not least of which is the calculation of the screen address where we need to poke our text. The PIXEL routine starts with pixel x-coordinate and y-coordinates for the pixel to draw, but for text, Elite maintains a text cursor in locations XC and YC:
 
-- [XC](https://elite.bbcelite.com/cassette/main/workspace/zp.html#xc)is the x-coordinate of the text cursor (i.e. the text column), which can be from 0 to 32. A value of 0 denotes the leftmost column and 32 the rightmost column, but because the top part of the screen (the space view) has a white border that clashes with columns 0 and 32, text is only shown in columns 1-31.
-- [YC](https://elite.bbcelite.com/cassette/main/workspace/zp.html#xc)is the y-coordinate of the text cursor (i.e. the text row), which can be from 0 to 23. The screen actually has 31 character rows if you include the dashboard, but the text printing routines only work on the top part (the space view), so the text cursor only goes up to a maximum of 23, the row just before the screen splits. A value of 0 denotes the top row, but because the top part of the screen has a white border that clashes with row 0, text is always shown at row 1 or greater.
+- [XC](https://elite.bbcelite.com/cassette/main/workspace/zp.html#xc) is the x-coordinate of the text cursor (i.e. the text column), which can be from 0 to 32. A value of 0 denotes the leftmost column and 32 the rightmost column, but because the top part of the screen (the space view) has a white border that clashes with columns 0 and 32, text is only shown in columns 1-31.
+- [YC](https://elite.bbcelite.com/cassette/main/workspace/zp.html#xc) is the y-coordinate of the text cursor (i.e. the text row), which can be from 0 to 23. The screen actually has 31 character rows if you include the dashboard, but the text printing routines only work on the top part (the space view), so the text cursor only goes up to a maximum of 23, the row just before the screen splits. A value of 0 denotes the top row, but because the top part of the screen has a white border that clashes with row 0, text is always shown at row 1 or greater.
 
 When TT26 is called to print a printable character, it prints it at the text cursor location, and increments the XC cursor value to point to the next character along, so repeated calls to TT26 will print characters one after the other.
 
@@ -57,7 +58,8 @@ When TT26 is called to print a printable character, it prints it at the text cur
 
 													 -----------------
 
-						So we have an on-screen cursor position where we want to print a character, but how do we know what to print? For that, we need a character definition in the form of a bitmap.
+						
+So we have an on-screen cursor position where we want to print a character, but how do we know what to print? For that, we need a character definition in the form of a bitmap.
 
 Note that this only applies to printable ASCII characters in the range 32-95, as other characters don't have a screen presence; character 7, for example, emits a beep, while character 13 is a carriage return, which we can implement by moving the text cursor without having to print anything. This deep dive is only concerned with drawing printable characters, though the TT26 routine does cope with all character types.
 
@@ -77,7 +79,8 @@ The code starting at label RR1 in [TT26](https://elite.bbcelite.com/cassette/mai
 
 													 -----------------------------------------------
 
-						The next task, then, is to convert the current text cursor location from columns and rows into an address in screen memory.
+						
+The next task, then, is to convert the current text cursor location from columns and rows into an address in screen memory.
 
 This part of the process is very similar to the [PIXEL](https://elite.bbcelite.com/cassette/main/subroutine/pixel.html) routine described in the deep dive on [drawing monochrome pixels on the BBC Micro](https://elite.bbcelite.com/drawing_monochrome_pixels_in_mode_4.html). As each on-screen character is 8 pixels wide, and the special screen mode Elite uses for the top part of the screen is 256 pixels across with one bit per pixel, we can simply multiply the text column number by 8 to get a value that is not only the screen address offset of the text cursor from the left side of the screen, it's also the least significant byte of the screen address where we want to print this character, as each row of on-screen pixels corresponds to one page.
 
@@ -96,7 +99,8 @@ Now to work out the most significant byte of the screen address. As already ment
             and:  %00010111
          &60 is:  %01100000
 ```
-						so YC OR &60 effectively adds &60 to YC, giving us the page number that we want, which is the most significant byte of the screen address of the character we want to display.
+						
+so YC OR &60 effectively adds &60 to YC, giving us the page number that we want, which is the most significant byte of the screen address of the character we want to display.
 
 For the Acorn Electron and Commodore 64, the calculations are slightly different because the screen is 320 pixels wide rather than 256 pixels wide; the deep dive on [drawing pixels in the Electron version](https://elite.bbcelite.com/drawing_pixels_in_the_electron_version.html) for details.
 
@@ -104,7 +108,8 @@ For the Acorn Electron and Commodore 64, the calculations are slightly different
 
 													 -------------------------
 
-						We now have the address where we need to poke our character, and we have the bitmap that we want to poke, so it's finally time to draw the character on-screen. Luckily, this is relatively straightforward, because the BBC Micro splits its screen mode up into character blocks, each of which is 8 bytes wide (see the diagram in the deep dive on [drawing monochrome pixels on the BBC Micro](https://elite.bbcelite.com/drawing_monochrome_pixels_in_mode_4.html) for details of the screen memory structure). We only want to display characters according to this same grid, so we simply need to poke our 8x8 character bitmap into the character block pointed to by the screen address we calculated above. (It would be a much trickier proposition if we wanted to display characters anywhere on-screen, rather than in alignment with the standard screen's character block, but Elite doesn't need this kind of flexibility.)
+						
+We now have the address where we need to poke our character, and we have the bitmap that we want to poke, so it's finally time to draw the character on-screen. Luckily, this is relatively straightforward, because the BBC Micro splits its screen mode up into character blocks, each of which is 8 bytes wide (see the diagram in the deep dive on [drawing monochrome pixels on the BBC Micro](https://elite.bbcelite.com/drawing_monochrome_pixels_in_mode_4.html) for details of the screen memory structure). We only want to display characters according to this same grid, so we simply need to poke our 8x8 character bitmap into the character block pointed to by the screen address we calculated above. (It would be a much trickier proposition if we wanted to display characters anywhere on-screen, rather than in alignment with the standard screen's character block, but Elite doesn't need this kind of flexibility.)
 
 For the monochrome mode 4 screen in cassette and disc Elite, poking into this location is a simple case of extracting each of the 8 rows from the character bitmap (each row being a byte), and poking this into the 8 bytes at our screen address. As with the line-drawing routine, this poking is done using EOR logic so the text can be removed by redrawing the same characters, and when we have poked all 8 rows, we are done and the character appears instantly on-screen.
 

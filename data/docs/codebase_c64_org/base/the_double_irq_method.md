@@ -3,8 +3,8 @@ title: The double (raster) IRQ method
 source_url: https://codebase.c64.org/doku.php?id=base%3Athe_double_irq_method
 category: reference
 topics:
-- sprite programming
 - raster interrupts
+- sprite programming
 - assembly
 difficulty: beginner
 language: mixed
@@ -14,11 +14,11 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -44,11 +44,74 @@ It's quite easy, let's configure a raster IRQ at raster line X to pull the CPU o
 
 Remember that the C64 has two irq pointer locations? One at $fffe in the ROM memory which is due to hardware design and one at $0314 in RAM which is just a memory location the kernal uses to indirect call a user irq handler. We can use both pointer to accomplish the task of irq jitter correction. The first irq, which contains the “nop” list, is called by the $0314 pointer with a cpu port value of $37 or $36. The second irq which just has a jitter of 1 cycle is called by the rom pointer at $fffe with a cpu port value of $35. The trick is to set up these pointers beforehand and within the irq code just toggle the cpu port value to toggle the irq targets. The number of nops can be determined by just removing one after each other until the part crashes. Then add again one nop. This is how it is done in the following code example where $0314 points to “irq0” and $fffe points to “irq”. The three pla just removes the pc and status from the stack which were pushed at the moment the second irq was triggered. However after the second irq ends we want to jumpback to the main program and not somewhere in the middle of the nop list. The inc $d012 in the first irq must come early so we sntill in the rasterline previous to the rastene in which the secondn irq should be triggered. The same applies for the dec $d012 in the second irq for similar reasons. After the three pla some timing opcodes follow. These assure that we are at the end of a rasterline when the lda $d012 is beeing performed. The compare tests, if the load occured in rasterline N or N+1 and wastes a cycle in the first case. As an effect the lines after the branch are executes always at the same rasterbeam position. The irq is stable, now.
 
-.PROC irq0 inc $d012 lsr $d019 dec $01 cli nop nop nop nop nop nop nop nop nop nop nop nop nop nop nop nop nop nop nop nop .ENDPROC .PROC irq dec $d012 pla pla pla lda (0,x) lda (0,x) lda (0,x) lda (0,x) nop bit 2 bit 2 lda $d012 cmp #$39 beq fixcycle fixcycle bit $d020 ...
+.PROC irq0
+		 inc $d012
+		 lsr $d019
+		 dec $01
+		 cli
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+		 nop
+.ENDPROC
+.PROC irq
+		 dec $d012
+		 pla
+		 pla
+		 pla
+		 lda (0,x)
+		 lda (0,x)
+		 lda (0,x)
+		 lda (0,x)
+		 nop
+		 bit 2
+		 bit 2
+		 lda $d012
+		 cmp #$39
+		 beq fixcycle
+fixcycle bit $d020
+...
 
 The corresponding irq init looks like this:
 
-.PROC irqInit lda #$7f sta $dc0d bit $dc0d lda #$81 sta $d01a lda #<irq0 sta $0314 lda #>irq0 sta $0315 lda #<irq sta $fffe lda #>irq sta $ffff lda #$38 sta $d012 lda #$36 sta $01 lsr $d019 rts .ENDPROC The lsr $d019 at the end of the init is performed to clear the irq request if for some reason a rasterirq request is rised during init.
+.PROC irqInit
+		lda #$7f
+		 sta $dc0d
+		 bit $dc0d
+		 lda #$81
+		 sta $d01a
+		 lda #<irq0
+		 sta $0314
+		 lda #>irq0
+		 sta $0315
+		 lda #<irq
+		 sta $fffe
+		 lda #>irq
+		 sta $ffff
+		 lda #$38
+		 sta $d012
+		 lda #$36
+		 sta $01
+		 lsr $d019
+	 rts
+.ENDPROC
+The lsr $d019 at the end of the init is performed to clear the irq request if for some reason a rasterirq request is rised during init.
 
 ## Codice Estratto
 

@@ -13,14 +13,14 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # MIDI Interfaces
@@ -33,9 +33,9 @@ base:c64_midi_interfaces
 
 Here is a list of Interfaces, 6850 UART registers and the most important values you will be feeding the Control Register with.
 
-| SEQUENTIAL CIRCUITS INC. | ||
+| SEQUENTIAL CIRCUITS INC. |  |  | 
 |---|---|---|
-| Mode | 1 MHZ IRQ | |
+| Mode | 1 MHZ IRQ |  | 
 | Control Register | $DE00 | Write only | 
 | Status Register | $DE02 | Read only | 
 | Transmit Data (Tx) | $DE01 | Write only | 
@@ -44,9 +44,9 @@ Here is a list of Interfaces, 6850 UART registers and the most important values 
 | Midi Enable | $15 | Word Select & Counter Divide | 
 | Midi IRQ Enable | $95 | IRQ ON, Word Select & Counter Divide | 
 
-| PASSPORT & SENTECH | ||
+| PASSPORT & SENTECH |  |  | 
 |---|---|---|
-| Mode | 1 MHZ IRQ | |
+| Mode | 1 MHZ IRQ |  | 
 | Control Register | $DE08 | Write | 
 | Status Register | $DE08 | Read | 
 | Transmit Data (Tx) | $DE09 | Write | 
@@ -55,9 +55,9 @@ Here is a list of Interfaces, 6850 UART registers and the most important values 
 | Midi Enable | $15 | Word Select & Counter Divide | 
 | Midi IRQ Enable | $95 | IRQ ON, Word Select & Counter Divide | 
 
-| DATEL/SIEL/JMS/C-LAB | ||
+| DATEL/SIEL/JMS/C-LAB |  |  | 
 |---|---|---|
-| Mode | 2 MHZ IRQ | |
+| Mode | 2 MHZ IRQ |  | 
 | Control Register | $DE04 | Write only | 
 | Status Register | $DE06 | Read only | 
 | Transmit Data (Tx) | $DE05 | Write only | 
@@ -66,9 +66,9 @@ Here is a list of Interfaces, 6850 UART registers and the most important values 
 | Midi Enable | $16 | Word Select & Counter Divide | 
 | Midi IRQ Enable | $96 | IRQ ON, Word Select & Counter Divide | 
 
-| NAMESOFT | ||
+| NAMESOFT |  |  | 
 |---|---|---|
-| Mode | 1 MHZ NMI | |
+| Mode | 1 MHZ NMI |  | 
 | Control Register | $DE00 | Write only | 
 | Status Register | $DE02 | Read only | 
 | Transmit Data (Tx) | $DE01 | Write only | 
@@ -84,7 +84,7 @@ Here is a list of Interfaces, 6850 UART registers and the most important values 
 
 This information is from the Motorola MC6850 ACIA.
 
-| ACIA (Asynchronous Communications Interface Adapter) Registers | ||||
+| ACIA (Asynchronous Communications Interface Adapter) Registers |  |  |  |  | 
 |---|---|---|---|---|
 | Bit | Control Register | Status Register | Tx | Rx | 
 | 7 | Receive Interrupt Enable | Interrupt Request (IRQ) | Bit 7 | Bit 7 | 
@@ -209,11 +209,13 @@ Bit 0 (Receive Data Register Full)
 ```
 ## The Tx Register (Write Only)
 
-In this register you store the byte you want to transmit. Note that you must check the TDRE bit is high before writing.
+In this register you store the byte you want to transmit.
+Note that you must check the TDRE bit is high before writing.
 
 ## The Rx Register (Read Only)
 
-In this register you read the byte your received. Note that you must check the RDRF bit is high before reading.
+In this register you read the byte your received.
+Note that you must check the RDRF bit is high before reading.
 
 base/c64_midi_interfaces.txt · Last modified:  by 127.0.0.1
 

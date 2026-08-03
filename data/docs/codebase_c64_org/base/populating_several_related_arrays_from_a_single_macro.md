@@ -9,12 +9,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- keyboard-handling
 - joystick-reading
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # base:populating_several_related_arrays_from_a_single_macro [Codebase64 wiki]
@@ -34,11 +34,32 @@ SEGMENTS
 ```
 Secondly, add labels at the beginning of each segment. NOTE: It's critical this is done before putting any data in them!
 
-.segment "INITLO" InitLo: .segment "INITHI" InitHi: .segment "RUNLO" RunLo: .segment "RUNHI" RunHi: .segment "NUMFRAMES" NumFrames:
+.segment "INITLO"
+InitLo:
+.segment "INITHI"
+InitHi:
+.segment "RUNLO"
+RunLo:
+.segment "RUNHI"
+RunHi:
+.segment "NUMFRAMES"
+NumFrames:
 
 Thirdly, create a macro, that takes all related information as arguments:
 
-.macro RegisterEffect init, run, numframes .segment "INITLO" .byte <init .segment "INITHI" .byte >init .segment "RUNLO" .byte <run .segment "RUNHI" .byte >run .segment "NUMFRAMES" .byte numframes ;.segment "EMPTY" .endmacro
+.macro RegisterEffect init, run, numframes
+	.segment "INITLO"
+	.byte <init
+	.segment "INITHI"
+	.byte >init
+	.segment "RUNLO"
+	.byte <run
+	.segment "RUNHI"
+	.byte >run
+	.segment "NUMFRAMES"
+	.byte numframes
+	;.segment "EMPTY"
+.endmacro
 
 This becomes more powerful, when you use given information to automatically calculate entries for other arrays.
 
@@ -46,7 +67,9 @@ NOTE: It's adviced to add [Safeguard against putting data in wrong segment](http
 
 Then fourthly, populate your arrays:
 
-RegisterEffect plasmainit, plasmarun, 200 RegisterEffect invaderinit, invaderrun, 50 RegisterEffect realtimeraytraceinit, realtimeraytracerun, 250
+	RegisterEffect plasmainit, plasmarun, 200
+	RegisterEffect invaderinit, invaderrun, 50
+	RegisterEffect realtimeraytraceinit, realtimeraytracerun, 250
 
 Oh, and fifthly, use array contents in your code. The entries will be in the order they were linked in.
 

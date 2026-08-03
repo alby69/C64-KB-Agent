@@ -3,25 +3,25 @@ title: File operations with embedded Apple DOS
 source_url: https://elite.bbcelite.com/deep_dives/file_operations_with_embedded_apple_dos.html
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # File operations with embedded Apple DOS
@@ -30,6 +30,7 @@ scraped_at: '2026-07-27'
 
 Just like all the other versions of Elite on the 6502, the Apple II version of Elite was written by Ian Bell and David Braben... and just like all the other non-Acorn versions that they wrote, they didn't do it entirely alone. Tucked away inside the cover of the Apple version's Space Trader's Flight Training Manual is this credit:
 
+							
 Technical Assistance by Rob Northan
 
 
@@ -37,7 +38,7 @@ They may have spelled his name incorrectly, but this is the same Rob Northen who
 
 Luckily there's a pretty big clue in the source code, at the top of the [A.ELITEJ](https://github.com/markmoxon/elite-source-code-apple-ii/blob/main/1-source-files/original-sources/A.ELITEJ.TXT) source file:
 
-30REM ELITE <J> AP / Apple DOS 1.00 from Rob Northen
+  30REM ELITE <J>  AP   /  Apple DOS 1.00 from Rob Northen
 
 This source file contains the code to load and save commander files... and there is an awful lot of it, too. So let's take a look at this contribution, because it turns out that Rob Northen wasn't working alone either.
 
@@ -45,7 +46,8 @@ This source file contains the code to load and save commander files... and there
 
 													 ---------
 
-						Putting the Apple II version to one side for a minute, Elite on the 6502 typically contains pretty terse file-related code.
+						
+Putting the Apple II version to one side for a minute, Elite on the 6502 typically contains pretty terse file-related code.
 
 For example, the Acorn versions all use the operating system's built-in OSFILE routine to load and save files, which involves little more than setting up a small data block containing the file details and passing the address of this block to OSFILE. The operating system takes care of everything else, and the resulting code is nice and simple: for example, the [LOD](https://elite.bbcelite.com/cassette/main/subroutine/lod.html) and [QUS1](https://elite.bbcelite.com/cassette/main/subroutine/qus1.html) routines in the BBC Micro cassette version load a commander file and move it to the correct location in memory, all in a few instructions, and the same approach works for the disc-based versions too.
 
@@ -69,11 +71,36 @@ Let's see what Apple DOS means for Elite.
 
 													 ------------------
 
-						When a floppy disk that has been formatted and initialised is put into an Apple II disk drive, the first thing that happens is that DOS gets loaded into memory. When it's fully loaded, DOS consumes quite a bit of space. According to the memory map in chapter 5 of Beneath Apple DOS, it grabs the whole block from $9600 to $BFFF, inserting itself just below I/O memory at $C000.
+						
+When a floppy disk that has been formatted and initialised is put into an Apple II disk drive, the first thing that happens is that DOS gets loaded into memory. When it's fully loaded, DOS consumes quite a bit of space. According to the memory map in chapter 5 of Beneath Apple DOS, it grabs the whole block from $9600 to $BFFF, inserting itself just below I/O memory at $C000.
 
 This is what it looks like once everything is loaded:
 
-: : : : +-----------------------------------+ $C100 | | | I/O memory | | | +-----------------------------------+ $C000 | | | RWTS | | | +-----------------------------------+ $B600 | | | File manager | | | +-----------------------------------+ $AAC9 | | | Main DOS routines | | | +-----------------------------------+ $9D00 | | | DOS file buffers | | | +-----------------------------------+ $9600 : : : :
+  :                                   :
+  :                                   :
+  +-----------------------------------+   $C100
+  |                                   |
+  | I/O memory                        |
+  |                                   |
+  +-----------------------------------+   $C000
+  |                                   |
+  | RWTS                              |
+  |                                   |
+  +-----------------------------------+   $B600
+  |                                   |
+  | File manager                      |
+  |                                   |
+  +-----------------------------------+   $AAC9
+  |                                   |
+  | Main DOS routines                 |
+  |                                   |
+  +-----------------------------------+   $9D00
+  |                                   |
+  | DOS file buffers                  |
+  |                                   |
+  +-----------------------------------+   $9600
+  :                                   :
+  :                                   :
 
 This is quite a big memory footprint: it's 10.5K of RAM, to be exact, which is a significant chunk of memory in a 48K machine. Elite uses almost all of that 48K when it's loaded, so there's no way that Elite and DOS can co-exist in the same machine - see the [Apple II Elite memory map](https://elite.bbcelite.com/the_elite_memory_map_apple_ii.html) for details. Something has to give, and it isn't going to be Elite.
 						
@@ -92,7 +119,8 @@ It also means that Apple II Elite contains a whole chunk of code that was writte
 
 													 -----------------
 
-						Here are the details of all the major disk routines and lookup variables in Apple II Elite.
+						
+Here are the details of all the major disk routines and lookup variables in Apple II Elite.
 
 The first table below shows all the low-level RWTS routines that have been included from Apple DOS 3.3, in the order in which they appear in the Elite source. The table also shows the equivalent routine name in DOS, and if you click the Elite routine name to see the commented code, you'll see I've included the original source code from Apple DOS 3.3 alongside the version in the Elite source code. This includes all the original Wozniak/Wigginton commentary, so you can see exactly how the two versions match up.
 

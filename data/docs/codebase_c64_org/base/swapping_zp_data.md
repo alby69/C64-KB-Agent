@@ -7,15 +7,15 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Swapping ZeroPage data
@@ -26,7 +26,14 @@ base:swapping_zp_data
 
 On some occasions you might want to save and restore ZP data. I.e. you have no time to patch a SID player, or the speedup you gain by giving several routines full ZP access is worth it. The small snippet below swaps 10 bytes from $00 on with memory in $10. It clutters X,Y and A though. Enjoy, enthusi.
 
-ldx #10 loop ldy $00,x lda $10,x sta $00,x sty $10,x dex bpl loop
+   ldx #10 
+loop 
+   ldy $00,x 
+   lda $10,x 
+   sta $00,x 
+   sty $10,x 
+   dex 
+   bpl loop
 
 base/swapping_zp_data.txt · Last modified:  by 127.0.0.1
 

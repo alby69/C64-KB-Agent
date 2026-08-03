@@ -3,30 +3,30 @@ title: Vicious Sid Demo Routine Explained
 source_url: https://codebase.c64.org/doku.php?id=base%3Avicious_sid_demo_routine_explained
 category: tool
 topics:
-- sound generation
 - raster interrupts
+- sound generation
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Vicious Sid Demo Routine Explained
@@ -37,8 +37,8 @@ scraped_at: '2026-07-27'
 
 Discussion about PWM and samples that are referred at the beginning of the article:
 
-- [http://www.ffd2.com/fridge/chacking/c=hacking20.txt](http://www.ffd2.com/fridge/chacking/c=hacking20.txt)“The C64 Digi”
-- [http://www.ffd2.com/fridge/chacking/c=hacking21.txt](http://www.ffd2.com/fridge/chacking/c=hacking21.txt)“Pulse Width Modulation, continued”
+- [http://www.ffd2.com/fridge/chacking/c=hacking20.txt](http://www.ffd2.com/fridge/chacking/c=hacking20.txt) “The C64 Digi”
+- [http://www.ffd2.com/fridge/chacking/c=hacking21.txt](http://www.ffd2.com/fridge/chacking/c=hacking21.txt) “Pulse Width Modulation, continued”
 
 # Vicious Routine
 
@@ -90,7 +90,58 @@ If the delay in step 4 is 128 cycles or less, it's usually better to use the tri
 
 So code doing this with two voices could look something like this:
 
-IRQ1: STA $FE STY $FF LDA #$00 ;step 5(voice 3) STA $D40F LDA #$11 ;step 6(voice 3) STA $D412 LDA #$09 ;step 1(voice 2) STA $D40B LDY #$00 ;step 2(voice 2) LDA ($10),Y STA $D408 LDA #$00 ;step 3(voice 2) STA $D40B ;step 4 until next irq (voice 2) INC $10 BNE *+4 INC $11 LDA $DC0D LDA #<IRQ2 STA $FFFE LDA #>IRQ2 STA $FFFF LDA $FE LDY $FF RTI IRQ2: STA $FE STY $FF LDA #$00 ;step 5(voice 2) STA $D408 LDA #$11 ;step 6(voice 2) STA $D40B LDA #$09 ;step 1(voice 3) STA $D412 LDY #$00 ;step 2(voice 3) LDA ($10),Y STA $D40F LDA #$00 ;step 3(voice 3) STA $D412 ;step 4 until next irq (voice 3) INC $10 BNE *+4 INC $11 LDA $DC0D LDA #<IRQ1 STA $FFFE LDA #>IRQ1 STA $FFFF LDA $FE LDY $FF RTI
+IRQ1:
+STA $FE
+STY $FF
+LDA #$00 ;step 5(voice 3)
+STA $D40F
+LDA #$11 ;step 6(voice 3)
+STA $D412
+LDA #$09 ;step 1(voice 2)
+STA $D40B
+LDY #$00 ;step 2(voice 2)
+LDA ($10),Y
+STA $D408
+LDA #$00 ;step 3(voice 2)
+STA $D40B
+;step 4 until next irq (voice 2)
+INC $10
+BNE *+4
+INC $11
+LDA $DC0D
+LDA #<IRQ2
+STA $FFFE
+LDA #>IRQ2
+STA $FFFF
+LDA $FE
+LDY $FF
+RTI
+IRQ2:
+STA $FE
+STY $FF
+LDA #$00 ;step 5(voice 2)
+STA $D408
+LDA #$11 ;step 6(voice 2)
+STA $D40B
+LDA #$09 ;step 1(voice 3)
+STA $D412
+LDY #$00 ;step 2(voice 3)
+LDA ($10),Y
+STA $D40F
+LDA #$00 ;step 3(voice 3)
+STA $D412
+;step 4 until next irq (voice 3)
+INC $10
+BNE *+4
+INC $11
+LDA $DC0D
+LDA #<IRQ1
+STA $FFFE
+LDA #>IRQ1
+STA $FFFF
+LDA $FE
+LDY $FF
+RTI
 
 As you can see, there's no waiting (step 4) inside the IRQ. The waiting happens outside the IRQ, in order to save raster time. This was suggested by Mixer. At first I was against it because having an unstable raster would result in a delay that would vary. I thought this would add a high pitched carrier noise to the sound. However, this doesn't happen. The reason will be explained later. The beauty of this implementation is indeed that a stable raster isn't required.
 
@@ -116,7 +167,30 @@ Knowing this, we can use the following method:
 
 And in code:
 
-IRQ STA $FF LDA $DC04 EOR #$07 AND #$07 STA *+4 BPL * CMP #$C9 CMP #$C9 CMP #$24 NOP LDA #$11 ;step 1 STA $D412 LDA #$09 ;step 2 & 3 STA $D412 IRQ1 LDA $1000 ;step 4 STA $D40F LDA #$01 ;step 5 STA $D412 INC IRQ1+1 BNE IRQ2 INC IRQ1+2 IRQ2 LDA $DC0D LDA $FF RTI
+IRQ STA $FF
+LDA $DC04
+EOR #$07
+AND #$07
+STA *+4
+BPL *
+CMP #$C9
+CMP #$C9
+CMP #$24
+NOP
+LDA #$11 ;step 1
+STA $D412
+LDA #$09 ;step 2 & 3
+STA $D412
+IRQ1 LDA $1000 ;step 4
+STA $D40F
+LDA #$01 ;step 5
+STA $D412
+INC IRQ1+1
+BNE IRQ2
+INC IRQ1+2
+IRQ2 LDA $DC0D
+LDA $FF
+RTI
 
 This method is much trickier to implement and hence I recommend starting with the two voice version. It should b easier to modify a two voice version to a one voice version than writing it from scratch. The timing is very crucial and the number of cycles is very limited on badlines. Try inserting a few instructions in the above routine and it won't work anymore.
 
@@ -128,7 +202,16 @@ The LDA $DC04 thing in the beginning of the IRQ routine makes the raster stable.
 
 You can use this little program to watch the effect of waveform $00. It will first set the voice output to $ff and then toggle waveform $00. As can be seen from the screen, the output of the voice will “fade” from $ff to $00 within some seconds.
 
-LDA #$00 STA $D410 STA $D411 LDA #$40 STA $D412 LDA #$00 STA $D412 LOOP LDA $D41B STA $0400 JMP LOOP
+LDA #$00
+STA $D410
+STA $D411
+LDA #$40
+STA $D412
+LDA #$00
+STA $D412
+LOOP LDA $D41B
+STA $0400
+JMP LOOP
 
 You might wonder why you don't get a very noticeable carrier with the two voice version, even though your raster isn't stable. The running time ofd the oscillator, and as a result, the amplitude will vary which indeed DOES produce carrier noise.
 

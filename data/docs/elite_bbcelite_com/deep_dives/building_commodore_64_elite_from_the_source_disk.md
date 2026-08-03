@@ -3,32 +3,32 @@ title: Building Commodore 64 Elite from the source disk
 source_url: https://elite.bbcelite.com/deep_dives/building_commodore_64_elite_from_the_source_disk.html
 category: source-code
 topics:
-- graphics
-- sprite programming
-- assembly
 - basic
+- graphics
+- assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
-- CPU
 - KERNAL
-- CIA
 - BASIC ROM
 - SID
+- VIC-II
+- CPU
+- CIA
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Building Commodore 64 Elite from the source disk
@@ -43,17 +43,18 @@ Let's take a look at the source disk and see what's involved in building Commodo
 
 													 -------------------
 
-						The source disk comes as a zip file, which you can [download](http://www.elitehomepage.org/archive/a/a5050010.zip) from the [archive](http://www.elitehomepage.org/archive/index.htm) on Ian Bell's site. Inside the zip is a DSD file, which is a BBC Micro double-sided DFS disk image that consists of two sides, drive 0 and drive 2.
+						
+The source disk comes as a zip file, which you can [download](http://www.elitehomepage.org/archive/a/a5050010.zip) from the [archive](http://www.elitehomepage.org/archive/index.htm) on Ian Bell's site. Inside the zip is a DSD file, which is a BBC Micro double-sided DFS disk image that consists of two sides, drive 0 and drive 2.
 
 This is the catalogue of drive 0:
 
 ![A catalogue of drive 0 of the Commodore 64 source disk](https://elite.bbcelite.com/images/c64/source_drive_0.png) 
 
-						And this is drive 2:
+And this is drive 2:
 
 ![A catalogue of drive 2 of the Commodore 64 source disk](https://elite.bbcelite.com/images/c64/source_drive_2.png) 
 
-						The disk contents can be viewed on any BBC Micro with DFS, but to actually run the build it needs to be loaded into a BBC Micro with a 6502 Second Processor. It will also work on emulators: my personal favourite is Tom Seddon's [b2 emulator](https://github.com/tom-seddon/b2), but any emulator with support for a second processor will do, even the browser-based JSBeeb (which you can use to run the build by following the links below).
+The disk contents can be viewed on any BBC Micro with DFS, but to actually run the build it needs to be loaded into a BBC Micro with a 6502 Second Processor. It will also work on emulators: my personal favourite is Tom Seddon's [b2 emulator](https://github.com/tom-seddon/b2), but any emulator with support for a second processor will do, even the browser-based JSBeeb (which you can use to run the build by following the links below).
 
 That said, if you try to run the build process using Ian Bell's disk image, then you quickly run out of disk space. To make it easier to run the build yourself, I have produced a stripped-down version of the disk that only contains the source files that the build needs, so there's enough room to run the whole end-to-end process.
 
@@ -69,7 +70,8 @@ If you would like to look at the source files but don't want to be messing about
 
 													 --------------------
 
-						Before we run through the build process itself, here's a quick summary of what the core source files do, in the order that they appear in the build pipeline. These are all BBC BASIC programs, with most of them including inline assembly language. All of them produce files as output, with some of them taking other files as input.
+						
+Before we run through the build process itself, here's a quick summary of what the core source files do, in the order that they appear in the build pipeline. These are all BBC BASIC programs, with most of them including inline assembly language. All of them produce files as output, with some of them taking other files as input.
 
 There is one part of the source pipeline that's missing from the source disk: the $.ELITE file from the first step. This file should contain an uncompressed source for the Elite Theme music, which the S.THEMES program converts into the C.THEME file, but $.ELITE is missing; luckily the compressed C.THEMES file is present, so we can simply skip the first step.
 
@@ -78,7 +80,7 @@ There are also four prerequisite files that are required by the build process: C
 | Program | Input | Output | 
 |---|---|---|
 | S.THEMES | $.ELITE (missing) | C.THEME | 
-| S.CSHIPS | Ship source disk ( [download](http://www.elitehomepage.org/archive/a/a4100082.zip)) | C.SHIPS | 
+| S.CSHIPS | Ship source disk ( [download](http://www.elitehomepage.org/archive/a/a4100082.zip) ) | C.SHIPS | 
 | S.MUCOMPR | C.MUSDAT | C.COMUDAT | 
 | S.GENWORD | - | P.WORDS | 
 | S.IANTOKS | - | A.IANTOK | 
@@ -103,7 +105,8 @@ Now let's take a look at the build process itself.
 
 													 --------------
 
-						At the outset it's worth noting that the source disk doesn't build a fully functioning Commodore 64 game. Instead, it produces binary files that are suitable for transmitting from a BBC Micro to a Commodore 64 via the user port, using the *SEND utility and the Programmer's Development System (see the deep dive on [developing Commodore 64 Elite on a BBC Micro](https://elite.bbcelite.com/developing_commodore_64_elite_on_a_bbc_micro.html) for more information). The binaries produced by the build process contain the game itself, but there is no disk loader, so the game can't be easily run in this format.
+						
+At the outset it's worth noting that the source disk doesn't build a fully functioning Commodore 64 game. Instead, it produces binary files that are suitable for transmitting from a BBC Micro to a Commodore 64 via the user port, using the *SEND utility and the Programmer's Development System (see the deep dive on [developing Commodore 64 Elite on a BBC Micro](https://elite.bbcelite.com/developing_commodore_64_elite_on_a_bbc_micro.html) for more information). The binaries produced by the build process contain the game itself, but there is no disk loader, so the game can't be easily run in this format.
 
 Specifically, the build process creates three binary files:
 
@@ -130,10 +133,11 @@ Firebird then added three disk loader programs - firebird, gma1 and gma3 - to pr
 
 													 -------------------------
 
-						In order to run the build process, we need all the source files, plus the four prerequisite files mentioned above. These latter four files are produced outside of the build process, as follows:
+						
+In order to run the build process, we need all the source files, plus the four prerequisite files mentioned above. These latter four files are produced outside of the build process, as follows:
 
-- C.SHIPS contains the ship data. There is a separate source disk for creating ship data, which [can be found on Ian Bell's site](http://www.elitehomepage.org/archive/a/a4100082.zip). The sources on this separate disk create individual ship files called MISSILE, COBRA and so on, which the S.CSHIPS program on the Commodore 64 source disk combines to form the C.SHIPS file. The Commodore 64 source disk contains a pre-compiled C.SHIPS file, so we can just use that.
-- C.MUSDAT is the uncompressed music file for The Blue Danube, which would have been delivered to Bell and Braben by Julie Dunn. See the deep dive on [music in Commodore 64 Elite](https://elite.bbcelite.com/music_in_commodore_64_elite.html)for more information.
+- C.SHIPS contains the ship data. There is a separate source disk for creating ship data, which [can be found on Ian Bell's site](http://www.elitehomepage.org/archive/a/a4100082.zip) . The sources on this separate disk create individual ship files called MISSILE, COBRA and so on, which the S.CSHIPS program on the Commodore 64 source disk combines to form the C.SHIPS file. The Commodore 64 source disk contains a pre-compiled C.SHIPS file, so we can just use that.
+- C.MUSDAT is the uncompressed music file for The Blue Danube, which would have been delivered to Bell and Braben by Julie Dunn. See the deep dive on [music in Commodore 64 Elite](https://elite.bbcelite.com/music_in_commodore_64_elite.html) for more information.
 - C.FONT is the game font, and it is identical to the P.FONT font file on the 6502 Second Processor version source disk. This is a direct extract of the font from the BBC Micro's operating system ROM.
 - $.DIALS53 contains the dashboard bitmap image, as a BBC Micro mode 5 screen image.
 
@@ -145,43 +149,45 @@ Put the disk image in drive 0 and press SHIFT-CTRL-BREAK. This will run a set of
 
 Now type the following and press RETURN:
 
-CHAIN ":2.S.MUCOMPR"
+  CHAIN ":2.S.MUCOMPR"
 
 This will compress the C.MUSDAT music data file and will save it as C.COMUDAT on drive 2. It takes a while.
 
 Now type the following and press RETURN after each line:
 
-*DRIVE 2 CHAIN "S.GENWORD"
+  *DRIVE 2
+  CHAIN "S.GENWORD"
 
 This will generate the P.WORDS text token file on drive 2.
 
 Now type the following and press RETURN:
 
-CHAIN "S.IANTOKS"
+  CHAIN "S.IANTOKS"
 
 This will generate the C.IANTOK extended text token file on drive 2. It takes a while.
 
 Now type the following and press RETURN, and then press RETURN again at the "insert destination disk" prompt:
 
-CHAIN "S.LODATAS"
+  CHAIN "S.LODATAS"
 
 This takes P.WORDS, C.FONT and C.IANTOK and produces the C.LODATA file on drive 2.
 
 Now type the following and press RETURN:
 
-CHAIN "S.SPRITES"
+  CHAIN "S.SPRITES"
 
 This will generate the C.SPRITE sprite definitions file on drive 2. It takes a while.
 
 Now type the following and press RETURN:
 
-CHAIN "S.CDATE4S"
+  CHAIN "S.CDATE4S"
 
 This will generate the C.DATE4 date image on drive 2.
 
 Now type the following and press RETURN after each line:
 
-*DIR $ CHAIN "$.MO5-COM"
+  *DIR $
+  CHAIN "$.MO5-COM"
 
 This converts the $.DIALS53 dashboard image into a Commodore 64 format image in C.CODIALS on drive 2. It takes a while.
 
@@ -189,7 +195,7 @@ Next, press SHIFT-CTRL-BREAK to reboot the disk.
 
 Now tap f0 (or f10 if you are in JSBeeb) and press RETURN, which will enter the following for you:
 
-CHAIN "ELITEA"
+  CHAIN "ELITEA"
 
 Be careful not to hold f0 down too long, otherwise it might insert multiple copies of the CHAIN command - just tap it quickly. If it does insert too much text, you can delete it with the DELETE key and try again.
 
@@ -197,13 +203,14 @@ Press RETURN at the USA% prompt, and Elite will start to build. This part takes 
 
 When it's finished, tap f4 and then RETURN, which will enter the following for you:
 
-CHAIN ":2.S.BCODES"
+  CHAIN ":2.S.BCODES"
 
 Again, press RETURN at the "insert destination disk" prompt. This will ingest C.ELTA through C.ELTK to produce the LOCODE and HICODE files on drive 2.
 
 Now type the following and press RETURN after each line:
 
-HIMEM=&B800 CHAIN ":2.S.COMLODS"
+  HIMEM=&B800
+  CHAIN ":2.S.COMLODS"
 
 This will ingest C.LODATA, C.SHIPS, C.CODIALS, C.SPRITE and C.DATE4 to produce the C.COMLOD file on drive 0.
 
@@ -213,7 +220,8 @@ If you don't want to run through the above process but want to see the final res
 
 In the original development environment, the authors could then send the results to a connected Commodore 64, using the SEND utility, before running the transmitted code directly on the Commodore 64 (see the deep dive on [developing Commodore 64 Elite on a BBC Micro](https://elite.bbcelite.com/developing_commodore_64_elite_on_a_bbc_micro.html) for more details). To see how this works from the BBC Micro side, you can run the SEND utility like this:
 
-*DIR $ *SEND
+  *DIR $
+  *SEND
 
 You can enter a filename if you like (try C.COMLOD, for example), but it will just hang, as it waits for a response from the Commodore 64 that you probably don't have hooked up to your machine. But this is how they did the original development, so it's still interesting to see what the process would have looked like, even if it doesn't work.
 

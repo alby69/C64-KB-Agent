@@ -8,20 +8,18 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # How to calculate SID frequency tables
-
-### Table of Contents
 
 # How to calculate SID frequency tables
 
@@ -35,7 +33,10 @@ What if you need a table which is not based on the standard 440 Hz A note, or wh
 
 First thing you need to do is to calculate the actual Hz of the notes that you want to use (such as 440hz for the standard A note). This is calculated in the following way:
 
-BASEFREQ = 440; //This is the Hz for the standard A note. NOTE = 0; //This is the note relative to the standard A. 0 = standard A itself, -1 = G# etc. STEPS_PER_OCTAVE = 12; //Normally we use 12 notes per octave. FREQ_HZ = BASEFREQ * 2^(NOTE/STEPS_PER_OCTAVE);
+	BASEFREQ = 440; //This is the Hz for the standard A note.
+	NOTE = 0;	//This is the note relative to the standard A. 0 = standard A itself, -1 = G# etc. 
+	STEPS_PER_OCTAVE = 12;	//Normally we use 12 notes per octave.
+	FREQ_HZ = BASEFREQ * 2^(NOTE/STEPS_PER_OCTAVE);
 
 Using this formula, we get a table which looks something like this:
 
@@ -61,11 +62,14 @@ Most SID music editors actually start their freq tables, not at standard A, but 
 
 How do we calculate the actual 16bit SID freq values we need to use from the Hz values calculated in the previous section? This is done with the following formula:
 
-PAL_PHI = 985248; NTSC_PHI = 1022727; //This is for machines with 6567R8 VIC. 6567R56A is slightly different. CONSTANT = 256^(3) / PAL_PHI; //Select the constant appropriate for your machine (PAL vs NTSC). SID_FREQ = CONSTANT * FREQ_HZ; //Calculate SID freq for a certain note (specified in Hz).
+	PAL_PHI = 985248;
+	NTSC_PHI = 1022727; //This is for machines with 6567R8 VIC. 6567R56A is slightly different.
+	CONSTANT = 256^(3) / PAL_PHI; //Select the constant appropriate for your machine (PAL vs NTSC).
+	SID_FREQ = CONSTANT * FREQ_HZ; //Calculate SID freq for a certain note (specified in Hz).
 
 The FREQ_HZ value is obtained by the calculations explained in the previous section. Hence, for a standard 440hz A on a PAL machine the actual calculation simply looks like this:
 
-17,02841924 * 440 = 7493 (or $1D45 in hex)
+	17,02841924 * 440 = 7493 (or $1D45 in hex)
 
 Hence, if we feed the 16bit SID frequency register with 7493 (or $1D45 if we write the values in hexadecimal instead of decimal) on a PAL machine, we will get the standard A.
 
@@ -73,7 +77,10 @@ Hence, if we feed the 16bit SID frequency register with 7493 (or $1D45 if we wri
 
 You may wonder what is going on with that constant mentioned above, which differs between different types of machines. It is nothing less than the number of cycles in the machine in one second. It can (obviously) be calculated in this way if you don't know it already:
 
-lines_on_screen = 312; cycles_per_line = 63; framerate = 50,12454212; //This is synonymous with "frames per second" constant = lines_on_screen * cycles_per_line * framerate;
+	lines_on_screen = 312;
+	cycles_per_line = 63;
+	framerate = 50,12454212;	//This is synonymous with "frames per second"
+	constant = lines_on_screen * cycles_per_line * framerate;
 
 The example above provides the values to use on PAL c64s. Knowing this formula may be useful if you need to calculate a frequency table for a more exotic C64 than PAL machines or the NTSC machines with the common 6567R8 VIC chip. Note that the number of lines and cycles per line etc are different for NTSC machines with the 6567R56A VIC as well as the rare DREAN C64.
 

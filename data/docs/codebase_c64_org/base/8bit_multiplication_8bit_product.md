@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # General 8bit * 8bit = 8bit multiply
@@ -17,7 +17,29 @@ base:8bit_multiplication_8bit_product
 
                 # General 8bit * 8bit = 8bit multiply
 
-; General 8bit * 8bit = 8bit multiply ; by White Flame 20030207 ; Multiplies "num1" by "num2" and returns result in .A ; Instead of using a bit counter, this routine early-exits when num2 reaches zero, thus saving iterations. ; Input variables: ; num1 (multiplicand) ; num2 (multiplier), should be small for speed ; Signedness should not matter ; .X and .Y are preserved ; num1 and num2 get clobbered lda #$00 beq enterLoop doAdd: clc adc num1 loop: asl num1 enterLoop: ;For an accumulating multiply (.A = .A + num1*num2), set up num1 and num2, then enter here lsr num2 bcs doAdd bne loop end: ; 15 bytes
+; General 8bit * 8bit = 8bit multiply
+; by White Flame 20030207
+; Multiplies "num1" by "num2" and returns result in .A
+; Instead of using a bit counter, this routine early-exits when num2 reaches zero, thus saving iterations.
+; Input variables:
+;   num1 (multiplicand)
+;   num2 (multiplier), should be small for speed
+;   Signedness should not matter
+; .X and .Y are preserved
+; num1 and num2 get clobbered
+ lda #$00
+ beq enterLoop
+doAdd:
+ clc
+ adc num1
+loop:
+ asl num1
+enterLoop: ;For an accumulating multiply (.A = .A + num1*num2), set up num1 and num2, then enter here
+ lsr num2
+ bcs doAdd
+ bne loop
+end:
+; 15 bytes
 
 base/8bit_multiplication_8bit_product.txt · Last modified:  by 127.0.0.1
 

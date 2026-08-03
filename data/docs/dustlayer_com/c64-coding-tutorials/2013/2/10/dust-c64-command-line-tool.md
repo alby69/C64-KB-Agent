@@ -3,26 +3,26 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool
 category: tutorial
 topics:
-- basic
-- assembly
 - sprite programming
+- assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
+- VIC-II
 - SID
 - CPU
-- VIC-II
 related:
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
 - memory-map
 - sid-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+scraped_at: '2026-08-03'
 ---
 
 # 
@@ -60,7 +60,7 @@ I wanted to write tutorials for beginners like me and provide the code in a easy
 
 **What needs to be set up by you:**
 
-- If your OSX Version is lower than 10.7.4 you need to Install Apples XCode. With OSX Versions 10.7.4 or higher you can just download the much smaller CLI Package also provided by Apple on their [download page](https://developer.apple.com/downloads/index.action)(one time registration required).
+- If your OSX Version is lower than 10.7.4 you need to Install Apples XCode. With OSX Versions 10.7.4 or higher you can just download the much smaller CLI Package also provided by Apple on their [download page](https://developer.apple.com/downloads/index.action) (one time registration required).
 - Two small tools need to be installed, git and node.js - both are available as one click installers.
 
 
@@ -120,13 +120,13 @@ After a short while DUST is installed at your system. The installation output sh
 
 ### 4. Setup environment
 
-Now it's a matter of setting up your environment using the DUST utility. Just type **dust setup **and everything will be installed and configured to get going. You typically want to use the 'Install all'-option unless you want to use an editor other than Sublime 2.
+Now it's a matter of setting up your environment using the DUST utility. Just type **dust setup** and everything will be installed and configured to get going. You typically want to use the 'Install all'-option unless you want to use an editor other than Sublime 2.
 
 After Setup is completed, you should download a project with the command 'dust tutorials', e.g. for the [Episode 2 tutorial](https://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro) to test your setup.  You also need to select  the build system in Sublime which must be done in the Tools/Build System menu only once.
 
-Select "**c64**" for assembling 6502 code. Make sure the file **index.asm **is still the focused file in the editor and then hit **⌘ + B** to compile and execute. Vice will open and run the example. 
+Select "**c64**" for assembling 6502 code. Make sure the file **index.asm** is still the focused file in the editor and then hit **⌘ + B** to compile and execute. Vice will open and run the example. 
 
-By the way, if you do modifcations to the code, you can just hit **⌘ + B **again without closing Vice before-hand. The assemble script will take care that eventual open Vice Sessions are closed. If you want to test the basic project you need to change the build system to 'c64 basic'. Dustlayer focuses on 6502 coding though but I wanted to include support for BASIC editing and executing nevertheless.
+By the way, if you do modifcations to the code, you can just hit **⌘ + B** again without closing Vice before-hand. The assemble script will take care that eventual open Vice Sessions are closed. If you want to test the basic project you need to change the build system to 'c64 basic'. Dustlayer focuses on 6502 coding though but I wanted to include support for BASIC editing and executing nevertheless.
 
 
 The setup will eventually improve over time, update individual components or add new features. Updating will be very simply using a single npm command. I hope this tool lifts a lot of work from anyone who want to kickstart on C64 development on Mac OSX.

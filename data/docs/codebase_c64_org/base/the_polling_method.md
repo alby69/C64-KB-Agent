@@ -11,13 +11,13 @@ hardware:
 - VIC-II
 - SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- sprite-programming
+- music-player
+- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -31,7 +31,9 @@ Let's examplify this with polling the raster beam. We know $D012 contains lower 
 
 Consider the following code:
 
-lda #$30 cmp $d012 bne *-3
+lda #$30
+cmp $d012
+bne *-3
 
 Since each loop here takes 7 cycles we'll have a jitter of up to 7 cycles. I.e. after the `bne` the beam will be on cycle 2-9.
 

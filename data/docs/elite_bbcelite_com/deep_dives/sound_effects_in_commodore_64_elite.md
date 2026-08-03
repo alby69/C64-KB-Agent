@@ -3,29 +3,29 @@ title: Sound effects in Commodore 64 Elite
 source_url: https://elite.bbcelite.com/deep_dives/sound_effects_in_commodore_64_elite.html
 category: deep-dive
 topics:
-- assembly
-- sound generation
 - raster interrupts
+- sound generation
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Sound effects in Commodore 64 Elite
@@ -40,7 +40,8 @@ The sound effects on the Commodore 64 version are noticeably better than on the 
 
 													 -----------------
 
-						The BBC Micro defines just [four sound envelopes](https://elite.bbcelite.com/cassette/loader/variable/e_per_cent.html) for the whole game, which uses a total of ten different sounds, as defined in the [SFX](https://elite.bbcelite.com/cassette/main/variable/sfx.html) table. The Commodore 64 version bumps this up to 16 sound effects, as follows:
+						
+The BBC Micro defines just [four sound envelopes](https://elite.bbcelite.com/cassette/loader/variable/e_per_cent.html) for the whole game, which uses a total of ten different sounds, as defined in the [SFX](https://elite.bbcelite.com/cassette/main/variable/sfx.html) table. The Commodore 64 version bumps this up to 16 sound effects, as follows:
 						
 
 | # | Variable | Description | 
@@ -64,7 +65,8 @@ The sound effects on the Commodore 64 version are noticeably better than on the 
 
 The variables can be passed in the Y register to the [NOISE](https://elite.bbcelite.com/c64/main/subroutine/noise.html) routine to make the specified sound effect, so this is how we can make the sound of the E.C.M. starting up, for example:
 
-LDY #sfxecm JSR NOISE
+  LDY #sfxecm
+  JSR NOISE
 
 Associated with the sound effects are a number of SFX tables, each of which contributes an aspect of each sound effect.
 

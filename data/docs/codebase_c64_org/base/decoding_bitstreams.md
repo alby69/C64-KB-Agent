@@ -3,30 +3,30 @@ title: Decoding bitstreams for fun and profit
 source_url: https://codebase.c64.org/doku.php?id=base%3Adecoding_bitstreams
 category: manual
 topics:
-- sprite programming
 - memory management
+- sprite programming
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- BASIC ROM
 - KERNAL
-- CIA
-- SID
 - CPU
+- SID
+- CIA
+- BASIC ROM
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Decoding bitstreams for fun and profit
@@ -276,8 +276,8 @@ Such decision trees are usually implemented explicitly, as code. But for large t
 
 In each node of the flowchart above, we first fetch a bitfield (possibly of size zero), and then either:
 
-- Branch to a different node, or
-- Add a constant and return.
+1. Branch to a different node, or
+2. Add a constant and return.
 
 It is time to introduce another decoding trick! So far, the field specifiers (what we put in A prior to calling getfield) have consisted of a number of zeros followed by a single set bit. But the remaining bits have no purpose yet, and they will be available in A when getfield returns, shifted into a position immediately to the left of the fetched bits.
 

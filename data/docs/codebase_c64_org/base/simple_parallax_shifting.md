@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -30,7 +30,8 @@ This effect can be seen in numerous games (e.g. Bounder, Parallax, Marauder etc.
 
 Example 2×2 tile with chars A, B, C, and D.
 
-AB CD
+AB
+CD
 
 To make this tile scroll left/right or up/down four shifting routines are necessary.
 
@@ -40,11 +41,36 @@ In mc-mode these loops have to be called twice per frame.
 
 Scroll tile to the left
 
-ldx #$00 loop1: lda charB,x ;bit7 charB -> carry asl rol charA,x ;carry -> bit0 charA rol charB,x ;bit7 charA -> bit0 charB lda charC,x ;same here with C and D asl rol charD,x rol charC,x inx cpx #$08 bne loop1 rts
+		ldx #$00
+loop1:		lda charB,x		;bit7 charB -> carry
+		asl				
+		rol charA,x		;carry -> bit0 charA
+		rol charB,x		;bit7 charA -> bit0 charB
+		lda charC,x		;same here with C and D
+		asl
+		rol charD,x
+		rol charC,x
+		inx
+		cpx #$08
+		bne loop1
+		rts
 
 Scroll tile to the right
 
-ldx #$00 loop2: lda charA,x ;bit0 charA -> carry lsr ror charB,x ;carry -> bit7 charB ror charA,x ;bit0 charB -> bit7 charA lda charC,x ;same here with C and D lsr ror charD,x ror charC,x inx cpx #$08 bne loop2 rts
+			
+		ldx #$00
+loop2:		lda charA,x		;bit0 charA -> carry
+		lsr				
+		ror charB,x		;carry -> bit7 charB
+		ror charA,x		;bit0 charB -> bit7 charA
+		lda charC,x		;same here with C and D
+		lsr
+		ror charD,x
+		ror charC,x
+		inx
+		cpx #$08
+		bne loop2
+		rts
 
 ## 2. Shifting bytes up/down
 

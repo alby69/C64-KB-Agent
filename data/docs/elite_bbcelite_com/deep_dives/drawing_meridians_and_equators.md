@@ -3,8 +3,8 @@ title: Drawing meridians and equators
 source_url: https://elite.bbcelite.com/deep_dives/drawing_meridians_and_equators.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
@@ -13,10 +13,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Drawing meridians and equators
@@ -27,7 +27,7 @@ For those of us who played the original Elite back in 1984, it's hard to underst
 
 ![The launch view of Lave in BBC Micro Elite](https://elite.bbcelite.com/images/ellipses/lave.png) 
 
-						Back in those days, most of the curve-drawing code you'd see on your 8-bit home computer would run at the speed of the Owlet demo in the deep dive on [drawing ellipses](https://elite.bbcelite.com/drawing_ellipses.html); graphics programs generally ran slowly enough that you could almost hear the computer thinking. To suddenly see a fully animated projection of a genuinely 3D planet appear on-screen, rotating away... well, that was a genuine "wow" moment.
+Back in those days, most of the curve-drawing code you'd see on your 8-bit home computer would run at the speed of the Owlet demo in the deep dive on [drawing ellipses](https://elite.bbcelite.com/drawing_ellipses.html); graphics programs generally ran slowly enough that you could almost hear the computer thinking. To suddenly see a fully animated projection of a genuinely 3D planet appear on-screen, rotating away... well, that was a genuine "wow" moment.
 
 In this deep dive we take a look at how planet meridians and equators are calculated and drawn by [part 2 of the PL9 routine](https://elite.bbcelite.com/cassette/main/subroutine/pl9_part_2_of_3.html), but first let's take a quick look at the two different planet types.
 
@@ -35,7 +35,8 @@ In this deep dive we take a look at how planet meridians and equators are calcul
 
 													 ------------
 
-						In the BBC version of Elite, planets come in two types - those with meridians and equators (like Lave, as shown above), and those with craters (like Diso and Leesti, as shown in the deep dive on [drawing craters](https://elite.bbcelite.com/drawing_craters.html)).
+						
+In the BBC version of Elite, planets come in two types - those with meridians and equators (like Lave, as shown above), and those with craters (like Diso and Leesti, as shown in the deep dive on [drawing craters](https://elite.bbcelite.com/drawing_craters.html)).
 
 The planet's type depends on its tech level, and it is set in the [SOS1](https://elite.bbcelite.com/cassette/main/subroutine/sos1.html) routine that creates the planet's ship data block. Each system has a procedurally generated tech level in the range 0 to 14, which is incremented by the [TT25](https://elite.bbcelite.com/cassette/main/subroutine/tt25.html) routine to give a final on-screen tech level in the range 1 to 15 (see the deep dive on [generating system data](https://elite.bbcelite.com/generating_system_data.html) for details). The rule is simple: if bit 1 of the generated tech level (0 to 14) is clear then the planet has a meridian and an equator, otherwise it has a crater.
 
@@ -45,7 +46,8 @@ This means that planets with a generated tech level ending in %00 or %01 will ha
 
 													 ----------------------------
 
-						When trying to understand how planets like Lave are drawn, the first question you might ask yourself is: what kind of 2D geometric objects *are* these projected meridians and equators? Are they arcs, or something else? We know that in 3D, an equator is a great circle of a sphere, while the front portion that we can see is a 3D great arc. In Elite, the 2D projection of this 3D great arc is so convincing that perhaps our brain is being tricked into believing that the 2D curves are also arcs?
+						
+When trying to understand how planets like Lave are drawn, the first question you might ask yourself is: what kind of 2D geometric objects *are* these projected meridians and equators? Are they arcs, or something else? We know that in 3D, an equator is a great circle of a sphere, while the front portion that we can see is a 3D great arc. In Elite, the 2D projection of this 3D great arc is so convincing that perhaps our brain is being tricked into believing that the 2D curves are also arcs?
 
 It turns out that in 2D, they are actually half-ellipses, which we can verify if we also draw in the back half of each ellipse (shown as dotted lines in the following):
 
@@ -55,15 +57,16 @@ It turns out that in 2D, they are actually half-ellipses, which we can verify if
 
 ![A planet showing great arcs as full ellipses](https://elite.bbcelite.com/images/meridians/b_half_ellipse.png) 
 
-						## 3D projection of meridians
+## 3D projection of meridians
 
 													 --------------------------
 
-						The way that we calculate and draw these half-ellipses uses much of the same mathematics as the projection of craters into ellipses (see the deep dive on [drawing craters](https://elite.bbcelite.com/drawing_craters.html) for details). This approach relies intimately on the way that ellipses are drawn in Elite. The key differences between meridians and craters are as follows:
+						
+The way that we calculate and draw these half-ellipses uses much of the same mathematics as the projection of craters into ellipses (see the deep dive on [drawing craters](https://elite.bbcelite.com/drawing_craters.html) for details). This approach relies intimately on the way that ellipses are drawn in Elite. The key differences between meridians and craters are as follows:
 
-- The meridian ellipses are centred on the centre of the planet (unlike the craters, which are centred 0.87 of the way along the roofv vector from the planet's centre).
-- The diameters of the meridians are the same as the diameter of the planet (unlike craters, which are half the diameter).
-- Only half-ellipses are drawn for meridians (unlike craters, which are full ellipses).
+1. The meridian ellipses are centred on the centre of the planet (unlike the craters, which are centred 0.87 of the way along the roofv vector from the planet's centre).
+2. The diameters of the meridians are the same as the diameter of the planet (unlike craters, which are half the diameter).
+3. Only half-ellipses are drawn for meridians (unlike craters, which are full ellipses).
 
 As with the crater routine, the 2D projection uses the x and y components of the nosev, sidev and roofv vectors (see the deep dive on [orientation vectors](https://elite.bbcelite.com/orientation_vectors.html) for more about these vectors). The usual ship-rotation code is used to rotate these three vectors, which makes the planet spin; this rotation process is described in the deep dive on [pitching and rolling by a fixed angle](https://elite.bbcelite.com/deep_dives/pitching_and_rolling_by_a_fixed_angle.html).
 
@@ -75,11 +78,12 @@ The ellipses are projected into 2D using an orthographic projection, using the x
 
 ![A planet showing the projection of the ellipses into 2D](https://elite.bbcelite.com/images/meridians/b_planet_meridians2.gif) 
 
-						As discussed in the deep dive on [drawing ellipses](https://elite.bbcelite.com/drawing_ellipses.html), an ellipse in Elite is defined by a centre point, and a pair of conjugate-radius vectors, u and v.
+As discussed in the deep dive on [drawing ellipses](https://elite.bbcelite.com/drawing_ellipses.html), an ellipse in Elite is defined by a centre point, and a pair of conjugate-radius vectors, u and v.
 
 For any meridian, the centre of the on-screen half-ellipse, in pixel coordinates, is given by the following:
 
-x = K3(1 0) = pixel x-coordinate of planet centre y = K4(1 0) = pixel y-coordinate of planet centre
+  x  =  K3(1 0)  =  pixel x-coordinate of planet centre
+  y  =  K4(1 0)  =  pixel y-coordinate of planet centre
 
 For meridian 1 of the planet, the conjugate-radius vectors are calculated as follows (where z is the z-coordinate of the planet's centre):
 
@@ -89,9 +93,10 @@ For meridian 1 of the planet, the conjugate-radius vectors are calculated as fol
   v = [ (XX16+2 K2+2) ] = [ roofv_x / z ]
       [ (XX16+3 K2+3) ]   [ roofv_y / z ]
 ```
-						The start angle of the ellipse (which we discuss in detail in the next section), is given by:
+						
+The start angle of the ellipse (which we discuss in detail in the next section), is given by:
 
-CNT2 = arctan(-nosev_z_hi / roofv_z_hi) / 4
+  CNT2 = arctan(-nosev_z_hi / roofv_z_hi) / 4
 
 The results of the above calculations in K3, K4, XX16 and K2 are passed as arguments to the [PLS22](https://elite.bbcelite.com/cassette/main/subroutine/pls22.html) routine, which draws the ellipse. The argument TGT is set to 32, which tells the ellipse routine to plot a half-ellipse with these details. In the animation above, this first meridian is the curve that lies in the plane spanned by the green and red vectors (nosev and roofv).
 
@@ -101,7 +106,8 @@ Meridian 2 is plotted in exactly the same way as meridian 1, but sidev replaces 
 
 													 ------------------------------------------
 
-						For the meridian to look convincing, the half-ellipse needs to start and end at a point that touches the planet's outer circle (i.e. the point X in the diagram below). This means calculating the starting angle, theta, shown here:
+						
+For the meridian to look convincing, the half-ellipse needs to start and end at a point that touches the planet's outer circle (i.e. the point X in the diagram below). This means calculating the starting angle, theta, shown here:
 
 ![A planet showing the starting angle theta](https://elite.bbcelite.com/images/meridians/w_ellipse_theta.png)
 
@@ -109,21 +115,22 @@ Meridian 2 is plotted in exactly the same way as meridian 1, but sidev replaces 
 
 ![A planet showing the starting angle theta](https://elite.bbcelite.com/images/meridians/b_ellipse_theta.png) 
 
-						Since ellipses are drawn starting from the end of the u (green) vector, and are swept out anti-clockwise through the end of the v (red) vector and beyond, we need to know the angle theta in order to calculate the point at which to start plotting our half-ellipse. Note, however, that theta is not a true angle, but is the argument used in the parametric equation that we use to plot ellipses (see the deep dive on [drawing ellipses](https://elite.bbcelite.com/drawing_ellipses.html) for details of this equation).
+Since ellipses are drawn starting from the end of the u (green) vector, and are swept out anti-clockwise through the end of the v (red) vector and beyond, we need to know the angle theta in order to calculate the point at which to start plotting our half-ellipse. Note, however, that theta is not a true angle, but is the argument used in the parametric equation that we use to plot ellipses (see the deep dive on [drawing ellipses](https://elite.bbcelite.com/drawing_ellipses.html) for details of this equation).
 
 In [part 2 of the PL9 routine](https://elite.bbcelite.com/cassette/main/subroutine/pl9_part_2_of_3.html), the calculation of theta is accomplished using the arctan expression above, which is repeated here:
 
-CNT2 = arctan(-nosev_z_hi / roofv_z_hi) / 4
+  CNT2 = arctan(-nosev_z_hi / roofv_z_hi) / 4
 
 This arctan expression calculates the value of theta that makes the point on the ellipse touch the outer circle (i.e. the theta that gives us point X in the diagram above). Equivalently, it calculates the value of theta that makes the length of this vector equal to 1:
 
-[ x ] = [ u_x ] * cos(theta) + [ v_x ] * sin(theta) [ y ] [ u_y ] [ v_y ]
+  [ x ]  =  [ u_x ] * cos(theta)  +  [ v_x ] * sin(theta)
+  [ y ]     [ u_y ]                  [ v_y ]
 
 (This assumes that u and v are three-dimensional normalised unit vectors, i.e. normalised versions of nosev and roofv.)
 
 To derive the arctan expression, we need to solve the above equation (i.e. solve the 2D dot product [x y].[x y] = 1), and also use the fact that u and v are both 3-dimensional unit vectors (i.e. solve the 3D dot products u.u = 1 and v.v = 1) and are perpendicular to each other (i.e. solve u.v = 0 in 3D). Solving this system of four simultaneous equations yields the solution:
 
-theta = atan2(-u_z, v_z)
+  theta = atan2(-u_z, v_z)
 
 Obtaining this solution takes approximately a page of algebra, using trigonometric double-angle formulae. The solution is omitted here, but is solvable by someone with UK A-level mathematics trigonometry skills.
 
@@ -131,7 +138,8 @@ Obtaining this solution takes approximately a page of algebra, using trigonometr
 
 													 ----------------
 
-						In the above, we make use of the atan2 function, which is commonly used in computer languages (see the [Wikipedia entry on atan2](https://en.wikipedia.org/wiki/Atan2) for details). The use of atan2 more elegantly explains the "with opposite sign to nosev_z_hi" condition which appears in the original Elite code. It also avoids explicitly dividing u_z by v_z, which could result is a division-by-zero error; the [ARCTAN](https://elite.bbcelite.com/cassette/main/subroutine/arctan.html) routine also takes care to avoid a division by zero.
+						
+In the above, we make use of the atan2 function, which is commonly used in computer languages (see the [Wikipedia entry on atan2](https://en.wikipedia.org/wiki/Atan2) for details). The use of atan2 more elegantly explains the "with opposite sign to nosev_z_hi" condition which appears in the original Elite code. It also avoids explicitly dividing u_z by v_z, which could result is a division-by-zero error; the [ARCTAN](https://elite.bbcelite.com/cassette/main/subroutine/arctan.html) routine also takes care to avoid a division by zero.
 
 It is perhaps surprising that the atan2 expression above relies on the z components of u and v (i.e. the z components of nosev and roofv), but the ellipse itself is drawn with the x and y components of u and v. This all comes out of the linked system of four equations that connect the x and y components with the z components. Perhaps there is a more elegant geometric explanation for why this all works, other than relying on algebraically solving a system of four equations?
 

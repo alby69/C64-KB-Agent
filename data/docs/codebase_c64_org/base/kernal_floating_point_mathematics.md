@@ -3,32 +3,30 @@ title: Floating Point Math
 source_url: https://codebase.c64.org/doku.php?id=base%3Akernal_floating_point_mathematics
 category: manual
 topics:
+- memory management
 - basic
 - sprite programming
-- memory management
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
 - CIA
-- BASIC ROM
 - KERNAL
+- BASIC ROM
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Floating Point Math
-
-### Table of Contents
 
 # Floating Point Math
 
@@ -37,15 +35,15 @@ scraped_at: '2026-07-27'
 
 Floating point numbers are stored with 5 bytes. The first byte is the exponent, stored in excess $80 format (E = E - $80). Second byte holds the sign of the mantissa in its uppermost bit. The normalized mantissa (0 =< M < 1) is assumed to have a leading 1, and the following bits hold the fraction. If the exponent is 0, the number is interpreted as 0 regardless of the contents of the mantissa.
 
-81 00 00 00 00 =   1 =  21 x %1.000…
+81 00 00 00 00 =   1 =  2<sup>1</sup> x %1.000…
 
-82 00 00 00 00 =   2 =  22 x %1.000…
+82 00 00 00 00 =   2 =  2<sup>2</sup> x %1.000…
 
-82 80 00 00 00 =  -2 =-(22 x %1.000…)
+82 80 00 00 00 =  -2 =-(2<sup>2</sup> x %1.000…)
 
-81 40 00 00 00 = 1.5 =  21 x %1.100…
+81 40 00 00 00 = 1.5 =  2<sup>1</sup> x %1.100…
 
-82 40 00 00 00 =  3  =  22 x %1.100…
+82 40 00 00 00 =  3  =  2<sup>2</sup> x %1.100…
 
 
 As you can see, multiplying or dividing a FP number by 2 is as easy as increasing or decreasing the exponent. When these numbers are brought to the ZP for use in the FP routines, the sign is extracted and replaced with the previously assumed 1, and the sign is stored in a separate byte.
@@ -237,7 +235,7 @@ This returns the natural log of FAC1 in FAC1. The FAC1 can not be negative or ze
 
 ### 5.2 EXP / e^x
 
-**$bfed** = Returns e raised to the power of FAC1. (ex : e = 2.718281828) 
+**$bfed** = Returns e raised to the power of FAC1. (e<sup>x</sup> : e = 2.718281828) 
 
 The opposite of log, i.e. log(exp(5)) = exp(log(5)) = 5, though the routine lacks the accuracy for this to always be true. Calculated using a series.
 
@@ -245,7 +243,7 @@ The opposite of log, i.e. log(exp(5)) = exp(log(5)) = 5, though the routine lack
 
 **$bf7b** = FAC2 raised to the power of FAC1 (FAC2^FAC1)
 
-This routine uses the formula exp(x*log(y)) to calculate yx, so it calculates two series (log and exp). It is slow and not entirely accurate. For whole number powers, it is often quicker and more accurate to use a series of multiplies.
+This routine uses the formula exp(x*log(y)) to calculate y<sup>x</sup>, so it calculates two series (log and exp). It is slow and not entirely accurate. For whole number powers, it is often quicker and more accurate to use a series of multiplies.
 
 ### 5.4 Square Root
 
@@ -285,7 +283,9 @@ The above process is basically what the KERNAL authors did to implement the 24 b
 
 You can take advantage of their work with the following pair of calls to convert a 24 bit unsigned integer held in YXA:
 
-sec jsr $af87 ; sets mantissa to 00yyxxaa jsr $af7e ; set rest of FAC1 and JMP to $b8d2
+  sec
+  jsr $af87  ; sets mantissa to 00yyxxaa
+  jsr $af7e  ; set rest of FAC1 and JMP to $b8d2
 
 ### 7.4 String to FP
 
@@ -307,49 +307,208 @@ These routines are called often, and move data around in memory using indirect i
 
 In cases where you are simply squaring or cubing a number, simply multiplying them together is faster than relying on the exponent routines, which uses log and exp. Larger, whole-number exponents can also be calculated using [exponentiation by squaring](https://en.wikipedia.org/wiki/Exponentiation_by_squaring). For example: 
 
-x4 =(x2)2
+x<sup>4</sup> =(x<sup>2</sup>)<sup>2</sup>
 
-x8 =( (x2)2)2
+x<sup>8</sup> =( (x<sup>2</sup>)<sup>2</sup>)<sup>2</sup>
 
-x16 =( ( (x2)2)2)2
+x<sup>16</sup> =( ( (x<sup>2</sup>)<sup>2</sup>)<sup>2</sup>)<sup>2</sup>
 
-Using the additive law of exponents many combinations are possible, i.e. x21 = x(x4(x16)). From assembly, collecting the values needed for each term in sequence means that once you've calculated x4, you're only two more multiplications away from the highest term. Four multiplications get you to x16, followed by three more to multiply the collected terms. The result is seven multiplies. At this point the built-in routine would be less than halfway done.
+Using the additive law of exponents many combinations are possible, i.e. x<sup>21</sup> = x(x<sup>4</sup>(x<sup>16</sup>)). From assembly, collecting the values needed for each term in sequence means that once you've calculated x<sup>4</sup>, you're only two more multiplications away from the highest term. Four multiplications get you to x<sup>16</sup>, followed by three more to multiply the collected terms. The result is seven multiplies. At this point the built-in routine would be less than halfway done.
 
 ## Faster Log and Exp
 
-Logarithms can be calculated without expensive multiplies through a shift-and-add method. ([Source: The "FXTbook" www.jjj.de/fxt](http://www.jjj.de/fxt/)) First a table needs to be generated. The number of terms in the table will determine the accuracy of the result. 20 iterations gets 7 digits of accuracy. For the table f(a) = logn(1+1/2a). In the BASIC example, the built-in log is loge.
+Logarithms can be calculated without expensive multiplies through a shift-and-add method. ([Source: The "FXTbook" www.jjj.de/fxt](http://www.jjj.de/fxt/)) First a table needs to be generated. The number of terms in the table will determine the accuracy of the result. 20 iterations gets 7 digits of accuracy. For the table f(a) = log<sub>n</sub>(1+1/2<sup>a</sup>). In the BASIC example, the built-in log is log<sub>e</sub>.
 
-5 dim t(20) 10 for a=1 to 20 15 t(a) = log(1+(1/(2^a))) 20 next 99 k=0:r=0:e=1:v=1:x=8 100 k=k+1:if k=20 goto 200 105 v=v*.5 110 u=e+e*v 115 if u>x goto 100 120 r=r+t(k) 125 e=u:goto 110 200 print r 205 print log(x)
+5 dim t(20)
+10 for a=1 to 20
+15 t(a) = log(1+(1/(2^a)))
+20 next
+99 k=0:r=0:e=1:v=1:x=8
+100 k=k+1:if k=20 goto 200
+105 v=v*.5
+110 u=e+e*v
+115 if u>x goto 100
+120 r=r+t(k)
+125 e=u:goto 110
+200 print r
+205 print log(x)
 
 The output is:
 
-2.07944107 2.07944154
+2.07944107
+2.07944154
 
 The assembly version, presuming the table is already made:
 
-input !byte $84,00,00,00,00 ;Floating Point 8 var_u !byte $00,00,00,00,00 var_e !byte $00,00,00,00,00 var_v !byte $00,00,00,00,00 var_re !byte $00,00,00,00,00 tempcount !byte 0 lda #<$c000-5 ;assume table at $c000 sta $fc lda #>$c000-5 sta $fb lda #21 sta tempcount lda #0 sta var_re sta var_e+1 sta var_e+2 sta var_e+3 sta var_e+4 sta var_v+1 sta var_v+2 sta var_v+3 sta var_v+4 lda #$81 sta var_e sta var_v ;the above loads e and v with 1, and re with 0 logloop dec tempcount beq logdone lda #5 clc adc $fb sta $fb lda #0 adc $fc sta $fc dec var_v ;/2 inlogloop lda #<var_e ldy #>var_e jsr VARtoFAC jsr FACtoARG sec ;returns with exponent sbc var_v ;get difference sta $fd ;temp lda $61 ;FAC1 exp sec sbc $fd sta $61 ;(e*v) division that is always a power of two ;a.k.a. exponent subtraction jsr addf ;e+(e*v) ldx #<var_u ldy #>var_u jsr FACtoVAR lda #<input ldy #>input jsr FACcmp bne logloop lda $fb ldy $fc jsr VARtoFAC lda #<var_re ldy #>var_re ;r=r+t(x) jsr add ldx #<var_re ldy #>var_re jsr FACtoVAR lda var_u+0 ;e=u sta var_e+0 lda var_u+1 sta var_e+1 lda var_u+2 sta var_e+2 lda var_u+3 sta var_e+3 lda var_u+4 sta var_e+4 jmp inlogloop logdone rts
+input	!byte $84,00,00,00,00 ;Floating Point 8
+var_u	!byte $00,00,00,00,00
+var_e	!byte $00,00,00,00,00
+var_v	!byte $00,00,00,00,00
+var_re	!byte $00,00,00,00,00
+tempcount !byte 0
+ 
+ 
+        lda #<$c000-5	;assume table at $c000
+	sta $fc
+	lda #>$c000-5
+	sta $fb
+ 
+	lda #21
+	sta tempcount
+	lda #0
+	sta var_re
+	sta var_e+1
+	sta var_e+2
+	sta var_e+3
+	sta var_e+4
+	sta var_v+1
+	sta var_v+2
+	sta var_v+3
+	sta var_v+4
+	lda #$81
+	sta var_e
+	sta var_v
+ 
+	;the above loads e and v with 1, and re with 0
+ 
+logloop	dec tempcount
+	beq logdone
+	lda #5
+	clc
+	adc $fb
+	sta $fb
+	lda #0
+	adc $fc
+	sta $fc
+	dec var_v	;/2
+inlogloop
+	lda #<var_e
+	ldy #>var_e
+	jsr VARtoFAC
+	jsr FACtoARG
+	sec		;returns with exponent
+	sbc var_v	;get difference
+	sta $fd		;temp
+	lda $61		;FAC1 exp
+	sec
+	sbc $fd
+	sta $61		;(e*v) division that is always a power of two
+			;a.k.a. exponent subtraction
+	jsr addf	;e+(e*v)
+	ldx #<var_u
+	ldy #>var_u
+	jsr FACtoVAR        
+	lda #<input
+	ldy #>input
+	jsr FACcmp
+	bne logloop
+	lda $fb
+	ldy $fc
+	jsr VARtoFAC
+	lda #<var_re
+	ldy #>var_re	;r=r+t(x)
+	jsr add
+	ldx #<var_re
+	ldy #>var_re
+	jsr FACtoVAR
+	lda var_u+0	;e=u
+	sta var_e+0
+	lda var_u+1
+	sta var_e+1
+	lda var_u+2
+	sta var_e+2
+	lda var_u+3
+	sta var_e+3
+	lda var_u+4
+	sta var_e+4
+	jmp inlogloop
+logdone	
+	rts
 
 This executes in around 13000 cycles, where the built-in routine takes 19000. Putting var_e and var_u on the ZP is worthwhile. Because we are only using the addition routines, a good amount of the ZP is opened up.
 
 The shift-and-add Exp algorithm uses the same table as our new Log routine.
 
 
-299 k=0:r=0:e=1:v=1:x=8 300 k=k+1:if k=20 goto 400 305 v=v*.5 310 u=r+t(k) 315 if u>x goto 300 320 r=u 325 e=e+e*v:goto 310 400 print e 405 print exp(x)
+299 k=0:r=0:e=1:v=1:x=8
+300 k=k+1:if k=20 goto 400
+305 v=v*.5
+310 u=r+t(k)
+315 if u>x goto 300
+320 r=u
+325 e=e+e*v:goto 310
+400 print e
+405 print exp(x)
 
 Output:
 
-2980.95568 2980.95799
+2980.95568
+2980.95799
 
 Doing log(exp(8)) = 7.99999624
 
 
-If we do exponentiation with our new routines like the Kernal does (yx = exp(x*log(y))) for 88 we get 16777148.6, while the true value is 16777224.
+If we do exponentiation with our new routines like the Kernal does (y<sup>x</sup> = exp(x*log(y))) for 8<sup>8</sup> we get 16777148.6, while the true value is 16777224.
 
 ## Faster Square Root
 
 The standard square root, puts .5 into the exponent and drops into the exponentiation routine. This quicker (and more accurate) version was published in *Transactor* Issue 8.1, and was written by E.J. Schmahl. Rather than a series, it uses Newton's Method to fine tune a first guess based on the exponent. Two temporary FP areas are used. The root is returned in FAC1 and in the result variable. The routine works directly on the variables, so a small speed increase results if these are located on the ZP.
 
-sqrt ldx #<value ldy #>value jsr FACtoVAR lda value+1 bmi error ;no negative square root lda value beq done ;root of 0 is 0 ldy #$00 ;fill temp result with 0 sty result+1 sty result+2 sty result+3 sty result+4 lda value ;get guess based on argument clc ror bcs sqrtadd ldx #$80 stx result+1 sqrtadd adc #$40 sta result lda value+1 ora result+1 lsr lsr lsr lsr tax lda sqrttable,x sta result+1 lda #04 ;4 iterations of newton's method sta $fb lda #<result ldy #>result jsr VARtoFAC - lda #<value ldy #>value jsr div lda #<result ldy #>result jsr add dec $61 ldx #<result ldy #>result jsr FACtoVAR dec $fb bne - done rts error rts sqrttable !byte 03,11,18,25,32,38,44,50 !byte 58,69,79,89,98,107,115,123
+sqrt	ldx #<value
+	ldy #>value
+	jsr FACtoVAR
+	lda value+1
+	bmi error	;no negative square root
+	lda value
+	beq done	;root of 0 is 0
+ 
+	ldy #$00	;fill temp result with 0
+	sty result+1
+	sty result+2
+	sty result+3
+	sty result+4
+ 
+	lda value	;get guess based on argument
+        clc
+	ror
+	bcs sqrtadd
+	ldx #$80
+	stx result+1
+sqrtadd adc #$40
+	sta result
+	lda value+1
+	ora result+1
+	lsr
+	lsr
+	lsr
+	lsr
+	tax
+	lda sqrttable,x
+	sta result+1
+	lda #04		;4 iterations of newton's method
+	sta $fb
+	lda #<result
+	ldy #>result
+	jsr VARtoFAC
+-	lda #<value
+	ldy #>value
+	jsr div
+	lda #<result
+	ldy #>result
+	jsr add
+	dec $61
+	ldx #<result
+	ldy #>result
+	jsr FACtoVAR
+	dec $fb
+	bne -
+done	rts
+ 
+error	rts
+ 
+sqrttable
+	!byte 03,11,18,25,32,38,44,50
+	!byte 58,69,79,89,98,107,115,123
 
 # Error Handling
 

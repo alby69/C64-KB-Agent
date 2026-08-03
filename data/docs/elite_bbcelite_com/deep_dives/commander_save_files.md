@@ -3,8 +3,8 @@ title: Commander save files
 source_url: https://elite.bbcelite.com/deep_dives/commander_save_files.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Commander save files
@@ -23,13 +23,14 @@ Elite maintains two separate copies of your commander's status in memory. The cu
 
 ![The disc access menu in BBC Micro disc Elite](https://elite.bbcelite.com/images/disc/disk_access_menu.png) 
 
-						To save a commander file, Elite simply saves the block of memory between NA%+8 and CHK (the first 8 bytes of NA% contain the commander name and a carriage return, which isn't saved as part of the file, but is used as the filename). Before doing the save, it calculates two checksums and puts them in CHK and CHK2, to make it harder to for crackers to manipulate commander files manually, and then it just saves out that clock of memory. In the Commodore 64 and Apple II versions, it also calculates a third checksum and puts it into CHK3. Let's take a look at the format of this saved file.
+To save a commander file, Elite simply saves the block of memory between NA%+8 and CHK (the first 8 bytes of NA% contain the commander name and a carriage return, which isn't saved as part of the file, but is used as the filename). Before doing the save, it calculates two checksums and puts them in CHK and CHK2, to make it harder to for crackers to manipulate commander files manually, and then it just saves out that clock of memory. In the Commodore 64 and Apple II versions, it also calculates a third checksum and puts it into CHK3. Let's take a look at the format of this saved file.
 
 ## The save file format
 
 													 --------------------
 
-						Each commander file is exactly 256 bytes long, though only the first 75 (&4B) bytes contain any data (the rest are zeroed out). Those 75 bytes are shown in the table below, along with links to the relevant variables in the current commander data block, and the corresponding value in the default JAMESON commander from when you start a brand new game.
+						
+Each commander file is exactly 256 bytes long, though only the first 75 (&4B) bytes contain any data (the rest are zeroed out). Those 75 bytes are shown in the table below, along with links to the relevant variables in the current commander data block, and the corresponding value in the default JAMESON commander from when you start a brand new game.
 
 Note that the NES version of Elite has a slightly different file structure to the following and encrypts its save files differently; see the [NA2%](https://elite.bbcelite.com/nes/bank_6/variable/na2_per_cent.html) variable for the file structure, and the [SaveLoadCommander](https://elite.bbcelite.com/nes/bank_6/subroutine/saveloadcommander.html) routine for the encryption.
 
@@ -48,7 +49,7 @@ Note that the NES version of Elite has a slightly different file structure to th
 | #17 | &11 | [LASER+1](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#laser) | Rear laser | 0 | 
 | #18 | &12 | [LASER+2](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#laser) | Left laser | 0 | 
 | #19 | &13 | [LASER+3](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#laser) | Right laser | 0 | 
-| #20-21 | &14-&15 | These two bytes are unused (they were originally used for up/down lasers, but they were dropped) | 0 | |
+| #20-21 | &14-&15 |  | These two bytes are unused (they were originally used for up/down lasers, but they were dropped) | 0 | 
 | #22 | &16 | [CRGO](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#crgo) | Cargo capacity | 22 | 
 | #23 | &17 | [QQ20+0](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#qq20) | Amount of Food in cargo hold | 0 | 
 | #24 | &18 | [QQ20+1](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#qq20) | Amount of Textiles in cargo hold | 0 | 
@@ -74,7 +75,7 @@ Note that the NES version of Elite has a slightly different file structure to th
 | #44 | &2C | [DKCMP](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#dkcmp) | Docking computer | 0 | 
 | #45 | &2D | [GHYP](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#ghyp) | Galactic hyperdrive | 0 | 
 | #46 | &2E | [ESCP](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#escp) | Escape pod | 0 | 
-| #47-50 | &2F-&32 | These four bytes are unused | 0 | |
+| #47-50 | &2F-&32 |  | These four bytes are unused | 0 | 
 | #51 | &33 | [NOMSL](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#nomsl) | Number of missiles | 3 | 
 | #52 | &34 | [FIST](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#fist) | Legal status ("fugitive/innocent status") | 0 | 
 | #53 | &35 | [AVL+0](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#avl) | Market availability of Food | 16 | 

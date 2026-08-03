@@ -3,21 +3,21 @@ title: Drawing explosion clouds
 source_url: https://elite.bbcelite.com/deep_dives/drawing_explosion_clouds.html
 category: deep-dive
 topics:
-- sprite programming
 - assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
 - CPU
+- VIC-II
 related:
-- raster-interrupts
-- sprite-programming
 - kernal-routines
+- sprite-programming
 - memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Drawing explosion clouds
@@ -49,10 +49,10 @@ The process for drawing explosion clouds is as follows:
 - Set the cloud size to cloud counter / distance, so the further away the cloud, the smaller it is, and as the cloud counter ticks onward, the cloud expands
 - Use the cloud counter to determine the number of particles in each vertex cloud, so the cloud has more particles as the counter increases, until it gets past 128, after which the number decreases
 - For the first n vertices (where n is the explosion count from the ship's blueprint), do the following:
-								- Fetch the vertex coordinates from the XX3 workspace into the ship line heap
-- Seed the random number generator with four bytes from the ship line heap
-- Plot randomly placed points within the radius of the vertex, with the number of particles set above, with random sizes
- 
+								
+  - Fetch the vertex coordinates from the XX3 workspace into the ship line heap
+  - Seed the random number generator with four bytes from the ship line heap
+  - Plot randomly placed points within the radius of the vertex, with the number of particles set above, with random sizes
 
 As well as explosion clouds, the NES version draws an explosion burst, using colourful sprites to give the initial explosion a burst of yellow-orange colour in the otherwise monochrome space view. See the deep dive on [sprite usage in NES Elite](https://elite.bbcelite.com/sprite_usage_in_nes_elite.html) for details.
 

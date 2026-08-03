@@ -11,10 +11,10 @@ hardware:
 - CPU
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # A Faster Radix Sort
@@ -103,7 +103,7 @@ After the first stage, we have sixteen lists. In the second stage, we traverse t
 
 Thanks to the tail-pointer representation, concatenating two lists is easy:
 
-*tail_A = first_B
+        *tail_A = first_B
 
 To concatenate several lists, we have to start at the end and move towards the beginning of the final list:
 
@@ -313,7 +313,7 @@ join_hi:
 
 Having the actor numbers on the stack isn't all that useful. If you'd rather traverse the list during the visible portion of the display, as part of the multiplexer, simply replace all of Stage 7 by:
 
-sta next_actor
+        sta     next_actor
 
 And then, to obtain each successive actor:
 

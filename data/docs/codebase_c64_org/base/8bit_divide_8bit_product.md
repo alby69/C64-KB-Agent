@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # 8bit Divide - 8bit Result
@@ -57,13 +57,45 @@ doynax: The remainder (in the accumulator) in the fraction loop seems to overflo
 
 ### Smaller version
 
-; 8bit/8bit division ; by White Flame ; ; Input: num, denom in zeropage ; Output: num = quotient, .A = remainder lda #$00 ldx #$07 clc : rol num rol cmp denom bcc :+ sbc denom : dex bpl :-- rol num ; 19 bytes ; ; Best case = 154 cycles ; Worst case = 170 cycles ; ; With immediate denom: ; Best case = 146 cycles ; Worst case = 162 cycles ; ; Unrolled with variable denom: ; Best case = 106 cycles ; Worst case = 127 cycles ; ; Unrolled with immediate denom: ; Best case = 98 cycles ; Worst case = 111 cycles
+; 8bit/8bit division
+; by White Flame
+;
+; Input: num, denom in zeropage
+; Output: num = quotient, .A = remainder
+ lda #$00
+ ldx #$07
+ clc
+: rol num
+  rol
+  cmp denom
+  bcc :+
+   sbc denom
+: dex
+ bpl :--
+ rol num
+; 19 bytes
+;
+;  Best case  = 154 cycles
+;  Worst case = 170 cycles
+;
+; With immediate denom:
+;  Best case  = 146 cycles 
+;  Worst case = 162 cycles
+;
+; Unrolled with variable denom:
+;  Best case  = 106 cycles
+;  Worst case = 127 cycles
+;
+; Unrolled with immediate denom:
+;  Best case  =  98 cycles
+;  Worst case = 111 cycles
 
 If you don't understand what :, :–, :+ means. : is an anonymous label. bpl :–, for example, goes back two labels in the code.
 
 ## Division using tables
 
-Comes from CSDb forum ( source by… ???)
+Comes from CSDb forum (
+ source by… ???)
 
 
 ;This will divide two 8-bit numbers in some 90-150 cycles. ;The code can easily be extended to handle larger dividends.
@@ -200,7 +232,53 @@ next
 ```
 ### The init optimized (well, it packs better)
 
-r0_table .byte $01,$fd,$f9,$f5,$f1,$ed,$ea,$e6 .byte $e2,$df,$db,$d8,$d5,$d1,$ce,$cb .byte $c8,$c4,$c1,$be,$bb,$b8,$b5,$b3 .byte $b0,$ad,$aa,$a7,$a5,$a2,$9f,$9d .byte $9a,$98,$95,$93,$90,$8e,$8b,$89 .byte $87,$84,$82,$80,$7e,$7b,$79,$77 .byte $75,$73,$71,$6f,$6d,$6b,$69,$67 .byte $65,$63,$61,$5f,$5d,$5b,$59,$58 .byte $56,$54,$52,$51,$4f,$4d,$4b,$4a .byte $48,$47,$45,$43,$42,$40,$3f,$3d .byte $3c,$3a,$39,$37,$36,$34,$33,$31 .byte $30,$2f,$2d,$2c,$2a,$29,$28,$26 .byte $25,$24,$22,$21,$20,$1f,$1d,$1c .byte $1b,$1a,$19,$17,$16,$15,$14,$13 .byte $12,$10,$0f,$0e,$0d,$0c,$0b,$0a .byte $09,$08,$07,$06,$05,$04,$03,$02 .fill $80,0 t0_table .fill $100,0 t1_table .fill $100,0 _divu_8_setup ldx #$7f ldy #$ff - lda #0 sta r0_table,y dey lda r0_table,x sta r0_table,y dey dex bpl - ldy #1 next tya ldx #$ff - inx asl bcc - sta t1_table,y txa sta t0_table,y iny bne next rts
+r0_table
+	.byte $01,$fd,$f9,$f5,$f1,$ed,$ea,$e6
+	.byte $e2,$df,$db,$d8,$d5,$d1,$ce,$cb
+	.byte $c8,$c4,$c1,$be,$bb,$b8,$b5,$b3
+	.byte $b0,$ad,$aa,$a7,$a5,$a2,$9f,$9d
+	.byte $9a,$98,$95,$93,$90,$8e,$8b,$89
+	.byte $87,$84,$82,$80,$7e,$7b,$79,$77
+	.byte $75,$73,$71,$6f,$6d,$6b,$69,$67
+	.byte $65,$63,$61,$5f,$5d,$5b,$59,$58
+	.byte $56,$54,$52,$51,$4f,$4d,$4b,$4a
+	.byte $48,$47,$45,$43,$42,$40,$3f,$3d
+	.byte $3c,$3a,$39,$37,$36,$34,$33,$31
+	.byte $30,$2f,$2d,$2c,$2a,$29,$28,$26
+	.byte $25,$24,$22,$21,$20,$1f,$1d,$1c
+	.byte $1b,$1a,$19,$17,$16,$15,$14,$13
+	.byte $12,$10,$0f,$0e,$0d,$0c,$0b,$0a
+	.byte $09,$08,$07,$06,$05,$04,$03,$02
+	.fill $80,0
+t0_table
+	.fill $100,0
+t1_table
+	.fill $100,0
+_divu_8_setup
+	ldx #$7f
+	ldy #$ff
+-
+	lda #0
+	sta r0_table,y
+	dey
+	lda r0_table,x
+	sta r0_table,y
+	dey
+	dex
+	bpl -
+	ldy #1
+next
+	tya
+	ldx #$ff
+-	inx
+	asl
+	bcc -
+	sta t1_table,y
+	txa
+	sta t0_table,y
+	iny
+	bne next
+	rts
 
 ## Codice Estratto
 

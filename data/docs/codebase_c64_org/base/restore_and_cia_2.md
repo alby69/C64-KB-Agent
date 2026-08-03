@@ -13,14 +13,14 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Surviving Restore key presses while using CIA 2 timer NMIs

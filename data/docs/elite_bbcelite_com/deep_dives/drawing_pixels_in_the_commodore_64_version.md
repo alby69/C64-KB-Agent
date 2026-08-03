@@ -4,29 +4,29 @@ source_url: https://elite.bbcelite.com/deep_dives/drawing_pixels_in_the_commodor
 category: manual
 topics:
 - graphics
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
+- KERNAL
+- SID
 - VIC-II
 - CPU
-- KERNAL
 - CIA
-- SID
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Drawing pixels in the Commodore 64 version
@@ -39,15 +39,15 @@ The BBC Micro's graphics come courtesy of a 6845 CRTC chip, a custom-built Video
 
 ![A space station in BBC Micro cassette Elite](https://elite.bbcelite.com/images/cassette/docking_checks.png) 
 
-						The Acorn Electron's graphics are handled by its custom Ferranti ULA, and they look like this:
+The Acorn Electron's graphics are handled by its custom Ferranti ULA, and they look like this:
 
 ![Electron Elite screenshot](https://elite.bbcelite.com/images/general/Elite-Electron.png) 
 
-						The Commodore 64's graphics are managed by the VIC-II video processor, and they look like this:
+The Commodore 64's graphics are managed by the VIC-II video processor, and they look like this:
 
 ![A space station in Commodore 64 Elite](https://elite.bbcelite.com/images/c64/station.png) 
 
-						There are two big differences between the Acorn platforms that are relevant to Elite. First, the Electron can't support the custom 256-pixel wide mode that the BBC Micro uses, as that's implemented by reprogramming the 6845, which the Electron doesn't have; and second, the Electron can't easily support the split-screen mode, as that relies on the 6522 System VIA timer, which is also missing from the Electron. As a result the Electron uses the standard mode 4 screen for both the space view and its black-and-white dashboard. This mode is 320 pixels wide, and it displays the game in the middle 256 pixels of the screen, with a blank border of 32 pixels on each side of the game screen.
+There are two big differences between the Acorn platforms that are relevant to Elite. First, the Electron can't support the custom 256-pixel wide mode that the BBC Micro uses, as that's implemented by reprogramming the 6845, which the Electron doesn't have; and second, the Electron can't easily support the split-screen mode, as that relies on the 6522 System VIA timer, which is also missing from the Electron. As a result the Electron uses the standard mode 4 screen for both the space view and its black-and-white dashboard. This mode is 320 pixels wide, and it displays the game in the middle 256 pixels of the screen, with a blank border of 32 pixels on each side of the game screen.
 
 The Commodore 64's VIC-II is a lot more powerful than the chips in both the BBC Micro and the Acorn Electron, and this is obvious in the colourful dashboard, yellow borders and chunky laser crosshairs. That said, the screen isn't as tall, so there is a bit of a trade-off: the VIC-II's standard bitmap screen mode that's used for the space view is 320 pixels wide but only 200 pixels high, which is quite a bit smaller than the 248-pixel height of the Acorn versions.
 
@@ -57,7 +57,8 @@ Let's see how all this influences the pixel-drawing routines on the Commodore 64
 
 													 --------------------
 
-						The Commodore 64 separates its screen bitmap from colour information (see the deep dive on [colouring the Commodore 64 bitmap screen](https://elite.bbcelite.com/colouring_the_commodore_64_bitmap_screen.html) for information about the latter). And Commodore 64 Elite also has a split screen, with the space view using standard bitmap mode while the dashboard uses multicolour bitmap mode (see the deep dive on [the split-screen mode in Commodore 64 Elite](https://elite.bbcelite.com/the_split-screen_mode_commodore_64.html) for details).
+						
+The Commodore 64 separates its screen bitmap from colour information (see the deep dive on [colouring the Commodore 64 bitmap screen](https://elite.bbcelite.com/colouring_the_commodore_64_bitmap_screen.html) for information about the latter). And Commodore 64 Elite also has a split screen, with the space view using standard bitmap mode while the dashboard uses multicolour bitmap mode (see the deep dive on [the split-screen mode in Commodore 64 Elite](https://elite.bbcelite.com/the_split-screen_mode_commodore_64.html) for details).
 
 On top of this, it turns out that the standard and multicolour screen bitmaps on the Commodore have an identical structure to the BBC Micro's screen modes 4 and 5, which are used in a customised 256-pixel wide form for the space view and dashboard in BBC Micro Elite. The Acorn Electron uses standard mode 4 for both the space view and dashboard, so for the VIC-II the authors converted their Acorn-based pixel-drawing routines as follows:
 
@@ -68,7 +69,8 @@ There is one more subtle difference. Because we can set colour palettes for the 
 
 To be explicit, each pixel row on the Commodore 64 looks like this:
 
-30 blank 2 yellow 256 pixels of 2 yellow 30 blank pixels pixels game screen pixels pixels
+  30 blank     2 yellow     256 pixels of     2 yellow     30 blank
+   pixels       pixels       game screen       pixels       pixels
 
 which looks like this in terms of bytes in a character row:
 
@@ -76,7 +78,8 @@ which looks like this in terms of bytes in a character row:
   24 blank     8 line      256 bytes of       8 line      24 blank
     bytes       bytes       game screen        bytes        bytes
 ```
-						The line bytes each have two pixels in yellow along one vertical edge, to form the border. They get drawn by the [TTX66K](https://elite.bbcelite.com/c64/main/subroutine/ttx66k.html) routine.
+						
+The line bytes each have two pixels in yellow along one vertical edge, to form the border. They get drawn by the [TTX66K](https://elite.bbcelite.com/c64/main/subroutine/ttx66k.html) routine.
 
 As with the BBC Micro and Electron, each character row is 8 pixels high, so the 24 bytes of the margin and the 8 bytes of the border line cover an area of 32 pixels across and 8 pixels high, while the character row of visible screen is 256 pixels wide and 8 pixels high.
 

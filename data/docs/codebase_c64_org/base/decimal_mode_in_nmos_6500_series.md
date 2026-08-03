@@ -8,19 +8,19 @@ difficulty: intermediate
 language: assembly
 hardware:
 - CPU
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Decimal mode in NMOS 6500 series
@@ -33,7 +33,7 @@ Most sources claim that the NMOS 6500 series sets the N, V and Z flags unpredict
 
 ADC works in Decimal mode in a quite complicated way. It is amazing how it can do that all in a single cycle. Here's a C code version of the instruction:
 
-```
+````
  [ Warning: this code is NOT accurate. ]
         unsigned
            A,  /* Accumulator */
@@ -169,7 +169,7 @@ M3Y$KH%R1*XII>ZBQ*Z!3D2N@8)$KBFE_J+$KH%61*Z!BD2OX.+BE^^;\Q_S8
 L"&B%_3BXI?OF_,?\"&A%_?`!`.;[T-_F_-#;RA"M8!@X&#CFYL;&Q\?GYP#8
 `
 end
-```
+````
 base/decimal_mode_in_nmos_6500_series.txt · Last modified:  by 127.0.0.1
 
 ## Codice Estratto

@@ -3,17 +3,17 @@ title: Numerical systems
 source_url: https://codebase.c64.org/doku.php?id=base%3Anumerical_systems
 category: reference
 topics:
-- basic
 - memory management
+- basic
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Numerical systems
@@ -50,7 +50,9 @@ In the binary numeral system, the value represented as 10 is (1 × 2^1) + (0 × 
 
 Binary-to-decimal equivalence:
 
-1 = 1 * 2^0 = 1 * 1 => 1 10 = (1 * 2^1) + (0 * 2^0) = 2 + 0 => 2 101 = (1 * 2^2) + (0 * 2^1) + (1 * 2^0) = 4 + 0 + 1 => 5
+  1 = 1 * 2^0 = 1 * 1 => 1
+  10 = (1 * 2^1) + (0 * 2^0) = 2 + 0 => 2
+  101 = (1 * 2^2) + (0 * 2^1) + (1 * 2^0) = 4 + 0 + 1 => 5
 
 Here is another way of thinking about it: When you run out of symbols, for example 11111, add a “1” on the left end and reset all the numerals on the right to “0”, producing 100000. This also works for symbols in the middle. Say the number is 100111. If you add one to it, you move the leftmost repeating “1” one space to the left (from the “fours” place to the “eights” place) and reset all the numerals on the right to “0”, producing 101000.
 
@@ -64,7 +66,23 @@ Binary may be converted to and from hexadecimal easily. This is due to the fact 
 
 The following table shows each hexadecimal digit along with the equivalent decimal value and four-digit binary sequence:
 
-Hex Dec Binary 0 0 0000 1 1 0001 2 2 0010 3 3 0011 4 4 0100 5 5 0101 6 6 0110 7 7 0111 8 8 1000 9 9 1001 A 10 1010 B 11 1011 C 12 1100 D 13 1101 E 14 1110 F 15 1111
+Hex 	Dec 	Binary
+0 	0 	0000
+1 	1 	0001
+2 	2 	0010
+3 	3 	0011
+4 	4 	0100
+5 	5 	0101
+6 	6 	0110
+7 	7 	0111
+8 	8 	1000
+9 	9 	1001
+A 	10 	1010
+B 	11 	1011
+C 	12 	1100
+D 	13 	1101
+E 	14 	1110
+F 	15 	1111
 
 To convert a hexadecimal number into its binary equivalent, simply substitute the corresponding binary digits:
 
@@ -80,7 +98,7 @@ To convert a binary number into its hexadecimal equivalent, divide it into group
 ```
 To convert a hexadecimal number into its decimal equivalent, multiply the decimal equivalent of each hexadecimal digit by the corresponding power of 16 and add the resulting values:
 
-C0E716 = (12 × 163) + (0 × 162) + (14 × 161) + (7 × 160) = (12 × 4096) + (0 × 256) + (14 × 16) + (7 × 1) = 49,38310
+    C0E716 = (12 × 163) + (0 × 162) + (14 × 161) + (7 × 160) = (12 × 4096) + (0 × 256) + (14 × 16) + (7 × 1) = 49,38310
 
 ## Codice Estratto
 

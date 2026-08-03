@@ -3,26 +3,26 @@ title: Technical information for flicker-free Elite
 source_url: https://elite.bbcelite.com/hacks/flicker-free_elite_technical_information.html
 category: source-code
 topics:
-- input handling
 - assembly
 - memory management
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Technical information for flicker-free Elite
@@ -35,12 +35,13 @@ There are two flicker-free flavours of Elite on this site: flicker-free ships an
 
 													 ------------------
 
-						The improved ship-drawing algorithm in flicker-free Elite originally appeared in the 1986 Apple II and BBC Master versions of Elite. This is the algorithm that I backported to the original 1984 BBC Micro and Acorn Electron versions of Elite, as well as the 1985 versions for the 6502 Second Processor and Commodore 64, and the unofficial version for the Commodore Plus/4.
+						
+The improved ship-drawing algorithm in flicker-free Elite originally appeared in the 1986 Apple II and BBC Master versions of Elite. This is the algorithm that I backported to the original 1984 BBC Micro and Acorn Electron versions of Elite, as well as the 1985 versions for the 6502 Second Processor and Commodore 64, and the unofficial version for the Commodore Plus/4.
 
 For more information on the flicker-free algorithm and the backporting process, see the following deep dives:
 
-- The [flicker-free ship drawing](https://elite.bbcelite.com/deep_dives/flicker-free_ship_drawing.html)deep dive looks at the newer algorithm and how it differs from the earlier, more flickery version in the original game.
-- The deep dive on [backporting the flicker-free algorithm](https://elite.bbcelite.com/deep_dives/backporting_the_flicker-free_algorithm.html)looks at exactly what was involved in taking the improved algorithm from the BBC Master and squeezing it into the original versions of Elite.
+- The [flicker-free ship drawing](https://elite.bbcelite.com/deep_dives/flicker-free_ship_drawing.html) deep dive looks at the newer algorithm and how it differs from the earlier, more flickery version in the original game.
+- The deep dive on [backporting the flicker-free algorithm](https://elite.bbcelite.com/deep_dives/backporting_the_flicker-free_algorithm.html) looks at exactly what was involved in taking the improved algorithm from the BBC Master and squeezing it into the original versions of Elite.
 
 See the [introduction](https://elite.bbcelite.com/flicker-free_elite.html) to see how the two algorithms compare, side-by-side.
 
@@ -48,7 +49,8 @@ See the [introduction](https://elite.bbcelite.com/flicker-free_elite.html) to se
 
 													 --------------------
 
-						In the original Apple II and BBC Master versions, planets still flicker, as they are displayed by a completely different part of the code. When the authors fixed the flicker, they only did so in the ship-drawing routines.
+						
+In the original Apple II and BBC Master versions, planets still flicker, as they are displayed by a completely different part of the code. When the authors fixed the flicker, they only did so in the ship-drawing routines.
 
 To get rid of this final bit of flicker, I have applied the same algorithm to the planet-drawing routines, so planets are also erased and redrawn one line at a time. Players of the BBC Micro disc version, BBC Master, 6502 Second Processor, Acorn Electron, Commodore 64, Commodore Plus/4 and Apple II can now enjoy both flicker-free ships *and* planets; unfortunately there isn't enough spare memory in all versions of Elite for this modification, so flicker-free planets are not supported on the BBC Micro cassette version or in Elite-A, where memory is really tight. See the page on [playing flicker-free Elite](https://elite.bbcelite.com/flicker-free_elite_downloads.html) for details of all the different versions.
 
@@ -76,7 +78,8 @@ Another option is the the [flicker-free Commodore 64 Elite repository](https://g
 
 													 -----------------------------
 
-						Astonishingly, there is enough spare room in the Acorn Electron for the full version of flicker-free planets. Although the game binary uses up almost every single byte of space, leaving only 13 bytes of unused space, it turns out that not all of the game code is actually used, and when those parts are removed, there is not only enough space for flicker-free planets, but for some other improvements as well.
+						
+Astonishingly, there is enough spare room in the Acorn Electron for the full version of flicker-free planets. Although the game binary uses up almost every single byte of space, leaving only 13 bytes of unused space, it turns out that not all of the game code is actually used, and when those parts are removed, there is not only enough space for flicker-free planets, but for some other improvements as well.
 
 The Electron version still contains the same unused multiplication routines as the BBC Micro (a [duplicate of MULTU](https://elite.bbcelite.com/electron/main/subroutine/unused_duplicate_of_multu.html) and the unused [MUT3](https://elite.bbcelite.com/electron/main/subroutine/mut3.html) routine), so there are 28 unused bytes there that can be reused... and on top of that, the authors left the [ARCTAN](https://elite.bbcelite.com/electron/main/subroutine/arctan.html) routine (70 bytes) and [ACT](https://elite.bbcelite.com/electron/main/variable/act.html) table (32 bytes) intact, even though they are only ever used to draw meridians and equators on planets, a feature that isn't present in the Electron version. There are 11 unused bytes in [part 2 of the main flight loop](https://elite.bbcelite.com/electron/main/subroutine/main_flight_loop_part_2_of_16.html) that are skipped using a JMP (so presumably this was code that was inserted at some point, and then deemed unnecessary, so it was just skipped), and there is a chunk of 39 bytes in the [TT17](https://elite.bbcelite.com/electron/main/subroutine/tt17.html) routine that enable you to move the crosshairs with a joystick, but as the Electron version doesn't support joysticks, this can also be removed (and in doing so, this fixes a bug in the original where you can still select joystick control, and in doing so break the crosshairs on the charts).
 

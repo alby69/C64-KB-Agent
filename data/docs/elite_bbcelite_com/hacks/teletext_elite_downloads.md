@@ -11,7 +11,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Playing Teletext Elite
@@ -20,19 +20,21 @@ scraped_at: '2026-07-27'
 
 ![Teletext Elite Short-range Chart](https://elite.bbcelite.com/images/teletext_elite/short-range_chart.png) 
 
-						The [Elite Compendium](https://elite.bbcelite.com/elite_compendium.html) is a great way to enjoy Teletext Elite in combination with my other hacks - see the [download page](https://elite.bbcelite.com/elite_compendium_downloads.html) for details. Or you can play Teletext Elite by choosing one of the following:
+The [Elite Compendium](https://elite.bbcelite.com/elite_compendium.html) is a great way to enjoy Teletext Elite in combination with my other hacks - see the [download page](https://elite.bbcelite.com/elite_compendium_downloads.html) for details. Or you can play Teletext Elite by choosing one of the following:
 
-- Play Teletext Elite [in your browser](https://bbc.xania.org/?autoboot&disc=https://elite.bbcelite.com/versions/teletext_elite/teletext-elite.ssd).
-- Download Teletext Elite [as a disc image](https://elite.bbcelite.com/versions/teletext_elite/teletext-elite.ssd)that will run in an emulator, or on a real BBC Micro or BBC Master 128 using a device like a Gotek.
+- Play Teletext Elite [in your browser](https://bbc.xania.org/?autoboot&disc=https://elite.bbcelite.com/versions/teletext_elite/teletext-elite.ssd) .
+- Download Teletext Elite [as a disc image](https://elite.bbcelite.com/versions/teletext_elite/teletext-elite.ssd) that will run in an emulator, or on a real BBC Micro or BBC Master 128 using a device like a Gotek.
 
 To load Teletext Elite on a BBC, simply insert the disc image and press SHIFT-D-BREAK (for DFS), SHIFT-M-BREAK (for MMFS), SHIFT-S-BREAK (for Micro SPI) or use the *DBOOT command (for all SD card solutions); emulators tend to map BREAK to F12, so press SHIFT-D-F12. The disc will automatically load if you're playing it in a browser.
 
 The controls in Teletext Elite are identical to standard BBC Micro Elite. For details, you can read the [original game manual on Ian Bell's website](http://www.elitehomepage.org/manual.htm). You can also check out the [instructions](https://elite.bbcelite.com/teletext_elite_instructions.html) for information on some of the subtle differences between the teletext version and the original.
 
+## 
 
 													 ---------------
 
-						Teletext Elite has had the following releases:
+						
+Teletext Elite has had the following releases:
 
 - 2022-12-03 - Initial release
 - 2022-12-09 - Fixed a bug where the bottom two lines of the mission briefing were showing as graphics rather than text

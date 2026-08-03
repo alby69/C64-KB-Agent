@@ -8,15 +8,15 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Digis R Eazy
@@ -43,7 +43,21 @@ The SID's volume register is located at memory $D418. The upper four bits contro
 
 The .RAW file format is designed around that four bit volume register. It consists only of 4 bit samples, with two samples stored in each byte. The first sample is stored in the upper four bits. To make our first routine easier, we can play only the samples stored in the low nybbles. We lose some crispness in our output, but the sound is still acceptable.
 
-start: lda #<sample sta $FE lda #>sample sta $FF ldy #0 - lda ($FE),y sta $D418 ; play sample nybble ldx #delay ; controls pitch/speed - dex bne - iny bne -- inc $FF bne -- rts
+start:	lda #<sample
+	sta $FE
+	lda #>sample
+	sta $FF
+	ldy #0
+-	lda ($FE),y
+	sta $D418	; play sample nybble
+	ldx #delay	; controls pitch/speed
+-	dex
+	bne -
+	iny
+	bne --
+	inc $FF
+	bne --
+	rts
 
 Now, we just load the sample into memory and run the routine. If the sound isn't right, adjust the delay value and try again. If the sample sounds too slow and deep, lower the delay value.
 

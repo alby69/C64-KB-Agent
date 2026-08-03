@@ -9,7 +9,7 @@ difficulty: beginner
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Trigonometric Functions
@@ -20,7 +20,13 @@ okay, well there's no magic here other than using tables. That is you simply pre
 
 a little pseudo c64 basic code here:
 
-c=2*pi/256 for x=0 to 2*pi step c value=(sin(x)*128) if value<0 then value=255-value+1 poke 8192+q,sine q=q+1 next x
+c=2*pi/256
+for x=0 to 2*pi step c
+value=(sin(x)*128)
+if value<0 then value=255-value+1
+poke 8192+q,sine
+q=q+1
+next x
 
 the c64 trigonometric functions think in radian, which means that the sin/cos functions repeats themselves after 2*pi. To make that 256 steps we simply make our for/next loop advance at 2*pi/256 steps.
 

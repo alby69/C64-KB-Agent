@@ -7,13 +7,13 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- CPU
 - KERNAL
+- CPU
 related:
 - kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
-last_modified: '2026-07-19T19:45:00Z'
+scraped_at: '2026-08-03'
+last_modified: '2026-07-31T18:59:23Z'
 ---
 
 # GitHub Repo: davervw/c-simple-emu6502-cbm
@@ -24,7 +24,7 @@ last_modified: '2026-07-19T19:45:00Z'
 
 **GitHub URL:** https://github.com/davervw/c-simple-emu6502-cbm
 **Stars:** 24
-**Last Updated:** 2026-07-19T19:45:00Z
+**Last Updated:** 2026-07-31T18:59:23Z
 
 
 ---

@@ -12,11 +12,11 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Part 6 - The Stack
@@ -37,11 +37,13 @@ A general principle of the stack is that you should always leave it as clean as 
 
 There are also a few more instructions relating to the stack:
 
-TSX - Transfer stack pointer to X TXS - Transfer X to stack pointer
+TSX - Transfer stack pointer to X
+TXS - Transfer X to stack pointer
 
 I've never used TSX, so I can't provide an example for that. However, TXS can be used to reset the stack pointer:
 
-LDX #$FF TXS
+LDX #$FF
+TXS
 
 A stack overflow happens when the stack pointer rolls over. Don't push when SP is $00, or pull when SP is $FF.
 
@@ -53,11 +55,26 @@ LDA $6000
 
 But, we have a loop right after that trashes all registers.
 
-LDA #$00 LDX #$18 TAY LDY $4000,X <- pretend this is at $1000 :) STA $5000,Y DEX BNE $1000
+LDA #$00
+LDX #$18
+TAY
+LDY $4000,X <- pretend this is at $1000 :)
+STA $5000,Y
+DEX
+BNE $1000
 
 To preserve the value in A, we must push the value to the stack and pull it back after the loop.
 
-LDA $6000 PHA LDA #$00 LDX #$18 TAY LDY $4000,X <- still $1000... STA $5000,Y DEX BNE $1000 PLA
+LDA $6000
+PHA
+LDA #$00
+LDX #$18
+TAY
+LDY $4000,X <- still $1000...
+STA $5000,Y
+DEX
+BNE $1000
+PLA
 
 ## Codice Estratto
 

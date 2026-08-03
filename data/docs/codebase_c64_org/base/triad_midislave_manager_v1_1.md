@@ -3,33 +3,33 @@ title: Sources for MIDISLAVE V1.1
 source_url: https://codebase.c64.org/doku.php?id=base%3Atriad_midislave_manager_v1.1
 category: reference
 topics:
-- raster interrupts
-- memory management
 - basic
+- sound generation
+- memory management
+- raster interrupts
 - input handling
 - sprite programming
 - assembly
-- sound generation
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -47,7 +47,25 @@ The original sources are in TASS format. A zipped d64 with these sources is avai
 
 The program is split into several sources, and each source file is given in its own section below in no special order. The memory locations for the program files goes like this:
 
-10 ------------------------------------ 11 MEMORY ALLOCATIONS FOR THE MIDISLAVE 12 ------------------------------------ 13 $0801-$0C00 MAIN MENU CODE 14 $0C00-$1000 MIDIMODE SCREEN 15 $1000-$1180 NOTES IN TEXT 16 $1180-$1480 MIDI BUFFER 17 $1480-$1E00 FREE! 18 $1E00-$2D00 MIDISLAVE MAIN CODE 19 $2D00-$4000 SOUND EDITOR CODE 20 $4000-$C000 SOUND PRESETS 21 $C000- MORE MAIN ROUTINES 22 $CF00-$D000 DUMMY ZER0PAGE 23 $D000-$E000 FREE! 24 $E000-$F000 SINUS WAVES 25 $F000-$F400 SOUND EDITOR SCREEN 26 $F400-$F800 MAIN MENU SCREEN 27 $F800-$FFFA FREE! 28 ------------------------------------
+10 ------------------------------------
+11 MEMORY ALLOCATIONS FOR THE MIDISLAVE
+12 ------------------------------------
+13 $0801-$0C00 MAIN MENU CODE
+14 $0C00-$1000 MIDIMODE SCREEN
+15 $1000-$1180 NOTES IN TEXT
+16 $1180-$1480 MIDI BUFFER
+17 $1480-$1E00 FREE!
+18 $1E00-$2D00 MIDISLAVE MAIN CODE
+19 $2D00-$4000 SOUND EDITOR CODE
+20 $4000-$C000 SOUND PRESETS
+21 $C000-      MORE MAIN ROUTINES
+22 $CF00-$D000 DUMMY ZER0PAGE
+23 $D000-$E000 FREE!
+24 $E000-$F000 SINUS WAVES
+25 $F000-$F400 SOUND EDITOR SCREEN
+26 $F400-$F800 MAIN MENU SCREEN
+27 $F800-$FFFA FREE!
+28 ------------------------------------
 
 ## "MAIN39.S"
 

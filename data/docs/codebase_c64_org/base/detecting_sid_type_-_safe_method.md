@@ -3,24 +3,24 @@ title: Detecting Sid Type - safe method
 source_url: https://codebase.c64.org/doku.php?id=base%3Adetecting_sid_type_-_safe_method
 category: reference
 topics:
-- sound generation
 - raster interrupts
+- sound generation
 - assembly
 difficulty: advanced
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -32,7 +32,33 @@ base:detecting_sid_type_-_safe_method
 
 This SID detection routine is based on the fact that there is a one cycle delay in the oscillator on 8580 compared to 6581 when turned on.
 
-;SID DETECTION ROUTINE ;By SounDemon - Based on a tip from Dag Lem. ;Put together by FTC after SounDemons instructions ;...and tested by Rambones and Jeff. ; - Don't run this routine on a badline sei ;No disturbing interrupts lda #$ff cmp $d012 ;Don't run it on a badline. bne *-3 ;Detection itself starts here lda #$ff ;Set frequency in voice 3 to $ffff sta $d412 ;...and set testbit (other bits don't matter) in VCREG3 ($d412) to disable oscillator sta $d40e sta $d40f lda #$20 ;Sawtooth wave and gatebit OFF to start oscillator again. sta $d412 lda $d41b ;Accu now has different value depending on sid model (6581=3/8580=2) lsr ;...that is: Carry flag is set for 6581, and clear for 8580. bcc model_8580 model_6581: [...] model_8580: [...]
+	;SID DETECTION ROUTINE
+	
+	;By SounDemon - Based on a tip from Dag Lem.
+	;Put together by FTC after SounDemons instructions
+	;...and tested by Rambones and Jeff.
+	
+	; - Don't run this routine on a badline
+	
+	sei		;No disturbing interrupts
+	lda #$ff
+	cmp $d012	;Don't run it on a badline.
+	bne *-3
+	
+	;Detection itself starts here	
+	lda #$ff	;Set frequency in voice 3 to $ffff 
+	sta $d412	;...and set testbit (other bits don't matter) in VCREG3 ($d412) to disable oscillator
+	sta $d40e
+	sta $d40f
+	lda #$20	;Sawtooth wave and gatebit OFF to start oscillator again.
+	sta $d412
+	lda $d41b	;Accu now has different value depending on sid model (6581=3/8580=2)
+	lsr		;...that is: Carry flag is set for 6581, and clear for 8580.
+	bcc model_8580
+model_6581:
+	[...]
+model_8580:
+	[...]
 
 base/detecting_sid_type_-_safe_method.txt · Last modified:  by 127.0.0.1
 

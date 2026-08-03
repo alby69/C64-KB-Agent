@@ -3,9 +3,9 @@ title: The I.F.F. system
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_the_iff_system.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - assembly
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,7 +13,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # The I.F.F. system
@@ -52,15 +52,16 @@ Let's take a look at how Angus added these colour schemes to the normal 3D scann
 
 													 ---------------------------
 
-						First of all, the [SCAN](https://elite.bbcelite.com/elite-a/flight/subroutine/scan.html) routine has been modified in Elite-A to support different colours for both the dot and the stick, by introducing two colours for each ship on the scanner - the base colour and the EOR value. The base colour is the colour of the dot and the colour of one of the stripes in the stick, while the EOR value is applied to the base colour to give the colour of the other stripe in the stick. This second colour is obtained by EOR'ing the base colour with the EOR value, so if the EOR value is 0, the stick doesn't have stripes and is all in the base colour, as n EOR 0 = n.
+						
+First of all, the [SCAN](https://elite.bbcelite.com/elite-a/flight/subroutine/scan.html) routine has been modified in Elite-A to support different colours for both the dot and the stick, by introducing two colours for each ship on the scanner - the base colour and the EOR value. The base colour is the colour of the dot and the colour of one of the stripes in the stick, while the EOR value is applied to the base colour to give the colour of the other stripe in the stick. This second colour is obtained by EOR'ing the base colour with the EOR value, so if the EOR value is 0, the stick doesn't have stripes and is all in the base colour, as n EOR 0 = n.
 
 So the first task we have when drawing a ship on the I.F.F. system is to determine the base colour and EOR value, depending on the type and status of the ship. This logic is implemented in the [iff_index](https://elite.bbcelite.com/elite-a/loader/subroutine/iff_index.html) routine, which returns an index value as follows:
 
-- Clean = innocent trader or innocent bounty hunter
-- Station tracked = cop, space station or escape pod
-- Debris = cargo canister, alloy plate, asteroid, boulder or splinter
-- Missile
-- Offender/fugitive = pirate or non-innocent bounty hunter
+1. Clean = innocent trader or innocent bounty hunter
+2. Station tracked = cop, space station or escape pod
+3. Debris = cargo canister, alloy plate, asteroid, boulder or splinter
+4. Missile
+5. Offender/fugitive = pirate or non-innocent bounty hunter
 
 If there is no I.F.F. system fitted, the index returned is always 0, the same as for a clean ship.
 
@@ -70,7 +71,8 @@ We now use the returned index as an offset into two tables, first to fetch the b
 
 													 ---------------------------
 
-						The EOR values in the [iff_xor](https://elite.bbcelite.com/elite-a/flight/variable/iff_xor.html) table have the following effect on the colour of the stick:
+						
+The EOR values in the [iff_xor](https://elite.bbcelite.com/elite-a/flight/variable/iff_xor.html) table have the following effect on the colour of the stick:
 						
 
 | Value | Effect | 
@@ -84,11 +86,12 @@ Let's take the example of debris, which has an index of 2 from the iff_index rou
 
 We now look up the EOR value from iff_xor + 2, which is &0F. This is %00001111, or a four-pixel mode 5 byte of %01 values. Applying this EOR to the base colour (%11) gives:
 
-%11 EOR %01 = %10 = 2
+  %11 EOR %01 = %10 = 2
 
 and colour 2 in mode 5 is yellow/white (yellow for the normal palette, white in the escape pod palette). So the stick colour for debris when we have an I.F.F. system fitted is:
 
-Green/cyan (the base colour) striped with yellow/white (the colour after applying the EOR value)
+  Green/cyan (the base colour)
+  striped with yellow/white (the colour after applying the EOR value)
 
 If there is no I.F.F. system fitted, the index is 0 and the EOR value is 0, which doesn't affect the default colour.
 

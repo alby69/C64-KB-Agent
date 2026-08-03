@@ -3,8 +3,8 @@ title: Drawing circles
 source_url: https://elite.bbcelite.com/deep_dives/drawing_circles.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,10 +13,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Drawing circles
@@ -27,25 +27,26 @@ You never forget your first journey in Elite, and a lot of that is down to the c
 
 ![The launch tunnel in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/cassette/launch.png) 
 
-						The planet Lave, hanging in space in front of you in all its rotating glory - that's the circle routine:
+The planet Lave, hanging in space in front of you in all its rotating glory - that's the circle routine:
 
 ![The launch view of Lave in the BBC Micro cassette version of Elitee](https://elite.bbcelite.com/images/ellipses/lave.png) 
 
-						The nearby systems you can choose to visit on the Short-range Chart are all those inside a circle drawn by the circle routine:
+The nearby systems you can choose to visit on the Short-range Chart are all those inside a circle drawn by the circle routine:
 
 ![The Short-range Chart in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/cassette/short-range_chart.png) 
 
-						And the hyperspace tunnel? You guessed it. It's the circle routine again:
+And the hyperspace tunnel? You guessed it. It's the circle routine again:
 
 ![The hyperspace tunnel in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/cassette/hyperspace.png) 
 
-						Let's take a look at how all these circles are drawn.
+Let's take a look at how all these circles are drawn.
 
 ## The circle-drawing routines
 
 													 ---------------------------
 
-						Circles are drawn by the following routines: [CIRCLE](https://elite.bbcelite.com/cassette/main/subroutine/circle.html) (for planets), [TT128](https://elite.bbcelite.com/cassette/main/subroutine/tt128.html) (for charts) and [CIRCLE2](https://elite.bbcelite.com/cassette/main/subroutine/circle2.html) (which does the actual drawing). This latter routine draws a circle by starting at the bottom of the circle - or at 6 o'clock if you think of it as a clock face - and moving anti-clockwise in steps defined by the size of the step size in STP. The whole circle is divided into 64 steps and the step number is stored in CNT, so if STP were 2, CNT would be 0, 2, 4 and so on up to and including 64. So we work our way around the circle like this:
+						
+Circles are drawn by the following routines: [CIRCLE](https://elite.bbcelite.com/cassette/main/subroutine/circle.html) (for planets), [TT128](https://elite.bbcelite.com/cassette/main/subroutine/tt128.html) (for charts) and [CIRCLE2](https://elite.bbcelite.com/cassette/main/subroutine/circle2.html) (which does the actual drawing). This latter routine draws a circle by starting at the bottom of the circle - or at 6 o'clock if you think of it as a clock face - and moving anti-clockwise in steps defined by the size of the step size in STP. The whole circle is divided into 64 steps and the step number is stored in CNT, so if STP were 2, CNT would be 0, 2, 4 and so on up to and including 64. So we work our way around the circle like this:
 
 | CNT | Quadrant | Clock | 
 |---|---|---|
@@ -68,9 +69,11 @@ So let's consider the step where CNT is around 5, say, so that's around 5 o'cloc
     =     |    `.                    |     __--´    ----->        K * sin(c)
      `--__|__--´                     |__--´
 ```
-						So if the centre of the circle (the top of the triangle above) is at the origin (0, 0), then using basic trigonometry, we can see that at step number CNT, the point on the circle is at these coordinates:
+						
+So if the centre of the circle (the top of the triangle above) is at the origin (0, 0), then using basic trigonometry, we can see that at step number CNT, the point on the circle is at these coordinates:
 
-x = K * sin(CNT) y = K * cos(CNT)
+  x = K * sin(CNT)
+  y = K * cos(CNT)
 
 The SNE table only gives us positive results, so for other quadrants of the circle, we'll need to set the signs of x and y according to the particular quadrant we're in, but the magnitude of the coordinates will be as above. Specifically, we need to do the following (as screen y-coordinates are positive down the screen and screen x-coordinates are positive to the right):
 
@@ -83,7 +86,8 @@ The SNE table only gives us positive results, so for other quadrants of the circ
 
 To get the final screen coordinates of the point at count CNT, we have to add the results from above to the coordinates of the centre of the circle, as the origin of the screen is at the top-left, not in the centre of the circle. We do this with the following:
 
-x = K * sin(CNT) + K3(1 0) y = K * cos(CNT) + K4(1 0)
+  x = K * sin(CNT) + K3(1 0)
+  y = K * cos(CNT) + K4(1 0)
 
 Perhaps surprisingly, the circle routine does not use any lines of symmetry to reduce the number of points calculated in the circle. Instead, speed comes from the use of the pre-calculated sine and cosine lookup tables - see the deep dive on [the sine, cosine and arctan tables](https://elite.bbcelite.com/the_sine_cosine_and_arctan_tables.html) for details.
 

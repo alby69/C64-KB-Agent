@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Store X Indexed by Y and Vice-Versa With SHX/SHY
@@ -20,11 +20,19 @@ scraped_at: '2026-07-27'
 
 The 6510 doesn't have a stx abs,y or sty abs,x. So instead you would normally do something like this:
 
-//store X indexed by Y: txa sta address,y //store Y indexed by X: tya sta address,x
+//store X indexed by Y:
+txa
+sta address,y
+//store Y indexed by X:
+tya
+sta address,x
 
 Which each take 7 cycles. But instead you can do this, which only takes 5:
 
-//store X indexed by Y: shx address,y //store Y indexed by X: shy address,x
+//store X indexed by Y:
+shx address,y
+//store Y indexed by X:
+shy address,x
 
 However, there's a little catch. The value is and'ed with the high byte of the address before it's stored. And to make it even more confusing, it's actually the high byte + 1. So if you store it in $fe00, the value is and'ed with $ff, and therefore unaffected. But since you don't always use all the 8 bits, other addresses might work as well. E.g. if your values are C64 colors, which are between $00 and $0f, the upper 4 bits don't matter. So in that case all pages ending in $e will work, i.e. $0e00, $1e00, etc.
 
@@ -36,7 +44,9 @@ The first instability is that the and'ing doesn't always take place. So sometime
 
 Another instability comes when you cross a page boundary like this:
 
-ldy #$14 ldx #$01 shy $0eff,x
+ldy #$14
+ldx #$01
+shy $0eff,x
 
 Normally you would expect the value to end up in $0f00, but for reasons unknown, the page changes to the value stored ((H + 1) & y), which in this case is ($0e + 1) & $14 = $04. So the value ends up in $0400.
 

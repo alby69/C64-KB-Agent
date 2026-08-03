@@ -11,9 +11,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Machine Language Tutorial Part 4 - Logical Operations and Math
@@ -32,7 +32,11 @@ All of these commands can only be used on the A register. The commands are appli
 
 This command will turn bits in A on. If the mask is zero, the bit will be left alone. If the mask is one, the bit will be turned on.
 
-Bit in accumulator | Mask = Resulting A bit. 0 | 0 = 0 0 | 1 = 1 1 | 0 = 1 1 | 1 = 1
+Bit in accumulator | Mask = Resulting A bit.
+0 | 0 = 0
+0 | 1 = 1
+1 | 0 = 1
+1 | 1 = 1
 
 Let's see this in action. If A was %00110101 and we ORA %01010011, what would happen?
 
@@ -46,7 +50,11 @@ A = 01110111
 
 This command will turn bits in A off. If the mask is zero, the bit will be turned off. If the mask is one, the bit will be left alone.
 
-Bit in accumulator & Mask = Resulting A bit. 0 & 0 = 0 0 & 1 = 0 1 & 0 = 0 1 & 1 = 1
+Bit in accumulator & Mask = Resulting A bit.
+0 & 0 = 0
+0 & 1 = 0
+1 & 0 = 0
+1 & 1 = 1
 
 ```
 A = 00110101
@@ -58,7 +66,11 @@ A = 00010001
 
 This command flips bits around. If the mask is zero, the bit is left alone. If the mask is 1, the bit is flipped.
 
-Bit in accumulator ^ Mask = Resulting A bit. 0 ^ 0 = 0 0 ^ 1 = 1 1 ^ 0 = 1 1 ^ 1 = 0
+Bit in accumulator ^ Mask = Resulting A bit.
+0 ^ 0 = 0
+0 ^ 1 = 1
+1 ^ 0 = 1
+1 ^ 1 = 0
 
 ```
 A = 00110101
@@ -74,7 +86,13 @@ To add to A, we use ADC. The carry bit is used to link different ADCs together f
 
 So to add a two byte value at $3000 to a value at $2000 and store that to $4000, we'd do:
 
-CLC LDA $2000 <- handle low byte ADC $3000 STA $4000 LDA $2001 <- handle high byte ADC $3001 STA $4001
+CLC
+LDA $2000 <- handle low byte
+ADC $3000
+STA $4000
+LDA $2001 <- handle high byte
+ADC $3001
+STA $4001
 
 By the way, it doesn't matter if you CLC or LDA first.
 
@@ -82,7 +100,13 @@ By the way, it doesn't matter if you CLC or LDA first.
 
 To subtract from A, we use SBC. The carry bit is used as a borrow for multi-byte subtraction. We need to set the carry to prevent anything extra from being subtracted.
 
-SEC LDA $2000 SBC $3000 STA $4000 LDA $2001 SBC $3001 STA $4001
+SEC
+LDA $2000
+SBC $3000
+STA $4000
+LDA $2001
+SBC $3001
+STA $4001
 
 For both subtraction and addition, if the carry flag is on after addition, that means that the number overflowed and you will need to use another byte depending on what you're trying to do.
 
@@ -112,11 +136,20 @@ It shifts carry into zero, all other bits left, and bit 7 goes into the new carr
 
 To multiply by non-powers of two, we must use other ways to get there. So to multiply by 6:
 
-LDA #$01 ASL A <- multiply by 2 STA $xxxx <- store A*2 into some location ASL A <- now we have A*4 CLC ADC $xxxx <- and add A*2 to get A*6
+LDA #$01
+ASL A <- multiply by 2
+STA $xxxx <- store A*2 into some location
+ASL A <- now we have A*4
+CLC
+ADC $xxxx <- and add A*2 to get A*6
 
 To multiply a two-byte value we need to use ASL and ROL in sequence.
 
-ASL $2000 <- x*2 ROL $2001 ASL $2000 <- x*4 ROL $2001 ...and so on.
+ASL $2000 <- x*2
+ROL $2001
+ASL $2000 <- x*4
+ROL $2001
+...and so on.
 
 ### Division
 

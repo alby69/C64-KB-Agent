@@ -3,25 +3,25 @@ title: Playing music at $A000 - $FFFF "behind" kernal
 source_url: https://codebase.c64.org/doku.php?id=base%3Aplaying_music_a000-_ffff
 category: reference
 topics:
-- sound generation
-- basic
 - raster interrupts
+- basic
+- sound generation
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 

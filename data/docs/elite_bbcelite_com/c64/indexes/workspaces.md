@@ -3,33 +3,33 @@ title: List of all workspaces in the Commodore 64 version of Elite
 source_url: https://elite.bbcelite.com/c64/indexes/workspaces.html
 category: source-code
 topics:
-- memory management
 - sound generation
+- memory management
 difficulty: intermediate
 language: none
 hardware:
-- SID
 - CIA
+- SID
 related:
 - sound-programming
-- sid-registers
 - keyboard-handling
+- cia-registers
 - music-player
 - joystick-reading
-- cia-registers
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # List of all workspaces in the Commodore 64 version of Elite
 
 This index contains every workspace that appears in the source code for the Commodore 64 version of Elite, grouped by category. A workspace is defined as a collection of variables, defined in a block.
 
-| ## Keyboard | |
+| Keyboard -------- |  | 
 | [KEYLOOK](https://elite.bbcelite.com/c64/main/workspace/keylook.html) | The key logger | 
-| ## Sound | |
+| Sound ----- |  | 
 | [Music variables](https://elite.bbcelite.com/c64/main/workspace/music_variables.html) | Variables that are used by the music player | 
 | [Sound variables](https://elite.bbcelite.com/c64/main/workspace/sound_variables.html) | The sound buffer where the data to be sent to the sound chip is processed | 
-| ## Workspaces | |
+| Workspaces ---------- |  | 
 | [K%](https://elite.bbcelite.com/c64/main/workspace/k_per_cent.html) | Ship data blocks and ship line heaps | 
 | [Option variables](https://elite.bbcelite.com/c64/main/workspace/option_variables.html) | Variables that are predominantly used to store the game options | 
 | [UP](https://elite.bbcelite.com/c64/main/workspace/up.html) | Configuration variables | 

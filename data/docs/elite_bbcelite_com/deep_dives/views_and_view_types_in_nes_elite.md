@@ -3,8 +3,8 @@ title: Views and view types in NES Elite
 source_url: https://elite.bbcelite.com/deep_dives/views_and_view_types_in_nes_elite.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,10 +13,10 @@ hardware:
 related:
 - kernal-routines
 - keyboard-handling
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+- memory-map
+scraped_at: '2026-08-03'
 ---
 
 # Views and view types in NES Elite
@@ -31,7 +31,8 @@ Let's start by running through the NES version's large collection of views, befo
 
 													 ------------------------
 
-						The view type is still stored in the [QQ11](https://elite.bbcelite.com/nes/common/workspace/zp.html#qq11) variable in the NES version, but it has been extended so the low nibble contains the view number (which is now in the range 0 to 15) and the high nibble contains metadata about the view. This not only allows more information to be stored in the view type, but it also allows views to have multiple statuses that we can track as views get drawn.
+						
+The view type is still stored in the [QQ11](https://elite.bbcelite.com/nes/common/workspace/zp.html#qq11) variable in the NES version, but it has been extended so the low nibble contains the view number (which is now in the range 0 to 15) and the high nibble contains metadata about the view. This not only allows more information to be stored in the view type, but it also allows views to have multiple statuses that we can track as views get drawn.
 
 The low nibble contains the view number, as follows:
 
@@ -58,13 +59,13 @@ Note that view number 14 ($xE) is unused.
 The high nibble contains four configuration bits, as follows:
 
 - Bit 4 clear = do not load the normal font
- Bit 4 set = load the normal font
+Bit 4 set = load the normal font
 - Bit 5 clear = do not load the highlight font
- Bit 5 set = load the highlight font
+Bit 5 set = load the highlight font
 - Bit 6 clear = icon bar
- Bit 6 set = no icon bar (rows 27-28 are blank)
+Bit 6 set = no icon bar (rows 27-28 are blank)
 - Bit 7 clear = dashboard (icon bar is on row 20)
- Bit 7 set = no dashboard (icon bar is on row 27)
+Bit 7 set = no dashboard (icon bar is on row 27)
 
 The normal font is colour 1 on a background of colour 0 (typically white or cyan on black), and the highlight font is colour 3 on a background of colour 1 (typically green on white), though view $BB (Save and load) displays the normal font as colour 1 on a background of colour 2 (white on red). For more details about the two different fonts and how they get loaded into the pattern tables, see the deep dive on [fonts in NES Elite](https://elite.bbcelite.com/fonts_in_nes_elite.html). 
 
@@ -119,7 +120,8 @@ The complete list of view types used in NES Elite is as follows:
   $FF = Segue screen from Title screen to Demo
         No fonts loaded, no dashboard or icon bar
 ```
-						Although it is technically possible to configure a view to only load the highlight font and not the normal font, in practice this isn't done. In terms of fonts, these are the only configurations used:
+						
+Although it is technically possible to configure a view to only load the highlight font and not the normal font, in practice this isn't done. In terms of fonts, these are the only configurations used:
 
 - No font is loaded
 - The normal font is loaded
@@ -132,7 +134,8 @@ As noted above, the last one is only used for the Save and Load screen.
 
 													 --------------------
 
-						Transitioning between different views is much improved in the NES version. When changing views, the [FadeToBlack](https://elite.bbcelite.com/nes/bank_3/subroutine/fadetoblack.html) routine slowly fades the current view to black over the course of the next four VBlanks. While the view is faded to black, we can remove the old view and draw the new one without worrying about NMIs, VBlanks and the PPU, as any screen corruption will be invisible as every colour in the palette is black. When the new view is ready, the [FadeToColour](https://elite.bbcelite.com/nes/bank_3/subroutine/fadetocolour.html) routine reverses the effect and the screen fades into view over the course of another four VBlanks.
+						
+Transitioning between different views is much improved in the NES version. When changing views, the [FadeToBlack](https://elite.bbcelite.com/nes/bank_3/subroutine/fadetoblack.html) routine slowly fades the current view to black over the course of the next four VBlanks. While the view is faded to black, we can remove the old view and draw the new one without worrying about NMIs, VBlanks and the PPU, as any screen corruption will be invisible as every colour in the palette is black. When the new view is ready, the [FadeToColour](https://elite.bbcelite.com/nes/bank_3/subroutine/fadetocolour.html) routine reverses the effect and the screen fades into view over the course of another four VBlanks.
 
 A new variable, [QQ11a](https://elite.bbcelite.com/nes/common/workspace/zp.html#qq11a), is used to store the old view type when changing views. When we decide to change view, QQ11 gets set to the new view number straight away while QQ11a stays set to the old view type, only updating to the new view type once the new view has appeared. This is useful when switching views as it allows us to work out what we need to change when we're in-between views and the screen has faded to black.
 
@@ -148,18 +151,19 @@ The effect is subtle but rather pleasing.
 
 													 -----------------------
 
-						As well as loading fonts, each view loads a set of static patterns into both pattern tables. For example, this space view:
+						
+As well as loading fonts, each view loads a set of static patterns into both pattern tables. For example, this space view:
 
 ![A deep space view showing a planet and an asteroid in NES Elite](https://elite.bbcelite.com/images/nes/bitplanes/planet_asteroid.png) 
 
-						contains the following fixed patterns in pattern table 0:
+contains the following fixed patterns in pattern table 0:
 
 ![Example pattern table 0 in NES Elite](https://elite.bbcelite.com/images/nes/bitplanes/planet_asteroid_patterns_0.png) 
 
-						Almost all views contain these fixed patterns. They come in two blocks: there are the icon bar patterns at the start of the table, and the dashboard patterns from pattern 69 to the end.
+Almost all views contain these fixed patterns. They come in two blocks: there are the icon bar patterns at the start of the table, and the dashboard patterns from pattern 69 to the end.
 
-- The icon bar patterns at pattern 0 are loaded in the NMI handler, after being configured in [ShowIconBar](https://elite.bbcelite.com/nes/bank_3/subroutine/showiconbar.html)or[UpdateIconBar](https://elite.bbcelite.com/nes/bank_3/subroutine/updateiconbar.html).
-- The [SendViewToPPU](https://elite.bbcelite.com/nes/bank_3/subroutine/sendviewtoppu.html)routine decides which other patterns to load for the new view, and for the space view shown above, it loads the dashboard image data from[dashImage](https://elite.bbcelite.com/nes/bank_3/variable/dashimage.html)into patterns 69 to 255 in pattern table 0. The actual loading is done by calling the[SendDashImageToPPU](https://elite.bbcelite.com/nes/bank_3/subroutine/senddashimagetoppu.html)routine.
+- The icon bar patterns at pattern 0 are loaded in the NMI handler, after being configured in [ShowIconBar](https://elite.bbcelite.com/nes/bank_3/subroutine/showiconbar.html) or[UpdateIconBar](https://elite.bbcelite.com/nes/bank_3/subroutine/updateiconbar.html) .
+- The [SendViewToPPU](https://elite.bbcelite.com/nes/bank_3/subroutine/sendviewtoppu.html) routine decides which other patterns to load for the new view, and for the space view shown above, it loads the dashboard image data from[dashImage](https://elite.bbcelite.com/nes/bank_3/variable/dashimage.html) into patterns 69 to 255 in pattern table 0. The actual loading is done by calling the[SendDashImageToPPU](https://elite.bbcelite.com/nes/bank_3/subroutine/senddashimagetoppu.html) routine.
 
 The SendViewToPPU routine is also responsible for loading patterns for the system and commander images, if required, as well as any other graphics that the new view needs. It sends these patterns straight to the PPU without waiting for the NMI handler, as we don't need to worry about corrupting the screen (as it's already faded to black by this point).
 
@@ -167,11 +171,12 @@ The SendViewToPPU routine is also responsible for loading patterns for the syste
 
 													 -------------------------------
 
-						There are lots of routines that deal with setting up new views and sending the correct data to the PPU. I have tried to use a clear naming convention for these different routines, to make things easier to follow.
+						
+There are lots of routines that deal with setting up new views and sending the correct data to the PPU. I have tried to use a clear naming convention for these different routines, to make things easier to follow.
 
-- Routines that end in "ToPPU" send data to the PPU immediately, without worrying about VBlank. For example, [SendViewToPPU](https://elite.bbcelite.com/nes/bank_3/subroutine/sendviewtoppu.html)sends the new view data to the PPU,[SendBitplaneToPPU](https://elite.bbcelite.com/nes/bank_3/subroutine/sendbitplanetoppu.html)sends a bitplane to the PPU, and[SendSpaceViewToPPU](https://elite.bbcelite.com/nes/bank_0/subroutine/sendspaceviewtoppu.html)configures a new space view and sends it to the PPU.
-- Routines that end in "InNMI" configure the NMI handler to start sending data to the PPU in the next appropriate VBlank. For example, [SetupViewInNMI](https://elite.bbcelite.com/nes/bank_3/subroutine/setupviewinnmi.html)sets up the new view before configuring the NMI handler to send it to the PPU,[DrawBitplaneInNMI](https://elite.bbcelite.com/nes/bank_7/subroutine/drawbitplaneinnmi.html)configures the NMI handler to send the specified bitplane to the PPU, and[DrawScreenInNMI](https://elite.bbcelite.com/nes/bank_0/subroutine/drawscreeninnmi.html)configures the NMI handler to send the screen to the PPU.
-- Routines that start with "Update" decide whether to send data to the PPU immediately or go via the NMI handler and VBlank. For example, routines like [UpdateScreen](https://elite.bbcelite.com/nes/bank_7/subroutine/updatescreen.html),[UpdateView](https://elite.bbcelite.com/nes/bank_0/subroutine/updateview.html)and[UpdateHangarView](https://elite.bbcelite.com/nes/bank_7/subroutine/updatehangarview.html)check whether the screen is faded before deciding how best to send the view data.
+- Routines that end in "ToPPU" send data to the PPU immediately, without worrying about VBlank. For example, [SendViewToPPU](https://elite.bbcelite.com/nes/bank_3/subroutine/sendviewtoppu.html) sends the new view data to the PPU,[SendBitplaneToPPU](https://elite.bbcelite.com/nes/bank_3/subroutine/sendbitplanetoppu.html) sends a bitplane to the PPU, and[SendSpaceViewToPPU](https://elite.bbcelite.com/nes/bank_0/subroutine/sendspaceviewtoppu.html) configures a new space view and sends it to the PPU.
+- Routines that end in "InNMI" configure the NMI handler to start sending data to the PPU in the next appropriate VBlank. For example, [SetupViewInNMI](https://elite.bbcelite.com/nes/bank_3/subroutine/setupviewinnmi.html) sets up the new view before configuring the NMI handler to send it to the PPU,[DrawBitplaneInNMI](https://elite.bbcelite.com/nes/bank_7/subroutine/drawbitplaneinnmi.html) configures the NMI handler to send the specified bitplane to the PPU, and[DrawScreenInNMI](https://elite.bbcelite.com/nes/bank_0/subroutine/drawscreeninnmi.html) configures the NMI handler to send the screen to the PPU.
+- Routines that start with "Update" decide whether to send data to the PPU immediately or go via the NMI handler and VBlank. For example, routines like [UpdateScreen](https://elite.bbcelite.com/nes/bank_7/subroutine/updatescreen.html) ,[UpdateView](https://elite.bbcelite.com/nes/bank_0/subroutine/updateview.html) and[UpdateHangarView](https://elite.bbcelite.com/nes/bank_7/subroutine/updatehangarview.html) check whether the screen is faded before deciding how best to send the view data.
 
 As in the original Elite, [TT66](https://elite.bbcelite.com/nes/bank_0/subroutine/tt66.html) is still the core routine for changing views, but in NES Elite there are lots of other routines too. Hopefully the naming convention above will help make things a little easier to understand...
 

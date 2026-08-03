@@ -10,9 +10,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 
@@ -34,11 +34,17 @@ Examples:
 
 BASIC code like you should do it in BASIC:
 
-10 OPEN 15,8,15 20 INPUT#15,F,E$,T,S 30 PRINT F;E$;T;S 40 CLOSE 15
+10 OPEN 15,8,15
+20 INPUT#15,F,E$,T,S
+30 PRINT F;E$;T;S
+40 CLOSE 15
 
 BASIC code similar to the assembler code:
 
-10 OPEN 15,8,15 20 IF ST<>0 THEN GOTO 40 30 GET#15,A$:PRINT A$;:GOTO 20 40 CLOSE 15
+10 OPEN 15,8,15
+20 IF ST<>0 THEN GOTO 40
+30 GET#15,A$:PRINT A$;:GOTO 20
+40 CLOSE 15
 
 Assembler:
 

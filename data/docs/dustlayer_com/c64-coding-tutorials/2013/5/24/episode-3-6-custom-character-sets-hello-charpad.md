@@ -3,29 +3,29 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-6-custom-character-sets-hello-charpad
 category: tutorial
 topics:
-- graphics
-- assembly
 - sprite programming
+- assembly
+- graphics
 difficulty: beginner
 language: assembly
 hardware:
 - KERNAL
+- VIC-II
 - SID
 - CIA
-- VIC-II
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
-- cia-registers
+- joystick-reading
 - memory-map
 - sid-registers
-- raster-interrupts
-- joystick-reading
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 
@@ -35,11 +35,9 @@ scraped_at: '2026-07-27'
 
 **Synopsis:** Using the Standard C64 Character Set is not really cool, so we will acquire a modfied set taken a C64 game and edit it in another Windows tool which can also run on Mac. 
 
-**Download via  dust:** $ dust tutorials (select 'spritro') 
+**Download via [dust](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite):** $ dust tutorials (select 'spritro') 
 
-**Github Repository:**
-
-[Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)
+**Github Repository:** [Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)  
 
 - [Episode 3-1: Spritro - An Intro with a Sprite](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite)
 - [Episode 3-2: Creating the Shapes - Hello SpritePad](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad)
@@ -67,11 +65,11 @@ Start up CharPad and load the rambo_font.ctm which came with the source code of 
 
 The Commodore Character Set has a Standard Size of 2 Kbyte which can hold 256 different items. We don't need that many items as we only work with the letters A-Z and some punctuation letters as well as a Heart Symbol which I put at the position of the "]"-letter. It is of course important that the order of the letters match the standard order of the C64 Character Sets so that the screen codes resulting from our text in the sources is adequately converted to the C64 screen.
 
-In **data_text.asm **you will find the three lines of text that are displayed on the screen. Notice how I use the "]" character which will be later shown as a heart character. 
+In **data_text.asm** you will find the three lines of text that are displayed on the screen. Notice how I use the "]" character which will be later shown as a heart character. 
 
 Before we load our Character Set into the project we we need to identify some acceptable space in memory and as with the Sprite Data make sure that the VIC-II can actually see the data its selected Bank. In Standard Bank 3 of the VIC-II there are not too many options and we decide to load our small set starting at $3800.
 
-This is done in **config_resources.asm **and again we need to consider that CharPad exports files with a header with lots of information. Since we only use the raw data without the need to consider anything special we skip all the header information spanning over 24 Bytes and just load the 384 Bytes of the following Character Data into memory. That translates to 48 single Characters each having a size of 8 Bytes or 8x8 Pixels. Lots of them are empty though because I did not bother to clean the Charset up thoughtfully.   
+This is done in **config_resources.asm** and again we need to consider that CharPad exports files with a header with lots of information. Since we only use the raw data without the need to consider anything special we skip all the header information spanning over 24 Bytes and just load the 384 Bytes of the following Character Data into memory. That translates to 48 single Characters each having a size of 8 Bytes or 8x8 Pixels. Lots of them are empty though because I did not bother to clean the Charset up thoughtfully.   
 
 Once the Character Set is loaded into memory we need to tell the VIC-II where it needs to fetch the data from because it is still pointing to the standard Character Generator ROM and we need to bend that pointer in question to our location at $3800.  We do this in the routine we execute only once to write all characters to the screen located in the file **sub_write_text.asm**.
 

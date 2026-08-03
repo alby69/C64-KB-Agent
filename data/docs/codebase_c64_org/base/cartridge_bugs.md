@@ -11,12 +11,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- keyboard-handling
 - joystick-reading
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Cartridge bugs

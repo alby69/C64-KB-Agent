@@ -3,21 +3,21 @@ title: Installing Elite over Econet
 source_url: https://elite.bbcelite.com/hacks/elite_over_econet_installing.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Installing Elite over Econet
@@ -26,13 +26,13 @@ scraped_at: '2026-07-27'
 
 To play Elite on your Econet network, you'll either need a PiEconetBridge with access to the TNMoC Econet Cloud (see [playing Elite over Econet](https://elite.bbcelite.com/elite_over_econet_downloads.html) for details), or you'll need to install the game on your own Econet fileserver by choosing one of these options and following the instructions below (they both contain the same files, so choose the one that's easiest to install on your network):
 
-- [Elite over Econet as a DSD disc image](https://elite.bbcelite.com/versions/elite_over_econet/elite-over-econet-flicker-free.dsd)for installing via a BBC Micro, BBC Master or Acorn Electron
-- [Elite over Econet as a RISC OS zip file](https://elite.bbcelite.com/versions/elite_over_econet/elite-over-econet-flicker-free.zip)for installing via an Archimedes
+- [Elite over Econet as a DSD disc image](https://elite.bbcelite.com/versions/elite_over_econet/elite-over-econet-flicker-free.dsd) for installing via a BBC Micro, BBC Master or Acorn Electron
+- [Elite over Econet as a RISC OS zip file](https://elite.bbcelite.com/versions/elite_over_econet/elite-over-econet-flicker-free.zip) for installing via an Archimedes
 
 If you want to be able to transmit scores from Archimedes Elite to scoreboards on your network, you should also download the following:
 
-- The [EliteNet application](https://elite.bbcelite.com/versions/elite_over_econet/elitenet.zip)as a RISC OS zip file
-- Version 1.14 of Archimedes Elite, which you can [download from archive.org](https://web.archive.org/web/20060130144818/http://phlamethrower.co.uk/riscos/elite.zip).
+- The [EliteNet application](https://elite.bbcelite.com/versions/elite_over_econet/elitenet.zip) as a RISC OS zip file
+- Version 1.14 of Archimedes Elite, which you can [download from archive.org](https://web.archive.org/web/20060130144818/http://phlamethrower.co.uk/riscos/elite.zip) .
 
 See [Elite over Econet on the Acorn Archimedes](https://elite.bbcelite.com/elite_over_econet_acorn_archimedes.html) for more details about playing Archimedes Elite over Econet; the rest of this page covers the 8-bit version.
 
@@ -50,17 +50,20 @@ If you have any problems installing or running Elite over Econet, you can post t
 
 													 --------------------
 
-						Elite can be installed in two ways: for all users on your network, or for individual users. The installation instructions below cover both options.
+						
+Elite can be installed in two ways: for all users on your network, or for individual users. The installation instructions below cover both options.
 
 You can also choose where to install the game binaries. By default they live in the $.EliteGame directory, but you can change this location by using an EliteConf file. This process is described below.
 
 A common configuration is to create a dedicated user called ELITE, and to install Elite for just that user. You can then set up a !BOOT file like this to run the game on login:
 
-*DIR *DIR EliteCmdrs *Elite
+  *DIR
+  *DIR EliteCmdrs
+  *Elite
 
 This means that users of your network can run Elite by simply typing:
 
-*I AM ELITE
+  *I AM ELITE
 
 The only thing to be aware of is that because there is only one login, all saved games will go into the same directory (e.g. $.ELITE.EliteCmdrs). So, when saving commanders, it's a good idea to use the catalogue option first to make sure there isn't an existing commander file with the same name.
 
@@ -68,17 +71,18 @@ The only thing to be aware of is that because there is only one login, all saved
 
 													 -----------------------------------------------------------------------
 
-						To install Elite using a BBC Micro, BBC Master or Acorn Electron, download the DSD disc image and copy the files to your server as follows (files have been grouped into DFS directories to make this process easier). Note that the disc image is a double-sided disc, so it contains files on both drive 0 and drive 2. I use [TREECOPY](https://mdfs.net/Software/FileTools/) to copy files from the disc to the server, but other copying programs are available.
+						
+To install Elite using a BBC Micro, BBC Master or Acorn Electron, download the DSD disc image and copy the files to your server as follows (files have been grouped into DFS directories to make this process easier). Note that the disc image is a double-sided disc, so it contains files on both drive 0 and drive 2. I use [TREECOPY](https://mdfs.net/Software/FileTools/) to copy files from the disc to the server, but other copying programs are available.
 
-- Create a directory on the server called $.EliteGame, to use for the game binaries (see the section below if you want to install the game into a different location).
-- Copy all the files from DFS directory G on drive 0 of the disc image into $.EliteGame.
-- Copy all the files from DFS directory G on drive 2 of the disc image into $.EliteGame.
-- Create a directory called D inside $.EliteGame (i.e. $.EliteGame.D) and copy all the files from DFS directory D on drive 2 of the disc image into there.
-- Create a directory called EliteCmdrs in the top level of the main home directory for each user who wants to play Elite (e.g. $.Mark.EliteCmdrs for user Mark), and copy all the files from DFS directory C on drive 2 of the disc image to there. If you don't create the EliteCmdrs directory, then the game will not work for that user.
-- Do one of the following, depending on who you want to be able to play the game:
-								- If you want all users to be able to play Elite, then copy all the files from DFS directory L on drive 2 of the disc image into $.Library and $.Library1 and ensure all users have their library set accordingly.
-- If you want to restrict the game to specific users, then copy all the files from DFS directory L on drive 2 of the disc image into the EliteCmdrs directory that you just created in each of the users' main home directories.
- 
+1. Create a directory on the server called $.EliteGame, to use for the game binaries (see the section below if you want to install the game into a different location).
+2. Copy all the files from DFS directory G on drive 0 of the disc image into $.EliteGame.
+3. Copy all the files from DFS directory G on drive 2 of the disc image into $.EliteGame.
+4. Create a directory called D inside $.EliteGame (i.e. $.EliteGame.D) and copy all the files from DFS directory D on drive 2 of the disc image into there.
+5. Create a directory called EliteCmdrs in the top level of the main home directory for each user who wants to play Elite (e.g. $.Mark.EliteCmdrs for user Mark), and copy all the files from DFS directory C on drive 2 of the disc image to there. If you don't create the EliteCmdrs directory, then the game will not work for that user.
+6. Do one of the following, depending on who you want to be able to play the game:
+								
+  - If you want all users to be able to play Elite, then copy all the files from DFS directory L on drive 2 of the disc image into $.Library and $.Library1 and ensure all users have their library set accordingly.
+  - If you want to restrict the game to specific users, then copy all the files from DFS directory L on drive 2 of the disc image into the EliteCmdrs directory that you just created in each of the users' main home directories.
 
 The game is now installed - see the section on [playing Elite over Econet](https://elite.bbcelite.com/elite_over_econet_downloads.html#playing) for details on how to run the game.
 
@@ -86,14 +90,15 @@ The game is now installed - see the section on [playing Elite over Econet](https
 
 													 -------------------------------------------
 
-						To install Elite using an Archimedes, download the zip file and open it up using an application like SparkFS (you can download SparkFS for free from [David Pilling's site](https://www.davidpilling.com/wiki/index.php/SparkFS)). Then copy the directories from the zip file to your server as follows:
+						
+To install Elite using an Archimedes, download the zip file and open it up using an application like SparkFS (you can download SparkFS for free from [David Pilling's site](https://www.davidpilling.com/wiki/index.php/SparkFS)). Then copy the directories from the zip file to your server as follows:
 
-- Copy the EliteGame directory to your fileserver's root directory, to create a directory called $.EliteGame on the server (see the section below if you want to install the game into a different location).
-- Copy the EliteCmdrs directory to the top level of the main home directory for each user who wants to play Elite (e.g. $.Mark.EliteCmdrs for user Mark)
-- Do one of the following, depending on who you want to be able to play the game:
-								- If you want all users to be able to play Elite, then copy the files from the Library and Library1 directories into $.Library and $.Library1 on your fileserver, and ensure all users have their library set accordingly.
-- If you want to restrict the game to specific users, then copy all the files from the Library directory into the EliteCmdrs directory that you created in each of the users' main home directories.
- 
+1. Copy the EliteGame directory to your fileserver's root directory, to create a directory called $.EliteGame on the server (see the section below if you want to install the game into a different location).
+2. Copy the EliteCmdrs directory to the top level of the main home directory for each user who wants to play Elite (e.g. $.Mark.EliteCmdrs for user Mark)
+3. Do one of the following, depending on who you want to be able to play the game:
+								
+  - If you want all users to be able to play Elite, then copy the files from the Library and Library1 directories into $.Library and $.Library1 on your fileserver, and ensure all users have their library set accordingly.
+  - If you want to restrict the game to specific users, then copy all the files from the Library directory into the EliteCmdrs directory that you created in each of the users' main home directories.
 
 The game is now installed - see the section on [playing Elite over Econet](https://elite.bbcelite.com/elite_over_econet_downloads.html#playing) for details on how to run the game.
 
@@ -101,7 +106,8 @@ The game is now installed - see the section on [playing Elite over Econet](https
 
 													 ----------------------------------------------
 
-						If you don't want to install the Elite binaries into the default directory of $.EliteGame, then that's no problem - you can install them anywhere you like. It is even possible to install Elite for just one user and have every single Elite-related file, including the loaders and binaries, within that user's directory and nowhere else.
+						
+If you don't want to install the Elite binaries into the default directory of $.EliteGame, then that's no problem - you can install them anywhere you like. It is even possible to install Elite for just one user and have every single Elite-related file, including the loaders and binaries, within that user's directory and nowhere else.
 
 If you do install the game binaries into a custom directory, then you need to tell the game where to look. To do this, you need to create a file called EliteConf that contains the full path of the directory where you've installed the binaries, followed by a carriage return (see below for instructions on creating this file).
 
@@ -111,13 +117,13 @@ If you do install the game binaries into a custom directory, then you need to te
 
 If you are installing Elite via a BBC Micro, BBC Master or Acorn Electron, then the easiest way to create the EliteConf file is by typing:
 
-*BUILD EliteConf
+  *BUILD EliteConf
 
 Type the full directory path containing the game binaries (e.g. $.Games.Elite if you have installed the binaries into $.Games.Elite), and then press RETURN and then ESCAPE.
 
 Note that you must give public read access to this file, which you can do like this:
 
-*ACCESS EliteConf WR/R
+  *ACCESS EliteConf WR/R
 
 You can tailor this permission to your own needs, just as long as there is public read access (i.e. the "/R" part in the above). Make sure you set the correct permissions for all copies of EliteConf.
 
@@ -131,119 +137,122 @@ If you choose to do the latter, then type the full directory path on the first l
 
 													 ---------------
 
-						If you install Elite over Econet in the default location, then the complete list of installed files on your server should look like this if you are installing Elite for all users:
+						
+If you install Elite over Econet in the default location, then the complete list of installed files on your server should look like this if you are installing Elite for all users:
 
 - $.EliteGame
-								- ElDebug
-- ElScore
-- ELTAB
-- ELTAD
-- ELTAI
-- ELTAT
-- ELTBD
-- ELTBI
-- ELTBM
-- ELTBR
-- ELTBS
-- ELTBT
-- ELTEC
-- ELTED
-- ELTEE
-- ELTEL
-- ELTER
-- ELTMC
-- ELTMD
-- ELTME
-- ELTSA
-- ELTSE
-- ELTSI
-- ELTSP
-- ELTXA
-- ELTXE
-- ELTXI
-- ELTXP
-- FixPAGE
-- Version
- 
+								
+  - ElDebug
+  - ElScore
+  - ELTAB
+  - ELTAD
+  - ELTAI
+  - ELTAT
+  - ELTBD
+  - ELTBI
+  - ELTBM
+  - ELTBR
+  - ELTBS
+  - ELTBT
+  - ELTEC
+  - ELTED
+  - ELTEE
+  - ELTEL
+  - ELTER
+  - ELTMC
+  - ELTMD
+  - ELTME
+  - ELTSA
+  - ELTSE
+  - ELTSI
+  - ELTSP
+  - ELTXA
+  - ELTXE
+  - ELTXI
+  - ELTXP
+  - FixPAGE
+  - Version
 - $.Library
-								- Elite
-- EliteB
- 
+								
+  - Elite
+  - EliteB
 - $.Library1
-								- Elite
-- EliteB
- 
+								
+  - Elite
+  - EliteB
 - $.User1.EliteCmdrs
-								- MAX
- 
+								
+  - MAX
 - $.User2.EliteCmdrs
-								- MAX
- 
+								
+  - MAX
 - ...
 
 Or like this if you are just installing Elite for one user:
 
 - $.EliteGame
-								- ElDebug
-- ElScore
-- ELTAB
-- ELTAD
-- ELTAI
-- ELTAT
-- ELTBD
-- ELTBI
-- ELTBM
-- ELTBR
-- ELTBS
-- ELTBT
-- ELTEC
-- ELTED
-- ELTEE
-- ELTEL
-- ELTER
-- ELTMC
-- ELTMD
-- ELTME
-- ELTSA
-- ELTSE
-- ELTSI
-- ELTSP
-- ELTXA
-- ELTXE
-- ELTXI
-- ELTXP
-- FixPAGE
-- Version
- 
+								
+  - ElDebug
+  - ElScore
+  - ELTAB
+  - ELTAD
+  - ELTAI
+  - ELTAT
+  - ELTBD
+  - ELTBI
+  - ELTBM
+  - ELTBR
+  - ELTBS
+  - ELTBT
+  - ELTEC
+  - ELTED
+  - ELTEE
+  - ELTEL
+  - ELTER
+  - ELTMC
+  - ELTMD
+  - ELTME
+  - ELTSA
+  - ELTSE
+  - ELTSI
+  - ELTSP
+  - ELTXA
+  - ELTXE
+  - ELTXI
+  - ELTXP
+  - FixPAGE
+  - Version
 - $.User.EliteCmdrs
-								- MAX
-- Elite
-- EliteB
- 
+								
+  - MAX
+  - Elite
+  - EliteB
 
 The 2024 version of Elite over Econet also contained EliteM, EliteSP and EliteX files, but these were rolled into the Elite binary in 2025, so if you are upgrading, these files can be removed from the library.
 
 If you install the game binaries to a directory other than $.EliteGame, then you need to add the EliteConf file as described in the previous section. If you are installing Elite for all users then you need to add these files:
 
 - $.Library
-								- EliteConf
- 
+								
+  - EliteConf
 - $.Library1
-								- EliteConf
- 
+								
+  - EliteConf
 
 If you are just installing Elite for one user, then this is the file to add:
 
 - $.User.EliteCmdrs
-								- EliteConf
- 
+								
+  - EliteConf
 
 If you can't get your installation working, let me know in [this Stardot thread](https://www.stardot.org.uk/forums/viewtopic.php?t=28355) and I'll try to help.
 
+## 
 
 													 ---------------
 
-						Elite over Econet has had the following releases:
+						
+Elite over Econet has had the following releases:
 
 - 2024-01-16 - Initial release
 - 2024-04-15 - Added BBC Micro sideways RAM version
@@ -260,24 +269,24 @@ If you can't get your installation working, let me know in [this Stardot thread]
 - 2024-05-23 - Forwarding now retains the correct network address of each player
 - 2024-05-28 - Added EliteConf file for configuring installation directory, improved FixPAGE process for BBC Micro, added Executive version of 6502 Second Processor Elite
 - 2025-03-24 - Major flicker-free update:
-								- Flicker-free ships and planets added
-- 6502 Second Processor versions now run at a playable speed
-- New *Elite command-line options: [V]ersion, [S]coreboard, [D]ebugger and e[X]ecutive
-- Fewer files in $.Library (from five down to just two)
-- New scoreboard features: up to 100 players (was 20), scores can be deleted, faster screen refresh, better key handling, three-digit station numbers, ranking takes death count into consideration, save scoreboard to a TSV file
-- New debugger features: log activity to a TSV file, forward scores to multiple stations, transmit test data, pause debugging
-- Fixed a bug in the standard BBC Micro version that would hang the game when launching from the station
-- EliteConf now works on all the main Econet servers (Level 2, Level 3, Level 4, MDFS and PiFS)
-- The single-user BBC Micro version now runs without having to log in twice
- 
+								
+  - Flicker-free ships and planets added
+  - 6502 Second Processor versions now run at a playable speed
+  - New *Elite command-line options: [V]ersion, [S]coreboard, [D]ebugger and e[X]ecutive
+  - Fewer files in $.Library (from five down to just two)
+  - New scoreboard features: up to 100 players (was 20), scores can be deleted, faster screen refresh, better key handling, three-digit station numbers, ranking takes death count into consideration, save scoreboard to a TSV file
+  - New debugger features: log activity to a TSV file, forward scores to multiple stations, transmit test data, pause debugging
+  - Fixed a bug in the standard BBC Micro version that would hang the game when launching from the station
+  - EliteConf now works on all the main Econet servers (Level 2, Level 3, Level 4, MDFS and PiFS)
+  - The single-user BBC Micro version now runs without having to log in twice
 - 2025-04-27 - TNMoC LAN party update:
-								- Added scoreboard support to Archimedes Elite
-- The kill count is now two bytes, so combat competitions can go on for as long as you like
-- Saving a commander file will also save multiplayer scores, so you can take a break during a competition and pick it up later
-- New scoreboard features: load and save score files, automated page-turning
-- New debugger features: convert score files to TSV, merge score files
-- Version information (*ELITE V) appears much more quickly on a BBC Micro
- 
+								
+  - Added scoreboard support to Archimedes Elite
+  - The kill count is now two bytes, so combat competitions can go on for as long as you like
+  - Saving a commander file will also save multiplayer scores, so you can take a break during a competition and pick it up later
+  - New scoreboard features: load and save score files, automated page-turning
+  - New debugger features: convert score files to TSV, merge score files
+  - Version information (*ELITE V) appears much more quickly on a BBC Micro
 - 2025-05-08 - Fixed saving and loading of one-score scoreboards, added a *-command option to the scoreboard, fixed test data transmission in the debugger, fixed a bug in the BBC Micro version that accidentally disabled versions 3.40, 3.60 and 3.62 of NFS
 - 2025-05-11 - Updated the BBC Micro version to support every known variant of NFS, improved stability of EliteNet
 - 2025-05-13 - Further improvements to EliteNet stability
@@ -289,10 +298,12 @@ You can check the release date for a given disc image by loading the disc and ty
 
 You can check the release date for the installed version of Elite by typing *ELITE V, or by using *TYPE to look in the Versions file in the game binary folder (in the default installation, that's $.EliteGame.Version).
 
+## 
 
 													 ------------
 
-						The BBC Micro version of Elite over Econet has some known issues:
+						
+The BBC Micro version of Elite over Econet has some known issues:
 
 - If the scoreboard machine is a BBC Micro fitted with NFS 3.34, then the scoreboard won't show updates coming from the other side of a bridge (though it will show updates from machines on the local network). Upgrading to NFS 3.40+ fixes this.
 - DFS 0.9 does not get disabled by the loader process, so you will have to find another way of disabling it (such as physically unplugging the ROM, or upgrading to DNFS or a later version of DFS). Upgrading to DFS 1.00+ or DNFS fixes this. This issue also applies to some MMFS ROMs (as they are based on DFS).

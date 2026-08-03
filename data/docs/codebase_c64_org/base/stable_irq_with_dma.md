@@ -3,25 +3,25 @@ title: Stable IRQ with DMA
 source_url: https://codebase.c64.org/doku.php?id=base%3Astable_irq_with_dma
 category: reference
 topics:
-- basic
 - raster interrupts
+- basic
 - assembly
 difficulty: advanced
 language: assembly
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -33,7 +33,120 @@ base:stable_irq_with_dma
 
 ChristopherJam's stable IRQ routine using DMA, posted on [http://noname.c64.org/csdb/forums/?roomid=11&topicid=88971](http://noname.c64.org/csdb/forums/?roomid=11&topicid=88971) (cleaned up and converted to ca65 syntax).
 
-.segment "STARTUP" .word basicstub ; load address basicstub: .word @nextline .word 1970 + (.time / 31557600) .byte $9e .byte <(((init / 1000) .mod 10) + $30) .byte <(((init / 100 ) .mod 10) + $30) .byte <(((init / 10 ) .mod 10) + $30) .byte <(((init ) .mod 10) + $30) .byte 0 @nextline: .word 0 init: lda #$04 sta $d021 sta 646 lda #147 jsr $ffd2 lda #0 sta $d021 lda #1 ; something to see sta $0400 lda #2 sta $0428 lda #$7f ; kill CIA irq sta $dc0d sei lda #$35 ; disable ROM sta $01 lda #$01 ; enable VIC irq sta $d01a lda #$1b ; clear high bit of irq rasterline sta $d011 lda #$32 ; last invisible line sta $d012 lda #<irq1 ; set irq vector sta $fffe lda #>irq1 sta $ffff cli loop: inc $07e7 ; a nice untidy main loop to ensure instability! bpl loop jmp loop irq1: pha lda $d019 sta $d019 txa pha tya pha lda #$0f ; this is unstable! sta $d020 lda #$1a ; force partial badline before screen starts sta $d011 lda #$0b ; this is stable ^_^ sta $d020 lda #$1b ; trigger normal re-fetch of first row of chars sta $d011 lda #$ff ; set end-of-screen irq sta $d012 lda #<irq2 sta $fffe lda #>irq2 sta $ffff pla tay pla tax pla rti irq2: pha lda $d019 sta $d019 txa pha tya pha ;ensure first row of chars is already being displayed when badline forced by irq1 lda #$18 sta $d011 lda #$32 sta $d012 lda #<irq1 sta $fffe lda #>irq1 sta $ffff pla tay pla tax pla rti
+	.segment "STARTUP"
+ 
+	.word basicstub		; load address
+ 
+basicstub:
+	.word @nextline
+	.word 1970 + (.time / 31557600)
+	.byte $9e
+	.byte <(((init / 1000) .mod 10) + $30)
+	.byte <(((init / 100 ) .mod 10) + $30)
+	.byte <(((init / 10  ) .mod 10) + $30)
+	.byte <(((init       ) .mod 10) + $30)
+	.byte 0
+@nextline:
+	.word 0
+ 
+init:
+	lda #$04
+	sta $d021
+	sta 646
+	lda #147
+	jsr $ffd2
+	lda #0
+	sta $d021
+	lda #1		; something to see
+	sta $0400
+	lda #2
+	sta $0428
+ 
+	lda #$7f	; kill CIA irq
+	sta $dc0d
+ 
+	sei
+ 
+	lda #$35	; disable ROM
+	sta $01
+ 
+	lda #$01	; enable VIC irq
+	sta $d01a
+	lda #$1b	; clear high bit of irq rasterline
+	sta $d011
+	lda #$32	; last invisible line
+	sta $d012
+ 
+	lda #<irq1	; set irq vector
+	sta $fffe
+	lda #>irq1
+	sta $ffff
+ 
+	cli
+ 
+loop:
+	inc $07e7	; a nice untidy main loop to ensure instability!
+	bpl loop
+	jmp loop
+ 
+irq1:
+	pha
+	lda $d019
+	sta $d019
+	txa
+	pha
+	tya
+	pha
+ 
+	lda #$0f   ; this is unstable!
+	sta $d020
+	lda #$1a   ; force partial badline before screen starts
+	sta $d011
+	lda #$0b   ; this is stable ^_^
+	sta $d020
+	lda #$1b   ; trigger normal re-fetch of first row of chars
+	sta $d011
+	lda #$ff   ; set end-of-screen irq
+	sta $d012
+ 
+	lda #<irq2
+	sta $fffe
+	lda #>irq2
+	sta $ffff
+ 
+	pla
+	tay
+	pla
+	tax
+	pla
+	rti
+ 
+irq2:
+	pha
+	lda $d019
+	sta $d019
+	txa
+	pha
+	tya
+	pha
+ 
+	;ensure first row of chars is already being displayed when badline forced by irq1
+	lda #$18
+	sta $d011
+	lda #$32
+	sta $d012
+ 
+	lda #<irq1
+	sta $fffe
+	lda #>irq1
+	sta $ffff
+ 
+	pla
+	tay
+	pla
+	tax
+	pla
+	rti
 
 base/stable_irq_with_dma.txt · Last modified:  by 127.0.0.1
 

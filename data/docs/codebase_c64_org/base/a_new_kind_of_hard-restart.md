@@ -3,8 +3,8 @@ title: A new kind of hard-restart
 source_url: https://codebase.c64.org/doku.php?id=base%3Aa_new_kind_of_hard-restart
 category: reference
 topics:
-- sound generation
 - raster interrupts
+- sound generation
 - assembly
 difficulty: beginner
 language: mixed
@@ -13,15 +13,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # A new kind of hard-restart
@@ -42,7 +42,85 @@ The CPU intensive part of the process takes a mere ten raster lines.
 
 The core implementation is included below; details of how the magic part works to follow in a future update.
 
-;------------------------------------------------------------------------------ ; stabiliseRC3 ; ; ; ; place SID in a known state, with quiescent env3 and ADSR=0000 ; ; ; ; All DMA and interrupts must be disabled for the last 600 cycles ; ; ; ;------------------------------------------------------------------------------ .align 256 stabiliseRC3: lda#$00 sta v3AD sta v3CR lda#$f0 sta v3SR ldy#25 ; wait >0x7fff cycles to recapture ldx#128 : dex bne :- dey bpl :- lda#$01 sta v3CR ; start rise to $ff ldx#205 ; wait >256*9 cycles for rise to maximum : dex bne :- : dex bne :- ; from this point on, timing is critical lda#$02 ldx#$01 ldy#$00 .repeat 7 ; here's where the magic happens. Potential RC values are released sta v3AD ; one at a time into a 63 cycle bottle, at intervals multiples of jsr wait20 ; 9 cycles apart stx v3AD nop nop sty v3AD .endrep sta v3AD waitNy 18 ; wait 18 cycles (clobbers Y, as ncycles>7) lda#$44 ; rate 4, limit 149 stx v3AD sta v3AD sta v3SR ; rate counter should now be one of 9 different values that ; are all equal modulo 9, in the range 0 to 99 lda#$00 sta v3CR ; ADSR=$4444, env=$ff, switching to release waitNy 170 ; wait for env to drop to $fe ldx#$01 ; request attack stx v3CR ; we've now a few cycles grace before env reaches ff in which to switch ADSR to $40f0 lda#$40 sta v3AD lda#$f0 sta v3SR waitNy 99 ; wait for the entire packet of potential values to be captured into the 9 cycle decay limit loop ; now ADSR = 40f0, RC is synchronised, env=$ff lda #$11 ; next we need to force overflow sta v3AD ; by switching to decay, then back to attack before env drops below $ff lda#$f1 ; we do this at a rate of 1 (RC limit of 31) to give us time for register fiddling. sta v3SR ldx #0 stx v3CR ; drop into decay ldx #1 stx v3CR ; return to attack - this'll increase env to $00 waitNy 5 lda#$00 ; recapture to the fastest rate sta v3AD ; this write must be performed while RC<9, or we'll trigger the bug again. sta v3SR sta v3CR ; and drop back to release state rts wait20: nop nop nop nop rts
+;------------------------------------------------------------------------------
+; stabiliseRC3                                                                ;
+;                                                                             ;
+;    place SID in a known state, with quiescent env3 and ADSR=0000            ;
+;                                                                             ;
+;    All DMA and interrupts must be disabled for the last 600 cycles          ;
+;                                                                             ;
+;------------------------------------------------------------------------------
+	.align 256
+stabiliseRC3:
+	lda#$00
+	sta v3AD
+	sta v3CR
+	lda#$f0
+	sta v3SR
+	ldy#25         ; wait >0x7fff cycles to recapture
+	ldx#128
+:	dex
+	bne :-
+	dey
+	bpl :-
+	lda#$01
+	sta v3CR       ; start rise to $ff
+	ldx#205        ; wait >256*9 cycles for rise to maximum
+:	dex
+	bne :-
+:	dex
+	bne :-
+	               ; from this point on, timing is critical
+	lda#$02
+	ldx#$01
+	ldy#$00
+.repeat 7          ; here's where the magic happens.  Potential RC values are released
+	sta   v3AD     ; one at a time into a 63 cycle bottle, at intervals multiples of
+	jsr wait20     ; 9 cycles apart
+	stx   v3AD
+	nop
+	nop
+	sty   v3AD
+.endrep
+	sta   v3AD
+	waitNy 18      ; wait 18 cycles (clobbers Y, as ncycles>7)
+	lda#$44        ; rate 4, limit 149
+	stx v3AD
+	sta v3AD
+	sta v3SR
+	               ; rate counter should now be one of 9 different values that
+	               ; are all equal modulo 9, in the range 0 to 99
+	lda#$00
+	sta v3CR       ; ADSR=$4444, env=$ff, switching to release
+	waitNy 170     ; wait for env to drop to $fe
+	ldx#$01        ; request attack
+	stx v3CR       ; we've now a few cycles grace before env reaches ff in which to switch ADSR to $40f0 
+	lda#$40
+	sta v3AD
+	lda#$f0
+	sta v3SR
+	waitNy 99      ; wait for the entire packet of potential values to be captured into the 9 cycle decay limit loop
+	               ; now ADSR = 40f0, RC is synchronised, env=$ff 
+	lda #$11       ; next we need to force overflow
+	sta v3AD       ; by switching to decay, then back to attack before env drops below $ff
+	lda#$f1        ; we do this at a rate of 1 (RC limit of 31) to give us time for register fiddling.
+	sta v3SR
+	ldx #0
+	stx v3CR       ; drop into decay
+	ldx #1
+	stx v3CR       ; return to attack - this'll increase env to $00
+	waitNy 5
+	lda#$00        ; recapture to the fastest rate
+	sta v3AD       ; this write must be performed while RC<9, or we'll trigger the bug again.
+	sta v3SR
+	sta v3CR       ; and drop back to release state
+	rts
+wait20:
+	nop
+	nop
+	nop
+	nop
+	rts
 
 Source for a full implementation and test harness may be found at [hard_restart_bottle_0.1.tar.gz](https://codebase.c64.org/lib/exe/fetch.php?media=sourcecode:hard_restart_bottle_0.1.tar.gz)
 

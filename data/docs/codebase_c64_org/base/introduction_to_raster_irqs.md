@@ -3,30 +3,30 @@ title: Introduction to raster IRQs
 source_url: https://codebase.c64.org/doku.php?id=base%3Aintroduction_to_raster_irqs
 category: reference
 topics:
-- basic
 - raster interrupts
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

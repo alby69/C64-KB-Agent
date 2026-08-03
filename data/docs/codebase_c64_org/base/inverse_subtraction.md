@@ -9,9 +9,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Inverse Subtraction
@@ -24,7 +24,9 @@ by White Flame
 
 To subtract A from a number, or “number - .A”, we transform it to the doable “-.A + number”:
 
-eor #$ff sec adc number
+ eor #$ff
+ sec
+ adc number
 
 and that's it.
 
@@ -34,9 +36,15 @@ by Frantic
 
 One may think that the following two pieces of code would produce exactly the same result:
 
-;Variant 1 - Subtract XX by YY using clc/adc lda #XX clc adc #YY ;E.g. to subtract with 1, use $ff here
+  ;Variant 1 - Subtract XX by YY using clc/adc
+  lda #XX
+  clc
+  adc #YY  ;E.g. to subtract with 1, use $ff here
 
-;Variant 2 - Subtract $XX by $YY using sec/adc lda #XX sec adc #YY-1 ;E.g. to subtract with 1, use $ff-1=$fe here
+  ;Variant 2 - Subtract $XX by $YY using sec/adc
+  lda #XX
+  sec
+  adc #YY-1  ;E.g. to subtract with 1, use $ff-1=$fe here
 
 The resulting byte in the A register will indeed be the same for all possible values (0-255) of value XX and YY in each of the two variants. However, the carry flag will be set differently after executing these two pieces of code for various values of XX and YY.
 

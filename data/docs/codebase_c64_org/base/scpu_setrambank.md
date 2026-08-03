@@ -9,7 +9,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # SetRAMBank
@@ -22,8 +22,8 @@ Set's the active RAM Bank used by the 658C16 CPU.
 
 Requires the function: “SwitchEndian16”
 
-| SYNTAX: | :SetRAMBank val | ||
-| EXAMPLE: | :SetRAMBank $100000 | ||
+| SYNTAX: | :SetRAMBank val |  |  | 
+| EXAMPLE: | :SetRAMBank $100000 |  |  | 
 | PARAMETERS: | Type | Minimum | Maximum | 
 | val | U8 | $00 | $ff | 
 

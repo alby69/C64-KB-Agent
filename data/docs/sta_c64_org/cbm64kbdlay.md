@@ -9,30 +9,30 @@ language: none
 hardware:
 - CIA
 related:
+- keyboard-handling
 - cia-registers
 - joystick-reading
-- keyboard-handling
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 
 # Commodore 64 keyboard matrix layout
 
-| Bit#0 $01,$FE | Bit#1 $02,$FD | Bit#2 $04,$FB | Bit#3 $08,$F7 | Bit#4 $10,$EF | Bit#5 $20,$DF | Bit#6 $40,$BF | Bit#7 $80,$7F | |
+|  | Bit#0 $01,$FE | Bit#1 $02,$FD | Bit#2 $04,$FB | Bit#3 $08,$F7 | Bit#4 $10,$EF | Bit#5 $20,$DF | Bit#6 $40,$BF | Bit#7 $80,$7F | 
 |---|---|---|---|---|---|---|---|---|
-| Bit#0$01,$FE | Insert/Delete | Return | cursor left/right | F7 | F1 | F3 | F5 | cursor up/down | 
-| Bit#1$02,$FD | 3 | W | A | 4 | Z | S | E | left Shift | 
-| Bit#2$04,$FB | 5 | R | D | 6 | C | F | T | X | 
-| Bit#3$08,$F7 | 7 | Y | G | 8 | B | H | U | V | 
-| Bit#4$10,$EF | 9 | I | J | 0 | M | K | O | N | 
-| Bit#5$20,$DF | + (plus) | P | L | – (minus) | . (period) | : (colon) | @ (at) | , (comma) | 
-| Bit#6$40,$BF | £ (pound) | * (asterisk) | ; (semicolon) | Clear/Home | right Shift (Shift Lock) | = (equal) | ↑ (up arrow) | / (slash) | 
-| Bit#7$80,$7F | 1 | ← (left arrow) | Control | 2 | Space | Commodore | Q | Run/Stop | 
+| **Bit#0 $01,$FE** | Insert/Delete | Return | cursor left/right | F7 | F1 | F3 | F5 | cursor up/down | 
+| **Bit#1 $02,$FD** | 3 | W | A | 4 | Z | S | E | left Shift | 
+| **Bit#2 $04,$FB** | 5 | R | D | 6 | C | F | T | X | 
+| **Bit#3 $08,$F7** | 7 | Y | G | 8 | B | H | U | V | 
+| **Bit#4 $10,$EF** | 9 | I | J | 0 | M | K | O | N | 
+| **Bit#5 $20,$DF** | + (plus) | P | L | – (minus) | . (period) | : (colon) | @ (at) | , (comma) | 
+| **Bit#6 $40,$BF** | £ (pound) | * (asterisk) | ; (semicolon) | Clear/Home | right Shift (Shift Lock) | = (equal) | ↑ (up arrow) | / (slash) | 
+| **Bit#7 $80,$7F** | 1 | ← (left arrow) | Control | 2 | Space | Commodore | Q | Run/Stop | 
 
 Notes:
 
-- Rows refer to values for memory address $DC00, columns to values for $DC01.
+1. Rows refer to values for memory address $DC00, columns to values for $DC01.
 
 ---
 *Fonte originale: [https://sta.c64.org/cbm64kbdlay.html](https://sta.c64.org/cbm64kbdlay.html)*

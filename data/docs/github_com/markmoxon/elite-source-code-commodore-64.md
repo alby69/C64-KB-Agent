@@ -8,8 +8,8 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
-last_modified: '2026-07-22T08:37:37Z'
+scraped_at: '2026-08-03'
+last_modified: '2026-07-29T10:47:21Z'
 ---
 
 # GitHub Repo: markmoxon/elite-source-code-commodore-64
@@ -19,8 +19,8 @@ last_modified: '2026-07-22T08:37:37Z'
 **Description:** Fully documented source code for the classic game Elite on the Commodore 64
 
 **GitHub URL:** https://github.com/markmoxon/elite-source-code-commodore-64
-**Stars:** 462
-**Last Updated:** 2026-07-22T08:37:37Z
+**Stars:** 463
+**Last Updated:** 2026-07-29T10:47:21Z
 
 
 ---

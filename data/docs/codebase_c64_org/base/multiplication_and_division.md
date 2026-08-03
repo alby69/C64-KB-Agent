@@ -3,17 +3,17 @@ title: Multiplication
 source_url: https://codebase.c64.org/doku.php?id=base%3Amultiplication_and_division
 category: tool
 topics:
-- basic
 - memory management
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Multiplication
@@ -28,7 +28,25 @@ The multiplication of two numbers can be done in various forms. The most common 
 
 The most simple and intuitive form of multiplication: When you get the expression x = a*b then you think of it as x = 0 + a + a + a + a… and so on. So all you have to do is to initialize your sum with 0 and start a loop that runs b times and adds a each time to the current sum. This routine is short, most easy to implement, but very slow because of the loop (which may be executed a real lot of times). A test over all 65,536 possible multiplications shows that we need 23 cycles in the best case, 1,629 cycles in the average case, and 4,186 cycles in the worst case (using the following optimized routine):
 
-a = $02 ; use zeropage adresses, they are faster b = $03 result = $04 lda a sta mod+1 ; modify code, this way we can use an immediate adc-command lda #$00 tay ; initialisation of result: accu is lowbyte, and y-register is highbyte ldx b inx loop1 clc loop2 dex beq end mod adc #$00 ; becomes modified -> adc a bcc loop2 iny bne loop1 end sta result sty result+1 rts
+a		= $02			; use zeropage adresses, they are faster
+b		= $03
+result		= $04
+		lda a
+		sta mod+1		; modify code, this way we can use an immediate adc-command
+		lda #$00
+		tay			; initialisation of result: accu is lowbyte, and y-register is highbyte
+		ldx b
+		inx
+loop1		clc
+loop2		dex
+		beq end
+mod		adc #$00		; becomes modified -> adc a
+		bcc loop2
+		iny
+		bne loop1
+end		sta result
+		sty result+1
+		rts
 
 After all you better forget this method.
 
@@ -38,33 +56,83 @@ In the decimalsystem it is easy to multiply a number by 10. The only thing we ha
 
 Now remember what you've learned in school: To multiply two large numbers you split them up to one multiplication for every decimal place and add the results. For an example, the equation 213 * 54 can be splitted up to:
 
-3 * 54 | + 162 + 10 * 54 | + 540 + 200 * 54 | 10,800 ----------------- | --------------- 11,502 | = 11,502
+	  3 * 54			|	+	   162
++	 10 * 54			|	+	   540
++	200 * 54			|		10,800
+-----------------			|	---------------
+	  11,502			|	=	11,502
 
 Of course the same method can be used in the binarysystem. Instead of looking at each decimal place we look at each binary place, treating every bit from the first multiplier seperatly. Fortunatly we get only multiplications by a power of two this way. And, as described above, these can simply be done by leftshifts. Using our example again (213 = %1101 0101, 54 = %0011 0110) we get:
 
-0000 0001 * 0011 0110 | .... .... 0011 0110 + 0000 0100 * 0011 0110 | + .... ..00 1101 10.. + 0001 0000 * 0011 0110 | + .... 0011 0110 .... + 0100 0000 * 0011 0110 | + ..00 1101 10.. .... + 1000 0000 * 0011 0110 | + .001 1011 0... .... -------------------------------- | ---------------------------- 0010 1100 1110 1110 | 0010 1100 1110 1110
+	0000 0001  *  0011 0110		|		.... .... 0011 0110
++	0000 0100  *  0011 0110		|	+	.... ..00 1101 10..
++	0001 0000  *  0011 0110		|	+	.... 0011 0110 ....
++	0100 0000  *  0011 0110		|	+	..00 1101 10.. ....
++	1000 0000  *  0011 0110		|	+	.001 1011 0... ....
+--------------------------------	|	----------------------------
+	    0010 1100 1110 1110		|		0010 1100 1110 1110
 
 This leads us directly to an implementation in assembler: At first we set up a loop which runs 8 times. The bits of the first multiplier can be tested one after another by rotating them out of the multiplier into the carryflag. If the carry is set then the bit was '1' and we have to add the second multiplier to our current result. In case the carry is clear the bit was '0' and we can skip the addition. After that we rotate the second multiplier to the left (in 16 bit, of course) and start the next iteration of the loop.
 
 Well, that is the basic concept. The fastest implementation of this I know was written by Damon Slye and published in “Call APPLE” in June 1983. This routine uses the same principle, but is highly optimized. It takes 7 cycles in the best case, 144 cycles in the average case and 149 cycles in the worst case.
 
-name: 8 bit multiplication, written by Damon Slye call: accu: multiplier x-register: multiplicant return: product in accu (hibyte) and x-register (lowbyte) multiplier = $02 ; some zeropage adress multiply cpx #$00 beq end dex stx mod+1 lsr sta multiplier lda #$00 ldx #$08 loop bcc skip mod adc #$00 skip ror ror multiplier dex bne loop ldx multiplier rts end txa rts
+name:	8 bit multiplication, written by Damon Slye
+call:	accu: multiplier
+	x-register: multiplicant
+return:	product in accu (hibyte) and x-register (lowbyte)
+multiplier	= $02			; some zeropage adress
+multiply	cpx #$00
+		beq end
+		dex
+		stx mod+1
+		lsr
+		sta multiplier
+		lda #$00
+		ldx #$08
+loop		bcc skip
+mod		adc #$00
+skip		ror
+		ror multiplier
+		dex
+		bne loop
+		ldx multiplier
+		rts
+end		txa
+		rts
 
 ## table based methods
 
 Of course the fastest way of doing a multiplication is - not to do it at all. At least not in realtime. Instead you can calculate all your possible results in advance and store them in the RAM. Now, whenever you need the result of a multiplication, you simply look it up in your result-table. The major drawback of this method is that it eats a lot of memory; depending on your domain even more than 64kb. The multiplication of two 8-bit numbers for example has 65,536 results of 16 bits each, resulting in a table of 128kb length. Fortunatly we can use some simple math to cut the required memory down a bit (at the cost of speed). The 'magic' formula is:
 
-a*b = ( (a+b)/2 )^2 - ( (a-b)/2 )^2
+a*b =  ( (a+b)/2 )^2 - ( (a-b)/2 )^2
 
-The two terms ( (a+b)/2 )2 and ( (a-b)/2 )2 can be precalculated, so our actual multiplication can be performed by doing a single substraction. If a and b are 8-bit numbers the tables for the two terms have just 512 entries each. Hence this method is an acceptable tradeoff between speed and size. An [implementation](https://codebase.c64.org/doku.php?id=base:fast_8bit_multiplication_16bit_product) of this method, writen by Oswald/Resource, can be found in the sourcecode-section.
+The two terms ( (a+b)/2 )<sup>2</sup> and ( (a-b)/2 )<sup>2</sup> can be precalculated, so our actual multiplication can be performed by doing a single substraction. If a and b are 8-bit numbers the tables for the two terms have just 512 entries each. Hence this method is an acceptable tradeoff between speed and size. An [implementation](https://codebase.c64.org/doku.php?id=base:fast_8bit_multiplication_16bit_product) of this method, writen by Oswald/Resource, can be found in the sourcecode-section.
 
 The last thing we have to do is to proove the correctness of the magic formula. In fact it can be gained by some rearrangements of our multiplication:
 
-ab = ab | *4 4ab = 2ab + 2ab | now lets add some 'nonsense' 4ab = 2ab + 2ab + aa - aa + bb - bb | by moving the terms around we get 4ab = aa + 2ab + bb - aa + 2ab - bb | using brackets now, which toggles the signs 4ab = (aa + 2ab + bb) - (aa - 2ab + bb) | using the binomial theorem gives us 4ab = ( (a+b)*(a+b) ) - ( (a-b)*(a-b) ) | /4 ab = ( (a+b)*(a+b) )/4 - ( (a-b)*(a-b) )/4 | which is the same as... ab = ( ((a+b)/2)*((a+b)/2) ) - ( ((a-b)/2)*((a-b)/2) ) | and as... ab = ( (a+b)/2 )^2 - ( (a-b)/2 )^2 | there we are!
+ ab		= ab							| *4
+4ab		= 2ab + 2ab						| now lets add some 'nonsense'
+4ab		= 2ab + 2ab  +  aa - aa  +  bb - bb			| by moving the terms around we get
+4ab		= aa + 2ab + bb  -  aa + 2ab - bb			| using brackets now, which toggles the signs
+4ab		= (aa + 2ab + bb)  -  (aa - 2ab + bb)			| using the binomial theorem gives us
+4ab		= ( (a+b)*(a+b) )  -  ( (a-b)*(a-b) )			| /4
+ ab		= ( (a+b)*(a+b) )/4  -  ( (a-b)*(a-b) )/4		| which is the same as...
+ ab		= ( ((a+b)/2)*((a+b)/2) )  -  ( ((a-b)/2)*((a-b)/2) )	| and as...
+ ab		= ( (a+b)/2 )^2  -  ( (a-b)/2 )^2			| there we are!
 
 another way to prove the formula:
 
-as we learned in school: (x+y)*(x-y)=x*x-x*y+y*x-y*y (x+y)*(x-y)=x^2-y^2 let a=x+y and b=x-y then: x=((x+y)+(x-y))/2=(a+b)/2 y=((x+y)-(x-y))/2=(a-b)/2 thus putting a and b into the original formula of: (x+y)*(x-y)=x^2-y^2 leads to: a*b = ((a+b)/2)^2 - ((a-b)/2)^2
+as we learned in school:
+(x+y)*(x-y)=x*x-x*y+y*x-y*y
+(x+y)*(x-y)=x^2-y^2
+let a=x+y
+and b=x-y
+then:
+x=((x+y)+(x-y))/2=(a+b)/2
+y=((x+y)-(x-y))/2=(a-b)/2
+thus putting a and b into the original formula of: (x+y)*(x-y)=x^2-y^2
+leads to:
+a*b = ((a+b)/2)^2 - ((a-b)/2)^2
 
 ## using the floatingpoint-routines of the C64 kernal
 

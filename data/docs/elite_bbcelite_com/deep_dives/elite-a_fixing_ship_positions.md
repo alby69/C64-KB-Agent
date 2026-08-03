@@ -3,22 +3,22 @@ title: Fixing ship positions
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_fixing_ship_positions.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Fixing ship positions
@@ -39,7 +39,8 @@ This article explains why ships spawn where they do in Elite, and what Angus did
 
 													 ---------------------
 
-						The key to understanding Elite's predictable spawning behaviour lies in the [DORND](https://elite.bbcelite.com/disc/flight/subroutine/dornd.html) routine, which produces random numbers that are used throughout the game. DORND actually composes a sequence of pseudo-random numbers, and returns the newest random number in the sequence in A, and the previous value in the sequence in X (for more on how the routine works, see the deep dive on [generating random numbers](https://elite.bbcelite.com/generating_random_numbers.html)). So the value of X returned by DORND is not a brand new random number - it's actually the value of A that was returned by the previous call to DORND.
+						
+The key to understanding Elite's predictable spawning behaviour lies in the [DORND](https://elite.bbcelite.com/disc/flight/subroutine/dornd.html) routine, which produces random numbers that are used throughout the game. DORND actually composes a sequence of pseudo-random numbers, and returns the newest random number in the sequence in A, and the previous value in the sequence in X (for more on how the routine works, see the deep dive on [generating random numbers](https://elite.bbcelite.com/generating_random_numbers.html)). So the value of X returned by DORND is not a brand new random number - it's actually the value of A that was returned by the previous call to DORND.
 
 The next part of the puzzle is the [Ze](https://elite.bbcelite.com/disc/flight/subroutine/ze.html) routine, which initialises the INWK workspace to a fairly aggressive ship. When we call Ze, it resets the INWK workspace and calls DORND, and then it sets the x-coordinate of the new ship to the value in A, and the y-coordinate to the value in X.
 
@@ -51,7 +52,8 @@ This is why ships appear in predictable places in Elite; let's take a closer loo
 
 													 ----------------------------
 
-						We start our sleuthing in [part 2 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_2_of_6.html), where we check the main loop counter and only consider spawning a new ship once every 256 iterations (the spawning code starts just after the JMP MLOOP instruction at [ytq](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_2_of_6.html#ytq)). The first bit of logic checks whether we are in witchspace, and assuming we aren't, it goes on to decide whether to spawn junk (i.e. an asteroid or a cargo canister) or a trader. The code looks like this:
+						
+We start our sleuthing in [part 2 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_2_of_6.html), where we check the main loop counter and only consider spawning a new ship once every 256 iterations (the spawning code starts just after the JMP MLOOP instruction at [ytq](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_2_of_6.html#ytq)). The first bit of logic checks whether we are in witchspace, and assuming we aren't, it goes on to decide whether to spawn junk (i.e. an asteroid or a cargo canister) or a trader. The code looks like this:
 
 ```
   JSR DORND           \ Set A and X to random numbers
@@ -63,7 +65,8 @@ This is why ships appear in predictable places in Elite; let's take a closer loo
   BCS MTT1            \ potentially spawn something else
 ```
 So we call DORND, and if our random A >= 35 or we already have enough junk in the vicinity, we jump down to MTT1 to skip the spawning of an asteroid, cargo canister or trader, and potentially spawn something else (see the next section). But if our random A < 35, we keep going, and the code then goes on to reset the INWK workspace with a call to ZINF and set z_hi to 38, so whatever we spawn will be far away in the distance ahead of us.
-						So far so good... and then we do this:
+						
+So far so good... and then we do this:
 
 ```
   JSR DORND           \ Set A, X and C flag to random numbers
@@ -78,7 +81,8 @@ So we call DORND, and if our random A >= 35 or we already have enough junk in th
   ROL INWK+1          \ this randomly moves us off-centre by 512 (as if x_hi
                       \ is %00000010, then (x_hi x_lo) is 512 + x_lo)
 ```
-						On the surface, this looks fine - we grab a couple of random numbers into A and X, and set the x-coordinate in (x_sign x_lo) to A, and the y-coordinate in (y_sign y_lo) to X. Then the last two instructions either leave x_hi at 0 or set it to 512, so the ship's x-coordinate ends up in one of three bands: -767 to -512 (to the left), -255 to +255 (around the centre), or +512 to +767 (to the right). These might sound like big numbers, but as the ship spawns in the far distance, it means it still appears within our laser sights, just slightly to the right or left of centre.
+						
+On the surface, this looks fine - we grab a couple of random numbers into A and X, and set the x-coordinate in (x_sign x_lo) to A, and the y-coordinate in (y_sign y_lo) to X. Then the last two instructions either leave x_hi at 0 or set it to 512, so the ship's x-coordinate ends up in one of three bands: -767 to -512 (to the left), -255 to +255 (around the centre), or +512 to +767 (to the right). These might sound like big numbers, but as the ship spawns in the far distance, it means it still appears within our laser sights, just slightly to the right or left of centre.
 
 Except the call to DORND doesn't return a random value in X; instead, it returns the value of A from the previous call to DORND, which we already know is less than 35, so the above code always sets the y-coordinate to a positive value in the range 0 to 34.
 
@@ -90,7 +94,8 @@ We then do another set of checks to decide whether to spawn a trader with this I
 
 													 -------------
 
-						In the above logic, we jumped down to MTT1 if A >= 35, skipping asteroids and traders in favour of something more interesting. Let's see what happens at [MTT1](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_3_of_6.html#mtt1), which is in [part 3 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_3_of_6.html).
+						
+In the above logic, we jumped down to MTT1 if A >= 35, skipping asteroids and traders in favour of something more interesting. Let's see what happens at [MTT1](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_3_of_6.html#mtt1), which is in [part 3 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_3_of_6.html).
 
 First we make sure we aren't in the station's safe zone, as the safe zone has its own spawning rules (see the [TACTICS](https://elite.bbcelite.com/disc/flight/subroutine/tactics_part_2_of_7.html) routine for that logic). Assuming we are in deep space, we then calculate how bad are, based on our legal status and the amount of contraband we are carrying, and store the result in A. And then we fall into the same trap as above:
 
@@ -107,7 +112,8 @@ First we make sure we aren't in the station's safe zone, as the safe zone has it
   LDA #COPS           \ Add a new police ship to the local bubble
   JSR NWSHP
 ```
-						As before, the Ze routine calls DORND and sets the ship's y-coordinate to the value of X that is returned. This value of X is the same as the value of A that was returned from the previous call to DORND, which is the one we checked above to decide whether to jump to MTT1 (i.e. A >= 35). So we know that y_lo >= 35, and y_sign gets set to bit 7 of this previous value of A. This means the y-coordinate can be positive or negative, though there's a higher chance that it's negative as we know the X returned from DORND in Ze is in the range 35 to 255, and most of these values have bit 7 set, giving a negative y_sign. Specifically, 93 values of X (35 to 127, or 42%) give a positive y-coordinate, while 128 values of X (128 to 255, or 58%) give a negative y-coordinate.
+						
+As before, the Ze routine calls DORND and sets the ship's y-coordinate to the value of X that is returned. This value of X is the same as the value of A that was returned from the previous call to DORND, which is the one we checked above to decide whether to jump to MTT1 (i.e. A >= 35). So we know that y_lo >= 35, and y_sign gets set to bit 7 of this previous value of A. This means the y-coordinate can be positive or negative, though there's a higher chance that it's negative as we know the X returned from DORND in Ze is in the range 35 to 255, and most of these values have bit 7 set, giving a negative y_sign. Specifically, 93 values of X (35 to 127, or 42%) give a positive y-coordinate, while 128 values of X (128 to 255, or 58%) give a negative y-coordinate.
 
 If we have been bad, then this is the INWK block that is used to spawn the cop that's hunting us - in other words, there's a slightly higher chance of cops spawning in the bottom half of the screen than in the top half.
 
@@ -115,7 +121,8 @@ If we have been bad, then this is the INWK block that is used to spawn the cop t
 
 													 ---------
 
-						If we haven't been that bad (or we're just plain lucky), then we move into [part 4 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_4_of_6.html) to potentially spawn a Thargoid, a lone bounty hunter, or up to four pirates.
+						
+If we haven't been that bad (or we're just plain lucky), then we move into [part 4 of the main game loop](https://elite.bbcelite.com/disc/flight/subroutine/main_game_loop_part_4_of_6.html) to potentially spawn a Thargoid, a lone bounty hunter, or up to four pirates.
 
 We start with the Thargoid. There's a bit of checking to see whether we are in the middle of mission 2, which spawns a lot more Thargoids than normal, but if we aren't, we consider whether to spawn a random Thargoid like this:
 
@@ -128,7 +135,8 @@ We start with the Thargoid. There's a bit of checking to see whether we are in t
                       \ companion
 .nopl
 ```
-						This is pretty reasonable, and it means we only jump to GTHG if our random number A >= 200. But what awaits us in [GTHG](https://elite.bbcelite.com/disc/flight/subroutine/gthg.html)? It's another call to Ze:
+						
+This is pretty reasonable, and it means we only jump to GTHG if our random number A >= 200. But what awaits us in [GTHG](https://elite.bbcelite.com/disc/flight/subroutine/gthg.html)? It's another call to Ze:
 
 ```
  .GTHG
@@ -141,7 +149,8 @@ We start with the Thargoid. There's a bit of checking to see whether we are in t
   JMP NWSHP           \ bubble of universe, and return from the subroutine
                       \ using a tail call
 ```
-						So this call to Ze will set the Thargoid's y-coordinate to the value of A from the previous call to DORND, which we know is >= 200. As this is converted into a sign-magnitude number using bit 7 for the sign, this means that Thargoids in deep space always spawn with a negative y-coordinate, which is in the bottom half of the screen.
+						
+So this call to Ze will set the Thargoid's y-coordinate to the value of A from the previous call to DORND, which we know is >= 200. As this is converted into a sign-magnitude number using bit 7 for the sign, this means that Thargoids in deep space always spawn with a negative y-coordinate, which is in the bottom half of the screen.
 
 (In witchspace, Thargoids are spawned by the [MJP](https://elite.bbcelite.com/disc/flight/subroutine/mjp.html) routine, which doesn't suffer from the same problem. However, this routine does call Ze in a loop to spawn a pack of Thargoids, so the Thargoids don't spawn in a completely random fashion, as the y-coordinate of each Thargoid is the same as the x-coordinate of the previously spawned Thargoid. Luckily this lack of randomness isn't that obvious, as by this point most of us are too busy panicking to notice...)
 
@@ -149,7 +158,8 @@ We start with the Thargoid. There's a bit of checking to see whether we are in t
 
 													 --------------------------
 
-						If we skipped to nopl above, avoiding the Thargoid spawning, then this is what we come across next:
+						
+If we skipped to nopl above, avoiding the Thargoid spawning, then this is what we come across next:
 
 ```
 .nopl
@@ -173,7 +183,8 @@ We start with the Thargoid. There's a bit of checking to see whether we are in t
   JSR Ze              \ Call Ze to initialise INWK to a fairly aggressive
                       \ ship, and set A and X to random values
 ```
-						So we call DORND, and if the current system is an anarchy, then we jump to LABEL_2 and call Ze before using either A or X, meaning the aggressive ship set up by Ze will be in a random position. However, if this is not an anarchy, then we only continue through to LABEL_2 if A < 120, at which point we call Ze... and Ze sets the ship's y-coordinate to this, the value of A from the previous call to DORND. So this means in non-anarchy systems, the y-coordinate is always positive and in the range 0 to 119.
+						
+So we call DORND, and if the current system is an anarchy, then we jump to LABEL_2 and call Ze before using either A or X, meaning the aggressive ship set up by Ze will be in a random position. However, if this is not an anarchy, then we only continue through to LABEL_2 if A < 120, at which point we call Ze... and Ze sets the ship's y-coordinate to this, the value of A from the previous call to DORND. So this means in non-anarchy systems, the y-coordinate is always positive and in the range 0 to 119.
 
 This INWK block is then used to spawn either a lone bounty hunter, the Constrictor (during mission 1), or a pack of pirates, without the coordinates being changed, so in non-anarchy systems, these ships always spawn in the top half of the screen. In the advanced versions, this same block is also used for the [rarest of rare ships, the Cougar](https://elite.bbcelite.com/deep_dives/the_elusive_cougar.html), so even that ship has a predictable spawning location outside of anarchy systems.
 
@@ -181,7 +192,8 @@ This INWK block is then used to spawn either a lone bounty hunter, the Constrict
 
 													 --------------------
 
-						To summarise, the 6502 versions of Elite spawn ships in deep space as follows, working our way down the screen:
+						
+To summarise, the 6502 versions of Elite spawn ships in deep space as follows, working our way down the screen:
 
 - In non-anarchy systems, lone bounty hunters, the Constrictor, the Cougar and packs of pirates always spawn in the top half of the screen
 - Asteroids, traders and cargo always spawn on or just above the horizontal, either dead ahead or slightly to the left or right

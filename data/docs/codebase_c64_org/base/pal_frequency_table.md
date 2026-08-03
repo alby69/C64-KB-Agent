@@ -8,10 +8,10 @@ difficulty: intermediate
 language: none
 hardware: []
 related:
-- music-player
-- sound-programming
 - sid-registers
-scraped_at: '2026-07-27'
+- sound-programming
+- music-player
+scraped_at: '2026-08-03'
 ---
 
 # PAL A440 frequency table

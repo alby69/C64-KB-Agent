@@ -3,17 +3,17 @@ title: The TINA hook
 source_url: https://elite.bbcelite.com/deep_dives/the_tina_hook.html
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # The TINA hook

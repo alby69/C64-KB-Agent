@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Decimal to hexadecimal conversion
@@ -21,7 +21,41 @@ By Mace
 
 This routine converts two bytes decimal to two bytes hexadecimal. 'hiInput' contains hundreds, 'loInput' contains tens and ones, so $0365 equals #365 decimal. It will be converted to 'hiResult' and 'loResult' (in this case $016d, the hexadecimal of 365).
 
-.pc = $0810 lda #$00 ; Init result bytes sta loResult sta hiResult lda loInput ; Fetch ones and tens tax ; Save to X and #$0f ; Strip the ones tay ; Save to Y txa ; Get original ones and tens lsr lsr lsr lsr ; Divide by 16 to get tens only tax ; Save to X tya ; Put the ones in A cpx #$00 ; No tens? Then skip beq PROCEED clc TENS: adc #$0a ; Add as many tens as value of X dex bne TENS PROCEED: ldx hiInput ; Fetch the hundreds beq END ; No hundreds? Then go to end HUND: clc adc #$64 ; Add as many hundreds as value of X bcc !+ inc hiResult ; Increase high byte every passed $FF !: dex bne HUND END: sta loResult ; Store low byte rts hiInput: .byte $00 loInput: .byte $01 hiResult: .byte $00 loResult: .byte $00
+	.pc = $0810
+		lda #$00	; Init result bytes
+		sta loResult
+		sta hiResult
+		lda loInput	; Fetch ones and tens
+		tax		; Save to X
+		and #$0f	; Strip the ones
+		tay		; Save to Y
+		txa		; Get original ones and tens
+		lsr
+		lsr
+		lsr
+		lsr		; Divide by 16 to get tens only
+		tax		; Save to X
+		tya		; Put the ones in A
+		cpx #$00	; No tens? Then skip
+		beq PROCEED
+		clc
+TENS:		adc #$0a	; Add as many tens as value of X
+		dex
+		bne TENS
+PROCEED:	ldx hiInput	; Fetch the hundreds
+		beq END		; No hundreds? Then go to end
+HUND:		clc
+		adc #$64	; Add as many hundreds as value of X
+		bcc !+
+		inc hiResult	; Increase high byte every passed $FF
+!:		dex
+		bne HUND
+END:		sta loResult	; Store low byte
+		rts
+hiInput:	.byte $00
+loInput:	.byte $01
+hiResult:	.byte $00
+loResult:	.byte $00
 
 By Verz:
 

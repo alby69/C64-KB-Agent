@@ -9,23 +9,23 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -64,8 +64,8 @@ What you need to do is to connect the two pins shown in the image below. The ima
 | 4 | VOUT | OUT | Composite Video Out | 
 | 5 | AIN | IN | Audio In | 
 | 6 | COL | OUT | Chrominance | 
-| 7 | NC | No Connection | |
-| 8 | NC | No Connection* | 
+| 7 | NC |  | No Connection | 
+| 8 | NC |  | No Connection* | 
 
 (Table composed from various sources, mainly C128 Programmes Reference Guide and [http://ftp.giga.or.at/pub/c64/library/repair_pinouts.txt](http://ftp.giga.or.at/pub/c64/library/repair_pinouts.txt))
 
@@ -85,11 +85,14 @@ You can also reduce noise a bit by turning the screen off (with the VIC) and set
 
 Some hot code to do this:
 
-lda #0 sta $d011 sta $d020
+	lda #0
+	sta $d011
+	sta $d020
 
 Another way to get rid of some of the noise is to route the external input signal into the filter. If, in addition, no filter type is selected, then this will effectively turn this external signal off. If any of the filter types are enabled, the noise will not be turned off, but at least reduced, because the noisy signal will at least be filtered. The extent to which the noise will be filtered in that case depends on the filter type and filter cutoff. The following code makes sure the external input signal is routed through the filter. It also de-selects all possible filter types, and turns off filtering for the three standard SID oscillators:
 
-lda #$08 ;Bit3 - filter external input signal set, all other bits off. sta $d417
+	lda #$08	;Bit3 - filter external input signal set, all other bits off.
+	sta $d417
 
 ## Codice Estratto
 

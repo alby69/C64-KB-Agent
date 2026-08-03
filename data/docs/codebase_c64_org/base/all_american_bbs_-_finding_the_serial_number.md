@@ -3,29 +3,29 @@ title: base:all_american_bbs_-_finding_the_serial_number [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Aall_american_bbs_-_finding_the_serial_number
 category: source-code
 topics:
+- memory management
 - basic
 - sprite programming
-- memory management
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
 - CIA
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -57,39 +57,102 @@ P.S. I have got permission from Nick Smith to release these to the public domain
 
 “Load it, wait for “Please enter your serial number” prompt. Start VICE monitor.”
 
-r ADDR AC XR YR SP 00 01 NV-BDIZC LIN CYC .;e5d4 00 af ff ea 2f 36 00100011 000 002
+r
+  ADDR AC XR YR SP 00 01 NV-BDIZC LIN CYC
+.;e5d4 00 af ff ea 2f 36 00100011 000 002
 
 Stack pointer is $ea, so used stack starts feom $01eb. Check it for JSR return address.
 
-m 01eb >C:01eb af ff 8d cb c5 a3 31 a5 92 c8 46 e1 67 18 e9 a7
+m 01eb
+>C:01eb  af ff 8d cb  c5 a3 31 a5  92 c8 46 e1  67 18 e9 a7
 
 I guess keyboard input routine was called from $cb8d-2.
 
-d cb8b .C:cb8b 20 CF FF JSR $FFCF .C:cb8e 64 8D NOOP $8D .C:cb90 99 00 BE STA $BE00,Y .C:cb93 88 DEY .C:cb94 80 79 NOOP #$79 .C:cb96 C9 0D CMP #$0D .C:cb98 F0 04 BEQ $CB9E .C:cb9a C0 F8 CPY #$F8 .C:cb9c B0 ED BCS $CB8B .C:cb9e 7A NOOP .C:cb9f E2 D9 NOOP #$D9 .C:cba1 A9 36 LDA #$36 .C:cba3 82 75 NOOP #$75 .C:cba5 4C 20 CB JMP $CB20
+d cb8b
+.C:cb8b   20 CF FF   JSR $FFCF
+.C:cb8e   64 8D      NOOP $8D
+.C:cb90   99 00 BE   STA $BE00,Y
+.C:cb93   88         DEY
+.C:cb94   80 79      NOOP #$79
+.C:cb96   C9 0D      CMP #$0D
+.C:cb98   F0 04      BEQ $CB9E
+.C:cb9a   C0 F8      CPY #$F8
+.C:cb9c   B0 ED      BCS $CB8B
+.C:cb9e   7A         NOOP
+.C:cb9f   E2 D9      NOOP #$D9
+.C:cba1   A9 36      LDA #$36
+.C:cba3   82 75      NOOP #$75
+.C:cba5   4C 20 CB   JMP $CB20
 
 Looks like it reads serial number, stores it and jumps to $cb20.
 
-d cb20 .C:cb20 80 64 NOOP #$64 .C:cb22 85 01 STA $01 .C:cb24 82 25 NOOP #$25 .C:cb26 A0 00 LDY #$00 .C:cb28 BF 00 A0 LAX $A000,Y .C:cb2b 49 57 EOR #$57 .C:cb2d 99 00 A0 STA $A000,Y .C:cb30 C8 INY .C:cb31 D0 F5 BNE $CB28 .C:cb33 EF 2A CB ISB $CB2A .C:cb36 EF 2F CB ISB $CB2F .C:cb39 AF 2A CB LAX $CB2A .C:cb3c E0 AF CPX #$AF .C:cb3e 90 E8 BCC $CB28 .C:cb40 A0 A0 LDY #$A0 .C:cb42 8C 2A CB STY $CB2A .C:cb45 8C 2F CB STY $CB2F .C:cb48 60 RTS
+d cb20
+.C:cb20   80 64      NOOP #$64
+.C:cb22   85 01      STA $01
+.C:cb24   82 25      NOOP #$25
+.C:cb26   A0 00      LDY #$00
+.C:cb28   BF 00 A0   LAX $A000,Y
+.C:cb2b   49 57      EOR #$57
+.C:cb2d   99 00 A0   STA $A000,Y
+.C:cb30   C8         INY
+.C:cb31   D0 F5      BNE $CB28
+.C:cb33   EF 2A CB   ISB $CB2A
+.C:cb36   EF 2F CB   ISB $CB2F
+.C:cb39   AF 2A CB   LAX $CB2A
+.C:cb3c   E0 AF      CPX #$AF
+.C:cb3e   90 E8      BCC $CB28
+.C:cb40   A0 A0      LDY #$A0
+.C:cb42   8C 2A CB   STY $CB2A
+.C:cb45   8C 2F CB   STY $CB2F
+.C:cb48   60         RTS
 
 Decrypts $axxx area and returns. Set breakpoint to rts and exit, just to come back a bit later.
 
-break cb48 x
+break cb48
+x
 
 Now enter any number and press return. We're back in monitor. Step forward twice to see where we end up
 
-z z .C:a3c6 80 4D NOOP #$4D
+z
+z
+.C:a3c6   80 4D      NOOP #$4D
 
 What's here?
 
-d a3c6 .C:a3c6 80 4D NOOP #$4D .C:a3c8 1A NOOP .C:a3c9 04 4C NOOP $4C .C:a3cb DA NOOP .C:a3cc C9 00 CMP #$00 .C:a3ce 85 64 STA $64 .C:a3d0 85 65 STA $65 .C:a3d2 A9 0D LDA #$0D .C:a3d4 20 D2 FF JSR $FFD2 .C:a3d7 A9 00 LDA #$00 .C:a3d9 99 00 BE STA $BE00,Y .C:a3dc A0 FF LDY #$FF .C:a3de BF 00 BE LAX $BE00,Y .C:a3e1 20 ED AB JSR $ABED .C:a3e4 D0 06 BNE $A3EC .C:a3e6 88 DEY .C:a3e7 C0 FC CPY #$FC .C:a3e9 B0 F3 BCS $A3DE .C:a3eb 60 RTS .C:a3ec A0 00 LDY #$00 .C:a3ee BF FC A3 LAX $A3FC,Y
+d a3c6
+.C:a3c6   80 4D      NOOP #$4D
+.C:a3c8   1A         NOOP
+.C:a3c9   04 4C      NOOP $4C
+.C:a3cb   DA         NOOP
+.C:a3cc   C9 00      CMP #$00
+.C:a3ce   85 64      STA $64
+.C:a3d0   85 65      STA $65
+.C:a3d2   A9 0D      LDA #$0D
+.C:a3d4   20 D2 FF   JSR $FFD2
+.C:a3d7   A9 00      LDA #$00
+.C:a3d9   99 00 BE   STA $BE00,Y
+.C:a3dc   A0 FF      LDY #$FF
+.C:a3de   BF 00 BE   LAX $BE00,Y
+.C:a3e1   20 ED AB   JSR $ABED
+.C:a3e4   D0 06      BNE $A3EC
+.C:a3e6   88         DEY
+.C:a3e7   C0 FC      CPY #$FC
+.C:a3e9   B0 F3      BCS $A3DE
+.C:a3eb   60         RTS
+.C:a3ec   A0 00      LDY #$00
+.C:a3ee   BF FC A3   LAX $A3FC,Y
 
 Looks like it checks serial number at $abed, so check it out.
 
-d abed .C:abed 49 FF EOR #$FF .C:abef D9 64 BE CMP $BE64,Y .C:abf2 60 RTS
+d abed
+.C:abed   49 FF      EOR #$FF
+.C:abef   D9 64 BE   CMP $BE64,Y
+.C:abf2   60         RTS
 
 Y ranges from $ff to $fc, so let's see what vlues we compare agains.
 
-m bf60 bf63 >C:bf60 cd ce cf cf
+m bf60 bf63
+>C:bf60  cd ce cf cf
 
 This was EORed with $ff, so let's invert some bits and we get 32 31 30 30 This looks like “2100” in PETSCII, but when we stored serial number into buffer we did it backwards, so it's really “0012”.
 

@@ -9,15 +9,15 @@ difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Square Root calculation
@@ -133,11 +133,27 @@ for n = 7 to 0
 ```
 D, T, M and R now look like this:
 
-D T M R 10000000 0100000000000000 xxxxxxxxxxxxxxxx x0000000 01000000 0x01000000000000 0xxxxxxxxxxxxxxx xx000000 00100000 00xx010000000000 00xxxxxxxxxxxxxx xxx00000 00010000 000xxx0100000000 000xxxxxxxxxxxxx xxxx0000 00001000 0000xxxx01000000 0000xxxxxxxxxxxx xxxxx000 00000100 00000xxxxx010000 00000xxxxxxxxxxx xxxxxx00 00000010 000000xxxxxx0100 000000xxxxxxxxxx xxxxxxx0 00000001 0000000xxxxxxx01 0000000xxxxxxxxx xxxxxxxx
+D        T                M                R
+10000000 0100000000000000 xxxxxxxxxxxxxxxx x0000000
+01000000 0x01000000000000 0xxxxxxxxxxxxxxx xx000000
+00100000 00xx010000000000 00xxxxxxxxxxxxxx xxx00000
+00010000 000xxx0100000000 000xxxxxxxxxxxxx xxxx0000
+00001000 0000xxxx01000000 0000xxxxxxxxxxxx xxxxx000
+00000100 00000xxxxx010000 00000xxxxxxxxxxx xxxxxx00
+00000010 000000xxxxxx0100 000000xxxxxxxxxx xxxxxxx0
+00000001 0000000xxxxxxx01 0000000xxxxxxxxx xxxxxxxx
 
 Removing the “ASL n” would completely change the behaviour of T. But also M has to change because otherwise the T ⇐ M compare and M-T math will not work. So if T is not left-shifted, M has to be right-shifted. The result looks like this:
 
-D T M R 10000000 0100000000000000 xxxxxxxxxxxxxxxx x0000000 01000000 x010000000000000 xxxxxxxxxxxxxxx0 xx000000 00100000 xx01000000000000 xxxxxxxxxxxxxx00 xxx00000 00010000 xxx0100000000000 xxxxxxxxxxxxx000 xxxx0000 00001000 xxxx010000000000 xxxxxxxxxxxx0000 xxxxx000 00000100 xxxxx01000000000 xxxxxxxxxxx00000 xxxxxx00 00000010 xxxxxx0100000000 xxxxxxxxxx000000 xxxxxxx0 00000001 xxxxxxx010000000 xxxxxxxxx0000000 xxxxxxxx
+D        T                M                R
+10000000 0100000000000000 xxxxxxxxxxxxxxxx x0000000
+01000000 x010000000000000 xxxxxxxxxxxxxxx0 xx000000
+00100000 xx01000000000000 xxxxxxxxxxxxxx00 xxx00000
+00010000 xxx0100000000000 xxxxxxxxxxxxx000 xxxx0000
+00001000 xxxx010000000000 xxxxxxxxxxxx0000 xxxxx000
+00000100 xxxxx01000000000 xxxxxxxxxxx00000 xxxxxx00
+00000010 xxxxxx0100000000 xxxxxxxxxx000000 xxxxxxx0
+00000001 xxxxxxx010000000 xxxxxxxxx0000000 xxxxxxxx
 
 So now instead of shifting T we shift M, but the advantage of shifting M is that it's only 1 bit per iteration. Look at the code now:
 
@@ -347,7 +363,104 @@ Incidentally the algorithm provides also the remainder via (M LSR p)
 
 This is the code for a 32bit integer Sqrt. Provides the result and the remainder:
 
-;******************************************** ;* sqrt32 ;* ;* computes Sqrt of a 32bit number ;******************************************** ;* by Verz - Jul2019 ;******************************************** ;* ;* input: square, 32bit source number ;* output: sqrt, 16bit value ;* remnd, 17bit value ;******************************************** sqrt32 lda #0 sta sqrt ; R=0 sta sqrt+1 sta M+4 ;sta T+1 ; (T+1) is zero until last iteration; (T+0) is always 0 clc ldy #14 ; 15 iterations (14-->0) + last iteration loopsq lda sqrt ; (2*R+D) LSR 1; actually: R+(D LSR 1) ora stablo,y ; using ORA instead of ADC is ok because the bit to be set sta T+2 ; will have not been affected yet lda sqrt+1 ora stabhi,y sta T+3 bcs skip0 ; takes care of large numbers; if set, M>T lda M+3 cmp T+3 bcc skip1 ; T <= M (branch if T>M) bne skip0 lda M+2 cmp T+2 bcc skip1 skip0 ;sec lda M+2 ; M=M-T sbc T+2 sta M+2 lda M+3 sbc T+3 sta M+3 lda sqrt ; R=R+D ora stablo+1,y sta sqrt lda sqrt+1 ora stabhi+1,y sta sqrt+1 skip1 asl M ; M=M*2 rol M+1 rol M+2 rol M+3 dey ; implicit: D=D/2, by the decrement of .Y bpl loopsq lastiter ; code for last iteration bcs skp0 ; takes care of large numbers; if set, M>T ; during last iteration D=1, so [(2*R+D) LSR 1] makes D the MSB of T+1 lda M+3 cmp sqrt+1 ; (T+3) = sqrtHI bcc skp1 ; T <= M branch if T>M bne skp0 lda M+2 cmp sqrt ; (T+2) = sqrtLO bcc skp1 bne skp0 lda M+1 cmp #$80 ; value of (T+1) during last iteration bcc skp1 skp0 ;sec lda M+1 sbc #$80 ; (T+1) during last iteration sta M+1 lda M+2 ; M=M-T sbc sqrt ; (T+2) sta M+2 lda M+3 sbc sqrt+1 ; (T+3) sta M+3 inc sqrt ; R=R+D with D=1 skp1 asl M+1 ; M=M*2; location M+0=0 rol M+2 rol M+3 rol M+4 rts ;**** Variables and Shift table stabhi byte 0,0,0,0,0,0,0,0 stablo BYTE $01,$02,$04,$08,$10,$20,$40,$80 byte 0,0,0,0,0,0,0,0 square = $57 ; 5 bytes: input value; during calculation needs the 5th byte sqrt = $5F ; 2 bytes: result remnd = M+2 ; 2 B + 1 b: is in the high bytes of M (M LSR 16); msb is in T+0 (the 5th byte of square) T = $5B ; 4 bytes: could be 2 bytes: T+0 is always 0; T+1 is 0 until last iteration M = square ; 4 bytes: over the input square
+;********************************************
+;*    sqrt32
+;*
+;*   computes Sqrt of a 32bit number
+;********************************************
+;*   by Verz - Jul2019
+;********************************************
+;*
+;*  input:  square, 32bit source number
+;*  output: sqrt,   16bit value
+;*          remnd,  17bit value
+;********************************************
+ 
+sqrt32  lda #0
+        sta sqrt        ; R=0
+        sta sqrt+1
+        sta M+4
+        ;sta T+1        ; (T+1) is zero until last iteration; (T+0) is always 0
+ 
+        clc
+        ldy #14         ; 15 iterations (14-->0) + last iteration
+loopsq  
+        lda sqrt        ; (2*R+D) LSR 1; actually: R+(D LSR 1)
+        ora stablo,y    ; using ORA instead of ADC is ok because the bit to be set
+        sta T+2         ;    will have not been affected yet
+        lda sqrt+1
+        ora stabhi,y
+        sta T+3
+        bcs skip0       ; takes care of large numbers; if set, M>T
+ 
+        lda M+3
+        cmp T+3
+        bcc skip1       ; T <= M    (branch if T>M)
+        bne skip0
+        lda M+2
+        cmp T+2
+        bcc skip1
+skip0   ;sec
+        lda M+2         ; M=M-T
+        sbc T+2
+        sta M+2
+        lda M+3
+        sbc T+3
+        sta M+3
+        lda sqrt        ; R=R+D
+        ora stablo+1,y
+        sta sqrt
+        lda sqrt+1
+        ora stabhi+1,y
+        sta sqrt+1
+skip1
+        asl M           ; M=M*2
+        rol M+1 
+        rol M+2
+        rol M+3
+        dey             ; implicit: D=D/2, by the decrement of .Y
+        bpl loopsq
+lastiter                ; code for last iteration
+        bcs skp0        ; takes care of large numbers; if set, M>T
+        ; during last iteration D=1, so [(2*R+D) LSR 1] makes D the MSB of T+1
+        lda M+3
+        cmp sqrt+1      ; (T+3) = sqrtHI
+        bcc skp1        ; T <= M    branch if T>M
+        bne skp0
+        lda M+2
+        cmp sqrt        ; (T+2) = sqrtLO
+        bcc skp1
+        bne skp0
+        lda M+1
+        cmp #$80        ; value of (T+1) during last iteration
+        bcc skp1
+skp0    ;sec
+        lda M+1
+        sbc #$80        ; (T+1) during last iteration
+        sta M+1
+        lda M+2         ; M=M-T
+        sbc sqrt        ; (T+2)
+        sta M+2
+        lda M+3
+        sbc sqrt+1      ; (T+3)
+        sta M+3
+        inc sqrt        ; R=R+D with D=1
+skp1    asl M+1         ; M=M*2; location M+0=0
+        rol M+2
+        rol M+3
+        rol M+4
+        rts
+ 
+;**** Variables and Shift table
+stabhi byte 0,0,0,0,0,0,0,0
+stablo BYTE $01,$02,$04,$08,$10,$20,$40,$80
+       byte 0,0,0,0,0,0,0,0
+ 
+square = $57    ; 5 bytes: input value; during calculation needs the 5th byte
+sqrt   = $5F    ; 2 bytes: result
+remnd  = M+2    ; 2 B + 1 b: is in the high bytes of M (M LSR 16); msb is in T+0 (the 5th byte of square)
+T      = $5B    ; 4 bytes: could be 2 bytes: T+0 is always 0; T+1 is 0 until last iteration
+M      = square ; 4 bytes: over the input square
 
 The algorithm is pretty fast: it has a top cycles count of around 1700, but seems to average at 1.3ms (using variables in page zero).
 

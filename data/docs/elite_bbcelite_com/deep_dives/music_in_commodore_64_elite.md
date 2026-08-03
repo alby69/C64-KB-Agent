@@ -3,31 +3,31 @@ title: Music in Commodore 64 Elite
 source_url: https://elite.bbcelite.com/deep_dives/music_in_commodore_64_elite.html
 category: source-code
 topics:
-- assembly
-- sound generation
 - raster interrupts
+- sound generation
 - basic
+- assembly
 difficulty: advanced
 language: mixed
 hardware:
+- KERNAL
+- SID
 - VIC-II
 - CPU
-- KERNAL
 - CIA
-- SID
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Music in Commodore 64 Elite
@@ -38,7 +38,7 @@ There is one aspect of Commodore 64 Elite that people seem to remember more fond
 
 ![A screenshot of the docking computer in Commodore 64 Elite](https://elite.bbcelite.com/images/c64/docking_computer.png) 
 
-						This feature alone makes the Commodore 64 conversion a really special update of the original; it's a sublime merging of 2001: A Space Odyssey and 1980s home computing, all wrapped up in the unique tones of the amazing SID sound synthesiser chip that makes the sound of the Commodore 64 so uniquely lush.
+This feature alone makes the Commodore 64 conversion a really special update of the original; it's a sublime merging of 2001: A Space Odyssey and 1980s home computing, all wrapped up in the unique tones of the amazing SID sound synthesiser chip that makes the sound of the Commodore 64 so uniquely lush.
 
 Let's take a look at how The Blue Danube - and the Elite Theme, which was added in a later release - work in Elite.
 
@@ -46,9 +46,14 @@ Let's take a look at how The Blue Danube - and the Elite Theme, which was added 
 
 													 -------------------
 
-						The source files for Commodore 64 Elite aren't exactly awash with comments, but the music driver does have some interesting information tucked into the start of the [BDirqhere](https://elite.bbcelite.com/c64/main/subroutine/bdirqhere.html) routine:
+						
+The source files for Commodore 64 Elite aren't exactly awash with comments, but the music driver does have some interesting information tucked into the start of the [BDirqhere](https://elite.bbcelite.com/c64/main/subroutine/bdirqhere.html) routine:
 
-Music driver by Dave Dunn. BBC source code converted from Commodore disassembly extremely badly Jez. 13/4/85. Music system (c)1985 D.Dunn. Modified by IB,DB
+  Music driver by Dave Dunn.
+  BBC source code converted from Commodore disassembly extremely badly
+  Jez. 13/4/85.
+  Music system (c)1985 D.Dunn.
+  Modified by IB,DB
 
 The music system is one of the few parts of Commodore 64 Elite that wasn't written by Ian Bell or David Braben. The comments tell us that it's actually a modified version of a Commodore 64 music driver by Julie Dunn (née David), which was converted into BBC Micro-compatible assembly by Jez (Jez San) in April 1985, and modified by IB (Ian Bell) and DB (David Braben).
 
@@ -62,7 +67,8 @@ Most routines and variables in the converted driver code have names with the pre
 
 													 -------------------------
 
-						The driver itself is a relatively straightforward affair. We can start playing music by calling the [startbd](https://elite.bbcelite.com/c64/main/subroutine/startbd.html) routine, which first checks the music-related option variables to make sure everything is enabled and that we aren't already playing something. If nothing is playing and music is enabled, then the MUPLA variable gets set to $FF to indicate that we should now be playing music, and we call the [BDENTRY](https://elite.bbcelite.com/c64/main/subroutine/bdentry.html) routine to reset a few music-related variables and configure the SID chip.
+						
+The driver itself is a relatively straightforward affair. We can start playing music by calling the [startbd](https://elite.bbcelite.com/c64/main/subroutine/startbd.html) routine, which first checks the music-related option variables to make sure everything is enabled and that we aren't already playing something. If nothing is playing and music is enabled, then the MUPLA variable gets set to $FF to indicate that we should now be playing music, and we call the [BDENTRY](https://elite.bbcelite.com/c64/main/subroutine/bdentry.html) routine to reset a few music-related variables and configure the SID chip.
 
 The magic happens in the interrupt handler at [COMIRQ1](https://elite.bbcelite.com/c64/main/subroutine/comirq1.html). This routine is called twice during each screen refresh, as part of the split-screen implementation; specifically, it gets called when the raster reaches the top of the space view and again when it reaches the top of the dashboard (see the deep dive on [the split-screen mode in Commodore 64 Elite](https://elite.bbcelite.com/the_split-screen_mode_commodore_64.html) for details). If bit 7 of MUPLA is set, to indicate that music is playing, then on every other call, COMIRQ1 calls the music driver routine at [BDirqhere](https://elite.bbcelite.com/c64/main/subroutine/bdirqhere.html); this means the music driver is called once for each screen refresh, so that's 50 times a second on PAL systems and 60 times a second on NTSC systems.
 
@@ -74,7 +80,8 @@ Let's take a look at the format of these blocks of music data.
 
 													 ---------------------
 
-						So each tune is made up of sequential blocks of music data, with one block of data being sent to the SID chip by the interrupt routine on each screen refresh.
+						
+So each tune is made up of sequential blocks of music data, with one block of data being sent to the SID chip by the interrupt routine on each screen refresh.
 
 Each block of music data consists of a series of commands that get processed sequentially by the [BDirqhere](https://elite.bbcelite.com/c64/main/subroutine/bdirqhere.html) routine. Each command starts with a command number between #0 and #15, and most (but not all) commands take arguments. The music data is simply a sequence of these commands, where each command is stored as the command number followed by any arguments that command requires.
 
@@ -109,33 +116,34 @@ There is one more important aspect of the music data: the command numbers are pa
 
 													 -------------------------------
 
-						This compression can make the music data a bit tricky to follow, so let's look at an example. The Blue Danube music data lives in the binary file C.COMUDAT on the source disk, which is included in the game binary using an INCBIN directive in the [COMUDAT](https://elite.bbcelite.com/c64/main/variable/comudat.html) variable.
+						
+This compression can make the music data a bit tricky to follow, so let's look at an example. The Blue Danube music data lives in the binary file C.COMUDAT on the source disk, which is included in the game binary using an INCBIN directive in the [COMUDAT](https://elite.bbcelite.com/c64/main/variable/comudat.html) variable.
 
 If we look at the first few bytes of this file in a hex editor, it looks like this:
 
-A7 26 26 48 29 29 AA 00 06 00 05 00 06 ED 21 21 41 1F F4 70 ...
+  A7 26 26 48 29 29 AA 00 06 00 05 00 06 ED 21 21 41 1F F4 70 ...
 
 We start with the first byte, $A7. Taking the low nibble first, i.e. $7, this means command #7, which is of the form <#7 ad1 ad2 ad3 sr1 sr2 sr3>. The arguments follow the command byte, so the first command is this:
 
-<#7 26 26 48 29 29 AA>
+  <#7 26 26 48 29 29 AA>
 
 This sets the attack and decay length, sustain volume and release length for all three voices; see the [BDRO7](https://elite.bbcelite.com/c64/main/subroutine/bdro7.html) routine for details on how the arguments correspond to the SID registers.
 
 We then move on to the command in the high nibble of the first byte, i.e. $A. This means command #10, which is of the form <#10 h1 l1 h2 l2 h3 l3>, and we get the arguments from just after the arguments for the previous command, giving this command:
 
-<#10 00 06 00 05 00 06>
+  <#10 00 06 00 05 00 06>
 
 This sets the pulse width for all three voices; see the [BDRO10](https://elite.bbcelite.com/c64/main/subroutine/bdro10.html) routine for details of how these values are sent to the SID chip.
 
 We then move on to the next byte of music data, which follows the arguments for the last command (as we have now processed both nibbles in the first byte). The next byte is $ED, so again we pick the low nibble first, $D, to give command #13. This is of the form <#13 v1 v2 v3>, so we fetch the next three bytes to give this:
 
-<#13 21 21 41>
+  <#13 21 21 41>
 
 This sets the value1, value2 and value3 variables to $21, $21 and $41 respectively, by calling the [BDRO13](https://elite.bbcelite.com/c64/main/subroutine/bdro13.html) routine.
 
 Then we do the high nibble command, $E, which is <#14 vf fc cf>, so this gives us:
 
-<#14 1F F4 70>
+  <#14 1F F4 70>
 
 which sets the volume and filter modes, filter control and filter cut-off frequency, calling the [BDRO14](https://elite.bbcelite.com/c64/main/subroutine/bdro10.html) routine to send the data to the SID chip.
 
@@ -147,7 +155,8 @@ At which point we start again with the next byte of music data, until the music 
 
 													 -----------
 
-						One final point to note is that the music plays at different speeds on PAL and NTSC machines. PAL machines refresh the screen at 50Hz (50 times a second), while NTSC machines refresh the screen at 60Hz (60 times a second). As we process music data in batches on every screen refresh, this means that NTSC machines work through the music data about 20% faster than the PAL machines, which means that The Blue Danube on NTSC machines plays about 20% faster than music on PAL machines.
+						
+One final point to note is that the music plays at different speeds on PAL and NTSC machines. PAL machines refresh the screen at 50Hz (50 times a second), while NTSC machines refresh the screen at 60Hz (60 times a second). As we process music data in batches on every screen refresh, this means that NTSC machines work through the music data about 20% faster than the PAL machines, which means that The Blue Danube on NTSC machines plays about 20% faster than music on PAL machines.
 
 Note that the pitch of the music is unchanged, so this isn't the same as running a tape at a higher speed - it's only the tempo that is faster, while all the notes and frequencies remain the same.
 

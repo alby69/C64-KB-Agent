@@ -3,26 +3,26 @@ title: The Ninja-Method
 source_url: https://codebase.c64.org/doku.php?id=base%3Anmis_and_distributed_jitter-correction_routines
 category: reference
 topics:
-- basic
-- raster interrupts
 - memory management
+- raster interrupts
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -54,11 +54,14 @@ For this amount of precision all we need is precision while setting it all up. B
 
 To not mess around with $dd0d badly, you'll have to follow two simple rules: Activate the NMI by
 
-lda #$81 bit $dd0d sta $dd0d
+lda #$81
+bit $dd0d
+sta $dd0d
 
 Deactivate the NMI by
 
-lda #$7f sta $dd0d
+lda #$7f
+sta $dd0d
 
 Just do not `bit $dd0d` “just in case”, as it might create the crashing results I mentioned above.
 

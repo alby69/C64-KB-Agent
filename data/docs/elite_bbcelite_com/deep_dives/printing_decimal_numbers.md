@@ -8,15 +8,15 @@ difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Printing decimal numbers
@@ -29,29 +29,30 @@ As an example, the Market Price screen contains numbers in various formats, some
 
 ![The Market Price screen in BBC Micro Elite](https://elite.bbcelite.com/images/cassette/market_prices.png) 
 
-						Let's first look at the algorithm for printing decimal numbers, as all our numbers are stored in binary, and then we'll look at the BPRNT implementation of it.
+Let's first look at the algorithm for printing decimal numbers, as all our numbers are stored in binary, and then we'll look at the BPRNT implementation of it.
 
 ## Printing decimal numbers
 
 													 ------------------------
 
-						The algorithm is relatively simple, but it looks fairly complicated because we're dealing with 32-bit numbers.
+						
+The algorithm is relatively simple, but it looks fairly complicated because we're dealing with 32-bit numbers.
 
 To see how it works, let's first consider a simple example with fewer digits. Let's say we want to print out the following number to three digits:
 
-567
+  567
 
 First we subtract 100 repeatedly until we can't do it any more, counting how many times we can do this:
 
-567 - 100 - 100 - 100 - 100 - 100 = 67
+  567 - 100 - 100 - 100 - 100 - 100 = 67
 
 Not surprisingly, we can subtract it 5 times, so our first digit is 5. Now we multiply the remaining number by 10 to get 670, and repeat the process:
 
-670 - 100 - 100 - 100 - 100 - 100 - 100 = 70
+  670 - 100 - 100 - 100 - 100 - 100 - 100 = 70
 
 We subtracted 100 6 times, so the second digit is 6. Now to multiply by 10 again to get 700 and repeat the process:
 
-700 - 100 - 100 - 100 - 100 - 100 - 100 - 100 = 0
+  700 - 100 - 100 - 100 - 100 - 100 - 100 - 100 = 0
 
 So the third digit is 7 and we are done.
 
@@ -59,7 +60,8 @@ So the third digit is 7 and we are done.
 
 													 -----------------
 
-						The BPRNT subroutine does exactly this in its main loop at TT36, except that instead of having a three-digit number and subtracting 100, we have up to an 11-digit number and subtract 10 billion each time (as 10 billion has 11 digits), using 32-bit arithmetic and an overflow byte, and that's where the complexity comes in.
+						
+The BPRNT subroutine does exactly this in its main loop at TT36, except that instead of having a three-digit number and subtracting 100, we have up to an 11-digit number and subtract 10 billion each time (as 10 billion has 11 digits), using 32-bit arithmetic and an overflow byte, and that's where the complexity comes in.
 
 Let's look at the above algorithm in more detail. We need to implement it with multi-byte subtraction, which we can do byte-by-byte using the C flag, but we also need to be able to multiply a multi-byte number by 10, which is slightly trickier. Multiplying by 10 isn't directly supported the 6502, but multiplying by 2 is, in the guise of shifting and rotating left, so we can do this to multiply K by 10:
 
@@ -68,9 +70,14 @@ Let's look at the above algorithm in more detail. We need to implement it with m
          = (K * 2) + (K * 8)
          = (K * 2) + (K * 2 * 2 * 2)
 ```
-						And that's essentially what we do in the TT35 subroutine, just with 32-bit numbers with an 8-bit overflow. This doubling process is used quite a few times in the following, so let's look at an example, in which we double the number in K(S 0 1 2 3):
+						
+And that's essentially what we do in the TT35 subroutine, just with 32-bit numbers with an 8-bit overflow. This doubling process is used quite a few times in the following, so let's look at an example, in which we double the number in K(S 0 1 2 3):
 
-ASL K+3 ROL K+2 ROL K+1 ROL K ROL S
+  ASL K+3
+  ROL K+2
+  ROL K+1
+  ROL K
+  ROL S
 
 First we use ASL K+3 to shift the least significant byte left (so bit 7 goes to the C flag). Then we rotate the next most significant byte with ROL K+2 (so the C flag goes into bit 0 and bit 7 goes into the C flag), and we repeat this with each byte in turn, until we get to the overflow byte S. This has the effect of shifting the entire five-byte number one place to the left, which doubles it in-place.
 

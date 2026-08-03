@@ -9,19 +9,19 @@ difficulty: beginner
 language: assembly
 hardware:
 - CPU
-- BASIC ROM
-- SID
 - KERNAL
+- SID
+- BASIC ROM
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # Machine Language Tutorial Part 1 - Preparations
@@ -42,19 +42,23 @@ AD 34 12 8D 21 43 60
 
 This is a very inefficient way of writing code, so most people will view and write code in assembly language, which is a lot easier to read. For example, the previous bit of code would be this in assembly.
 
-LDA $1234 STA $4321 RTS
+LDA $1234
+STA $4321
+RTS
 
 The process of converting assembly to machine language is called “assembly”, so of course it would be “disassembly” vice versa.
 
 Let's compare some lines side by side.
 
-AD 34 12 LDA $1234
+AD 34 12
+LDA $1234
 
 The first byte of the line is called an opcode. This is what tells the 6510 what to do. The abbreviations in assembly language are called mnemonics. The next two bytes in this line are the operand. This specifies where to do the operation. You may notice that in the assembly example that the operand was “$1234”. But in the machine example, it's 34 12! What is going on? The 6510 uses reverse byte order. Get used to it, every part of the 6510 is this way.
 
 Some opcodes have no operand, like the RTS.
 
-60 RTS
+60
+RTS
 
 ## Using a Machine Language Monitor
 
@@ -62,7 +66,8 @@ Machine language monitors are programs that freeze the machine and allow you to 
 
 When you open the monitor up you'll get something like this:
 
-ADDR AR XR YR SP 01 NV-BDIZC .;E37B FF FF FF FB 37 00000000
+  ADDR AR XR YR SP 01 NV-BDIZC
+.;E37B FF FF FF FB 37 00000000
 
 ADDR/PC - Program counter. Tells the 6510 where to get the next instruction from.
 
@@ -96,7 +101,10 @@ D ADD1 ADD2
 
 where ADD1 is the address you'd like to disassemble from, and ADD2 is the address where disassembly ends. Typing just D will continuously disassemble from where you left off. You'll get output like this:
 
-.> 1000 AD 34 12 LDA $1234 .> 1003 8D 21 43 STA $4321 .> 1006 60 RTS .> 1007 00 BRK
+.> 1000 AD 34 12  LDA $1234
+.> 1003 8D 21 43  STA $4321
+.> 1006 60        RTS
+.> 1007 00        BRK
 
 So we have the address of the instruction, and the instruction in machine language and then assembly language. You can type over a disassembly listing to change the code.
 

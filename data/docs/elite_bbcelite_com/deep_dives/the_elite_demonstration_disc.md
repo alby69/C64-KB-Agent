@@ -3,25 +3,25 @@ title: The Elite Demonstration Disc
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_demonstration_disc.html
 category: deep-dive
 topics:
-- input handling
-- assembly
 - basic
+- assembly
+- input handling
 difficulty: intermediate
 language: mixed
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # The Elite Demonstration Disc
@@ -32,13 +32,14 @@ The Elite Demonstration Disc was released back in 1984, alongside the original B
 
 ![Elite Demonstration Disc title screen screenshot](https://elite.bbcelite.com/images/demo/demo_title_screen.png) 
 
-						In this article we'll take a look at exactly what the demonstration disc demonstrates, and how it does it. To see details of the code changes behind the following, see the deep dive on [code changes in the Demonstration Disc](https://elite.bbcelite.com/code_changes_in_the_demonstration_disc.html).
+In this article we'll take a look at exactly what the demonstration disc demonstrates, and how it does it. To see details of the code changes behind the following, see the deep dive on [code changes in the Demonstration Disc](https://elite.bbcelite.com/code_changes_in_the_demonstration_disc.html).
 
 ## The demonstration
 
 													 -----------------
 
-						Although the demonstration disc is a floppy disc, it demonstrates the cassette version of the game. The advantage of this is that it loads the entire game into memory at once, so shops could remove the floppy disc from their display machine and simply leave it running (though any shop leaving the machine accessible would have found out the hard way that this wasn't a wise move, even with the disc removed).
+						
+Although the demonstration disc is a floppy disc, it demonstrates the cassette version of the game. The advantage of this is that it loads the entire game into memory at once, so shops could remove the floppy disc from their display machine and simply leave it running (though any shop leaving the machine accessible would have found out the hard way that this wasn't a wise move, even with the disc removed).
 
 Here's what the demonstration does:
 
@@ -75,7 +76,8 @@ No other key presses have any effect, and joysticks are also disabled.
 
 													 --------------------
 
-						Once the demonstration ship has jumped to Riedquat, things get a bit more interesting, as this is where the combat autopilot kicks in.
+						
+Once the demonstration ship has jumped to Riedquat, things get a bit more interesting, as this is where the combat autopilot kicks in.
 
 The default position in deep space is to head towards the space station, which in practice means heading towards the planet. This uses the same code as the docking computer from the enhanced versions; if you engage the docking computer in deep space in those versions then the ship will turn towards the planet, and that's exactly what happens in the demo.
 
@@ -83,11 +85,11 @@ This is all controlled by the [DOKEY](https://elite.bbcelite.com/demo/main/subro
 
 ![Elite Demonstration Disc combat screenshot](https://elite.bbcelite.com/images/demo/demo_combat.png) 
 
-						When pirates attack, things change - and because Riedquat is an anarchy system and we're carrying cargo, this is very likely to happen, and pretty quickly too. The key change is when an enemy fires its lasers at us, in which case a few things happen:
+When pirates attack, things change - and because Riedquat is an anarchy system, this is very likely to happen, and pretty quickly too. The key change is when an enemy fires its lasers at us, in which case a few things happen:
 
-- If the enemy has fired a missile at us, then [part 5 of TACTICS](https://elite.bbcelite.com/demo/main/subroutine/tactics_part_5_of_7.html)will set the missile as our target by setting the[targetShip](https://elite.bbcelite.com/demo/main/workspace/wp.html#targetship)variable to the missile's slot number.
-- If the enemy has fired its lasers at us, then [part 6 of TACTICS](https://elite.bbcelite.com/demo/main/subroutine/tactics_part_6_of_7.html)stores the attacking ship's slot number in[attackingShip](https://elite.bbcelite.com/demo/main/workspace/wp.html#attackingship). If we don't already have a target, then it will set the target to the attacking ship, and will arm one of our missiles, if we have one.
-- Then [part 13 of the main flight loop](https://elite.bbcelite.com/demo/main/subroutine/main_flight_loop_part_13_of_16.html)will randomly decide (39% chance on each iteration of the main loop) whether or not to set the enemy ship as our target by setting the[targetShip](https://elite.bbcelite.com/demo/main/workspace/wp.html#targetship)variable to the enemy's slot number in[attackingShip](https://elite.bbcelite.com/demo/main/workspace/wp.html#attackingship).
+- If the enemy has fired a missile at us, then [part 5 of TACTICS](https://elite.bbcelite.com/demo/main/subroutine/tactics_part_5_of_7.html) will set the missile as our target by setting the[targetShip](https://elite.bbcelite.com/demo/main/workspace/wp.html#targetship) variable to the missile's slot number.
+- If the enemy has fired its lasers at us, then [part 6 of TACTICS](https://elite.bbcelite.com/demo/main/subroutine/tactics_part_6_of_7.html) stores the attacking ship's slot number in[attackingShip](https://elite.bbcelite.com/demo/main/workspace/wp.html#attackingship) . If we don't already have a target, then it will set the target to the attacking ship, and will arm one of our missiles, if we have one.
+- Then [part 13 of the main flight loop](https://elite.bbcelite.com/demo/main/subroutine/main_flight_loop_part_13_of_16.html) will randomly decide (39% chance on each iteration of the main loop) whether or not to set the enemy ship as our target by setting the[targetShip](https://elite.bbcelite.com/demo/main/workspace/wp.html#targetship) variable to the enemy's slot number in[attackingShip](https://elite.bbcelite.com/demo/main/workspace/wp.html#attackingship) .
 
 Interestingly, attackingShip does not get reset when the attacking ship gets destroyed, so even if all the enemy ships get killed, attackingShip will still contain the slot number of the last ship to fire its lasers at us. This means the autopilot can still randomly choose to go after that ship, but because the ship doesn't exist, the autopilot just fires endlessly into the void until a new ship is spawned and stores a valid slot in attackingShip once again.
 

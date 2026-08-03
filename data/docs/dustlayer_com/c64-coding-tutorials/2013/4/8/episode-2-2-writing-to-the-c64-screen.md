@@ -3,29 +3,29 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-2-writing-to-the-c64-screen
 category: tutorial
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CPU
 - CIA
 - VIC-II
+- CPU
 - SID
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
-- cia-registers
+- joystick-reading
 - memory-map
 - sid-registers
-- raster-interrupts
-- joystick-reading
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 
@@ -35,11 +35,9 @@ scraped_at: '2026-07-27'
 
 **Topics:** Now that we saw the working intro, we want to understand how it works. Let's start with the text written to the C64 screen.  
 
-**Download via  dust:** $ dust tutorials (select 'first intro') 
+**Download via [dust](http://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool):** $ dust tutorials (select 'first intro') 
 
-**Github Repository:**
-
-[First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)
+**Github Repository:** [First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)  
 
 - [Episode 2-1: Let's compile and run C64 code](http://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro)
 - **Episode 2-2: Writing to the C64 Screen**
@@ -99,16 +97,16 @@ We now need to loop over the previously defined string data byte by byte and cop
 
 e add another label for the code to loop over the text (init_text), then we initialize our X-Index-Register with zero and start with loading the first byte stored at label line1 into the accumulator. The content of the accumulator is then stored at the location near the middle of the screen plus the content of the X-Index-Register which is 0 at the beginning.
 
-The content of *line1,x *s the first byte in the first string, actually the Screen Code for a space character. We store the code from the accumulator to the appropriate position in Screen RAM at $0590 plus the value of the X-Index-Register which is still zero. 
+The content of *line1,x* s the first byte in the first string, actually the Screen Code for a space character. We store the code from the accumulator to the appropriate position in Screen RAM at $0590 plus the value of the X-Index-Register which is still zero. 
 
 We repeat the process with line2 but this time we start storing the screen code at $05E0 which is two lines below the previous Screen RAM we wrote to earlier.
 
 
 The first byte of each line of text has been written to Screen RAM - excellent! Now we want to do the same with the second character of the string. For that all we need to do is to increment the X-Index-Register and continue looping.
 
-*inx *oes exactly that - it increments the content of the X-Index-Register. The next thing before we continue the loop is to check whether we already finished iterating over the complete line. As one row of the C64 screen can not hold more than 40 characters we simply compare the X-Index-Register using the *cmp* command to the number 40 which is $28 in hex. the branch command *bne* will jump back to our label *loop_text* if the comparison is not true. With this we can work through 40 bytes of data for each line. Once the comparison to $28 is true the next command after *bne executed. * This is an *rts *hich means *return from subroutine*.
+*inx* oes exactly that - it increments the content of the X-Index-Register. The next thing before we continue the loop is to check whether we already finished iterating over the complete line. As one row of the C64 screen can not hold more than 40 characters we simply compare the X-Index-Register using the *cmp* command to the number 40 which is $28 in hex. the branch command *bne* will jump back to our label *loop_text* if the comparison is not true. With this we can work through 40 bytes of data for each line. Once the comparison to $28 is true the next command after *bne executed.*  This is an *rts* hich means *return from subroutine*.
 
-**And that's it! **on't worry that we skipped some details yet but you should have been able to get what we did to write some text to the C64 screen. We will soon do another iteration example when it comes to the color washer effect but before that, we talk about interrupts.
+**And that's it!** on't worry that we skipped some details yet but you should have been able to get what we did to write some text to the C64 screen. We will soon do another iteration example when it comes to the color washer effect but before that, we talk about interrupts.
 
 -act
 

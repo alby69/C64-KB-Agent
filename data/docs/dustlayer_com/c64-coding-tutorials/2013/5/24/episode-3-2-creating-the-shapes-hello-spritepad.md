@@ -3,31 +3,31 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad
 category: tutorial
 topics:
-- basic
-- graphics
-- assembly
 - sprite programming
+- assembly
+- graphics
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CPU
 - CIA
 - VIC-II
+- CPU
 - SID
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
-- cia-registers
+- joystick-reading
 - memory-map
 - sid-registers
-- raster-interrupts
-- joystick-reading
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 
@@ -37,11 +37,9 @@ scraped_at: '2026-07-27'
 
 **Synopsis:** Creating C64 Sprites - especially on Mac - is not trivial. Here is an easy way to circumvent the problem with non-existing C64 Tools on Mac - we will simply run a Windows tool! 
 
-**Download via  dust:** $ dust tutorials (select 'spritro') 
+**Download via [dust](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite):** $ dust tutorials (select 'spritro') 
 
-**Github Repository:**
-
-[Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)
+**Github Repository:** [Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)  
 
 - [Episode 3-1: Spritro - An Intro with a Sprite](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite)
 - **Episode 3-2: Creating the Shapes - Hello SpritePad**
@@ -63,17 +61,17 @@ We need to install Wine, however, as with many large open source projects, this 
 
 ### Running SpritePad on Mac
 
-[Download SpritePad](http://csdb.dk/release/?id=100657) and unzip it to a folder of your choice. The clean way would be to put it under *~/Wine Files/drive_c/Program Files *which is the directory set up by WineBottler when it was run for the first time but really every other directory works as well. Double-Click on *SpritePad.exe* and after a short time you should see the User Interface - let's start! 
+[Download SpritePad](http://csdb.dk/release/?id=100657) and unzip it to a folder of your choice. The clean way would be to put it under *~/Wine Files/drive_c/Program Files* which is the directory set up by WineBottler when it was run for the first time but really every other directory works as well. Double-Click on *SpritePad.exe* and after a short time you should see the User Interface - let's start! 
 
 ### What do we want to achieve?
 
 For our little intro we need to animate and move a Sprite from right to left. I went for the traditional space ship but as a matter of fact I am no way skilled to draw and animate a good-looking sprite myself.
 
-Luckily, SpritePad comes with some pre-bundled examples which include a number of Shapes - in modern environments you would probably call those files spritesheets. We will use one as basis and modify it to our liking. Let's load the [Uridium](http://www.lemon64.com/?game_id=2766) spritesheet which is located in the* /examples* directory of the unzipped SpritePad project. The good thing about using this particular sheet is that it already comes with a great Sprite - the famous Manta Class Space Ship from the game Uridium.
+Luckily, SpritePad comes with some pre-bundled examples which include a number of Shapes - in modern environments you would probably call those files spritesheets. We will use one as basis and modify it to our liking. Let's load the [Uridium](http://www.lemon64.com/?game_id=2766) spritesheet which is located in the */examples* directory of the unzipped SpritePad project. The good thing about using this particular sheet is that it already comes with a great Sprite - the famous Manta Class Space Ship from the game Uridium.
 
 Our ship is supposed to fly into the screen from the right - go all the way to the left to disappear behind the side border before it shows up again on the opposite side.
 
-Let's prepare our Spritesheet using SpritePad now. Click on *File->Open *then select the *Examples* folder and load the Uridium Spritesheet named *Uridium.spd*. If you don't want to do the work, just load the Sprites.spr which came with the Spritro Sources.
+Let's prepare our Spritesheet using SpritePad now. Click on *File->Open* then select the *Examples* folder and load the Uridium Spritesheet named *Uridium.spd*. If you don't want to do the work, just load the Sprites.spr which came with the Spritro Sources.
 
 - This Uridium-Spritesheet contains 128 different Shapes. When you scroll a bit down using the right side scrollbar you will find the Manta Space Ship and all of its animations. 
 
@@ -88,7 +86,7 @@ SpritePad comes with a simple Animator Tool to check whether our different Shape
 For example, select all Shapes from Frame 72 to Frame 87 - the Frame Number is displayed below the the small preview window between the Grid and the Spritesheet Window.  After you open the Animator you simply click on the *Play* Icon, that is the one facing to the right. The animation plays backs. 
 
 
-**Looks great, doesn't it? **You can change Animation Speed and whether the Animation will repeat or go back and forth. This behavior of course is not exported with your Sprite Data but must be programmed ourselves later. To get back to the SpriteEditor you must first close the Animator-Tool by the way.
+**Looks great, doesn't it?** You can change Animation Speed and whether the Animation will repeat or go back and forth. This behavior of course is not exported with your Sprite Data but must be programmed ourselves later. To get back to the SpriteEditor you must first close the Animator-Tool by the way.
 
 ### Building our Sprite Shapes
 
@@ -98,7 +96,7 @@ The Space Ship is already there and you played back the animation a minute ago. 
 
 Finally we want to delete all the Frames from 0 to 71 in the Spritesheet. Then we cut and paste the remaining 16 Ship Frames to the top of the spritesheet matrix. Once this is copied we can safely change the number of Frames from 128 to 16. This makes sure that only the shapes for the ship animation are saved into the output file.
 
-**Our work is done! ** We would save the spritesheet as sprites.spr and put it in our resources folder of the Spritro project but of course it is already there when you downloaded the sources from Github or using DUST. Play a bit with the Sprite Editor though and change individual frames to get a feel for SpritePad. It's a great tool!
+**Our work is done!**  We would save the spritesheet as sprites.spr and put it in our resources folder of the Spritro project but of course it is already there when you downloaded the sources from Github or using DUST. Play a bit with the Sprite Editor though and change individual frames to get a feel for SpritePad. It's a great tool!
 
 ### The SpritePad Format
 
@@ -114,7 +112,7 @@ The first three Bytes are $00, $0B and $01 which correspond to Background Color,
 
 Finally we reach Byte 64. The low Nibble stores the individual color Black in this particular case - therefore it is $00 - and the high Nibble of that Byte indicates by the most significant Bit set that this Sprite uses Multicolor Mode. For Standard Mode, Bit#7 of Byte 64 would have been set to low by SpritePad.
 
-**Here is a drawing for a quick overview of the just explained properties of the format. **
+**Here is a drawing for a quick overview of the just explained properties of the format.** 
 
 When we load the Spritesheet into our program we must consider that the first three bytes are color information and that all the shapes follow afterwards. When loading the data into our program we can either parse the first three bytes or just skip them and put the color information manually into the appropriate registers. The latter is actually what I did.
 

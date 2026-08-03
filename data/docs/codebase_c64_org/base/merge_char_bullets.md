@@ -11,11 +11,11 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -31,7 +31,9 @@ First thing to do is to reserve as many empty chars in your charset as you need 
 
 For example 8 chars:
 
-charset: $2000-$2800 8 empty chars: $27c0, $27c8, $27d0, $27d8, $27e0, $27e8, $27f0, $27f8 char values: $f8, $f9, $fa, $fb, $fc, $fd, $fe, $ff
+charset:	$2000-$2800
+8 empty chars:	$27c0, $27c8, $27d0, $27d8, $27e0, $27e8, $27f0, $27f8
+char values:	$f8, $f9, $fa, $fb, $fc, $fd, $fe, $ff
 
 Now you need a positive and a negative image/char of your char bullet.
 
@@ -50,7 +52,10 @@ The negative has to be done with $d021 and $d800/colorRAM, the positive should b
 
 Everytime the main program places a new bullet on screen respectively moving the char bullet on screen, it first has to read and save the char underneath the bullet.
 
-ldy screencolumn //column of char bullet lda (screenposition),y //screenposition=zp address holding the screen row sta charstorage,x //save char at specific position, x pointing at currently used char bullet jsr chargenerator //now create new char and print it on screen
+ldy screencolumn	//column of char bullet
+lda (screenposition),y	//screenposition=zp address holding the screen row		
+sta charstorage,x	//save char at specific position, x pointing at currently used char bullet
+jsr chargenerator	//now create new char and print it on screen
 
 Now the new char has to be generated:
 

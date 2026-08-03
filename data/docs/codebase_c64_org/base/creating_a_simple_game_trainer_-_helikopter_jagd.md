@@ -12,15 +12,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -37,15 +37,18 @@ Step 1:
 
 We will use a method suggested by iAN CooG on Lemon forums. Starting with the FCG version of the game from CSDB, launch the d64 in WinVice. Start the gameplay, and before you lose a life, enter the monitor (alt-m). Save the ram using the following commands: (do not type the > sign)
 
-bank ram s "lives4" 0 2 ffff
+bank ram
+s "lives4" 0 2 ffff
 
 Resume gameplay and lose a life. Re-enter the monitor and save the ram:
 
-bank ram s "lives3" 0 2 ffff
+bank ram
+s "lives3" 0 2 ffff
 
 Do this once more, lose a life then save the ram:
 
-bank ram s "lives2" 0 2 ffff
+bank ram
+s "lives2" 0 2 ffff
 
 Now we can generate some diff files, from a DOS command prompt type:
 
@@ -77,17 +80,21 @@ This tells winvice to open the monitor when any code stores a value to 27e1. Clo
 
 It will look like this:
 
-** Monitor 079 053 (C:$1ff6) #1 (Watch-store) .C:1ff6 30 09 BMI $2001
+** Monitor 079 053
+(C:$1ff6) #1 (Watch-store) .C:1ff6   30 09      BMI $2001
 
 Now, from the view menu, open the disassembly window. It should be highlighted blue on line 1FF6. Scroll up and lets look at the line just before it.
 
-1FF3: CE E1 27 DEC $27E1
+1FF3:  CE E1 27   DEC $27E1
 
 We can see that this is DECrementing the address we are watching. To give unlimited lives, all we need to do now is to change the three opcodes that make up this DECrement instruction (CE E1 27) to the opcode for No-OPeration, meaning do nothing (EA).
 
 Some assembly code to do this is:
 
-lda #$ea sta $1ff3 sta $1ff4 sta $1ff5
+lda #$ea
+sta $1ff3
+sta $1ff4
+sta $1ff5
 
 Now that we know what we need to do, and we have the code to do it, we need to get our changes into the program file. In order to do that we have to unpack the original file.
 
@@ -102,13 +109,21 @@ We'll make a Windows batch file to handle the unpacking. Create a file called ex
 
 In the batch file, the first thing we need to do is extract the prg file from the .d64 and save it to our working folder, so add this line to the bat file:
 
-c1541 -attach disk.d64 8 -read "helikopter jagd" output.prg
+c1541 -attach disk.d64 8 -read "helikopter jagd" output.prg 
 
 This will save the game to a file named output.prg. Now we can run this file through unp64 to unpack it. In this case, we need to run it through the unpacker a few times to unpack all the different levels of packing. The automated feature in unp64 (-c) to do this didnt work for me, so we will just do it manually. We keep unpacking until unp64 tells us its no longer packed.
 
 To save you the time, it takes four runs through. So add the following lines to your bat file:
 
-unp64 -v -l -o output1.prg output.prg del output.prg unp64 -v -l -o output2.prg output1.prg del output1.prg unp64 -v -l -o output3.prg output2.prg del output2.prg unp64 -v -l -o output4.prg output3.prg del output3.prg pause
+unp64 -v -l -o output1.prg output.prg
+del output.prg
+unp64 -v -l -o output2.prg output1.prg
+del output1.prg
+unp64 -v -l -o output3.prg output2.prg
+del output2.prg
+unp64 -v -l -o output4.prg output3.prg
+del output3.prg
+pause
 
 The pause at the end is so you can look and find the entry-point before the window closes. We will need this address.
 
@@ -116,7 +131,17 @@ Once this is done, save and run the bat file. You should end up with only one fi
 
 While the window is still open, look at the last unpacking entry:
 
-ECA Compacker, unpacker=$0100 ECA reloc active at $01da, from $d000-$efff to $e000-$ffff (use -l) Clean memory-end leftovers Entry point: $0811 pass1, find unpacker: $0100 Iterations 169811 cycles 673037 pass2, return to mem: $c000 Iterations 525343 cycles 2675443 ECA: endmem adjusted from $efff to $ffff mem $d000-$dfff cleaned saved $0900-$fffe as output4.prg
+ECA Compacker, unpacker=$0100
+ECA reloc active at $01da, from $d000-$efff to $e000-$ffff (use -l)
+Clean memory-end leftovers
+Entry point: $0811
+pass1, find unpacker: $0100
+Iterations 169811 cycles 673037
+pass2, return to mem: $c000
+Iterations 525343 cycles 2675443
+ECA: endmem adjusted from $efff to $ffff
+mem $d000-$dfff cleaned
+saved $0900-$fffe as output4.prg
 
 The Entry-Point listed here is the entry to the depacker routine and not the one we want. The “return to mem” value is the entry-point we need. In this case $c000.
 
@@ -124,7 +149,70 @@ Now open the output4.prg in winvice. It wont run properly yet, but thats ok, onc
 
 Scroll to our entry-point location ($C000). You should see the following code. I've commented some important points:
 
-.C:c000 A9 0E LDA #$0E .C:c002 8D 20 D0 STA $D020 ;change screen/bg color .C:c005 8D 21 D0 STA $D021 .C:c008 A9 04 LDA #$04 .C:c00a 8D 00 DD STA $DD00 .C:c00d A9 18 LDA #$18 .C:c00f 8D 18 D0 STA $D018 .C:c012 A9 D8 LDA #$D8 .C:c014 8D 16 D0 STA $D016 .C:c017 A9 3B LDA #$3B .C:c019 8D 11 D0 STA $D011 .C:c01c A2 00 LDX #$00 .C:c01e BD 00 C8 LDA $C800,X ;load title pic data .C:c021 9D 00 D8 STA $D800,X .C:c024 BD 00 C9 LDA $C900,X .C:c027 9D 00 D9 STA $D900,X .C:c02a BD 00 CA LDA $CA00,X .C:c02d 9D 00 DA STA $DA00,X .C:c030 BD 00 CB LDA $CB00,X .C:c033 9D 00 DB STA $DB00,X .C:c036 E8 INX .C:c037 E0 00 CPX #$00 .C:c039 D0 E3 BNE $C01E .C:c03b 20 9F FF JSR $FF9F .C:c03e 20 E4 FF JSR $FFE4 ;wait for keypress .C:c041 C9 20 CMP #$20 ;check if space bar pressed .C:c043 D0 F6 BNE $C03B ;loop wait for keypress .C:c045 A9 97 LDA #$97 ;space was pressed, continue .C:c047 8D 00 DD STA $DD00 .C:c04a A9 15 LDA #$15 .C:c04c 8D 18 D0 STA $D018 .C:c04f A9 C8 LDA #$C8 .C:c051 8D 16 D0 STA $D016 .C:c054 A9 1B LDA #$1B .C:c056 8D 11 D0 STA $D011 .C:c059 20 44 E5 JSR $E544 .C:c05c A2 00 LDX #$00 .C:c05e BD 7B C0 LDA $C07B,X .C:c061 9D E6 05 STA $05E6,X .C:c064 E8 INX .C:c065 E0 1A CPX #$1A ;doing some stuff we dont care about .C:c067 D0 F5 BNE $C05E .C:c069 A9 0E LDA #$0E .C:c06b 20 D2 FF JSR $FFD2 .C:c06e A2 00 LDX #$00 .C:c070 A9 00 LDA #$00 .C:c072 9D E0 D9 STA $D9E0,X .C:c075 E8 INX .C:c076 D0 F8 BNE $C070 .C:c078 4C 95 C0 JMP $C095 .C:c07b 50 41 BVC $C0BE .C:c081 20 42 59 JSR $5942 .C:c084 20 44 55 JSR $5544 .C:c087 4B 45 ASR #$45 .C:c089 20 4F 46 JSR $464F .C:c08c 20 46 43 JSR $4346 .C:c08f 47 20 SRE $20 .C:c091 31 39 AND ($39),Y .C:c093 34 31 NOOP $31,X .C:c095 A9 60 LDA #$60 .C:c097 85 AE STA $AE .C:c099 A9 72 LDA #$72 .C:c09b 85 AF STA $AF .C:c09d 4C 00 10 JMP $1000 ;and finally, jump to start of game
+.C:c000   A9 0E      LDA #$0E
+.C:c002   8D 20 D0   STA $D020		;change screen/bg color
+.C:c005   8D 21 D0   STA $D021
+.C:c008   A9 04      LDA #$04
+.C:c00a   8D 00 DD   STA $DD00
+.C:c00d   A9 18      LDA #$18
+.C:c00f   8D 18 D0   STA $D018
+.C:c012   A9 D8      LDA #$D8
+.C:c014   8D 16 D0   STA $D016
+.C:c017   A9 3B      LDA #$3B
+.C:c019   8D 11 D0   STA $D011
+.C:c01c   A2 00      LDX #$00
+.C:c01e   BD 00 C8   LDA $C800,X	;load title pic data
+.C:c021   9D 00 D8   STA $D800,X
+.C:c024   BD 00 C9   LDA $C900,X
+.C:c027   9D 00 D9   STA $D900,X
+.C:c02a   BD 00 CA   LDA $CA00,X
+.C:c02d   9D 00 DA   STA $DA00,X
+.C:c030   BD 00 CB   LDA $CB00,X
+.C:c033   9D 00 DB   STA $DB00,X
+.C:c036   E8         INX
+.C:c037   E0 00      CPX #$00
+.C:c039   D0 E3      BNE $C01E
+.C:c03b   20 9F FF   JSR $FF9F
+.C:c03e   20 E4 FF   JSR $FFE4		;wait for keypress
+.C:c041   C9 20      CMP #$20		;check if space bar pressed
+.C:c043   D0 F6      BNE $C03B		;loop wait for keypress
+.C:c045   A9 97      LDA #$97		;space was pressed, continue
+.C:c047   8D 00 DD   STA $DD00
+.C:c04a   A9 15      LDA #$15
+.C:c04c   8D 18 D0   STA $D018
+.C:c04f   A9 C8      LDA #$C8
+.C:c051   8D 16 D0   STA $D016
+.C:c054   A9 1B      LDA #$1B
+.C:c056   8D 11 D0   STA $D011
+.C:c059   20 44 E5   JSR $E544
+.C:c05c   A2 00      LDX #$00
+.C:c05e   BD 7B C0   LDA $C07B,X
+.C:c061   9D E6 05   STA $05E6,X
+.C:c064   E8         INX
+.C:c065   E0 1A      CPX #$1A		;doing some stuff we dont care about
+.C:c067   D0 F5      BNE $C05E
+.C:c069   A9 0E      LDA #$0E
+.C:c06b   20 D2 FF   JSR $FFD2
+.C:c06e   A2 00      LDX #$00
+.C:c070   A9 00      LDA #$00
+.C:c072   9D E0 D9   STA $D9E0,X
+.C:c075   E8         INX
+.C:c076   D0 F8      BNE $C070
+.C:c078   4C 95 C0   JMP $C095
+.C:c07b   50 41      BVC $C0BE
+.C:c081   20 42 59   JSR $5942
+.C:c084   20 44 55   JSR $5544
+.C:c087   4B 45      ASR #$45
+.C:c089   20 4F 46   JSR $464F
+.C:c08c   20 46 43   JSR $4346
+.C:c08f   47 20      SRE $20
+.C:c091   31 39      AND ($39),Y
+.C:c093   34 31      NOOP $31,X
+.C:c095   A9 60      LDA #$60
+.C:c097   85 AE      STA $AE
+.C:c099   A9 72      LDA #$72
+.C:c09b   85 AF      STA $AF
+.C:c09d   4C 00 10   JMP $1000		;and finally, jump to start of game
 
 We can see following this last address, there is alot of BRK lines… This is empty space we can use for our trainer intro if we write one (a job for another tutorial).
 
@@ -138,17 +226,28 @@ a c09d
 
 It is then ready for you to enter your assembly, type the following hitting enter after each line:
 
-lda #$ea sta $1ff3 sta $1ff4 sta $1ff5 jmp $1000
+lda #$ea
+sta $1ff3
+sta $1ff4
+sta $1ff5
+jmp $1000
 
 When finished, hit enter on an empty line to exit assembly mode. We have now edited the DEC instruction before jumping to $1000. You can now type:
 
-d c081
+d c081 
 
 to see your modified code. (or use the disassembly window) Now we will take note of our new hex values and make the changes to the “output4.prg” file with a hex editor.
 
 You should be looking at the following code:
 
-.C:c097 85 AE STA $AE .C:c099 A9 72 LDA #$72 .C:c09b 85 AF STA $AF .C:c09d A9 EA LDA #$EA ;our changes start here .C:c09f 8D F3 1F STA $1FF3 .C:c0a2 8D F4 1F STA $1FF4 .C:c0a5 8D F5 1F STA $1FF5 .C:c0a8 4C 00 10 JMP $1000
+.C:c097   85 AE      STA $AE
+.C:c099   A9 72      LDA #$72
+.C:c09b   85 AF      STA $AF
+.C:c09d   A9 EA      LDA #$EA	;our changes start here
+.C:c09f   8D F3 1F   STA $1FF3
+.C:c0a2   8D F4 1F   STA $1FF4
+.C:c0a5   8D F5 1F   STA $1FF5
+.C:c0a8   4C 00 10   JMP $1000
 
 Take note of the hex values of the three lines before our changed code. We will use this to find the correct place in the hex editor to put our new code. The hex for these three lines is:
 

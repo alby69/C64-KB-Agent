@@ -3,24 +3,24 @@ title: Instructions for the Commodore 64 version of the Elite Universe Editor
 source_url: https://elite.bbcelite.com/hacks/elite_universe_editor_instructions_commodore_64.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Instructions for the Commodore 64 version of the Elite Universe Editor
@@ -29,43 +29,38 @@ scraped_at: '2026-07-27'
 
 This page contains full instructions for the Commodore 64 version of the Elite Universe Editor. Click on any of the following to jump down to the relevant section:
 
-- [Basic concepts](https://elite.bbcelite.com#concepts)
-- [Saving, loading and playing universe files](https://elite.bbcelite.com#saving)
-- [Example universe files](https://elite.bbcelite.com#example)
-- [Adding, selecting, duplicating and deleting objects](https://elite.bbcelite.com#adding)
-- [Moving objects in space](https://elite.bbcelite.com#moving)
-- [Editing ship attributes](https://elite.bbcelite.com#attributes)
-- [Notes on the ship attributes](https://elite.bbcelite.com#attribute_notes)
-- [Editing the galaxy seeds](https://elite.bbcelite.com#seeds)
-
 To download the Elite Universe Editor or load it in your browser, see the [downloads page](https://elite.bbcelite.com/elite_universe_editor_downloads.html). There's also a [summary of keys](https://elite.bbcelite.com/elite_universe_editor_summary_of_keys.html) for reference.
 
+## 
 
 													 --------------
 
-						To get started with the Universe Editor, you'll need to know the following:
+						
+To get started with the Universe Editor, you'll need to know the following:
 
 - To launch the Universe Editor, press f1 from the first title screen. This is the screen with the rotating Cobra Mk III that you see on loading the editor:
-								![The Elite Universe Editor](/images/elite_universe_editor_c64/home-screen.png) This will open up the Universe Editor, with a universe containing the planet and the sun, like this: This will open up the Universe Editor, with a universe containing the planet and the sun, like this:![Editing the planet](/images/elite_universe_editor_c64/planet.png) If you end up in the main game instead of the title screen, you can always exit to the title screen by pausing the game with INST/DEL and pressing left arrow. You can then press f1 to enter the Universe Editor. If you end up in the main game instead of the title screen, you can always exit to the title screen by pausing the game with INST/DEL and pressing left arrow. You can then press f1 to enter the Universe Editor.
-- To exit the Universe Editor, press RUN/STOP and confirm your choice by pressing Y. Quitting the Universe Editor clears down the current universe, so if you want to [save your changes](https://elite.bbcelite.com#saving), make sure you so this first.
+								![The Elite Universe Editor](/images/elite_universe_editor_c64/home-screen.png) This will open up the Universe Editor, with a universe containing the planet and the sun, like this: ![Editing the planet](/images/elite_universe_editor_c64/planet.png) If you end up in the main game instead of the title screen, you can always exit to the title screen by pausing the game with INST/DEL and pressing left arrow. You can then press f1 to enter the Universe Editor.
+- To exit the Universe Editor, press RUN/STOP and confirm your choice by pressing Y. Quitting the Universe Editor clears down the current universe, so if you want to [save your changes](https://elite.bbcelite.com#saving) , make sure you so this first.
 - The Elite Universe Editor lets you create miniature universes. A "universe" in Elite terminology is the local "bubble" around our ship. This bubble of universe can contain one planet, either one sun or one space station (but not both), and a collections of spaceships. It also has an associated set of galactic seeds, which are three 16-bit numbers from which the game's eight galaxies are procedurally generated.
 - In these instructions, I use the term "ship" to mean a spaceship, asteroid, missile, cargo or escape pod.
 - Each object in the universe lives in a slot. Slot 0 contains the planet, slot 1 contains the sun or the space station, and slots 2 and up are for ships. The Commodore 64 supports a maximum of 8 ships in slots 2 to 9.
 - The number of the currently selected slot is shown in the top-left of the screen. To edit an object - planet, sun, station or ship - you need to select the relevant slot with the Q and W keys. In this example, slot 8 is selected, which happens to be the Transporter in the bottom-right:
-								![Editing a ship slot](/images/elite_universe_editor_c64/slot.png)  
+								![Editing a ship slot](/images/elite_universe_editor_c64/slot.png) 
 - Some objects have a "personality", such as pirate, trader or bounty hunter. This is shown in the top-right of the screen. For example, in the above screenshot, the currently selected ship in slot 8 is a trader.
 - The relative direction in space of the currently selected slot is shown on the compass, using the same logic as in the game (i.e. a thick dot means in front, while a thin dot means behind). As with the in-game compass, this is relative to the forward view from our ship. In the above example, the selected ship is in front of us and slightly down to the right.
 
 The easiest way to see what the Universe Editor does is to load one of the example files, so let's talk about that next.
 
+## 
 
 													 ------------------------------------------
 
-						Press @ to bring up the Universe Editor menu. This is very similar to the disk access menu in the main game, except instead of saving and loading commander files, you can save, load and play universe files. It looks like this:
+						
+Press @ to bring up the Universe Editor menu. This is very similar to the disk access menu in the main game, except instead of saving and loading commander files, you can save, load and play universe files. It looks like this:
 
 ![The Elite Universe Editor menu](https://elite.bbcelite.com/images/elite_universe_editor_c64/menu.png) 
 
-						To load or save a universe file, press 1 or 2 and enter the filename (by default the Universe Editor disk is set to load from the game disk). Universe files are filenames like BOXARTC and MANUAL (see the [next section for some example filenames](https://elite.bbcelite.com#example)).
+To load or save a universe file, press 1 or 2 and enter the filename (by default the Universe Editor disk is set to load from the game disk). Universe files are filenames like BOXARTC and MANUAL (see the [next section for some example filenames](https://elite.bbcelite.com#example)).
 
 The current filename is shown in option 2 in the menu. If you want to save or load a file with this name, you can leave the filename blank. This is useful if you keep making edits to the same file, as you can quickly save it to the same filename without having to re-enter it every time. However, when saving to disk, bear in mind that the Commodore 64 does not let you overwrite an existing file with a file of the same name, so you should only use this shortcut when saving to tape. The same happens when saving commander files.
 
@@ -79,37 +74,41 @@ If you do want to continue your adventures from a universe file, and that univer
 
 Note that universe files do not include the current set of galaxy seeds, as they are already saved as part of the main game's commander file. If you have [edited the galaxy seeds](https://elite.bbcelite.com#seeds) and want to save your new galaxy settings, you can jump into the main game's save menu and save them as part of the commander. The quickest way to do this from the Universe Editor is to press RUN/STOP to go to the main title screen, and then press Y to open the game's disk access menu, from where you can save your commander file. Don't forget to save your universe file first if you haven't already, as quitting the Universe Editor clears down the current universe.
 
+## 
 
 													 ----------------------
 
-						The Universe Editor comes bundled with a number of example universe files, ready for you to load and play. To load them, press @ to bring up the main menu and enter the name as shown below. You can then edit the universe, or play it to see the scene brought to life.
+						
+The Universe Editor comes bundled with a number of example universe files, ready for you to load and play. To load them, press @ to bring up the main menu and enter the name as shown below. You can then edit the universe, or play it to see the scene brought to life.
 
 BOXARTC is the screenshot from the back of the Firebird Elite box:
 
 ![The screenshot from the back of the box](https://elite.bbcelite.com/images/elite_universe_editor_c64/boxartc.png) 
 
-						brought to life as a playable universe:
+brought to life as a playable universe:
 
 MANUAL is the first screenshot from the game manual, of the Cobra Mk III:
 
 ![The screenshot from page 5 of the manual](https://elite.bbcelite.com/images/elite_universe_editor_c64/manual.png) 
 
-						which looks like this when brought to life as a playable universe:
+which looks like this when brought to life as a playable universe:
 
 SHIPIDC is a selection of ships from the ship identification poster that came with the game:
 
 ![The ship identification poster](https://elite.bbcelite.com/images/elite_universe_editor_c64/ship_id.jpg) 
 
-						Here it is brought to life as a playable universe:
+Here it is brought to life as a playable universe:
 
 Note that the disk also contains the BOXART1, BOXART2 and SHIPID universe files from the BBC version. Universe files can be shared between all the different platforms, as these files demonstrate. See the [instructions for the BBC version](https://elite.bbcelite.com/elite_universe_editor_instructions_bbc.html#example) for details on these files.
 
 These example universes are designed for playing, so don't forget to bring up the menu and press "play".
 
+## 
 
 													 ---------------------------------------------------
 
-						The following keys are discussed in this section:
+						
+The following keys are discussed in this section:
 
 | Key | Function | 
 |---|---|
@@ -167,10 +166,12 @@ Press CLR/HOME to duplicate the currently selected ship. As with adding a new sh
 
 Next, let's see how to move things around in space.
 
+## 
 
 													 -----------------------
 
-						The following keys are used to move the currently selected object in space. Hold down the movement keys to auto-repeat.
+						
+The following keys are used to move the currently selected object in space. Hold down the movement keys to auto-repeat.
 
 | Key | Function | 
 |---|---|
@@ -191,14 +192,16 @@ When moving the space station, bear the following in mind. To be able to dock at
 
 Now that we've covered moving objects in space, let's look at how to edit all the different object attributes that the game engine supports.
 
+## 
 
 													 -----------------------
 
-						Selecting a slot will show the object's attributes on the dashboard. The dashboard is similar to the standard game's dashboard, but note that some of the labels are different. Here's the dashboard in the Universe Editor:
+						
+Selecting a slot will show the object's attributes on the dashboard. The dashboard is similar to the standard game's dashboard, but note that some of the labels are different. Here's the dashboard in the Universe Editor:
 
 ![The Elite Universe Editor dashboard](https://elite.bbcelite.com/images/elite_universe_editor_c64/dashboard.png) 
 
-						To edit the attributes for the currently selected object, simply press the corresponding number key for that attribute. Here are the keys:
+To edit the attributes for the currently selected object, simply press the corresponding number key for that attribute. Here are the keys:
 
 ```
     1     AC = Acceleration                              Speed = SP     7
@@ -208,7 +211,8 @@ Now that we've covered moving objects in space, let's look at how to edit all th
     5     HS = Hostile (on/off)
     6     AL = Aggression level
 ```
-						To help you remember which keys do what, start counting from the top-left of the dashboard, going down the left side of the dashboard from top to bottom (for keys 1 to 6) and then down the right side of the dashboard (for keys 7 to 0). Ignore the slider colours - they are not significant in the Universe Editor.
+						
+To help you remember which keys do what, start counting from the top-left of the dashboard, going down the left side of the dashboard from top to bottom (for keys 1 to 6) and then down the right side of the dashboard (for keys 7 to 0). Ignore the slider colours - they are not significant in the Universe Editor.
 
 Some of these values are analogue, and have a range of values, while others are toggles, and are either on or off.
 
@@ -265,10 +269,12 @@ Also, the "show planets" configuration is enabled by default in the Universe Edi
 
 Finally, you can press D to destroy (i.e. explode) the current ship, replacing it with an explosion cloud ("Cloud" is shown in the top-right corner when an explosion is selected). You can't explode the station, sun or planet. Exploding ships are no longer shown on the scanner, but you can still highlight them on the scanner by pressing H. You can advance the state of the explosion cloud by repeatedly pressing D, though explosions are restarted on playing a universe, or when a universe is loaded.
 
+## 
 
 													 ----------------------------
 
-						See the deep dive on [advanced tactics with the NEWB flags](https://elite.bbcelite.com/deep_dives/advanced_tactics_with_the_newb_flags.html) for more details on being a trader, bounty hunter, pirate, innocent bystander or cop, as well as docking or being hostile.
+						
+See the deep dive on [advanced tactics with the NEWB flags](https://elite.bbcelite.com/deep_dives/advanced_tactics_with_the_newb_flags.html) for more details on being a trader, bounty hunter, pirate, innocent bystander or cop, as well as docking or being hostile.
 
 Here are some things to note when editing analogue values:
 
@@ -285,10 +291,12 @@ Here are some notes on the AI toggle:
 
 Now that we've covered objects in the local bubble, let's move on to the surrounding universe.
 
+## 
 
 													 ------------------------
 
-						Elite is famous for being able to generate billions of galaxies (though only eight form part of the released game). You can now visit every single one of them by editing the galaxy seeds.
+						
+Elite is famous for being able to generate billions of galaxies (though only eight form part of the released game). You can now visit every single one of them by editing the galaxy seeds.
 
 Here are the relevant keys, most of which are the same as in the game:
 
@@ -314,15 +322,15 @@ For example, in the following we edit the default seeds for the galaxy that cont
 
 ![Editing galaxy seeds](https://elite.bbcelite.com/images/elite_universe_editor_c64/edit_seeds.png) 
 
-						This takes us to the following galaxy:
+This takes us to the following galaxy:
 
 ![The long-range chart](https://elite.bbcelite.com/images/elite_universe_editor_c64/long_range_chart.png) 
 
-						with these systems in the vicinity:
+with these systems in the vicinity:
 
 ![The short-range chart](https://elite.bbcelite.com/images/elite_universe_editor_c64/short_range_chart.png) 
 
-						There are 281,474,976,710,656 different seed combinations (i.e. 256 ^ 6). The eight galaxies in the game are calculated by rotating each byte by one place, which you can do by pressing CTRL-H.
+There are 281,474,976,710,656 different seed combinations (i.e. 256 ^ 6). The eight galaxies in the game are calculated by rotating each byte by one place, which you can do by pressing CTRL-H.
 
 To restore the galaxy to the one containing Lave, enter the following seeds: 74, 90, 72, 2, 83, 183.
 

@@ -3,39 +3,37 @@ title: Advanced optimizing
 source_url: https://codebase.c64.org/doku.php?id=base%3Aadvanced_optimizing
 category: tutorial
 topics:
-- raster interrupts
-- memory management
-- sprite programming
-- graphics
-- assembly
 - basic
+- graphics
+- memory management
+- raster interrupts
+- sprite programming
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
 # Advanced optimizing
-
-### Table of Contents
 
 # Advanced optimizing
 
@@ -148,7 +146,9 @@ However if x1 and x2 are 9 bit numbers we get into trouble. Imagine x1 is $100 a
 ```
 As you see first of all the lower 3 bits of x1 are all set to avoid an underflow in the lower 3 bits and what would simulate the same as a (x1 - (x2 & $1f8)). However performing an and-operation on the second operand would force us to do the operation beforehand and store the result somewhere. So we first of all turn things around and avoid the underrun on the lowest 3 bits not by masking them out, but by maximizing those bits what gives the same result. When done so we would subtract x2 and finally shift 3 times to divide by 8. Now going through that example with our previous 9 bit values we see that the following happens:
 
-$00 | $07 = $07 $07 - $f0 = $17 $17 >> 3 = $02
+$00 | $07 = $07
+$07 - $f0 = $17
+$17 >> 3 = $02
 
 So no matter what lower three bits of x2 would be set, we would be save from an an underrun and end in values from $10 up to $17. Finally when shifting now, all is fine. As the subtract wraps around at the right bit, we end up with a result of $02. However keep in mind that the distance between x1 and x2 must not be greater than $ff.
 
@@ -1015,7 +1015,7 @@ ztab    = $fe00
 
 Whenever you need to shift and influence the carry afterwards, you can use ASR for that, and if you even need to apply an and-mask beforehand, you are extra lucky and can do 3 commands by that:
 
-asr #$fe ;-> A & $fe = $fe -> lsr -> carry is cleared as bit 0 was not set before lsr
+        asr #$fe     ;-> A & $fe = $fe -> lsr -> carry is cleared as bit 0 was not set before lsr
 
 … same as …
 
@@ -1224,11 +1224,27 @@ Another good use can be made if you want to do a inc/dec ($xx),y what is actuall
 
 f.e.:
 
-ldy #.. lda (zp),y clc adc #.. sta (zp),y bcc + iny isc (zp),y +
+ldy #..
+lda (zp),y
+clc
+adc #..
+sta (zp),y
+bcc +
+iny
+isc (zp),y
++
 
 or
 
-ldy #.. lda (zp),y sec sbc #.. sta (zp),y bcs + iny dcp (zp),y +
+ldy #..
+lda (zp),y
+sec
+sbc #..
+sta (zp),y
+bcs +
+iny
+dcp (zp),y
++
 
 For decrementing a 16 bit pointer it is also of good use:
 
@@ -1363,7 +1379,10 @@ Those cycles can be a pain in the arse when doing cycle exact timing, but they c
 
 So to avoid wasting lots of cycles we need to align tables properly, usually to a page boundary to avoid an overflow on the index. If our code crosses a page we should avoid placing a loop at that edge, as else one penalty cycle is consumed on branching back to the beginning of the loop:
 
-.C:0ffc A2 00 LDX #$00 .C:0ffe 9D 00 20 LDA $2080,X ;needs 1 cycle extra if X >= $80 .C:1001 E8 INX .C:1002 D0 FA BNE $0FFE ;needs 4 cycles if branch is taken
+.C:0ffc   A2 00      LDX #$00
+.C:0ffe   9D 00 20   LDA $2080,X ;needs 1 cycle extra if X >= $80
+.C:1001   E8         INX
+.C:1002   D0 FA      BNE $0FFE   ;needs 4 cycles if branch is taken
 
 Best is to add some warnings around important loops, so that you get a notice when you loop is badly aligned. For ACME for e.g. you could do that by comparing the highbytes of the loop's start- and end-address:
 
@@ -1594,7 +1613,9 @@ When you place code in the zeropage you might run out of space, but when placing
 
 So you can easily do things like the following iif your assembler supports it by labels, if not, you have to do the branches manually with a *+$xx or *-$xx:
 
-fff3 90 18 BCC $000D ;directly go to zeropage, no need for a far jump, as this wraps around ... 002c 30 87 BMI $FFB5 ;same here
+fff3   90 18      BCC $000D       ;directly go to zeropage, no need for a far jump, as this wraps around
+...
+002c   30 87      BMI $FFB5       ;same here
 
 ## Reuse of intrinsic information
 
@@ -1629,7 +1650,13 @@ When [dispatching on a byte](https://codebase.c64.org/doku.php?id=base:dispatch_
 
 Sometimes we are happy and a parameter, be it in a register or in an other opcode happens to just be the opcode that we want to execute, either directly or in another case when branching. Thus the jmp $dd0c trick happens to work, but also other scenarios could be possible:
 
-.C:0010 68 PLA .C:0011 E9 00 SBC #$00 .C:0013 01 06 BCS $001B .C:0015 69 00 ADC #$00 .C:0017 48 PHA .C:0018 29 0F AND #$0F .C:001a 85 48 STA $48
+.C:0010  68          PLA
+.C:0011  E9 00       SBC #$00
+.C:0013  01 06       BCS $001B
+.C:0015  69 00       ADC #$00
+.C:0017  48          PHA
+.C:0018  29 0F       AND #$0F
+.C:001a  85 48       STA $48
 
 As A is modified in the one case a common point where both paths merge again with a PHA is impossible. But by storing A at a wise address ($48 = opcode PHA) we can successful merge both parts at $001c without further awkwardness like an additional branch/jump. Thanks a lot to lft for pointing me to this!
 

@@ -8,7 +8,7 @@ difficulty: intermediate
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # 8bit multiplication with 16bit product

@@ -3,27 +3,27 @@ title: Turbo Assembler 5.2 reference
 source_url: https://codebase.c64.org/doku.php?id=base%3Aturboassembler_5.2_bacchus_version
 category: manual
 topics:
-- basic
-- raster interrupts
 - memory management
+- raster interrupts
+- basic
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
 - CPU
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -55,11 +55,7 @@ Commands are invoked by pressing the following keys, preceded by the “left-arr
 | 2 | Insert separator line | 
 | 3 | Assemble | 
 | 4 | Print (? - print, name - to file, ' - To Screen) | 
-| 5 | 
-Produce object file (assemble to disk)  
-*= $1000  
-*=$2000  Assembled to disk you'll load six bytes; 
-$1000 : LDA $1000  As you see, the assembly is right, but it landed in the wrong place! | 
+| 5 |  Produce object file (assemble to disk) Be careful: Setting the program counter ( *= ) a second time in your source won't work while assembling to disk. The code will be correct, but it won't land in the right place in memory. Say;  *= $1000 lda *  *=$2000 lda * Assembled to disk you'll load six bytes;  $1000 : LDA $1000 $1003 : LDA $2000  As you see, the assembly is right, but it landed in the wrong place! | 
 | 6 | Input part of the memory as data - import binary data as .byte | 
 | 7 | Set tab (Cursor pos after Return) | 
 | 8 | Position of mnemonic column | 
@@ -115,12 +111,12 @@ Note that the keys F1, F2, F7 and F8 are static, whereas F3-F6 are redefinable f
 
 ### Pseudo Op-codes
 
-| .BYTE | .BYTE “p”, $ab,%100011001,49,&19Enter data. Either within quotes (one character), as hex ($E0) binary (%10001110), decimal (45) or octal (&34). Separate numbers with commas. | 
-| .WORD |  .WORD label, $1000, label+$f8/2, *-9 Enter 16 bit/2 byte address in the normal 6502/6510 way, i.e. lowbyte, highbyte. Any label and expression is valid! | 
-| * |  * = $XXXX XXXX is here the start for your code. Can be used any number of time, but beware while assembling to disk (“”+“5”). | 
-| .TEXT |  .TEXT “Some text” Enter some text in ASCII-format. Beware that there is no obvious way of entering pokecodes, but for this purpose I recommend my own method. Either AND #$3F or: Enter your monitor. Type the text to the screen and transfer it into a safe place in the memory. Enter TurboAss and insert the data with “”+“6” | 
-| ; |  ; <Comment> A comment for information purposes. Enter any comment after the semicolon. Truly good for you when you want to understand the crappy, ununderstandable code you produced when you were lame (last week! label LDA #$00 ;Load accumulator with zero! | 
-| .OFFS |  .OFFS XXXX This is a toughie, that relocates the code. The value after the offs is a value added to the *= value. F.ex. *=$1000 followed by .OFFS $0800 makes the code land on $1800 and .OFFS $F800 makes it land on $0800. Inserting things like drivecode, is a joy thanks to this feature, even if it could have been done a bit easier to understand. The trick to make it work is this piece of code, so this will also work *=$1000 label1 *=$0400 ;Start for f.ex. drive code .OFFS 0-(*-label1) label2 LDA label2 Labels will be initialized to the following: Label1 =$1000 Label2 =$0400 The code LDA $0400 will be placed at $1000 in memory. | 
+| .BYTE | **.BYTE “p”, $ab,%100011001,49,&19**Enter data. Either within quotes (one character), as hex ($E0) binary (%10001110), decimal (45) or octal (&34). Separate numbers with commas. | 
+| .WORD |  **.WORD label, $1000, label+$f8/2, *-9** Enter 16 bit/2 byte address in the normal 6502/6510 way, i.e. lowbyte, highbyte. Any label and expression is valid! | 
+| * |  *** = $XXXX** XXXX is here the start for your code. Can be used any number of time, but beware while assembling to disk (“”+“5”). | 
+| .TEXT |  **.TEXT “Some text”** Enter some text in ASCII-format. Beware that there is no obvious way of entering pokecodes, but for this purpose I recommend my own method. Either AND #$3F or: Enter your monitor. Type the text to the screen and transfer it into a safe place in the memory. Enter TurboAss and insert the data with “”+“6” | 
+| ; |  **; <Comment>** A comment for information purposes. Enter any comment after the semicolon. Truly good for you when you want to understand the crappy, ununderstandable code you produced when you were lame (last week! label LDA #$00 ;Load accumulator with zero! | 
+| .OFFS |  **.OFFS XXXX** This is a toughie, that relocates the code. The value after the offs is a value added to the *= value. F.ex. *=$1000 followed by .OFFS $0800 makes the code land on $1800 and .OFFS $F800 makes it land on $0800. Inserting things like drivecode, is a joy thanks to this feature, even if it could have been done a bit easier to understand. The trick to make it work is this piece of code, so this will also work *=$1000 label1 *=$0400 ;Start for f.ex. drive code .OFFS 0-(*-label1) label2 LDA label2 Labels will be initialized to the following: Label1 =$1000 Label2 =$0400 The code LDA $0400 will be placed at $1000 in memory. | 
 
 ### Working with labels
 

@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Arithmetic shift right
@@ -28,19 +28,36 @@ If we want to divide by the power of 2 we usually shift right. That is fine with
 ```
 Easy like that, done in 4 cycles! However keep in mind that this way the result is rounded down and not up when dealing with negative numbers. So for more accuracy you might prefer:
 
-bpl + ;positive number? eor #$ff ;a = 0 - a to get a positive number clc adc #$01 lsr ;shift right eor #$ff ;make it negative again clc adc #$01 jmp ++ + lsr ++
+   bpl +     ;positive number?
+   eor #$ff  ;a = 0 - a to get a positive number
+   clc
+   adc #$01
+   lsr       ;shift right
+   eor #$ff  ;make it negative again
+   clc
+   adc #$01
+   jmp ++
++
+   lsr
+++
 
 This would need 13 cycles in average, but it can be done faster as well using the first method:
 
-cmp #$80 ;copy bit 7 to carry ror ;shift right as before bpl + ;if positive number then skip adc #$00 ;else round up + ...
+   cmp #$80  ;copy bit 7 to carry
+   ror       ;shift right as before
+   bpl +     ;if positive number then skip
+   adc #$00  ;else round up
++  ...
 
 Then we would need 7,5 cycles in average. Still pretty nice. If you need it even faster (6 cycles) and use a lot of div by 2, then a lookup table might also be an option:
 
-tax lda divtable,x
+   tax
+   lda divtable,x
 
 When using illegal op-codes you might also want to use this version that gives you always a cleared carry afterwards:
 
-anc #$fe ;copy N to C and mask out bit 0 ror ;rotate, carry will now be clear
+   anc #$fe  ;copy N to C and mask out bit 0
+   ror       ;rotate, carry will now be clear
 
 ## And how's about shifting left?
 

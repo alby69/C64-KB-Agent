@@ -3,32 +3,30 @@ title: Using a Timer as an Inverted Raster X-Pos Register
 source_url: https://codebase.c64.org/doku.php?id=base%3Ausing_a_timer_as_an_inverted_raster_x-pos_register_method
 category: reference
 topics:
-- sprite programming
 - raster interrupts
+- sprite programming
 - assembly
 difficulty: advanced
 language: assembly
 hardware:
 - CPU
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
 # Using a Timer as an Inverted Raster X-Pos Register
-
-### Table of Contents
 
 # Using a Timer as an Inverted Raster X-Pos Register
 

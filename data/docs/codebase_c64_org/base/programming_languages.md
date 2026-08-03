@@ -10,9 +10,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Programming Languages
@@ -29,11 +29,11 @@ This section contains material on programming languages other than assembler, su
 
 Assembler isn't exactly a “programming language” in the same sense as the other languages covered on this page. Having said that, Turbo Assembler was the most used tool for C64 programming for a long time.
 
-- [TurboAssembler 5.2 (Bacchus Version)](https://codebase.c64.org/doku.php?id=base:turboassembler_5.2_bacchus_version)— Reference document by Bacchus/FLT
+- [TurboAssembler 5.2 (Bacchus Version)](https://codebase.c64.org/doku.php?id=base:turboassembler_5.2_bacchus_version) — Reference document by Bacchus/FLT
 
 ## BASIC Programming
 
-- [Overview of Basic V2 commands](http://www.c64-wiki.com/index.php/C64-Commands)- (External link, but useful info)
+- [Overview of Basic V2 commands](http://www.c64-wiki.com/index.php/C64-Commands) - (External link, but useful info)
 
 ## COMAL Programming
 

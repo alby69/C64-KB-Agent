@@ -7,18 +7,18 @@ difficulty: intermediate
 language: none
 hardware:
 - CIA
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- keyboard-handling
 - joystick-reading
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - sound-programming
+- sid-registers
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Wersiboard Music 64

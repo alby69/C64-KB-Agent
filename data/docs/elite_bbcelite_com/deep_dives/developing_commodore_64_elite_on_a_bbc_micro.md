@@ -3,29 +3,29 @@ title: Developing Commodore 64 Elite on a BBC Micro
 source_url: https://elite.bbcelite.com/deep_dives/developing_commodore_64_elite_on_a_bbc_micro.html
 category: source-code
 topics:
-- assembly
 - raster interrupts
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Developing Commodore 64 Elite on a BBC Micro
@@ -44,9 +44,11 @@ But the source disk build process produces three binary files (COMLOD, LOCODE an
 
 													 -----------------------------------
 
-						If you look in the source code for the Commodore 64 version of Elite, there's a reference to someone called "Jez", who converted the music driver from the Commodore 64 to the BBC Micro... "extremely badly", according to the self-deprecating comment in the [BDirqhere](https://elite.bbcelite.com/c64/main/subroutine/bdirqhere.html) routine:
+						
+If you look in the source code for the Commodore 64 version of Elite, there's a reference to someone called "Jez", who converted the music driver from the Commodore 64 to the BBC Micro... "extremely badly", according to the self-deprecating comment in the [BDirqhere](https://elite.bbcelite.com/c64/main/subroutine/bdirqhere.html) routine:
 
-BBC source code converted from Commodore disassembly extremely badly Jez. 13/4/85.
+  BBC source code converted from Commodore disassembly extremely badly
+  Jez. 13/4/85.
 
 The Jez in question is Jez San, who would go on to create the Super FX chipset for the Nintendo, as well as epic games like Starglider, Star Fox and Stunt Race FX. In 1985, before he was famous, he was asked to help out Ian Bell and David Braben with their conversion of Elite to the Commodore 64, a platform that Bell and Braben didn't know that much about.
 
@@ -58,9 +60,9 @@ It was also developed for the Nintendo Entertainment System (NES), and it was us
 
 It's a bit difficult to find information about the PDS, as only around 500 were sold; that's a pretty healthy figure for such a top-end development environment, but it does mean they're pretty rare these days. These links provide a tantalising glimpse into this early development environment:
 
-- This [interview with Jez San](https://www.timeextension.com/features/jez-san-on-argonaut-star-fox-and-working-with-nintendo)is fun, especially when he talks about how he got involved with Elite and the PDS.
-- [Andy Glaister's work history](http://www.glaister.com/History/Andy/Andy%20History.htm)is a great read, and he talks about the PDS in a fair amount of detail.
-- The [PDS entry on the CPC wiki](https://www.cpcwiki.eu/index.php/PDS_development_system)contains loads of fascinating information, with photos, links to drivers and manuals, and lots more.
+- This [interview with Jez San](https://www.timeextension.com/features/jez-san-on-argonaut-star-fox-and-working-with-nintendo) is fun, especially when he talks about how he got involved with Elite and the PDS.
+- [Andy Glaister's work history](http://www.glaister.com/History/Andy/Andy%20History.htm) is a great read, and he talks about the PDS in a fair amount of detail.
+- The [PDS entry on the CPC wiki](https://www.cpcwiki.eu/index.php/PDS_development_system) contains loads of fascinating information, with photos, links to drivers and manuals, and lots more.
 
 As for Elite, the Commodore 64 source disk contains one end of the story in the form of the SEND utility, which was used to transmit files across the PDS cable to a Commodore 64. I've disassembled the utility and [added it to the accompanying repository](https://github.com/markmoxon/elite-source-code-commodore-64/blob/main/1-source-files/main-sources/elite-send.asm).
 
@@ -68,8 +70,8 @@ Essentially it takes a filename as an argument, and it then transmits the file's
 
 The link to the CPC wiki does contain some Commodore 64 code for receiving data from the PDS, but it implements a protocol that's based on command bytes that the SEND utility doesn't use, so I suspect even the simplest code on that site is from an era after Elite was built. I have archived the relevant files here:
 
-- A PDF of the [PDS 6502 manual](https://elite.bbcelite.com/pdfs/The_PDS_6502_Manual.pdf), which mentions three tiers of PDS download software; presumably Elite used something akin to tier DL0, the most basic system.
-- An archive of the [PDS download source code](https://elite.bbcelite.com/media/c64/PDS_source_code.zip), which contains a DL0 driver for the Commodore 64.
+- A PDF of the [PDS 6502 manual](https://elite.bbcelite.com/pdfs/The_PDS_6502_Manual.pdf) , which mentions three tiers of PDS download software; presumably Elite used something akin to tier DL0, the most basic system.
+- An archive of the [PDS download source code](https://elite.bbcelite.com/media/c64/PDS_source_code.zip) , which contains a DL0 driver for the Commodore 64.
 
 The latter contains a very basic driver for the Commodore 64 that lives at address $8000 and which receives PDS commands 180 (download code) and 181 (jump to an address). The SEND utility doesn't send these download codes, but this has got to be fairly close to the system that was used to develop Commodore 64 Elite on a BBC Micro.
 

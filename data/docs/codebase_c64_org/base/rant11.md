@@ -3,37 +3,35 @@ title: Significant tricks & techniques in MW4 by Cadaver
 source_url: https://codebase.c64.org/doku.php?id=base%3Arant11
 category: source-code
 topics:
+- basic
+- graphics
 - raster interrupts
 - sprite programming
-- graphics
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
 # Significant tricks & techniques in MW4 by Cadaver
-
-### Table of Contents
 
 # Significant tricks & techniques in MW4 by Cadaver
 
@@ -88,7 +86,20 @@ But the weapon carried by each character/enemy, all bullets/other projectiles, i
 
 Packed sprites are divided into 6 “slices”, consisting of 7 bytes, like this: (each string of four numbers represents four multicolor pixels - one byte)
 
-1111 2222 3333 1111 2222 3333 1111 2222 3333 1111 2222 3333 1111 2222 3333 1111 2222 3333 1111 2222 3333 4444 5555 6666 4444 5555 6666 4444 5555 6666 4444 5555 6666 4444 5555 6666 4444 5555 6666 4444 5555 6666
+1111 2222 3333
+1111 2222 3333
+1111 2222 3333
+1111 2222 3333
+1111 2222 3333
+1111 2222 3333
+1111 2222 3333
+4444 5555 6666
+4444 5555 6666
+4444 5555 6666
+4444 5555 6666
+4444 5555 6666
+4444 5555 6666
+4444 5555 6666
 
 As you see, the lowest 7 rows of a packed sprite aren't used at all, to make the depacking process quicker (the lowest 7 rows have been cleared beforehand, when the program starts - this needs to be done only once). All packed sprites are so small that they fit into the 6 slices.
 

@@ -3,8 +3,8 @@ title: Orientation vectors
 source_url: https://elite.bbcelite.com/deep_dives/orientation_vectors.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,10 +13,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Orientation vectors
@@ -35,7 +35,7 @@ So if we're looking at the Cobra Mk III on the title screen, like this:
 
 ![The title screen in the BBC Micro version of Elite](https://elite.bbcelite.com/images/cassette/title.png) 
 
-						then this is how the orientation vectors are arranged:
+then this is how the orientation vectors are arranged:
 
 - nosev points out of the nose, towards the bottom-right corner
 - roofv points out of the roof, coming out of the screen to the top-right
@@ -45,7 +45,17 @@ So if we're looking at the Cobra Mk III on the title screen, like this:
 
 It might help to think of these vectors from the point of view of the ship's cockpit. From this perspective, the orientation vectors always look like this, with our ship at the origin:
 
-roofv ^ | | | | nosev | / | / | / |/ +-----------------------> sidev
+  roofv
+  ^
+  |
+  |
+  |
+  |    nosev
+  |   /
+  |  /
+  | /
+  |/
+  +-----------------------> sidev
 
 Every ship out there has its own set of orientation vectors, with nosev pointing out of that ship's nose, roofv pointing out of that ship's roof, and sidev out of that ship's right side. The orientation vectors are used in lots of places, for example:
 
@@ -59,14 +69,16 @@ Our ship doesn't have its own set of orientation vectors - at least, not explici
 
 													 ------------------------------------------
 
-						The three vectors are stored in bytes #9-26 of the ship's data block, so when we copy a ship's data into the internal workspace INWK, the vectors live in INWK+9 to INWK+26. Each vector coordinate is stored as a 16-bit sign-magnitude number, like this:
+						
+The three vectors are stored in bytes #9-26 of the ship's data block, so when we copy a ship's data into the internal workspace INWK, the vectors live in INWK+9 to INWK+26. Each vector coordinate is stored as a 16-bit sign-magnitude number, like this:
 
 ```
           [ INWK(10 9)  ]           [ INWK(16 15) ]           [ INWK(22 21) ]
   nosev = [ INWK(12 11) ]   roofv = [ INWK(18 17) ]   sidev = [ INWK(24 23) ]
           [ INWK(14 13) ]           [ INWK(20 19) ]           [ INWK(26 25) ]
 ```
-						We can refer to these three vectors in various ways, such as these variations for the nosev vector:
+						
+We can refer to these three vectors in various ways, such as these variations for the nosev vector:
 
 ```
   nosev = (nosev_x, nosev_y, nosev_z)
@@ -78,11 +90,13 @@ Our ship doesn't have its own set of orientation vectors - at least, not explici
         = [ (nosev_y_hi nosev_y_lo) ]
           [ (nosev_z_hi nosev_z_lo) ]
 ```
-						## Orthonormal vectors
+						
+## Orthonormal vectors
 
 													 -------------------
 
-						The three orientation vectors are orthonormal, which means they are orthogonal (i.e. they are perpendicular to each other), and normal (i.e. each of the vectors has length 1).
+						
+The three orientation vectors are orthonormal, which means they are orthogonal (i.e. they are perpendicular to each other), and normal (i.e. each of the vectors has length 1).
 
 We can rotate a ship about its centre by rotating these vectors, as in the MVS4 routine (see the deep dive on [pitching and rolling](https://elite.bbcelite.com/pitching_and_rolling.html) for more about this). However, because we use the small angle approximation to rotate in space, and it is not completely accurate, the three vectors tend to get a bit stretched over time, so periodically we have to tidy the vectors with the [TIDY](https://elite.bbcelite.com/cassette/main/subroutine/tidy.html) routine to ensure they remain as orthonormal as possible (see the deep dive on [tidying orthonormal vectors](https://elite.bbcelite.com/tidying_orthonormal_vectors.html) for details).
 
@@ -90,15 +104,20 @@ We can rotate a ship about its centre by rotating these vectors, as in the MVS4 
 
 													 --------------
 
-						When a new ship is spawned, its vectors are initialised in the [INWK](https://elite.bbcelite.com/cassette/main/workspace/zp.html#inwk) workspace by the [ZINF](https://elite.bbcelite.com/cassette/main/subroutine/zinf.html) routine as follows:
+						
+When a new ship is spawned, its vectors are initialised in the [INWK](https://elite.bbcelite.com/cassette/main/workspace/zp.html#inwk) workspace by the [ZINF](https://elite.bbcelite.com/cassette/main/subroutine/zinf.html) routine as follows:
 
-sidev = (1, 0, 0) roofv = (0, 1, 0) nosev = (0, 0, -1)
+  sidev = (1,  0,  0)
+  roofv = (0,  1,  0)
+  nosev = (0,  0, -1)
 
 So new ships are spawned facing out of the screen, as their nosev vectors point in a negative direction along the z-axis, which is positive into the screen and negative out of the screen. They are also spawned with roofv pointing up and sidev pointing right (though see below for some exceptions to this rule)
 
 Internally, we store the unit vector with a length of (96 0), or &6000, as a 16-bit sign-magnitude number. We use this high value to make it easier to support fractional calculations, which wouldn't be possible if we used a value of 1 for the unit vector length; instead the value of (96 0) represents a length of 1, just scaled up to allow for accuracy. &60 with bit 7 set is &E0, so &E000 represents -1, and we can store the above vectors like this:
 
-sidev = (&6000, 0, 0) roofv = (0, &6000, 0) nosev = (0, 0, &E000)
+  sidev = (&6000, 0, 0)
+  roofv = (0, &6000, 0)
+  nosev = (0, 0, &E000)
 
 So in this case, nosev_z_hi = &E0 = -96, sidev_x_hi = &60 = 96 and so on, while all the low bytes are zero. For a discussion of just how big this initial vector is, see the deep dive on [a sense of scale](https://elite.bbcelite.com/a_sense_of_scale.html).
 
@@ -110,9 +129,12 @@ This means the crater is on the very top of the planet when we arrive out of hyp
 
 													 --------------------------
 
-						Sometimes we might refer to the orientation vectors as a matrix, with sidev as the first row, roofv as the second row, and nosev as the third row, like this:
+						
+Sometimes we might refer to the orientation vectors as a matrix, with sidev as the first row, roofv as the second row, and nosev as the third row, like this:
 
-[ sidev_x sidev_y sidev_z ] [ roofv_x roofv_y roofv_z ] [ nosev_x nosev_y nosev_z ]
+  [ sidev_x sidev_y sidev_z ]
+  [ roofv_x roofv_y roofv_z ]
+  [ nosev_x nosev_y nosev_z ]
 
 though generally we talk about the individual vectors, because that's easier to understand. See the deep dive on [calculating vertex coordinates](https://elite.bbcelite.com/calculating_vertex_coordinates.html) for an example of the above matrix in use.
 
@@ -124,30 +146,31 @@ Finally, the orientation vectors define a left-handed universe, with the thumb a
 
 													 -------------------------
 
-						Not all ships are spawned with the nosev pointing towards us. For example, the space station is an exception; when we launch from the station, it is spawned with nosev pointing away from us, into the screen. This is because nosev points out of the station slot, and when we launch from it, we want the station to be spawned behind us, and with the slot facing forwards, in the same direction that we are looking. You can see this logic in the [TT110](https://elite.bbcelite.com/cassette/main/subroutine/tt110.html) launch routine, which places the new station behind us before calling [NWSPS](https://elite.bbcelite.com/cassette/main/subroutine/nwsps.html) to flip nosev before spawning the station with NWSHP.
+						
+Not all ships are spawned with the nosev pointing towards us. For example, the space station is an exception; when we launch from the station, it is spawned with nosev pointing away from us, into the screen. This is because nosev points out of the station slot, and when we launch from it, we want the station to be spawned behind us, and with the slot facing forwards, in the same direction that we are looking. You can see this logic in the [TT110](https://elite.bbcelite.com/cassette/main/subroutine/tt110.html) launch routine, which places the new station behind us before calling [NWSPS](https://elite.bbcelite.com/cassette/main/subroutine/nwsps.html) to flip nosev before spawning the station with NWSHP.
 
 The following ships don't have a standard orientation (all other ships follow the logical nose-roof-side pattern).
 
 - Thargoid mothership:
-								- nosev points out of one side of the mothership
-- roofv points out of the other side of the mothership
-- sidev points out of the roof of the mothership
- 
+								
+  - nosev points out of one side of the mothership
+  - roofv points out of the other side of the mothership
+  - sidev points out of the roof of the mothership
 - Thargon:
-								- nosev points out of the Thargon's nose
-- roofv points out of the side of the Thargon
-- sidev points out of the roof of the Thargon
- 
+								
+  - nosev points out of the Thargon's nose
+  - roofv points out of the side of the Thargon
+  - sidev points out of the roof of the Thargon
 - Space station:
-								- nosev points forward out of the docking slot
-- roofv points out of the side of the space station in a direction that is parallel to the horizontal line of the slot
-- sidev points out of the side of the space station in a direction that is perpendicular to the horizontal line of the slot
- 
+								
+  - nosev points forward out of the docking slot
+  - roofv points out of the side of the space station in a direction that is parallel to the horizontal line of the slot
+  - sidev points out of the side of the space station in a direction that is perpendicular to the horizontal line of the slot
 - Cargo canister:
-								- nosev points out of the side of the canister, avoiding the apexes of the pentagonal cross-section and at right-angles to roofv
-- roofv points out of the side of the canister, through one of the apexes of the pentagonal cross-section
-- sidev points out of one end of the canister
- 
+								
+  - nosev points out of the side of the canister, avoiding the apexes of the pentagonal cross-section and at right-angles to roofv
+  - roofv points out of the side of the canister, through one of the apexes of the pentagonal cross-section
+  - sidev points out of one end of the canister
 
 The asteroid also follows its own orientation, but I'm not even going to try to describe which features appear to be the nose, roof and side, as they all just look like bumps to me.
 

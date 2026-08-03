@@ -3,31 +3,29 @@ title: 6510 Instruction Timing
 source_url: https://codebase.c64.org/doku.php?id=base%3A6510_instruction_timing
 category: reference
 topics:
-- sprite programming
-- raster interrupts
 - memory management
+- raster interrupts
+- sprite programming
 - assembly
 difficulty: advanced
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # 6510 Instruction Timing
-
-### Table of Contents
 
 # 6510 Instruction Timing
 

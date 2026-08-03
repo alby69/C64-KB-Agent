@@ -3,11 +3,11 @@ title: Examination of SID noise waveform
 source_url: https://codebase.c64.org/doku.php?id=base%3Anoise_waveform
 category: tool
 topics:
-- memory management
 - basic
+- sound generation
+- memory management
 - sprite programming
 - assembly
-- sound generation
 difficulty: beginner
 language: mixed
 hardware:
@@ -16,15 +16,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -44,13 +44,25 @@ To examine the data, we want to be able to sample the output in a consistent way
 
 To this end, we want to read the waveform output of register $1b as fast as possible. With a REU it is possible to sample the value every cycle, and with the program “Cyclewise”, which samples $10000 bytes of the waveform output into bank 0 of a REU, I have collected the data in table 1 which are valid for the noise waveform. The number in the first column is the frequency put into registers $0e and $0f. The second number is the number of cycles each value of the waveform at least lasted, while the third number is the number of cycles the first value ($fe) lasted when the sampling is done using the construct:
 
-sta $d412 ;Start waveform stx $df01 ;Start sampling
+sta $d412 ;Start waveform
+stx $df01 ;Start sampling
 
 The STA and STX instructions take 4 cycles, but the data in the table suggests that the sampling is delayed only 3 cycles. Furthermore the first value count is probably 1.5 times longer than the waveform.
 
 Table 1: Frequency, wavelength and initial delay
 
-Frequency Wavelength 1st value cnt ---------------------------------------------- $ffff $10.001000 $16 $C000 $15.555555 $1D $AAAA $18.001800 $22 $8000 $20 $2D $6000 $2A.AAAAAB $3D $4000 $40 $6D $3222 $51.B3F644 $78 $3000 $55.555555 $7D $1000 $100 $17D $0100 $1000 $17FD
+Frequency	  Wavelength	1st value cnt
+----------------------------------------------
+  $ffff		  $10.001000	  $16
+  $C000		  $15.555555	  $1D
+  $AAAA		  $18.001800	  $22
+  $8000		  $20		  $2D
+  $6000		  $2A.AAAAAB	  $3D
+  $4000		  $40		  $6D
+  $3222		  $51.B3F644	  $78
+  $3000		  $55.555555	  $7D
+  $1000		  $100		  $17D
+  $0100		  $1000		  $17FD
 
 This leads to the conclusion that the frequencies can generated with a loop like this for the noise waveform:
 
@@ -105,19 +117,57 @@ Thirdly, this implies an internal register length of log2(8.0 MB)= 23 bits. And 
 
 With the implication of an internal register of 23 bits, the next step is to find a pattern in the data which might hint the algorithm used to produce the data. Since we know a shifting and eor scheme can be used, it might be useful to take a look at the data in binary:
 
-11111110 11111100 11111100 11111100 11111000 11111000 11111000 11111000 11110000 11110000 11100000 11100000 11100000 11000000 11000000 11000000 11000000 10000001 New value for bit 0! 10000001 00000011 00000011 00000011 00000110 00000110 00000100 00000100 00001100 00001000 00011000 00011000 00011000 00110000 00110000 ...
+11111110
+11111100
+11111100
+11111100
+11111000
+11111000
+11111000
+11111000
+11110000
+11110000
+11100000
+11100000
+11100000
+11000000
+11000000
+11000000
+11000000
+10000001 New value for bit 0!
+10000001
+00000011
+00000011
+00000011
+00000110
+00000110
+00000100
+00000100
+00001100
+00001000
+00011000
+00011000
+00011000
+00110000
+00110000
+...
 
 It should be quite clear that some kind of shifting scheme is used. Further examination of the data suggests that the internal register indeed is on 23 bits, where the mapping between the 8 bits in the output and the internal 23 bit register is like this:
 
-Internal register bit number 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 Output bit from register $1b 7 6 5 4 3 2 1 0
+Internal register bit number
+	22 21 20 19 18 17 16 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1  
+Output bit from register $1b
+	 7     6           5        4     3           2        1     0
 
 The first data from the output can be reproduced with this layout if the internal register is leftshifted, and the initial value of the internal register is:
 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0
+	 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0
 
 Now we need to explain the new bits appearing in bit 0 of the data. Even further examination of the data implies that an eor-gate is used to feed bit 0 of the internal register. I have found that the bits 22 and 17 of the internal register provides the feed for bit 0 through an eor-gate, which gives us the entire mechanism:
 
-22-21-20-19-18-17-16-15-14-13-12-...-8-7-6-5-4-3-2-1-0 | | | +---->----->-----> eor ->----->----->----->----->----->----->----->---->+
+22-21-20-19-18-17-16-15-14-13-12-...-8-7-6-5-4-3-2-1-0
+|                   |                                                   |
++---->----->-----> eor ->----->----->----->----->----->----->----->---->+
 
 This can also be expressed as a C-program like this:
 
@@ -158,7 +208,108 @@ When it comes to the quality of the pseudo-random generated numbers, one thing i
 
 ## Programs in assembler
 
-;"Cyclewise" - records noise-waveform each cycle using REU. ;---------------------------------------------------------- * = $1000 freq = $8000 ;Define frequency here cycle jsr init ;Init screen lda #$08 ;Set testbit to reset the waveform. sta $d412 jsr pause ;Give it time to settle - nescessary on my machine. lda #<freq ;Set frequency ldx #>freq sta $d40e stx $d40f ;Set up REU ldx #$d41b ;Define REU read address to be $d41b. ldy #>$d41b stx $df02 sty $df03 lda #$00 ;Record into $0000 sta $df04 sta $df05 sta $df06 ;in bank 0. sta $df07 ;Transfer $10000 bytes. sta $df08 lda #$00 ;No interrupts from the REU. sta $df09 lda #%10000000 ;Fix c64 adress at $d41b. sta $df0a lda #$80 ldx #%10010000 ;REU command: Do transfer from c64->REU. ;start waveform and do the sampling sta $d412 ;Enable noise-waveform stx $df01 ;and start recording. jmp done ;After sampling, wrap it up ;Loopchecker - checks for a loop in the noise-waveform. ;------------------------------------------------------ * = $1100 block = $2000 loop jsr init ;Init screen lda #$08 ;Set testbit to reset the waveform. sta $d412 jsr pause ;Give it time to settle - nescessary on my machine. lda #$00 ;Set frequency to $8000 sta $d40e lda #$80 sta $d40f lda #$80 ;Start noise-waveform sta $d412 jsr pause ;Wait a while, so we get well into the waveform inc $d020 ;Signal that the recording starts now ldx #0 ;Sample 256 bytes at 32 cycles l1 lda $d41b sta block,x bit $ffff bit $ffff bit $ffff bit $ffff nop inx bne l1 nop ;Wait exactly 1 value bit $ea bit $ffff bit $ffff l2 ldy #$1d ;See if the 256 bytes repeat ldx #$00 l3 lda $d3ff,y ;(Trick to get 5 cycles execution time) bit $ffff bit $ffff bit $ffff bit $ffff cmp block,x bne l2 inx bne l3 jmp done ;And exit if they do ;Misc subroutines ;---------------- * = $1800 ;Init screen init sei ;Secure accurate timing by lda #$00 ;disabling sprites sta $d015 in1 lda $d011 ;and screen. bpl in1 and #$ef sta $d011 rts ;Wait 50 frames so waveform can be reset pause ldx #50 p1 bit $d011 bpl p1 p2 bit $d011 bmi p2 dex bne p1 rts ;Wraps it up done lda $d011 ;Reenable screen ora #$10 sta $d011 cli ;and exit. rts
+;"Cyclewise" - records noise-waveform each cycle using REU.
+;----------------------------------------------------------
+	* = $1000
+freq	= $8000		;Define frequency here
+cycle	jsr init	;Init screen
+	lda #$08	;Set testbit to reset the waveform.
+	sta $d412
+	jsr pause	;Give it time to settle - nescessary on my machine.
+	lda #<freq 	;Set frequency
+	ldx #>freq
+	sta $d40e
+	stx $d40f
+	;Set up REU
+	ldx #$d41b	;Define REU read address to be $d41b.
+	ldy #>$d41b
+	stx $df02
+	sty $df03
+	lda #$00 	;Record into $0000
+	sta $df04
+	sta $df05
+	sta $df06	;in bank 0.
+	sta $df07	;Transfer $10000 bytes.
+	sta $df08
+	lda #$00	;No interrupts from the REU.
+	sta $df09
+	lda #%10000000	;Fix c64 adress at $d41b.
+	sta $df0a
+	lda #$80
+	ldx #%10010000	;REU command: Do transfer from c64->REU.
+	;start waveform and do the sampling
+	sta $d412	;Enable noise-waveform
+	stx $df01	;and start recording.
+	jmp done	;After sampling, wrap it up
+;Loopchecker - checks for a loop in the noise-waveform.
+;------------------------------------------------------
+	* = $1100
+block	= $2000
+loop	jsr init	;Init screen
+	lda #$08	;Set testbit to reset the waveform.
+	sta $d412
+	jsr pause	;Give it time to settle - nescessary on my machine.
+	lda #$00 	;Set frequency to $8000
+	sta $d40e
+	lda #$80
+	sta $d40f
+	lda #$80 	;Start noise-waveform
+	sta $d412
+	jsr pause	;Wait a while, so we get well into the waveform
+	inc $d020	;Signal that the recording starts now
+	ldx #0		;Sample 256 bytes at 32 cycles
+l1	lda $d41b
+	sta block,x
+	bit $ffff
+	bit $ffff
+	bit $ffff
+	bit $ffff
+	nop
+	inx
+	bne l1
+	nop		;Wait exactly 1 value
+	bit $ea
+	bit $ffff
+	bit $ffff
+l2	ldy #$1d	;See if the 256 bytes repeat
+	ldx #$00
+l3	lda $d3ff,y	;(Trick to get 5 cycles execution time)
+	bit $ffff
+	bit $ffff
+	bit $ffff
+	bit $ffff
+	cmp block,x
+	bne l2
+	inx
+	bne l3
+	jmp done	;And exit if they do
+;Misc subroutines
+;----------------
+	* = $1800
+	;Init screen
+init	sei		;Secure accurate timing by
+	lda #$00	;disabling sprites
+	sta $d015
+in1	lda $d011	;and screen.
+	bpl in1
+	and #$ef
+	sta $d011
+	rts
+	;Wait 50 frames so waveform can be reset
+pause	ldx #50
+p1	bit $d011
+	bpl p1
+p2	bit $d011
+	bmi p2
+	dex
+	bne p1
+	rts
+	;Wraps it up
+done	lda $d011	;Reenable screen
+	ora #$10
+	sta $d011
+	cli		;and exit.
+	rts
 
 Output from “cyclewise” with a frequency of $ffff (The data are correct: the wavelength is effectively 16 cycles for the first $10000 or so values):
 

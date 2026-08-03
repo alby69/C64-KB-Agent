@@ -3,20 +3,20 @@ title: Program flow of the main game loop
 source_url: https://elite.bbcelite.com/deep_dives/program_flow_of_the_main_game_loop.html
 category: source-code
 topics:
-- sprite programming
-- assembly
 - basic
+- assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 related:
-- raster-interrupts
-- sprite-programming
 - kernal-routines
+- sprite-programming
 - memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Program flow of the main game loop
@@ -31,7 +31,8 @@ Each section is broken down into parts that mirror the structure of the source c
 
 													 --------------
 
-						The main title sequence, with its iconic rotating ships, is shown when the game starts, or restarts following a "GAME OVER" message.
+						
+The main title sequence, with its iconic rotating ships, is shown when the game starts, or restarts following a "GAME OVER" message.
 
 - Reset the stack pointer to clear any previous return addresses
 
@@ -51,7 +52,8 @@ Each section is broken down into parts that mirror the structure of the source c
 
 													 --------------
 
-						The main game loop starts when we begin a new game. When docked, only parts 5 and 6 form the game loop, but the whole loop from parts 2 to 6 is run when we are in space (part 1 is a subroutine that's called from part 2).
+						
+The main game loop starts when we begin a new game. When docked, only parts 5 and 6 form the game loop, but the whole loop from parts 2 to 6 is run when we are in space (part 1 is a subroutine that's called from part 2).
 
 [1/6: Main game loop (Part 1 of 6)](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_1_of_6.html)
 
@@ -92,7 +94,8 @@ Each section is broken down into parts that mirror the structure of the source c
 
 													 ----------------
 
-						The main flight loop is called from the main game loop, but only if we are in space. It deals with all the flight aspects of the game, calling the various moving and tactics routines as required.
+						
+The main flight loop is called from the main game loop, but only if we are in space. It deals with all the flight aspects of the game, calling the various moving and tactics routines as required.
 
 [1/16: Main flight loop (Part 1 of 16)](https://elite.bbcelite.com/cassette/main/subroutine/main_flight_loop_part_1_of_16.html)
 
@@ -120,7 +123,7 @@ Now start looping through all the ships in the local bubble, and for each one, d
 
 [6/16: Main flight loop (Part 6 of 16)](https://elite.bbcelite.com/cassette/main/subroutine/main_flight_loop_part_6_of_16.html)
 
-- Move the ship in space by calling the MVEIT routine (see the deep dive on [program flow of the ship-moving routine](https://elite.bbcelite.com/program_flow_of_the_ship-moving_routine.html)for details). MVEIT also calls the main tactics routine at TACTICS to implement ship AI (see the deep dive on[program flow of the tactics routine](https://elite.bbcelite.com/program_flow_of_the_tactics_routine.html)for more)
+- Move the ship in space by calling the MVEIT routine (see the deep dive on [program flow of the ship-moving routine](https://elite.bbcelite.com/program_flow_of_the_ship-moving_routine.html) for details). MVEIT also calls the main tactics routine at TACTICS to implement ship AI (see the deep dive on[program flow of the tactics routine](https://elite.bbcelite.com/program_flow_of_the_tactics_routine.html) for more)
 - Copy the updated ship's data block from INWK back to K%
 
 [7/16: Main flight loop (Part 7 of 16)](https://elite.bbcelite.com/cassette/main/subroutine/main_flight_loop_part_7_of_16.html)
@@ -180,7 +183,8 @@ Loop back up to part 4 to do the next ship in the local bubble until we have pro
 
 													 -----
 
-						The death routine is called when we die (or quit the game by pausing and pressing ESCAPE). It's a one-way street and eventually loops back to the start to show the title screen again.
+						
+The death routine is called when we die (or quit the game by pausing and pressing ESCAPE). It's a one-way street and eventually loops back to the start to show the title screen again.
 
 - We have been killed, so display the chaos of our destruction above a "GAME OVER" sign
 

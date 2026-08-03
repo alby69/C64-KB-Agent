@@ -3,8 +3,8 @@ title: base:fastest_multiplication_2023 [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Afastest_multiplication_2023
 category: reference
 topics:
-- sprite programming
 - memory management
+- sprite programming
 - assembly
 difficulty: intermediate
 language: assembly
@@ -13,11 +13,11 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # base:fastest_multiplication_2023 [Codebase64 wiki]

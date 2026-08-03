@@ -2,12 +2,17 @@
 title: BBC Micro disc Elite on the BBC Master
 source_url: https://elite.bbcelite.com/hacks/bbc_master_disc_elite.html
 category: reference
-topics: []
+topics:
+- basic
+- assembly
 difficulty: intermediate
-language: none
-hardware: []
-related: []
-scraped_at: '2026-07-27'
+language: mixed
+hardware:
+- KERNAL
+related:
+- memory-map
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # BBC Micro disc Elite on the BBC Master
@@ -20,11 +25,17 @@ Unfortunately the original BBC Micro version doesn't work on the BBC Master; it 
 
 ![BBC Micro disc Elite breaking on a BBC Master](https://elite.bbcelite.com/images/bbc_master_disc_elite/broken.png) 
 
-						instead of this:
+instead of this:
 
 ![BBC Micro disc Elite working on a BBC Master](https://elite.bbcelite.com/images/bbc_master_disc_elite/fixed.png) 
 
-						So despite having the more powerful computer, BBC Master owners can't play what's regarded as the canonical version of Elite.
+This was clearly a problem back in the day, as there was an entire third-party product dedicated to getting BBC Micro Elite running on the BBC Master - the Advanced Elite Filing System. Here's a snippet from the news section of the November 1986 issue of *Acorn User* talking about the AEFS:
+
+![A news article from the November 1986 issue of Acorn User about the Advanced Elite Filing System](https://elite.bbcelite.com/images/bbc_master_disc_elite/aefs_acorn_user_nov_1986.jpg) 
+
+I've tried to track down a copy of the AEFS, but it seems to have been lost to time, which is a shame; if you have a copy do please [let me know in this Stardot thread](https://stardot.org.uk/forums/viewtopic.php?t=33143), as I'd love to see how it works.
+
+So, despite having the more powerful computer, BBC Master owners can't play what's regarded as the canonical version of Elite.
 
 This just isn't fair, so I've hacked the original game to work on the Master. See the [downloads page](https://elite.bbcelite.com/bbc_master_disc_elite_downloads.html) to get hold of a copy, or check out the [technical information](https://elite.bbcelite.com/bbc_master_disc_elite_technical_information.html) for details of how it works.
 

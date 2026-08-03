@@ -3,25 +3,25 @@ title: Reading the Commodore 64 keyboard matrix
 source_url: https://elite.bbcelite.com/deep_dives/reading_the_commodore_64_keyboard_matrix.html
 category: source-code
 topics:
-- input handling
-- assembly
 - basic
+- assembly
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 
@@ -39,7 +39,8 @@ Let's take a look at the Commodore's keyboard matrix and how it influences the c
 
 													 -------------------
 
-						On the BBC Micro, it is fairly easy to query the 6522 System VIA chip to detect whether a specific key is being held down; the [DKS4](https://elite.bbcelite.com/cassette/main/subroutine/dks4.html) routine implements this in ten instructions, so Elite uses this routine to scan for the main and secondary flight keys, updating the key logger with the results. The key logger contains one entry for each flight key, plus another entry where we can store non-flight key presses, and the code can then query the key logger to see what's being pressed. In the cassette version of BBC Micro Elite, the key logger takes up just 17 bytes.
+						
+On the BBC Micro, it is fairly easy to query the 6522 System VIA chip to detect whether a specific key is being held down; the [DKS4](https://elite.bbcelite.com/cassette/main/subroutine/dks4.html) routine implements this in ten instructions, so Elite uses this routine to scan for the main and secondary flight keys, updating the key logger with the results. The key logger contains one entry for each flight key, plus another entry where we can store non-flight key presses, and the code can then query the key logger to see what's being pressed. In the cassette version of BBC Micro Elite, the key logger takes up just 17 bytes.
 
 On the Commodore 64, it's possible to fetch the status of eight keys in one go, so the most efficient approach is to scan the whole keyboard, rather than each of the flight keys in turn. The Commodore keyboard is split up into eight columns of eight keys each, so the key logger in the Commodore 64 version is 64 bytes in size, with one entry for every single key.
 
@@ -59,7 +60,8 @@ The keyboard matrix itself is [documented here](https://sta.c64.org/cbm64kbdlay.
 
 													 -----------------
 
-						One final point to note is the Commodore 64's "ghost key presses". [Part 3 of the main flight loop](https://elite.bbcelite.com/c64/main/subroutine/main_flight_loop_part_3_of_16.html#ma64) in the Commodore 64 source contains some strange-looking code with a comment "kill phantom C's". The code first checks to see if "C" is being pressed, for the docking computer, and if it is, it also checks to see if "X" is being pressed. If both keys are being pressed, it ignores the "C" key press and doesn't activate the docking computer.
+						
+One final point to note is the Commodore 64's "ghost key presses". [Part 3 of the main flight loop](https://elite.bbcelite.com/c64/main/subroutine/main_flight_loop_part_3_of_16.html#ma64) in the Commodore 64 source contains some strange-looking code with a comment "kill phantom C's". The code first checks to see if "C" is being pressed, for the docking computer, and if it is, it also checks to see if "X" is being pressed. If both keys are being pressed, it ignores the "C" key press and doesn't activate the docking computer.
 
 This is a workaround for a ghost key press. If "X" is also being pressed, then the "C" we just detected is likely to be a ghost key press, caused by the player actually holding down "A", "S" and "X" (i.e. up, down and fire). Ghost key presses can occur on the Commodore 64 when three keys are held down that form a right angle in the keyboard scan matrix, in which case a fourth key can also appear to be "pressed". The extra code looks for this right angle, and acts accordingly.
 

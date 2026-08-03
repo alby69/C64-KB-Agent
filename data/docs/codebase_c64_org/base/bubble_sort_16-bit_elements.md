@@ -9,18 +9,18 @@ difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # Bubble Sort (for 16-Bit Elements)

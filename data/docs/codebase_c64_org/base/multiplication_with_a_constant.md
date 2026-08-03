@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Multiplication with a constant
@@ -22,7 +22,13 @@ For multiplying by a power of two, you can use ASL multiple times on a number.
 
 For multiplying by other things, you can use two copies of the number, ASL both copies different amounts, and then add the results together. For example, here's some code for multiplying the accumulator by ten:
 
-sta $2 ; Can be any other memory location that's free for use asl ; Shifting something left three times multiplies it by eight asl ; asl ; asl $2 ; Shifting something left one time multiplies it by two clc ; Clear carry adc $2 ; Add the two results together
+  sta $2 ; Can be any other memory location that's free for use
+  asl    ; Shifting something left three times multiplies it by eight
+  asl    ; 
+  asl    ; 
+  asl $2 ; Shifting something left one time multiplies it by two
+  clc    ; Clear carry
+  adc $2 ; Add the two results together
 
 By TWW:
 
@@ -43,7 +49,8 @@ This gives the following code to multiply A with 10 (assuming A is less than 26)
 
 You may also use a table, which is even faster, but would take up more space.
 
-tax ; Copy the accumulator into X so we can use it as an index lda Table, x ;
+  tax          ; Copy the accumulator into X so we can use it as an index
+  lda Table, x ;
 
 ## Codice Estratto
 

@@ -3,30 +3,30 @@ title: base:quest_for_cash [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Aquest_for_cash
 category: reference
 topics:
-- raster interrupts
+- basic
+- graphics
 - memory management
+- raster interrupts
 - input handling
 - sprite programming
-- graphics
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

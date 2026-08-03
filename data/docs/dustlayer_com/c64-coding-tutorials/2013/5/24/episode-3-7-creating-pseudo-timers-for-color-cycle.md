@@ -3,29 +3,29 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-7-creating-pseudo-timers-for-color-cycle
 category: tutorial
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CPU
 - CIA
 - VIC-II
+- CPU
 - SID
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
-- cia-registers
+- joystick-reading
 - memory-map
 - sid-registers
-- raster-interrupts
-- joystick-reading
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 
@@ -35,11 +35,9 @@ scraped_at: '2026-07-27'
 
 **Synopsis:** For our two color cycle effects we experiment with different ideas where to source timing information from.
 
-**Download via  dust:** $ dust tutorials (select 'spritro') 
+**Download via [dust](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite):** $ dust tutorials (select 'spritro') 
 
-**Github Repository:**
-
-[Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)
+**Github Repository:** [Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)  
 
 - [Episode 3-1: Spritro - An Intro with a Sprite](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite)
 - [Episode 3-2: Creating the Shapes - Hello SpritePad](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad)
@@ -65,13 +63,13 @@ In the same subroutine I also let the side borders flip between to color states 
 
 Let's check the code in **sub_color_cycle.asm** on how I approached this. This sub routine is executed in the custom interrupt routine 50 times per second on a PAL machine so I need to take delay actions within the sub routine.
 
-We start by initializing the X-Register with #$00. The X-Register's purpose is to check our column position when writing to the screen. Then we load the** sprite_ship_current_frame** symbol which holds the current shape number displayed within the space ship animation. We cmp against #$0f, the last of the 16 color codes of the C64. If the value is indeed #$0f we skip the next instruction which is incrementing that value.  
+We start by initializing the X-Register with #$00. The X-Register's purpose is to check our column position when writing to the screen. Then we load the **sprite_ship_current_frame** symbol which holds the current shape number displayed within the space ship animation. We cmp against #$0f, the last of the 16 color codes of the C64. If the value is indeed #$0f we skip the next instruction which is incrementing that value.  
 
-We store the current value into Color RAM locations for the three rows of text and then subtract 1 from it. So if the value was for example #$06, it became #$05. We compare if the value is #$00 yet because if this is the case we want to skip the next step - we are not interested in using a Black foreground color. If it is not we increase our X register to step forward in our text. Then we check if we reached the end of the row already by comparing X against #$28 (= Column 40). As long as we have not reached the end of the row we will keep branching back to the **color_inc **label. It will colorize the next character with the current value in the Accumulator and so forth. With this, every character in all three lines of texts are changing color every two screen refreshes. 
+We store the current value into Color RAM locations for the three rows of text and then subtract 1 from it. So if the value was for example #$06, it became #$05. We compare if the value is #$00 yet because if this is the case we want to skip the next step - we are not interested in using a Black foreground color. If it is not we increase our X register to step forward in our text. Then we check if we reached the end of the row already by comparing X against #$28 (= Column 40). As long as we have not reached the end of the row we will keep branching back to the **color_inc** label. It will colorize the next character with the current value in the Accumulator and so forth. With this, every character in all three lines of texts are changing color every two screen refreshes. 
 
 Now how did we sync the border flipping color with the SID (kinda...). As already mentioned it is simple trial and error. For the switching logic I used a free memory location and attached the symbol **delay_counter** to it. Every time we completed to colorize all three lines of text I load the delay pointer into the accumulator and compare it against #$34. If this comparison turns out true I flip the border color by simply loading the current color from $d021 and EOR'ing it against the value #$08. This wil flip dark blue for light blue and vice-versa every time this is executed. If you put in another EOR value it will flip against another color. After that the **delay_counter** is reseted to #$00. 
 
-If we have not reached #$34 yet in the** delay_counter**, it is simply incremented and we return from the subroutine. This approach will delay the flipping to about ever three seconds which is at least for the first few chords in sync with the music. It is far from perfect though after a few chords the music and color flipping will be out of sync. It's fine for a first impression though.
+If we have not reached #$34 yet in the **delay_counter**, it is simply incremented and we return from the subroutine. This approach will delay the flipping to about ever three seconds which is at least for the first few chords in sync with the music. It is far from perfect though after a few chords the music and color flipping will be out of sync. It's fine for a first impression though.
 
 ### ConclusionI
 

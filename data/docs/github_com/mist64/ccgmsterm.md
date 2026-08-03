@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: '2022-03-20T16:42:14Z'
 ---
 
@@ -19,7 +19,7 @@ last_modified: '2022-03-20T16:42:14Z'
 **Description:** CCGMS Future, a terminal program for the Commodore 64
 
 **GitHub URL:** https://github.com/mist64/ccgmsterm
-**Stars:** 104
+**Stars:** 105
 **Last Updated:** 2022-03-20T16:42:14Z
 
 

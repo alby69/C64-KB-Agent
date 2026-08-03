@@ -10,9 +10,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Reversing bits in a byte
@@ -75,11 +75,27 @@ or unrolled (56 cycl +rts):
 ```
 – Optimized version, at 84cycl +rts (enter with the value in .A, result in .A)
 
-sta $02 ; 3 lda #1 ; 2 lp: ror $02 ; 5 rol ; 2 bcc lp ; 3(2) ; =84 rts
+	sta	$02	; 3
+	lda	#1	; 2
+lp:
+	ror	$02	; 5
+	rol		; 2
+	bcc	lp	; 3(2)
+			; =84
+	rts
 
 or slightly unrolled:
 
-sta $02 ; 3 lda #1 ; 2 lp: ror $02 ; 5 rol ; 2 ror $02 ; 5 rol ; 2 bcc lp ; 3(2) ; =72 rts
+	sta	$02	; 3
+	lda	#1	; 2
+lp:
+	ror	$02	; 5
+	rol		; 2
+	ror	$02	; 5
+	rol		; 2
+	bcc	lp	; 3(2)
+			; =72
+	rts
 
 base/reversing_bits_in_a_byte.txt · Last modified:  by cz
 

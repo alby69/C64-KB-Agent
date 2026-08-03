@@ -3,12 +3,12 @@ title: Fake Music Player
 source_url: https://codebase.c64.org/doku.php?id=base%3Afake_music_player
 category: tool
 topics:
-- raster interrupts
-- memory management
 - basic
+- sound generation
+- memory management
+- raster interrupts
 - sprite programming
 - assembly
-- sound generation
 difficulty: advanced
 language: mixed
 hardware:
@@ -17,15 +17,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -55,13 +55,14 @@ The solution listed below solves all the above problems, as it can be configured
 
 There are some constants at the beginning which we can abuse to configure the fake player.
 
-- **MUSIC_START_ADDRESS**
-- **MUSIC_NOT_AVAILABLE**
-- **MUSIC_FAKE_SHOW_RASTER**- `MUSIC_NOT_AVAILABLE = 1`.
-- **MUSIC_FAKE_SIZE**
-- **MUSIC_FAKE_MIN_EXEC_TIME**
-- **MUSIC_FAKE_MAX_EXEC_TIME**
-- **MUSIC_FAKE_ZERO_PAGE_PTR**
+**MUSIC_START_ADDRESS**
+**MUSIC_NOT_AVAILABLE**
+**MUSIC_FAKE_SHOW_RASTER**
+`MUSIC_NOT_AVAILABLE = 1` .
+**MUSIC_FAKE_SIZE**
+**MUSIC_FAKE_MIN_EXEC_TIME**
+**MUSIC_FAKE_MAX_EXEC_TIME**
+**MUSIC_FAKE_ZERO_PAGE_PTR**
 
 The code also defines two labels that can be used in our code: **MUSIC_INIT****MUSIC_PLAY**
 

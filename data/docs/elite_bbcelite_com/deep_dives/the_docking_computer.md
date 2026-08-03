@@ -7,19 +7,19 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # The docking computer
@@ -30,7 +30,7 @@ For those of us back in the day who bought disc drives and upgraded our well-wor
 
 ![The docking computer in action in the disc version of BBC Micro Elite](https://elite.bbcelite.com/images/disc/docking_computer.png) 
 
-						For someone coming from the insta-dock of the cassette version, this was mind-blowing stuff - a real example of Artificial Intelligence, right there on an 8-bit computer. Sure, the docking computer wasn't perfect and sometimes crashed into the back of the space station or hit the edges of the slot, but that only added to the fun. It may have extended the gameplay over the cassette version, as this more advanced docking computer wasn't a lot faster than doing it yourself, but it was so futuristic.
+For someone coming from the insta-dock of the cassette version, this was mind-blowing stuff - a real example of Artificial Intelligence, right there on an 8-bit computer. Sure, the docking computer wasn't perfect and sometimes crashed into the back of the space station or hit the edges of the slot, but that only added to the fun. It may have extended the gameplay over the cassette version, as this more advanced docking computer wasn't a lot faster than doing it yourself, but it was so futuristic.
 
 This deep dive pulls back the curtain on the [DOCKIT](https://elite.bbcelite.com/disc/flight/subroutine/dockit.html) routine that implements the docking computer, and reveals why it's sometimes less than perfect. Incidentally, the same routine is used to dock non-player ships (referred to as NPCs below), though NPCs don't bother with the details that only matter to those of us nervously looking out of the cockpit window.
 
@@ -38,7 +38,8 @@ This deep dive pulls back the curtain on the [DOCKIT](https://elite.bbcelite.com
 
 													 ------------
 
-						When you press "C" to enable the docking computer, the DOCKIT routine starts calculating the best approach for docking. It then returns a "fake" keypress to the [DOKEY](https://elite.bbcelite.com/disc/flight/subroutine/dokey.html) routine, so in a very literal sense, the docking computer takes over the controls.
+						
+When you press "C" to enable the docking computer, the DOCKIT routine starts calculating the best approach for docking. It then returns a "fake" keypress to the [DOKEY](https://elite.bbcelite.com/disc/flight/subroutine/dokey.html) routine, so in a very literal sense, the docking computer takes over the controls.
 
 Specifically, the DOCKIT gets called every iteration round the main loop, and calculates the best approach as follows:
 
@@ -46,13 +47,13 @@ Specifically, the DOCKIT gets called every iteration round the main loop, and ca
 - If we are a long way away from the station, head for the planet and we're done for this iteration
 - If we're approaching the station from behind or the side (which is defined as more than 69° off the optimal docking approach, which would be straight into the slot), then aim for the docking point (see below) and we're done for this iteration
 - If we're approaching the station from the front, then:
-								- If we are pointing towards the station, refine our approach and we're done
-- If we are not pointing towards the station, then check our distance to the station, and:
-										- If we're too close, turn away and we're done
-- Otherwise if this is us docking, refine our approach and we're done
-- Otherwise this is an NPC, so turn away from the station and we're done
- 
- 
+								
+  - If we are pointing towards the station, refine our approach and we're done
+  - If we are not pointing towards the station, then check our distance to the station, and:
+										
+    - If we're too close, turn away and we're done
+    - Otherwise if this is us docking, refine our approach and we're done
+    - Otherwise this is an NPC, so turn away from the station and we're done
 
 Let's take a look at a couple of these points in more detail.
 
@@ -60,7 +61,8 @@ Let's take a look at a couple of these points in more detail.
 
 													 ---------------------
 
-						In the above, "refine our approach" means:
+						
+In the above, "refine our approach" means:
 
 - If this is us docking (rather than an NPC), apply pitch and roll to get the station in our sights
 - Once the station is in our sights, match roll with the station to get a horizontal slot
@@ -70,13 +72,14 @@ So, in essence, the docking computer refines our approach once it's broadly line
 
 ![A screenshot of the docking computer in Commodore 64 Elite](https://elite.bbcelite.com/images/c64/docking_approach.png) 
 
-						It doesn't always work, and the docking computer can crash into the station. It's intentionally scary...
+It doesn't always work, and the docking computer can crash into the station. It's intentionally scary...
 
 ## The docking point
 
 													 -----------------
 
-						The docking point is 8 unit vector lengths from the centre of the space station, through the slot and out into space, so it's a good starting point for the final approach towards the slot.
+						
+The docking point is 8 unit vector lengths from the centre of the space station, through the slot and out into space, so it's a good starting point for the final approach towards the slot.
 
 That said, the docking computer doesn't check whether the station is between us and the docking point. So, if you approach the station from the opposite side of the station to the slot and press "C", the docking computer will head for the docking point, crashing into the station if it's in the way. The best way to avoid this is to fly towards the front of the station before engaging the docking computer; pressing "C" when you're a long way from the station and going to make a cup of tea is not necessarily the best approach...
 

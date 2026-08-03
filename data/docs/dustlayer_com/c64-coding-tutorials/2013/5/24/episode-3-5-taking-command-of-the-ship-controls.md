@@ -3,31 +3,31 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-5-taking-command-of-the-ship-controls
 category: tutorial
 topics:
-- basic
-- assembly
-- input handling
 - sprite programming
+- input handling
+- assembly
+- basic
 difficulty: advanced
 language: mixed
 hardware:
 - KERNAL
-- CPU
 - CIA
 - VIC-II
+- CPU
 - SID
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
-- cia-registers
+- joystick-reading
 - memory-map
 - sid-registers
-- raster-interrupts
-- joystick-reading
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 
@@ -37,11 +37,9 @@ scraped_at: '2026-07-27'
 
 **Synopsis:** We implement some basic steering controls for our Space Ship using the C64 keyboard.  
 
-**Download via  dust:** $ dust tutorials (select 'spritro') 
+**Download via [dust](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite):** $ dust tutorials (select 'spritro') 
 
-**Github Repository:**
-
-[Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)
+**Github Repository:** [Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)  
 
 - [Episode 3-1: Spritro - An Intro with a Sprite](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite)
 - [Episode 3-2: Creating the Shapes - Hello SpritePad](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad)
@@ -71,7 +69,7 @@ The approach to check for an individual pressed key is actually not very hard. Y
 
 What needs to be considered is that the Bits in $dc00 and $dc01 are low-active, so if a key is pressed, a Bit is 0, if it is not pressed the Bit is set high.
 
-**Let's do an example! **
+**Let's do an example!** 
 
 Below is the matrix as organized between the two Port Register A and Port Register B. Next to each key the Screen Code is shown for the sake of completeness but it is not required for the following scan. The testing for keys without supplied Screen Code need some additional checking in other registers which we will not discuss at this point.
 

@@ -3,22 +3,22 @@ title: The Constrictor mission
 source_url: https://elite.bbcelite.com/deep_dives/the_constrictor_mission.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- SID
 - BASIC ROM
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # The Constrictor mission
@@ -29,20 +29,21 @@ I can still remember the thrill of my first mission in Elite. I'd cut my teeth o
 
 ![The INCOMING MESSAGE screen in BBC Micro Elite](https://elite.bbcelite.com/images/missions/incoming.png) 
 
-						I nearly fell out of my pilot seat. What was this? Could this be a mission, like the ones I'd heard about in the Acorn press? And then this wondrous sight appeared, spinning away in the middle of the screen:
+I nearly fell out of my pilot seat. What was this? Could this be a mission, like the ones I'd heard about in the Acorn press? And then this wondrous sight appeared, spinning away in the middle of the screen:
 
 ![The rotating Constrictor in BBC Micro Elite](https://elite.bbcelite.com/images/missions/mission_1_ship.png) 
 
-						By this point I knew all the ships by sight, and this was a new one. It slowly drifted up towards the top of the screen, and then I hit the jackpot:
+By this point I knew all the ships by sight, and this was a new one. It slowly drifted up towards the top of the screen, and then I hit the jackpot:
 
 ![The first briefing screen for the Constrictor mission in BBC Micro Elite](https://elite.bbcelite.com/images/missions/mission_1a.png) 
 
-						Finally, a mission! And a mission so detailed that it needed a second screen:
+Finally, a mission! And a mission so detailed that it needed a second screen:
 
 ![The second briefing screen for the Constrictor mission in BBC Micro Elite](https://elite.bbcelite.com/images/missions/mission_1b.png) 
 
-						I scribbled down the details, which looked like this:
+I scribbled down the details, which looked like this:
 
+							
 Greetings Commander MARK, I am Captain Curruthers of Her Majesty's Space Navy and I beg a moment of your valuable time.
 
 We would like you to do a little job for us.
@@ -68,16 +69,18 @@ I still get goosebumps reading this; it's one of my favourite gaming moments, an
 
 													 -----------------------
 
-						The clue in the mission briefing is to travel to Reesdice. If you're at the starting system of Lave, it's a 53.2 light-year journey across the galaxy (Reesdice is the small cross to the right in this Long-range Chart):
+						
+The clue in the mission briefing is to travel to Reesdice. If you're at the starting system of Lave, it's a 53.2 light-year journey across the galaxy (Reesdice is the small cross to the right in this Long-range Chart):
 
 ![The Long-range Chart showing Reesdice in BBC Micro Elite](https://elite.bbcelite.com/images/missions/reesdice_long_range_chart.png) 
 
-						Flying there takes a while, but when you dock at Reesdice and look at the Data on System screen, there's something new - the extended system description has been replaced by a mission-specific clue, all in capitals so you can't miss it. Here's what it looks like:
+Flying there takes a while, but when you dock at Reesdice and look at the Data on System screen, there's something new - the extended system description has been replaced by a mission-specific clue, all in capitals so you can't miss it. Here's what it looks like:
 
 ![The mission message at Reesdice in BBC Micro Elite](https://elite.bbcelite.com/images/missions/reesdice.png) 
 
-						I scribbled this down, too:
+I scribbled this down, too:
 
+							
 A STRANGE LOOKING SHIP LEFT HERE A WHILE BACK. LOOKED BOUND FOR AREXE.
 
 
@@ -85,8 +88,9 @@ Heading to Arexe gives you a new message:
 
 ![The mission message at Arexe in BBC Micro Elite](https://elite.bbcelite.com/images/missions/arexe_1.png) 
 
-						I scribbled this down as well, spelling mistake and all:
+I scribbled this down as well, spelling mistake and all:
 
+							
 YEP, A WIERD NEW SHIP HAD A GALACTIC HYPERDRIVE FITTED HERE. USED IT TOO.
 
 
@@ -94,8 +98,9 @@ It turns out that some of the mission messages are randomly generated, and refre
 
 ![The mission message at Arexe in BBC Micro Elite](https://elite.bbcelite.com/images/missions/arexe_2.png) 
 
-						This one's also in my notes, complete with typo:
+This one's also in my notes, complete with typo:
 
+							
 YEP, A UNUSAL NEW SHIP HAD A GALACTIC HYPERDRIVE FITTED HERE. USED IT TOO.
 
 
@@ -103,8 +108,9 @@ There is at least one grammatically correct version of this message, though. Her
 
 ![The mission message at Arexe in BBC Micro Elite](https://elite.bbcelite.com/images/missions/arexe_3.png) 
 
-						And here it is in a more readable form:
+And here it is in a more readable form:
 
+							
 YEP, A PECULIAR NEW SHIP HAD A GALACTIC HYPERDRIVE FITTED HERE. USED IT TOO.
 
 
@@ -112,16 +118,17 @@ So you need a galactic hyperdrive to continue with the mission, which might take
 
 ![The Long-range Chart for arriving in galaxy 2 in BBC Micro Elite](https://elite.bbcelite.com/images/missions/galaxy_2_long_range_chart.png) 
 
-						And specifically, at the system of Ororra:
+And specifically, at the system of Ororra:
 
 ![The Short-range Chart for arriving in  galaxy 2 in BBC Micro Elite](https://elite.bbcelite.com/images/missions/galaxy_2_short_range_chart.png) 
 
-						At this point the trail appears to have gone cold - there are no mission briefings, and Ororra doesn't have a capitalised hint in its Data on System screen. But it turns out there are quite a few systems scattered around the galaxy with hints, including one at Cearso, just a short hop from our arrival point. Here it is:
+At this point the trail appears to have gone cold - there are no mission briefings, and Ororra doesn't have a capitalised hint in its Data on System screen. But it turns out there are quite a few systems scattered around the galaxy with hints, including one at Cearso, just a short hop from our arrival point. Here it is:
 
 ![The mission message at Cearso in BBC Micro Elite](https://elite.bbcelite.com/images/missions/cearso_1.png) 
 
-						And here it is in slightly more legible text:
+And here it is in slightly more legible text:
 
+							
 I HEAR A STRANGE LOOKING SHIP APPEARED AT ERRIUS.
 
 
@@ -129,8 +136,9 @@ This message also has an alternative if you refresh the screen, and this one's a
 
 ![The mission message at Cearso in BBC Micro Elite](https://elite.bbcelite.com/images/missions/cearso_2.png) 
 
-						Or, if that screenshot text is too small, here it is:
+Or, if that screenshot text is too small, here it is:
 
+							
 GET YOUR IRON ASS OVER TO ERRIUS.
 
 
@@ -138,18 +146,21 @@ Now that's a mission statement! Of course, Errius is a bit of a hike at 39.6 lig
 
 ![The Long-range Chart showing Errius in BBC Micro Elite](https://elite.bbcelite.com/images/missions/errius_long_range_chart.png) 
 
-						The messages continue. At Errius we get another clue:
+The messages continue. At Errius we get another clue:
 
+							
 THIS UNUSUAL SHIP DEHYPED HERE FROM NOWHERE, SUN SKIMMED AND JUMPED. I HEAR IT WENT TO INBIBE.
 
 
 The hint at Inbibe keeps the chase going:
 
+							
 SCOUNDREL SHIP WENT FOR ME AT AUSAR. MY LASERS DIDN'T EVEN SCRATCH THE SON OF A BITCH.
 
 
 And there's yet another hint when we dock at Ausar:
 
+							
 OH DEAR ME YES. A FRIGHTFUL ROGUE WITH WHAT I BELIEVE YOU PEOPLE CALL A LEAD POSTERIOR SHOT UP LOTS OF THOSE BEASTLY PIRATES AND WENT TO USLERI.
 
 
@@ -157,8 +168,9 @@ Finally, in Usleri, we get our last hint:
 
 ![The mission message at Usleri in BBC Micro Elite](https://elite.bbcelite.com/images/missions/usleri_1.png) 
 
-						This says:
+This says:
 
+							
 YOU CAN TACKLE THE EVIL SCOUNDREL IF YOU LIKE. HE'S AT ORARRA.
 
 
@@ -166,8 +178,9 @@ Though you definitely want to refresh this one, as the other version is a lot mo
 
 ![The mission message at Usleri in BBC Micro Elite](https://elite.bbcelite.com/images/missions/usleri_2.png) 
 
-						This says:
+This says:
 
+							
 YOU CAN TACKLE THE VICIOUS WHORESON BEETLE HEADFLAP EAR'D KNAVE IF YOU LIKE. HE'S AT ORARRA.
 
 
@@ -177,20 +190,21 @@ So it's time to head to Orarra for the showdown, which is just a short hop from 
 
 ![The Long-range Chart showing Orarra in BBC Micro Elite](https://elite.bbcelite.com/images/missions/orarra_long_range_chart.png) 
 
-						And in fact it is within range, but the Short-range Chart is rather coy about showing its name, though it does show the crosshairs at the top of the screen:
+And in fact it is within range, but the Short-range Chart is rather coy about showing its name, though it does show the crosshairs at the top of the screen:
 
 ![The Short-range Chart showing Orarra in BBC Micro Elite](https://elite.bbcelite.com/images/missions/orarra_short_range_chart.png) 
 
-						Anyway, flying to Orarra and hanging around in deep space will eventually bring on a fight to the death with the Constrictor. Here he is, about to make the mistake of flying into my laser sights. Rookie mistake!
+Anyway, flying to Orarra and hanging around in deep space will eventually bring on a fight to the death with the Constrictor. Here he is, about to make the mistake of flying into my laser sights. Rookie mistake!
 
 ![The Constrictor in BBC Micro Elite](https://elite.bbcelite.com/images/missions/constrictor.png) 
 
-						It might take a while, but assuming we win, there's a final message waiting for us back in the station:
+It might take a while, but assuming we win, there's a final message waiting for us back in the station:
 
 ![The debriefing screen for the Constrictor mission in BBC Micro Elite](https://elite.bbcelite.com/images/missions/mission_1c.png) 
 
-						It says:
+It says:
 
+							
 Congratulations Commander!
 
 There will always be a place for you in Her Majesty's Space Navy.
@@ -208,18 +222,20 @@ And that's the first mission in Elite; maybe you had to be there, but for some o
 
 													 -------------------------------
 
-						The Constrictor mission appears in every version of 6502 Elite apart from the BBC Micro cassette and Acorn Electron versions, which have no missions at all.
+						
+The Constrictor mission appears in every version of 6502 Elite apart from the BBC Micro cassette and Acorn Electron versions, which have no missions at all.
 
 The [DOENTRY](https://elite.bbcelite.com/disc/docked/subroutine/doentry.html) routine in the docked code contains all the mission logic, and because missions are designed to take a long time, there's a flag in the commander save file called [TP](https://elite.bbcelite.com/disc/docked/workspace/up.html#tp) that stores the current mission status. The DOENTRY routine is called every time we dock, and it checks the flags in TP and compares it with our current situation, and if we meet the criteria for a mission, it calls one of the many briefing routines to display the relevant mission details.
 
 Bits 0 and 1 of TP contain the flags for the Constrictor mission. For this mission, DOENTRY applies the following logic:
 
 - If bits 0-1 of TP are %00, then the Constrictor mission has not been started yet, so check the following:
-								- Is TALLY+1 > 0 (i.e. have we reached a combat rank of Competent and earned a grand total of at least 256 kill points, which is another 128 kill points beyond the promotion to Competent)?
-- Are we in either of the first two galaxies?
- [BRIEF](https://elite.bbcelite.com/disc/docked/subroutine/brief.html)routine to display the Constrictor briefing and set bit 0 of TP (so bits 0-1 of TP are now %01). If the answer to either or both of these is "no", then we jump straight to the docking bay and skip the rest of the mission logic, as we are not yet ready for the mission.
-- If bits 0-1 of TP are %01, then the Constrictor mission is already in progress, so we stop checking further and fall through into the other mission checks. In the BBC Micro version this will take us to the docking bay as there is only one other mission ([the Thargoid Plans mission](https://elite.bbcelite.com/the_thargoid_plans_mission.html)), and we can only start that once we've killed the Constrictor. In the other 6502 versions it is possible to do[the Trumbles mission](https://elite.bbcelite.com/the_trumbles_mission.html)at the same time as the others, so in theory we could be offered the Trumbles mission straight after accepting the Constrictor mission, though it's pretty unlikely we'd be Competent without having already met the criteria for the Trumbles offer.
-- If bits 0-1 of TP are %11, then we have just killed the Constrictor (the [KILLSHP](https://elite.bbcelite.com/disc/flight/subroutine/killshp.html)routine sets bit 1 of TP when this happens, so TP goes from %01 to %11). If this is the case, we jump to the[DEBRIEF](https://elite.bbcelite.com/disc/docked/subroutine/debrief.html)routine to display the congratulations message and get our reward. At this point bit 0 of TP is cleared, leaving bits 0-1 of TP set to %10 to indicate that the mission is done and dusted, and to ensure that in future we pass through the above logic and into the checks for the Thargoid Plans mission (see the deep dive on[the Thargoid Plans mission](https://elite.bbcelite.com/the_thargoid_plans_mission.html)for details).
+								
+  - Is TALLY+1 > 0 (i.e. have we reached a combat rank of Competent and earned a grand total of at least 256 kill points, which is another 128 kill points beyond the promotion to Competent)?
+  - Are we in either of the first two galaxies?
+ [BRIEF](https://elite.bbcelite.com/disc/docked/subroutine/brief.html) routine to display the Constrictor briefing and set bit 0 of TP (so bits 0-1 of TP are now %01). If the answer to either or both of these is "no", then we jump straight to the docking bay and skip the rest of the mission logic, as we are not yet ready for the mission.
+- If bits 0-1 of TP are %01, then the Constrictor mission is already in progress, so we stop checking further and fall through into the other mission checks. In the BBC Micro version this will take us to the docking bay as there is only one other mission ([the Thargoid Plans mission](https://elite.bbcelite.com/the_thargoid_plans_mission.html) ), and we can only start that once we've killed the Constrictor. In the other 6502 versions it is possible to do[the Trumbles mission](https://elite.bbcelite.com/the_trumbles_mission.html) at the same time as the others, so in theory we could be offered the Trumbles mission straight after accepting the Constrictor mission, though it's pretty unlikely we'd be Competent without having already met the criteria for the Trumbles offer.
+- If bits 0-1 of TP are %11, then we have just killed the Constrictor (the [KILLSHP](https://elite.bbcelite.com/disc/flight/subroutine/killshp.html) routine sets bit 1 of TP when this happens, so TP goes from %01 to %11). If this is the case, we jump to the[DEBRIEF](https://elite.bbcelite.com/disc/docked/subroutine/debrief.html) routine to display the congratulations message and get our reward. At this point bit 0 of TP is cleared, leaving bits 0-1 of TP set to %10 to indicate that the mission is done and dusted, and to ensure that in future we pass through the above logic and into the checks for the Thargoid Plans mission (see the deep dive on[the Thargoid Plans mission](https://elite.bbcelite.com/the_thargoid_plans_mission.html) for details).
 
 As well as the DOENTRY logic for when we dock, the game displays the mission hints using the extended system description overrides described in the deep dive on [extended system descriptions](https://elite.bbcelite.com/extended_system_descriptions.html). Specifically, the [RUGAL](https://elite.bbcelite.com/disc/docked/variable/rugal.html) and [RUPLA](https://elite.bbcelite.com/disc/docked/variable/rupla.html) tables define a selection of capitalised tokens from the [RUTOK](https://elite.bbcelite.com/disc/docked/variable/rutok.html) table that get shown instead of the normal extended system descriptions, but only when the Constrictor mission is in progress. The tokens are as follows:
 
@@ -269,11 +285,11 @@ Finally, the random tokens in the above translate into the following options, wi
 Here are some other points of interest:
 
 - The last invective in token 95 is "WHORESON BEETLE HEAD FLAP EAR'D KNAVE" in the disc version, but by the time of the 6502 Second Processor version, it had been changed to "WHORESON BEETLE HEADED FLAP EAR'D KNAVE", which presumably scans better. It's good to see the authors refining the quality of their insults over time (though, sadly, the NES version changes it to "WRETCH", which is just not the same).
-- The names of the Navy captains in the above messages are different depending on which galaxy you are in when the mission is offered (which is a nice touch). If we receive the briefing in galaxy 1 then it's from Captain Carruthers, but if we are in galaxy 2 then it's from Captain Fosdyke Smythe. The names are implemented in the [MT27](https://elite.bbcelite.com/disc/docked/subroutine/mt27.html)routine, which is called when printing an EJMP 27 token from the extended token table.
+- The names of the Navy captains in the above messages are different depending on which galaxy you are in when the mission is offered (which is a nice touch). If we receive the briefing in galaxy 1 then it's from Captain Carruthers, but if we are in galaxy 2 then it's from Captain Fosdyke Smythe. The names are implemented in the [MT27](https://elite.bbcelite.com/disc/docked/subroutine/mt27.html) routine, which is called when printing an EJMP 27 token from the extended token table.
 - In the NES version, the captains' names vary between different languages. In English they're Captain Carruthers and Captain Fosdyke Smythe, in German they're Käpitan Richtofen and Käpitan Vanderbilt, and in French they're le capitain de Remigny and le capitain de Sevigny.
-- The mission hint in the mission briefing is also different depending on the galaxy you are in when the mission is offered. If we are in galaxy 1 then the hint is "was last seen at Reesdice", but if we're in galaxy 2, the hint is "is believed to have jumped to this galaxy". The hints are implemented in the [MT28](https://elite.bbcelite.com/disc/docked/subroutine/mt28.html)routine, which is called when printing an EJMP 28 token from the extended token table.
-- The incoming message text is token 216 in [TKN1](https://elite.bbcelite.com/disc/docked/variable/tkn1.html), the mission briefing with the rotating ship is token 10, and the mission debriefing is token 15.
-- In the BBC Micro disc version, the mission status affects which ship data files are loaded. Specifically, the [LOMOD](https://elite.bbcelite.com/disc/flight/subroutine/lomod.html)routine ensures that the ship blueprints file D.MOG is loaded for the Constrictor fight, as that's the only data file that contains the Constrictor blueprint. See the deep dive on[ship blueprints in the disc version](https://elite.bbcelite.com/ship_blueprints_in_the_disc_version.html)for details.
+- The mission hint in the mission briefing is also different depending on the galaxy you are in when the mission is offered. If we are in galaxy 1 then the hint is "was last seen at Reesdice", but if we're in galaxy 2, the hint is "is believed to have jumped to this galaxy". The hints are implemented in the [MT28](https://elite.bbcelite.com/disc/docked/subroutine/mt28.html) routine, which is called when printing an EJMP 28 token from the extended token table.
+- The incoming message text is token 216 in [TKN1](https://elite.bbcelite.com/disc/docked/variable/tkn1.html) , the mission briefing with the rotating ship is token 10, and the mission debriefing is token 15.
+- In the BBC Micro disc version, the mission status affects which ship data files are loaded. Specifically, the [LOMOD](https://elite.bbcelite.com/disc/flight/subroutine/lomod.html) routine ensures that the ship blueprints file D.MOG is loaded for the Constrictor fight, as that's the only data file that contains the Constrictor blueprint. See the deep dive on[ship blueprints in the disc version](https://elite.bbcelite.com/ship_blueprints_in_the_disc_version.html) for details.
 
 And that's it - mission accomplished! See the deep dives on [the Thargoid Plans mission](https://elite.bbcelite.com/the_thargoid_plans_mission.html) and [the Trumbles mission](https://elite.bbcelite.com/the_trumbles_mission.html) for more mission-related reading.
 

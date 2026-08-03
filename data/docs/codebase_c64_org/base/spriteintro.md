@@ -3,9 +3,9 @@ title: General introduction to sprites
 source_url: https://codebase.c64.org/doku.php?id=base%3Aspriteintro
 category: reference
 topics:
-- sprite programming
-- raster interrupts
 - graphics
+- raster interrupts
+- sprite programming
 - assembly
 difficulty: beginner
 language: mixed
@@ -15,15 +15,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -91,8 +91,8 @@ In Multicolor mode the resolution halves, and each 2 bit represents a pixel.
 
 This works by simpling doubling the pixel sizes either vertically or horizontally.
 
-- $d017 controls wether the sprite should be stretched*vertically*, works like $d015
-- $d01d controls wether the sprite should be stretched*horizontally*, works like $d015
+- $d017 controls wether the sprite should be stretched*vertically* , works like $d015
+- $d01d controls wether the sprite should be stretched*horizontally* , works like $d015
 
 # Sprite Shape / animation
 
@@ -113,7 +113,12 @@ The sprites have a rigid hierarchy among themselves: Sprite 0 has the highest an
 
 The priority of the sprites to the text/bitmap graphics can be controlled within some limits. First of all, you have to distinguish the text/bitmap graphics between foreground and background pixels. Which bit combinations belong to the foreground or background is decided by the MCM bit in register $d016 independently of the state of the graphics data sequencer and of the BMM and ECM bits in register $d011:
 
-| MCM=0 | MCM=1 ------------+-------+----------- Bits/pixel | 1 | 2 Pixels/byte | 8 | 4 Background | "0" | "00", "01" Foreground | "1" | "10", "11"
+             | MCM=0 |   MCM=1
+ ------------+-------+-----------
+ Bits/pixel  |   1   |     2
+ Pixels/byte |   8   |     4
+ Background  |  "0"  | "00", "01"
+ Foreground  |  "1"  | "10", "11"
 
 In multicolor mode (MCM=1), the bit combinations “00” and “01” belong to the background and “10” and “11” to the foreground whereas in standard mode (MCM=0), cleared pixels belong to the background and set pixels to the foreground. It should be noted that this is also valid for the graphics generated in idle state.
 
@@ -161,7 +166,17 @@ A collision of sprites and other graphics data is detected as soon as one or mor
 
 (from AAY64)
 
-$D01A/53274/VIC+26: Interrupt Mask Register (IMR) 1 = IRQ enabled +----------+-------------------------------------------------------+ | Bit 7-4 | Always 1 | | Bit 3 | Light-Pen Triggered IRQ Flag | | Bit 2 | Sprite to Sprite Collision IRQ Flag (see $D01E) | | Bit 1 | Sprite to Background Collision IRQ Flag (see $D01F) | | Bit 0 | Raster Compare IRQ Flag (see $D012) | +----------+-------------------------------------------------------+ An IRQ will be initiated, if equal bits are set in IRR and IMR. Default Value: $00/0 (%00000000).
+$D01A/53274/VIC+26:  Interrupt Mask Register (IMR)
+   1 = IRQ enabled
+   +----------+-------------------------------------------------------+
+   | Bit 7-4  |   Always 1                                            |
+   | Bit 3    |   Light-Pen Triggered IRQ Flag                        |
+   | Bit 2    |   Sprite to Sprite Collision IRQ Flag     (see $D01E) |
+   | Bit 1    |   Sprite to Background Collision IRQ Flag (see $D01F) |
+   | Bit 0    |   Raster Compare IRQ Flag                 (see $D012) |
+   +----------+-------------------------------------------------------+
+   An IRQ will be initiated, if equal bits are set in IRR and IMR.
+   Default Value: $00/0 (%00000000).
 
 ## Codice Estratto
 

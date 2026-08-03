@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # base:another_16bit_pseudo_random_generator [Codebase64 wiki]
@@ -18,7 +18,20 @@ base:another_16bit_pseudo_random_generator
                 
 Better use this one, which is more evolved: [Two very fast 16bit pseudo random generators as LFSR](https://codebase.c64.org/doku.php?id=base:two_very_fast_16bit_pseudo_random_generators_as_lfsr)
 
-sr=$FD lda sr+1 asl asl eor sr+1 asl eor sr+1 asl asl eor sr+1 asl rol sr rol sr+1 rts
+sr=$FD
+lda sr+1
+asl
+asl
+eor sr+1
+asl
+eor sr+1
+asl
+asl
+eor sr+1
+asl
+rol sr
+rol sr+1
+rts
 
 base/another_16bit_pseudo_random_generator.txt · Last modified:  by 127.0.0.1
 

@@ -3,31 +3,31 @@ title: Detecting 6526 vs 6526A CIA Chips
 source_url: https://codebase.c64.org/doku.php?id=base%3Adetecting_6526_vs_6526a_cia_chips
 category: reference
 topics:
-- raster interrupts
+- basic
 - memory management
+- raster interrupts
 - sprite programming
 - assembly
-- basic
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Detecting 6526 vs 6526A CIA Chips
@@ -42,7 +42,35 @@ Make sure the screen & sprites are off first.
 
 oldCia should be in zeropage, and will have a 0 or 1 after this routine.
 
-testCIAVersion: ; Set NMI vector lda #<continue sta $fffa lda #>continue sta $fffb lda #$81 ;also don't forget to set mask. Setting $01 to an appropriate value will also help :-) (Bitbreaker/Oxyron) sta $dd0d ; Set timer to 5 cycles lda #4 sta $dd04 lda #0 sta $dd05 ; Clear the detection flag sta oldCIA ; Fire a 1-shot timer lda #%10011001 sta $dd0e ; This should be interrupted before the INC ; only if it's a newer chip. lda $dd0d lda $dd0d inc oldCIA jmp * ; just in case continue: lda $dd0d pla pla pla
+testCIAVersion:
+ ; Set NMI vector
+ lda #<continue
+ sta $fffa
+ lda #>continue
+ sta $fffb
+ lda #$81  ;also don't forget to set mask. Setting $01 to an appropriate value will also help :-) (Bitbreaker/Oxyron)
+ sta $dd0d
+ ; Set timer to 5 cycles
+ lda #4
+ sta $dd04
+ lda #0
+ sta $dd05
+ ; Clear the detection flag
+ sta oldCIA
+ ; Fire a 1-shot timer
+ lda #%10011001
+ sta $dd0e
+ ; This should be interrupted before the INC
+ ; only if it's a newer chip.
+ lda $dd0d
+ lda $dd0d
+ inc oldCIA
+ jmp * ; just in case
+continue:
+ lda $dd0d
+ pla
+ pla
+ pla
 
 Note by Karoshier: I had problems making this work once adapted to use CIA1 instead of CIA2, as the interrupt wouldn't fire at all and the CPU remained locked in the JMP *. The cause of this was the two consecutive LDA $DC0D before the INC oldCIA instruction. It happened by chance that one of them had been cycle-exact synchronized with the CIA and cleared the interrupt flag in the very same cycle as the one in which the interrupt was asserted. The interrupt pulse didn't last enough and the CPU didn't see it (tried on both VICE 2.4 and on the real hardware). I have solved the problem by replacing those LDA $DC0D with NOPs and readjusting the number of clock cycles the timer A is set to timeout at.
 

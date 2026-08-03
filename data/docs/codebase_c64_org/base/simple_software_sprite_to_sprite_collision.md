@@ -10,10 +10,10 @@ language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 
@@ -27,7 +27,14 @@ Depending on the area size of your sprites, this nifty piece of code can calcula
 
 Something like:
 
-COLLISIONX1 = $02 (or wherever you want it) COLLISIONX2 = $03 COLLISIONY1 = $04 COLLISIONY2 = $05 XSIZE1 = $06 ;The area of the drawn sprite on the left XSIZE2 = $0C ;The area of the drawn sprite on the right YSIZE1 = $0C ;The area of the drawn sprite at the top YSIZE2 = $18 ;The area of the drawn sprite at the bottom
+COLLISIONX1 = $02 (or wherever you want it)
+COLLISIONX2 = $03
+COLLISIONY1 = $04
+COLLISIONY2 = $05
+XSIZE1 = $06 ;The area of the drawn sprite on the left
+XSIZE2 = $0C ;The area of the drawn sprite on the right
+YSIZE1 = $0C ;The area of the drawn sprite at the top
+YSIZE2 = $18 ;The area of the drawn sprite at the bottom
 
 Now we write a routine to calculate the collision routine
 

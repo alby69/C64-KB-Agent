@@ -3,30 +3,30 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-8-if-the-sid-doesnt-fit-use-a-bigger-hammer
 category: tutorial
 topics:
-- basic
-- graphics
-- assembly
 - sprite programming
+- assembly
+- graphics
+- basic
 difficulty: advanced
 language: mixed
 hardware:
 - KERNAL
+- VIC-II
 - SID
 - CIA
-- VIC-II
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
-- cia-registers
+- joystick-reading
 - memory-map
 - sid-registers
-- raster-interrupts
-- joystick-reading
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 # 
@@ -35,11 +35,9 @@ scraped_at: '2026-07-27'
 
 **Synopsis:** Sometimes you want to use a SID file which is set up for a special memory address which is not aligned with you own memory strategy. I introduce a great tool to fix this. 
 
-**Download via  dust:** $ dust tutorials (select 'spritro') 
+**Download via [dust](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite):** $ dust tutorials (select 'spritro') 
 
-**Github Repository:**
-
-[Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)
+**Github Repository:** [Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)  
 
 - [Episode 3-1: Spritro - An Intro with a Sprite](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite)
 - [Episode 3-2: Creating the Shapes - Hello SpritePad](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad)
@@ -55,8 +53,8 @@ scraped_at: '2026-07-27'
 
 A SID file is more than just some music data. A SID comes with everything you need to play back the music too. So there is Replay Routine, the actual Music Information and some SID header. No matter which Replay Routine is used, whether it be custom or something standardized due some popular Music Editor the procedure to play a SID file is always the same after loaded into memory:
 
-- Initialize the Playback routine once by jumping to the SIDs init address
-- Trigger the Play Routine Address with every screen refresh
+1. Initialize the Playback routine once by jumping to the SIDs init address
+2. Trigger the Play Routine Address with every screen refresh
 
 When there are subtunes you also may want to actually select beforehand which tune to play back. The common convention is to set the X-Register to the desired subtune number before initializing the SID.
 
@@ -87,7 +85,7 @@ The Load Address is not exactly at $1000 since it must consider the relative Loa
 
 
 
-We finally load the SID file in **config_resources.asm** and setup the two symbols **init_sid** and **play_sid** in in **config_symbols.asm** so we don't have to remember the addresses.  In our Interrupt Setup routine in **main.asm** we initialize the SID with** jsr init_sid** and from there we just call **jsr ****play_sid** within our custom interrupt 50 times a second. Everything works just fine! 
+We finally load the SID file in **config_resources.asm** and setup the two symbols **init_sid** and **play_sid** in in **config_symbols.asm** so we don't have to remember the addresses.  In our Interrupt Setup routine in **main.asm** we initialize the SID with **jsr init_sid** and from there we just call **jsr** **play_sid** within our custom interrupt 50 times a second. Everything works just fine! 
 
 SidReloc is a really a nice little utility.
 

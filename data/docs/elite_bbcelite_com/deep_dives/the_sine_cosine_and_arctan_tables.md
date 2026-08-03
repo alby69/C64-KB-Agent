@@ -10,7 +10,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # The sine, cosine and arctan tables
@@ -21,10 +21,10 @@ As described in the deep dives on [drawing circles](https://elite.bbcelite.com/d
 
 ![A view of Diso in BBC Micro Elite](https://elite.bbcelite.com/images/ellipses/diso.png) 
 
-						The circle and ellipse routines use two trigonometric lookup tables, as follows:
+The circle and ellipse routines use two trigonometric lookup tables, as follows:
 
-- The [SNE](https://elite.bbcelite.com/cassette/main/variable/sne.html)table contains lookup values for sine and cosine. These values are used when drawing circles and ellipses, as the small angle approximation that we use when rotating ships in space isn't accurate enough for describing entire circles. For this, we need to be able to look up the sine and cosine of any angle, not just small ones, and for that we need a lookup table.
-- The [ACT](https://elite.bbcelite.com/cassette/main/variable/act.html)table, meanwhile, contains lookup values for arctan, and is used by the[ARCTAN](https://elite.bbcelite.com/cassette/main/subroutine/arctan.html)routine. This is used when drawing the meridians and equators on planets in part 2 of PL9.
+- The [SNE](https://elite.bbcelite.com/cassette/main/variable/sne.html) table contains lookup values for sine and cosine. These values are used when drawing circles and ellipses, as the small angle approximation that we use when rotating ships in space isn't accurate enough for describing entire circles. For this, we need to be able to look up the sine and cosine of any angle, not just small ones, and for that we need a lookup table.
+- The [ACT](https://elite.bbcelite.com/cassette/main/variable/act.html) table, meanwhile, contains lookup values for arctan, and is used by the[ARCTAN](https://elite.bbcelite.com/cassette/main/subroutine/arctan.html) routine. This is used when drawing the meridians and equators on planets in part 2 of PL9.
 
 Let's have a look at how these tables work.
 
@@ -34,17 +34,18 @@ Let's have a look at how these tables work.
 
 													 ----------
 
-						We use the sine table like this. To calculate the following:
+						
+We use the sine table like this. To calculate the following:
 
-sin(theta) * 256
+  sin(theta) * 256
 
 where theta is in radians, we look up the value in:
 
-SNE + (theta * 10)
+  SNE + (theta * 10)
 
 Here's how this works. The value at byte number (theta * 10) is:
 
-256 * ABS(SIN((theta * 10 / 64) * 2 * PI))
+  256 * ABS(SIN((theta * 10 / 64) * 2 * PI))
 
 rounded to the nearest integer. If we expand the part that we pass to SIN():
 
@@ -53,25 +54,27 @@ rounded to the nearest integer. If we expand the part that we pass to SIN():
                              =~ (theta / 6.4) * 6.28
                              =~ theta
 ```
-						then substituting this into the above, we can see that the value at byte (theta * 10) is approximately:
+						
+then substituting this into the above, we can see that the value at byte (theta * 10) is approximately:
 
-256 * ABS(SIN(theta))
+  256 * ABS(SIN(theta))
 
 ## Cosine table
 
             							 ------------
 
-						So that's the sine lookup, but what about the cosine? To calculate the following:
+						
+So that's the sine lookup, but what about the cosine? To calculate the following:
 
-cos(theta) * 256
+  cos(theta) * 256
 
 where theta is in radians, we look up the value in:
 
-SNE + ((theta * 10) + 16) mod 32
+  SNE + ((theta * 10) + 16) mod 32
 
 How does this work? Well, because of the way sine and cosine work in terms of right-angled triangles, the following holds true (using degrees for a second as it's easier to picture):
 
-cos(theta) = sin(90 - theta) = sin(90 + theta)
+  cos(theta) = sin(90 - theta) = sin(90 + theta)
 
 So to get the cosine value, we just need to look up the sine of 90 + theta.
 
@@ -79,7 +82,7 @@ The 32 entries in the sine table cover half a circle, as they go from sin(0) to 
 
 So to get the cosine, we look up the following value, applying mod 32 so the table lookup wraps around correctly if the index falls over the end:
 
-SNE + ((theta * 10) + 16) mod 32
+  SNE + ((theta * 10) + 16) mod 32
 
 It's not 100% accurate, but it's easily good enough for our needs.
 
@@ -87,13 +90,14 @@ It's not 100% accurate, but it's easily good enough for our needs.
 
 													 ------------
 
-						To calculate the following:
+						
+To calculate the following:
 
-theta = arctan(t)
+  theta = arctan(t)
 
 where 0 <= t < 1, we look up the value in:
 
-ACT + (t * 32)
+  ACT + (t * 32)
 
 The result will be an integer representing the angle in radians, with 256 representing a full circle of 2 * PI radians.
 

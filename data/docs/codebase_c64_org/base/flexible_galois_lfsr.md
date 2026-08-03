@@ -9,9 +9,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # base:flexible_galois_lfsr [Codebase64 wiki]
@@ -22,7 +22,23 @@ base:flexible_galois_lfsr
 
 Tap Sequences
 
-LFSR Term -> Period ------------------- $03 -> 1..$03 $06 -> 1..$07 $0c -> 1..$0f $14 -> 1..$1f $30 -> 1..$3f $60 -> 1..$7f $b8 -> 1..$ff $0110 -> 1..$01ff $0240 -> 1..$03ff $0500 -> 1..$07ff $0ca0 -> 1..$0fff $1b00 -> 1..$1fff $3500 -> 1..$3fff $6000 -> 1..$7fff $b400 -> 1..$ffff
+LFSR Term -> Period
+-------------------
+$03 -> 1..$03
+$06 -> 1..$07
+$0c -> 1..$0f
+$14 -> 1..$1f
+$30 -> 1..$3f
+$60 -> 1..$7f
+$b8 -> 1..$ff
+$0110 -> 1..$01ff
+$0240 -> 1..$03ff
+$0500 -> 1..$07ff
+$0ca0 -> 1..$0fff
+$1b00 -> 1..$1fff
+$3500 -> 1..$3fff
+$6000 -> 1..$7fff
+$b400 -> 1..$ffff
 
 16-bit version - you have to read the random number from rand.
 

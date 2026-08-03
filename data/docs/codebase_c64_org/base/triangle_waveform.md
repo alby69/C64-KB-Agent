@@ -3,9 +3,9 @@ title: Examination of SID triangle waveform
 source_url: https://codebase.c64.org/doku.php?id=base%3Atriangle_waveform
 category: reference
 topics:
+- memory management
 - sound generation
 - sprite programming
-- memory management
 - assembly
 difficulty: beginner
 language: assembly
@@ -14,15 +14,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -36,11 +36,35 @@ scraped_at: '2026-07-27'
 
 The data are recorded using a REU. The recording is done like this:
 
-;* Program 1 * ;Turn off screen and sprites ... ;Set frequency of voice 3 LDA #<freq LDX #>freq STA $D40E STX $D40F ;Reset waveform LDA #$08 ;Set test bit STA $D412 ;Setup REU to sample register $D41B for $10000 cycles ... ;Start recording LDA #$10 ;Waveform: Triangle LDX #%1001000 ;REU-command: Start transfer STA $D412 ;Start waveform STX $DF01 ;Start transfer ...
+        ;* Program 1 *
+	;Turn off screen and sprites
+	...
+	;Set frequency of voice 3
+	LDA #<freq
+	LDX #>freq
+	STA $D40E
+	STX $D40F
+	;Reset waveform
+	LDA #$08	;Set test bit
+	STA $D412
+	;Setup REU to sample register $D41B for $10000 cycles
+	...
+	;Start recording
+	LDA #$10	;Waveform: Triangle
+	LDX #%1001000	;REU-command: Start transfer
+	STA $D412	;Start waveform
+	STX $DF01	;Start transfer
+	...
 
 Furthermore, a construct like this is used to get a value from the waveform as fast as possible (via software) from the SID:
 
-;* Program 2 * ... LDA #$10 STA $D412 ;Start waveform LDA $D41B ;Record early value STA Haps ;Save value ...
+	;* Program 2 *
+	...
+	LDA #$10
+	STA $D412	;Start waveform
+	LDA $D41B	;Record early value
+	STA Haps	;Save value
+	...
 
 The table below summarizes the recordings (all values in hex):
 
@@ -131,7 +155,38 @@ The above program (when checked) is only capable of reproducing the output of re
 
 People have used oscilloscopes and concluded that this is the output is digital and probably 8 bit. This can also be checked with this program, if you have decent audio-equipment:
 
-jsr $e544 ;Clear screen ldx #0 stx $d021 ;Background color black stx $d020 ;Border black ;(The black color reduces noise with my equipment) lda #11 ;As of request from Andreas with kernal R2 :-) col sta $d800,x ;Character color dark grey inx bne col lda #$01 ;Frequency 1 sta $d40e lda #$00 sta $d40f lda #$00 ;ADSR:00F0 sta $d412 lda #$f0 sta $d413 lda #$81 ;Waveform: Random, changes rarely. ;Change for other waveforms sta $d412 lda #$0f ;Max volume: $f sta $d418 ldx $d41b loop1 stx temp loop2 ldx $d41b cpx temp bne loop2 lda $0400,x ;Display when value changes eor #$80 sta $0400,x jmp loop1 temp .byte $00
+	jsr $e544	;Clear screen
+	ldx #0
+	stx $d021       ;Background color black
+	stx $d020	;Border black
+			;(The black color reduces noise with my equipment)
+	lda #11		;As of request from Andreas with kernal R2 :-)
+col	sta $d800,x	;Character color dark grey
+	inx
+	bne col
+	lda #$01 	;Frequency 1
+	sta $d40e
+	lda #$00
+	sta $d40f
+	lda #$00	;ADSR:00F0
+	sta $d412
+	lda #$f0
+	sta $d413
+	lda #$81	;Waveform: Random, changes rarely.
+			;Change for other waveforms
+	sta $d412
+	lda #$0f	;Max volume: $f
+	sta $d418
+	ldx $d41b
+loop1	stx temp
+loop2	ldx $d41b
+	cpx temp
+	bne loop2
+	lda $0400,x	;Display when value changes
+	eor #$80
+	sta $0400,x
+	jmp loop1
+temp 	.byte $00
 
 Turn up the volume of the TV-set and you can hear the “ticks” when the waveform changes every few seconds. If the ticks happen in alignment with the changes on the screen, the output is digital and 8 bit.
 
@@ -146,7 +201,20 @@ I believe examination of this requires an oscilloscope, which I have no access t
 
 Observation: If you record the data of the waveform with a structure like this:
 
-... lda #$08 ;Reset waveform: Test bit is 1. sta $d412 lda #$00 ;Frequency $8000 sta $d40e lda #$80 sta $d40f ... ldy #$00 ;Clear test bit lda #$10 ;Waveform triangle ldx #$90 ;REU command sty $d412 ;The difference! sta $d412 stx $df01
+	...
+	lda #$08 	;Reset waveform: Test bit is 1.
+	sta $d412
+	lda #$00	;Frequency $8000
+	sta $d40e
+	lda #$80
+	sta $d40f
+	...
+	ldy #$00	;Clear test bit
+	lda #$10	;Waveform triangle
+	ldx #$90	;REU command
+	sty $d412	;The difference!
+	sta $d412
+	stx $df01
 
 the recorded data are all 4 cycles behind! I.e. the first value in the REU data is not $05, but $09. The similar thing happens if you use the capture in program 2: Instead of getting $04, you get $08. The 4 cycle delay is the time, the sta $d412 takes.
 

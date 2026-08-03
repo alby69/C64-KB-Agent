@@ -3,9 +3,9 @@ title: RAM beneath 00 and 01
 source_url: https://codebase.c64.org/doku.php?id=base%3Aram_beneath_00_and_01
 category: reference
 topics:
-- sprite programming
 - graphics
 - memory management
+- sprite programming
 difficulty: advanced
 language: none
 hardware:
@@ -14,15 +14,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # RAM beneath 00 and 01

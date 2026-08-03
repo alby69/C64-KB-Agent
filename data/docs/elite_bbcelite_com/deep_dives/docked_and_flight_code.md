@@ -3,26 +3,26 @@ title: Swapping between the docked and flight code
 source_url: https://elite.bbcelite.com/deep_dives/docked_and_flight_code.html
 category: manual
 topics:
-- graphics
-- assembly
 - raster interrupts
+- graphics
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
+- BASIC ROM
 - KERNAL
 - SID
-- BASIC ROM
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
 - kernal-routines
 - music-player
 - memory-map
+- raster-interrupts
+- sid-registers
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Swapping between the docked and flight code
@@ -35,7 +35,7 @@ Elite blew all of this out of the water. The cassette version of Elite was great
 
 ![The docking computer in action in the disc version of BBC Micro Elite](https://elite.bbcelite.com/images/disc/docking_computer.png) 
 
-						More ships! Military lasers! Asteroid mining! Extended system descriptions! Better enemy tactics! Missions! A proper docking computer! Bitstik support! The list went on. And OK, perhaps nobody really cared about the last one, but this exotic menu of extra features was utterly mouthwatering for those of with our noses pressed up against the glass. To see what I mean, check out the [feature comparison table](https://elite.bbcelite.com/compare/feature_comparison.html) for a comprehensive list of all the extra features in the disc version.
+More ships! Military lasers! Asteroid mining! Extended system descriptions! Better enemy tactics! Missions! A proper docking computer! Bitstik support! The list went on. And OK, perhaps nobody really cared about the last one, but this exotic menu of extra features was utterly mouthwatering for those of with our noses pressed up against the glass. To see what I mean, check out the [feature comparison table](https://elite.bbcelite.com/compare/feature_comparison.html) for a comprehensive list of all the extra features in the disc version.
 
 I, like many others, starting saving up for a disc drive specifically to play the enhanced disc version of Elite, and although it took ages to get there, it was worth every single penny. The BBC Micro disc version is now regarded as the canonical version of Elite, and quite right too.
 
@@ -45,11 +45,12 @@ In this article, we'll take a look at how Bell and Braben managed to fit so many
 
 													 -------------------------------------------
 
-						If you look at the disc contents for the BBC Micro disc version of Elite, there are an awful lot of files on there:
+						
+If you look at the disc contents for the BBC Micro disc version of Elite, there are an awful lot of files on there:
 
 ![The contents of the disc for the BBC Micro disc version of Elite](https://elite.bbcelite.com/images/disc/disc_contents.png) 
 
-						Most of these files - the ones called D.MOA to D.MOP - contain different combinations of ship blueprints, and one of these files gets loaded every time we launch from the station or do a hyperspace jump. These are discussed in the deep dive on [ship blueprints in the BBC Micro disc version](https://elite.bbcelite.com/ship_blueprints_in_the_disc_version.html).
+Most of these files - the ones called D.MOA to D.MOP - contain different combinations of ship blueprints, and one of these files gets loaded every time we launch from the station or do a hyperspace jump. These are discussed in the deep dive on [ship blueprints in the BBC Micro disc version](https://elite.bbcelite.com/ship_blueprints_in_the_disc_version.html).
 
 The files we are interested in here are called T.CODE and D.CODE, which contain the docked code and the flight code respectively. The directory prefixes are slightly confusing: the "T" in "T.CODE" presumably stands for "Trade", as that's the code that's loaded when we are docked and you can only trade items when inside the station. But the "D" in "D.CODE" is less obvious, as this is the code that's loaded when we launch into space; whatever the "D" stands for, it definitely doesn't stand for "Docked", so don't get confused by that.
 
@@ -61,7 +62,7 @@ All of this code and data stays in memory for the duration of the game, leaving 
 
 ![The launch tunnel in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/cassette/launch.png) 
 
-						This approach enables us to cram more functionality into the game, at the expense of a short pause for loading when switching between the station and space. The T.CODE binary contains all the routines that are needed to run the game while docked, so it covers buying and selling cargo, equipping our ship, mission briefings, the ship hangar and so on. Meanwhile the D.CODE binary contains all the flight code, along with the ship blueprints that contain the 3D wireframes.
+This approach enables us to cram more functionality into the game, at the expense of a short pause for loading when switching between the station and space. The T.CODE binary contains all the routines that are needed to run the game while docked, so it covers buying and selling cargo, equipping our ship, mission briefings, the ship hangar and so on. Meanwhile the D.CODE binary contains all the flight code, along with the ship blueprints that contain the 3D wireframes.
 
 There is quite a bit of code that appears in both the docked and flight code: the maths routines, the system charts, the Inventory and Status Mode screens, the text-printing routines... all of these are needed by both the docked and flight code, so they appear in both T.CODE and D.CODE (though typically at different addresses, as the docked and flight code binaries are assembled separately).
 
@@ -75,17 +76,18 @@ Let's take a closer look at the process of swapping the docked and flight code.
 
 													 -------------------------------------------
 
-						When we launch from the space station, the game loads and runs the flight code with a simple *RUN D.CODE command in the [RDLI](https://elite.bbcelite.com/disc/docked/variable/rdli.html) variable. The load and execution address of D.CODE are both set to &11E3, and the first instruction in the D.CODE binary at [S%](https://elite.bbcelite.com/disc/flight/workspace/s_per_cent.html) is a jump to [DEEOR](https://elite.bbcelite.com/disc/flight/subroutine/deeor.html) in the flight code, which decrypts the binary and jumps into the flight loop to display the space view.
+						
+When we launch from the space station, the game loads and runs the flight code with a simple *RUN D.CODE command in the [RDLI](https://elite.bbcelite.com/disc/docked/variable/rdli.html) variable. The load and execution address of D.CODE are both set to &11E3, and the first instruction in the D.CODE binary at [S%](https://elite.bbcelite.com/disc/flight/workspace/s_per_cent.html) is a jump to [DEEOR](https://elite.bbcelite.com/disc/flight/subroutine/deeor.html) in the flight code, which decrypts the binary and jumps into the flight loop to display the space view.
 
 ![The launch view of Lave in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/ellipses/lave.png) 
 
-						Things are slightly more complex when going the other way, as there are two ways to leave the flight code: by docking, or by dying. When docking, we want to load the docked code, display the ship hangar and show the Status Mode screen. When dying, we want to load the docked code and jump to the title screen.
+Things are slightly more complex when going the other way, as there are two ways to leave the flight code: by docking, or by dying. When docking, we want to load the docked code, display the ship hangar and show the Status Mode screen. When dying, we want to load the docked code and jump to the title screen.
 
 The flight code deals with these two scenarios by editing the command string that we use to load the docked code. The command string lives in the [LTLI](https://elite.bbcelite.com/disc/flight/variable/ltli.html) variable, and by default it contains a *LOAD T.CODE command, which is the command we run when we die in space (we'll look at this below). However, if we execute a successful docking, then the [DOENTRY](https://elite.bbcelite.com/disc/flight/subroutine/doentry.html) routine in the flight code changes this command to *RUN T.CODE instead, which is executed in the flight code's [INBAY](https://elite.bbcelite.com/disc/flight/subroutine/inbay.html) routine. The load and execution address of T.CODE are both set to &11E3, and the first instruction in the T.CODE binary at [S%](https://elite.bbcelite.com/disc/docked/workspace/s_per_cent.html) is a jump to [DOENTRY](https://elite.bbcelite.com/disc/docked/subroutine/doentry.html) in the docked code, which shows the ship hangar, checks for mission progression and shows the Status Mode screen.
 
 ![The Status Mode screen in the BBC Micro disc version of Elite](https://elite.bbcelite.com/images/disc/status_mode.png) 
 
-						So what happens if we die in space, with the command still left at *LOAD T.CODE? Well, the docked code in T.CODE gets loaded at its load address of &11E3, and then the CPU continues executing instructions as if nothing had happened. The load command is executed in the flight code's [INBAY](https://elite.bbcelite.com/disc/flight/subroutine/inbay.html) routine, which calls the operating system's OSCLI routine with a JSR, so when the T.CODE file has been loaded, execution continues with the instruction after the JSR OSCLI instruction... which has now been replaced by the docked code.
+So what happens if we die in space, with the command still left at *LOAD T.CODE? Well, the docked code in T.CODE gets loaded at its load address of &11E3, and then the CPU continues executing instructions as if nothing had happened. The load command is executed in the flight code's [INBAY](https://elite.bbcelite.com/disc/flight/subroutine/inbay.html) routine, which calls the operating system's OSCLI routine with a JSR, so when the T.CODE file has been loaded, execution continues with the instruction after the JSR OSCLI instruction... which has now been replaced by the docked code.
 
 To make this work, the first few bytes of both the T.CODE and D.CODE files have the exact same structure. At the start of each binary is a workspace called S% that contains the following:
 
@@ -105,11 +107,12 @@ The S% workspace is followed by the INBAY routine. [INBAY in the flight code](ht
 
 													 -----------------------------------
 
-						If you look at the [memory map](https://elite.bbcelite.com/the_elite_memory_map_disc.html) for the BBC Micro disc version of Elite, you'll see that the [WP workspace](https://elite.bbcelite.com/disc/docked/workspace/wp.html) from &0E00 to &0FD2 uses the same memory as the DFS disc catalogue. On DFS discs, the disc catalogue takes up sectors 0 and 1, and the Disc Filing System loads these two sectors into pages &E and &F, so it can work with the disc's file catalogue data in-memory before saving it back to disc. Elite uses the same part of memory for the WP workspace, where it stores flight-specific data such as line heaps and stardust coordinates. This is acceptable as the flight code doesn't require disc access (you can only save or load commander files when docked).
+						
+If you look at the [memory map](https://elite.bbcelite.com/the_elite_memory_map_disc.html) for the BBC Micro disc version of Elite, you'll see that the [WP workspace](https://elite.bbcelite.com/disc/docked/workspace/wp.html) from &0E00 to &0FD2 uses the same memory as the DFS disc catalogue. On DFS discs, the disc catalogue takes up sectors 0 and 1, and the Disc Filing System loads these two sectors into pages &E and &F, so it can work with the disc's file catalogue data in-memory before saving it back to disc. Elite uses the same part of memory for the WP workspace, where it stores flight-specific data such as line heaps and stardust coordinates. This is acceptable as the flight code doesn't require disc access (you can only save or load commander files when docked).
 
 ![A space station in BBC Micro cassette Elite](https://elite.bbcelite.com/images/cassette/docking_checks.png) 
 
-						The only issue is that using this part of memory for flight data obviously corrupts the disc catalogue that normally lives there, so before doing any disc activity, Elite calls the [CATD](https://elite.bbcelite.com/disc/loader_3/subroutine/catd.html) routine at &0D7A, which reloads sectors 0 and 1 into pages &E and &F. This routine is itself tucked away in the middle of the DFS workspace, this time in a safe spot in the NMI vector workspace that persists between disc operations, so the CATD routine persists throughout the game.
+The only issue is that using this part of memory for flight data obviously corrupts the disc catalogue that normally lives there, so before doing any disc activity, Elite calls the [CATD](https://elite.bbcelite.com/disc/loader_3/subroutine/catd.html) routine at &0D7A, which reloads sectors 0 and 1 into pages &E and &F. This routine is itself tucked away in the middle of the DFS workspace, this time in a safe spot in the NMI vector workspace that persists between disc operations, so the CATD routine persists throughout the game.
 
 But doesn't the DFS simply reload the catalogue itself from sectors 0 and 1 when it needs to access a disc? It does, but it only does this when necessary; specifically, if the disc is still spinning in the drive, the DFS assumes that the catalogue in memory is still present and correct. It only reloads the catalogue when it spins the disc up again.
 
@@ -121,7 +124,8 @@ You can see this in action in Elite-A, as Angus removed the CATD routine to make
 
 													 -------------------------------
 
-						The final thing to mention about this code-swapping process are the three break handlers.
+						
+The final thing to mention about this code-swapping process are the three break handlers.
 
 The loader sets up a break handler called [BRBR1](https://elite.bbcelite.com/disc/loader_3/subroutine/brbr1.html), which is loaded into permanent memory just before the docked or flight code (as mentioned above). This break handler is used by the flight code, and it is extremely basic: it simply prints a newline, followed by the system error message in the block pointed to by (&FD &FE), which is where the disc filing system will put any disc errors (such as "Not found", "Disc fault" and so on). After printing the error message, it hangs the computer. This is only used for fatal errors, such as the "Not found" error that's shown if you remove the game disc from drive 0, replace it with a different disc (such as your disc of saved games!) and then try to hyperspace, at which point the flight code will try to load a non-existent ship blueprint file and will hang the game with a "Not found" error at that point. Ask me how I know...
 
@@ -129,7 +133,7 @@ For the docked code, there is a slightly more civilised break handler at [BRBR](
 
 ![The disc access menu in BBC Micro disc Elite](https://elite.bbcelite.com/images/disc/disk_access_menu.png) 
 
-						On top of this, there is a third break handler at [MEBRK](https://elite.bbcelite.com/disc/docked/subroutine/mebrk.html) that is used when saving or loading commander files; this handler makes a beep and prints the system error message in the block pointed to by (&FD &FE). It then waits for a key press and returns to the disc access menu. This ensures that any disc errors in the disc access menu are handled gracefully, in case the user tries to load or delete a non-existent file, for example.
+On top of this, there is a third break handler at [MEBRK](https://elite.bbcelite.com/disc/docked/subroutine/mebrk.html) that is used when saving or loading commander files; this handler makes a beep and prints the system error message in the block pointed to by (&FD &FE). It then waits for a key press and returns to the disc access menu. This ensures that any disc errors in the disc access menu are handled gracefully, in case the user tries to load or delete a non-existent file, for example.
 
 In summary, BRBR is the standard BRKV handler for the docked part of the game, and it's swapped out to MEBRK for disc access operations only. When the flight code loads, it switches to the BRBR1 break handler until the docked code is loaded once more. This ensures that errors are handled as gracefully as possible, depending on which part of the codebase is loaded.
 

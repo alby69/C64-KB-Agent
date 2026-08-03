@@ -3,28 +3,28 @@ title: 6502 Second Processor Tube communication
 source_url: https://elite.bbcelite.com/deep_dives/6502sp_tube_communication.html
 category: deep-dive
 topics:
+- basic
+- memory management
 - graphics
 - assembly
-- memory management
 - sprite programming
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
-- KERNAL
 - CIA
+- KERNAL
 - CPU
+- VIC-II
 related:
-- raster-interrupts
 - sprite-programming
-- kernal-routines
 - keyboard-handling
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+- memory-map
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # 6502 Second Processor Tube communication
@@ -35,7 +35,7 @@ One of the more intriguing features of the BBC Micro is the Tube interface, whic
 
 ![The 6502 Second Processor](https://elite.bbcelite.com/images/6502sp/second_processor.jpg) 
 
-						The basic concept of the Tube system is that the fast processor in the expansion box runs the majority of tasks, delegating input and output to the attached BBC Micro (input and output in this context meaning keyboard, display, keyboard, sound and so on). In this relationship the BBC Micro is known as the "I/O processor" (or sometimes the "host"), while the Second Processor is known as the "parasite". Communication between the two is via the high-speed Tube interface, and both computers run independently using their own CPUs and memory.
+The basic concept of the Tube system is that the fast processor in the expansion box runs the majority of tasks, delegating input and output to the attached BBC Micro (input and output in this context meaning keyboard, display, keyboard, sound and so on). In this relationship the BBC Micro is known as the "I/O processor" (or sometimes the "host"), while the Second Processor is known as the "parasite". Communication between the two is via the high-speed Tube interface, and both computers run independently using their own CPUs and memory.
 
 The 6502 Second Processor version of Elite has become the poster child for the Tube system. The main game code runs on the 6502 Second Processor, with its 3 MHz 65C02 processor and 64K of RAM, and it uses the BBC Micro, with its 2 Mhz 6502 processor and 32K of RAM, to manage the display and keyboard. This enables the game to have more colours with faster graphics, and the extra memory in the parasite lets the game load all the ship blueprints at once, as well as supporting nearly twice as many concurrent ships in the local bubble.
 
@@ -45,7 +45,8 @@ One of the reasons for Elite's reputation as a Second Processor killer app is th
 
 													 ---------------------
 
-						There are various ways that the parasite and I/O processor can communicate, and for programs that use the standard OS commands, most of the heavy lifting is done by the Tube code that's built into the system. For example, when saving and loading commander files in the [QUS1](https://elite.bbcelite.com/6502sp/main/subroutine/qus1.html) routine, the parasite just calls the standard OSFILE routine and the system takes care of the rest - there's no need to contact the I/O processor explicitly.
+						
+There are various ways that the parasite and I/O processor can communicate, and for programs that use the standard OS commands, most of the heavy lifting is done by the Tube code that's built into the system. For example, when saving and loading commander files in the [QUS1](https://elite.bbcelite.com/6502sp/main/subroutine/qus1.html) routine, the parasite just calls the standard OSFILE routine and the system takes care of the rest - there's no need to contact the I/O processor explicitly.
 
 Elite, however, needs to tell the I/O processor what to do, and for that the parasite needs to be able to communicate with its host. It uses two broadly similar approaches, one using OSWRCH to send single bytes to the I/O processor, and the other using OSWORD to send and receive larger blocks of data. The idea behind the two approaches is the same: the parasite issues commands to the I/O processor to get it to update the screen, scan the keyboard and so on, thus splitting up the work in an efficient manner. When it comes to 6502 Second Processor Elite, two heads are better than one.
 
@@ -55,20 +56,21 @@ These special commands are implemented by custom OSWRCH and OSWORD handlers in t
 
 													 -------------------
 
-						Elite implements custom OSWRCH commands for values of A from 128 to 147. In the commentary, we might therefore refer to the OSWRCH 129 command (which tells the I/O processor we are about to send over a batch of line coordinates for drawing), or the OSWRCH 130 command (which sends one of those line coordinates, and tells the I/O processor to draw the line once the last coordinate is sent). Some of these commands have associated configuration variables for their numbers, so we might talk about the #SETXC command, which moves the text cursor to a specific column, for example. The SETXC variable has the value 133, so this is the same as the OSWRCH 133 command, but using the variable name makes things a bit easier to follow. Here's a list of supported commands:
+						
+Elite implements custom OSWRCH commands for values of A from 128 to 147. In the commentary, we might therefore refer to the OSWRCH 129 command (which tells the I/O processor we are about to send over a batch of line coordinates for drawing), or the OSWRCH 130 command (which sends one of those line coordinates, and tells the I/O processor to draw the line once the last coordinate is sent). Some of these commands have associated configuration variables for their numbers, so we might talk about the #SETXC command, which moves the text cursor to a specific column, for example. The SETXC variable has the value 133, so this is the same as the OSWRCH 133 command, but using the variable name makes things a bit easier to follow. Here's a list of supported commands:
 
 | Offset | Variable | OSWRCH # | Action | I/O routine | 
 |---|---|---|---|---|
-| 0 | 128 (&80) | Put back to USOSWRCH | [USOSWRCH](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/usoswrch.html) | |
-| 1 | 129 (&81) | Begin drawing a line | [BEGINLIN](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/beginlin.html) | |
-| 2 | 130 (&82) | Add line byte/draw line | [ADDBYT](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/addbyt.html) | |
+| 0 |  | 128 (&80) | Put back to USOSWRCH | [USOSWRCH](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/usoswrch.html) | 
+| 1 |  | 129 (&81) | Begin drawing a line | [BEGINLIN](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/beginlin.html) | 
+| 2 |  | 130 (&82) | Add line byte/draw line | [ADDBYT](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/addbyt.html) | 
 | 3 | #DOFE21 | 131 (&83) | Show energy bomb effect | [DOFE21](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dofe21.html) | 
 | 4 | #DOhfx | 132 (&84) | Show hyperspace colours | [DOHFX](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dohfx.html) | 
 | 5 | #SETXC | 133 (&85) | Set text cursor column | [SETXC](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/setxc.html) | 
 | 6 | #SETYC | 134 (&86) | Set text cursor row | [SETYC](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/setyc.html) | 
 | 7 | #clyns | 135 (&87) | Clear bottom of screen | [CLYNS](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/clyns.html) | 
 | 8 | #RDPARAMS | 136 (&88) | Update dashboard | [RDPARAMS](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/rdparams.html) | 
-| 9 | 137 (&89) | Add dashboard parameter | [ADPARAMS](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/adparams.html) | |
+| 9 |  | 137 (&89) | Add dashboard parameter | [ADPARAMS](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/adparams.html) | 
 | 10 | #DODIALS | 138 (&8A) | Show or hide dashboard | [DODIALS](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dodials.html) | 
 | 11 | #VIAE | 139 (&8B) | Set 6522 System VIA IER | [DOVIAE](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/doviae.html) | 
 | 12 | #DOBULB | 140 (&8C) | Toggle dashboard bulb | [DOBULB](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dobulb.html) | 
@@ -76,7 +78,7 @@ These special commands are implemented by custom OSWRCH and OSWORD handlers in t
 | 14 | #SETCOL | 142 (&8E) | Set the current colour | [DOCOL](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/docol.html) | 
 | 15 | #SETVDU19 | 143 (&8F) | Change mode 1 palette | [SETVDU19](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/setvdu19.html) | 
 | 16 | #DOsvn | 144 (&90) | Set file saving flag | [DOSVN](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dosvn.html) | 
-| 17 | 145 (&91) | Execute BRK instruction | [DOBRK](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dobrk.html) | |
+| 17 |  | 145 (&91) | Execute BRK instruction | [DOBRK](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dobrk.html) | 
 | 18 | #printcode | 146 (&92) | Write to printer/screen | [printer](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/printer.html) | 
 | 19 | #prilf | 147 (&93) | Blank line on printer | [prilf](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/prilf.html) | 
 
@@ -84,7 +86,10 @@ OSWRCH transmits just one byte to the I/O processor, the value of A, so that's t
 
 For example, the aforementioned #SETXC command takes an argument containing the new column number for the text cursor (we can refer to the full version as the #SETXC <col> command). The full command gets sent by two calls to OSWRCH, as in this example, which moves the text cursor to column 10:
 
-LDA #SETXC \ Send the first part of a #SETXC command to the I/O JSR OSWRCH \ processor LDA #10 \ Send the column number to the I/O processor JSR OSWRCH
+  LDA #SETXC            \ Send the first part of a #SETXC command to the I/O
+  JSR OSWRCH            \ processor
+  LDA #10               \ Send the column number to the I/O processor
+  JSR OSWRCH
 
 The most extreme example of an OSWRCH call with parameters is the #RDPARAMS command, which tells the I/O processor to expect a set of 15 dashboard values, such as speed and altitude. Once all 15 are received, the I/O processor updates the various dials on the dashboard. You can see these OSWRCH calls in the parasite's [DIALS](https://elite.bbcelite.com/6502sp/main/subroutine/dials.html) routine, each of which triggers either the I/O processor's [RDPARAMS](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/rdparams.html) routine (for the first command, which tells the I/O processor to expect a batch of dashboard values) or the [ADPARAMS](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/adparams.html) routine (for all the calls that actually send those values).
 
@@ -92,20 +97,21 @@ The most extreme example of an OSWRCH call with parameters is the #RDPARAMS comm
 
 													 -------------------
 
-						The other approach to Tube communication in Elite is via the OSWORD command. While the OSWRCH command can send one byte of information in one direction (to the I/O processor) with each call, OSWORD commands can both send and receive entire blocks of data, with up to 128 bytes being transmitted between the parasite and I/O processor as part of each call. For OSWORD calls with A >= 128, this data transmission is automatically handled by the Tube's own host code, so it's an ideal way to pass large amounts of data between the second processor and the BBC Micro. Here's a list of supported commands:
+						
+The other approach to Tube communication in Elite is via the OSWORD command. While the OSWRCH command can send one byte of information in one direction (to the I/O processor) with each call, OSWORD commands can both send and receive entire blocks of data, with up to 128 bytes being transmitted between the parasite and I/O processor as part of each call. For OSWORD calls with A >= 128, this data transmission is automatically handled by the Tube's own host code, so it's an ideal way to pass large amounts of data between the second processor and the BBC Micro. Here's a list of supported commands:
 
 | Offset | Variable | OSWORD # | Action | I/O routine | 
 |---|---|---|---|---|
-| 0 | 240 (&F0) | Scan the keyboard | [KEYBOARD](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/keyboard.html) | |
-| 1 | 241 (&F1) | Draw space view pixels | [PIXEL](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/pixel.html) | |
+| 0 |  | 240 (&F0) | Scan the keyboard | [KEYBOARD](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/keyboard.html) | 
+| 1 |  | 241 (&F1) | Draw space view pixels | [PIXEL](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/pixel.html) | 
 | 2 | #DOmsbar | 242 (&F2) | Update missile indicators | [MSBAR](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/msbar.html) | 
 | 3 | #wscn | 243 (&F3) | Wait for vertical sync | [WSCAN](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/wscan.html) | 
 | 4 | #onescan | 244 (&F4) | Draw a ship on the 3D scanner | [SC48](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/sc48.html) | 
 | 5 | #DOdot | 245 (&F5) | Draw a dot on the compass | [DOT](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dot.html) | 
 | 6 | #DODKS4 | 246 (&F6) | Scan for a specific key | [DODKS4](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/dodks4.html) | 
-| 7 | 247 (&F7) | Draw orange sun lines | [HLOIN](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/hloin.html) | |
-| 8 | 248 (&F8) | Display the ship hangar | [HANGER](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/hanger.html) | |
-| 9 | 249 (&F9) | Copy protection | [SOMEPROT](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/someprot.html) | 
+| 7 |  | 247 (&F7) | Draw orange sun lines | [HLOIN](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/hloin.html) | 
+| 8 |  | 248 (&F8) | Display the ship hangar | [HANGER](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/hanger.html) | 
+| 9 |  | 249 (&F9) | Copy protection | [SOMEPROT](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/someprot.html) | 
 
 Elite implements OSWORD commands for values of A from 240 to 249, and as with OSWRCH, some have associated variables, so we might talk about the OSWORD 240 command that scans the keyboard and returns the result, or the #onescan command that draws a ship on the 3D scanner, for example.
 
@@ -117,7 +123,8 @@ Apart from the payload size, there's another important difference between OSWRCH
 
 													 -----------------------
 
-						So the parasite and I/O processor communicate, and code runs on both processors at various times, but how does Elite set up this meeting of digital minds? It's all in the loader, which, once it has configured things like the screen mode and sound effects and drawn the loading screen, then *RUNs not one but two different binaries:
+						
+So the parasite and I/O processor communicate, and code runs on both processors at various times, but how does Elite set up this meeting of digital minds? It's all in the loader, which, once it has configured things like the screen mode and sound effects and drawn the loading screen, then *RUNs not one but two different binaries:
 
 - I.CODE is the I/O processor's game code, which loads at &2400 in the BBC Micro (the file has a load address of &FFFF2400, and the &FFFF part specifies it should load into the I/O processor)
 - P.CODE is the parasite's game code, which loads at &1000 in the Second Processor (the file has a load address of &00001000, and the &0000 part specifies it should load into the parasite)

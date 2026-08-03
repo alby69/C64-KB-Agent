@@ -9,9 +9,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # AX+ Tinyrand8 - a fast 8-bit random generator with internal 16bit state
@@ -29,7 +29,40 @@ In a test, I plotted the output of 51200 random values, which don't seem to reve
 ![](https://codebase.c64.org/lib/exe/fetch.php?w=400&tok=6195c8&media=base:rand_ax_.png) 
 
 
-;; AX+ Tinyrand8 ;; A fast 8-bit random generator with an internal 16bit state ;; ;; Algorithm, implementation and evaluation by Wil ;; This version stores the seed as arguments and uses self-modifying code ;; The name AX+ comes from the ASL, XOR and addition operation ;; ;; Size: 15 Bytes (not counting the set_seed function) ;; Execution time: 18 (without RTS) ;; Period 59748 rand8: b1=*+1 lda #31 asl a1=*+1 eor #53 sta b1 adc a1 sta a1 rts ; sets the seed based on the value in A ; always sets a1 and b1 so that a cycle with maximum period is chosen ; constants 217 and 21263 have been derived by simulation set_seed: pha and #217 clc adc #<21263 sta a1 pla and #255-217 adc #>21263 sta b1 rts
+;; AX+ Tinyrand8
+;; A fast 8-bit random generator with an internal 16bit state
+;;
+;; Algorithm, implementation and evaluation by Wil
+;; This version stores the seed as arguments and uses self-modifying code
+;; The name AX+ comes from the ASL, XOR and addition operation
+;;
+;; Size: 15 Bytes (not counting the set_seed function)
+;; Execution time: 18 (without RTS)
+;; Period 59748
+rand8:	
+b1=*+1
+	lda #31
+	asl
+a1=*+1
+	eor #53
+	sta b1
+	adc a1
+	sta a1
+	rts
+; sets the seed based on the value in A
+; always sets a1 and b1 so that a cycle with maximum period is chosen
+; constants 217 and 21263 have been derived by simulation
+set_seed:
+	pha
+	and #217
+	clc
+	adc #<21263
+	sta a1
+	pla
+	and #255-217
+	adc #>21263
+	sta b1
+	rts
 
 ## Codice Estratto
 

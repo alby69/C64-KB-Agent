@@ -3,25 +3,25 @@ title: ACME macro tutorial
 source_url: https://codebase.c64.org/doku.php?id=base%3Aacme-macro-tut
 category: tutorial
 topics:
-- basic
 - raster interrupts
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # ACME macro tutorial
@@ -113,7 +113,7 @@ When someone loads my crap and types “list” I'd like him or her to see a lin
 To have this neat little line in front of my code I wrote another library-routine which I use to !src instead of setting “* = 0801”:
 
 - [ACME_lib/C64/basicstart_template.a](https://codebase.c64.org/doku.php?do=export_code&id=base:acme-macro-tut&codeblock=0)
-- ;============================================================================== ; ACME - Basicstart-Template ;-) by St0fF/Neoplasia ;============================================================================== !src <6502/std.a> !src <C64/std.a> * = $0801 !byte <.basend,>.basend,<year,>year,$9e !byte (.run/1000)+48,((.run/100)%10)+48,((.run/10)%10)+48,.run%10+48 !byte ":",$8f ;REM !fill 11,20 +der_text !byte 0 .basend !byte 0,0 .run ;YEAR SYS.run:REM~~~~~~~~~~~der_text 
+- ;============================================================================== ; ACME - Basicstart-Template ;-) by St0fF/Neoplasia ;============================================================================== !src <6502/std.a> !src <C64/std.a> * = $0801 !byte <.basend,>.basend,<year,>year,$9e !byte (.run/1000)+48,((.run/100)%10)+48,((.run/10)%10)+48,.run%10+48 !byte ":",$8f ;REM !fill 11,20 +der_text !byte 0 .basend !byte 0,0 .run ;YEAR SYS.run:REM~~~~~~~~~~~der_text
 
 So now you can start you code like this:
 
@@ -132,7 +132,22 @@ You can clearly see that the “advancement” lays in this template using a ver
 Codebase is great. I put some math code from here into a macro. The advancement is: the macro itself does not create any code, its sole purpose is precalculating a value I can use later on. Here we go with the “calculate square root at compile time” example:
 
 - [wurzel.ha](https://codebase.c64.org/doku.php?do=export_code&id=base:acme-macro-tut&codeblock=2)
-- `!macro wurzel Q,W { !set .M = Q !set .R = 0 !set .D = 128 !do while .D >= 1 { !set .T = .D * (2 * .R + .D) !if (.T <= .M) { !set .M = .M - .T !set .R = .R + .D } !set .D = .D / 2 } !set W = .R }`
+- ```
+!macro wurzel Q,W {
+	!set .M = Q
+	!set .R = 0
+	!set .D = 128
+	!do while .D >= 1 {
+		!set .T = .D * (2 * .R + .D)
+		!if (.T <= .M) {
+			!set .M = .M - .T
+			!set .R = .R + .D
+		}
+		!set .D = .D / 2
+	}
+	!set W = .R
+}
+```
 
 Thanks a lot to Graham for the algorithm posting! Beware! Here we find some caveats in ACME's macro processing: each call of a macro seems to open up a subzone. So to use the “wurzel” macro, the “W” parameter needs to be a global label in the calling source. See this example of calculating lightsource data:
 

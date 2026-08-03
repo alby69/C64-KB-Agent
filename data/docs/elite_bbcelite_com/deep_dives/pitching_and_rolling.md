@@ -3,25 +3,25 @@ title: Pitching and rolling
 source_url: https://elite.bbcelite.com/deep_dives/pitching_and_rolling.html
 category: source-code
 topics:
-- input handling
 - assembly
+- input handling
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Pitching and rolling
@@ -40,11 +40,22 @@ So this routine calculates the movement of the enemy ship in space when we pitch
 
 													 --------------
 
-						To make it easier to work with the 3D rotations of pitching and rolling, we break down the movement into two separate rotations, the roll and the pitch, and we apply one of them first, and then the other (in Elite, we do the roll first, and then the pitch).
+						
+To make it easier to work with the 3D rotations of pitching and rolling, we break down the movement into two separate rotations, the roll and the pitch, and we apply one of them first, and then the other (in Elite, we do the roll first, and then the pitch).
 
 So let's look at the first one: the roll. Imagine we're sitting in our spaceship and do a roll to the right by pressing ">". From our perspective this is the same as the universe doing a roll to the left, so if we're looking out of the front of our ship, and there's a stationary enemy ship at (x, y, z), then rolling by an angle of a will look something like this:
 
-y ^ (x´, y´, z´) | / | / <-. | / a`. | / | | / | / __ (x, y, z) | / __..--'' |/__..--'' +-----------------------> x
+  y
+  ^         (x´, y´, z´)
+  |       /
+  |      /    <-.
+  |     /       a`.
+  |    /          |
+  |   /
+  |  /              __ (x, y, z)
+  | /       __..--''
+  |/__..--''
+  +-----------------------> x
 
 So the enemy ship will move from (x, y, z) to (x´, y´, z´) in our little bubble of universe. Moreover, because the enemy ship is stationary, rolling our ship won't change the enemy ship's z-coordinate - it will always be the same distance in front of us, however far we roll. So we know that z´ = z, but how do we calculate x´ and y´?
 
@@ -65,27 +76,42 @@ Now, let's look at the triangle formed by the original (x, y) point:
   +----------------------->
        <---- x ---->
 ```
-						In this triangle, let's call the angle at the origin t and the hypotenuse h, and we already know the adjacent side is x and the opposite side is y. If we plug these into the equations for sine and cosine, we get:
+						
+In this triangle, let's call the angle at the origin t and the hypotenuse h, and we already know the adjacent side is x and the opposite side is y. If we plug these into the equations for sine and cosine, we get:
 
-cos t = adjacent / hypotenuse = x / h sin t = opposite / hypotenuse = y / h
+  cos t = adjacent / hypotenuse = x / h
+  sin t = opposite / hypotenuse = y / h
 
 which gives us the following when we multiply both sides by h:
 
-x = h * cos(t) y = h * sin(t)
+  x = h * cos(t)
+  y = h * sin(t)
 
 (We could use Pythagoras to calculate h from x and y, but we don't need to - you'll see why in a minute.)
 
 Now let's look at the 2D triangle formed by the new, post-roll (x´, y´) point:
 
-^ (x´, y´) | /| | / | | / | | h / | | / | <------- y´ | / | | / | |/ t+a | +-----------------------> <-- x´ -->
+  ^         (x´, y´)
+  |       /|
+  |      / |
+  |     /  |
+  |  h /   |
+  |   /    | <------- y´
+  |  /     |
+  | /      |
+  |/ t+a   |
+  +----------------------->
+  <-- x´ -->
 
 In this triangle, the angle is now t + a (as we have rolled left by an angle of a), the hypotenuse is still h (because we're rotating around the origin), the adjacent is x´ and the opposite is y´. If we plug these into the equations for sine and cosine, we get:
 
-cos(t + a) = adjacent / hypotenuse = x´ / h sin(t + a) = opposite / hypotenuse = y´ / h
+  cos(t + a) = adjacent / hypotenuse = x´ / h
+  sin(t + a) = opposite / hypotenuse = y´ / h
 
 which gives us the following when we multiply both sides by h:
 
-x´ = h * cos(t + a) (i) y´ = h * sin(t + a) (ii)
+  x´ = h * cos(t + a)                                   (i)
+  y´ = h * sin(t + a)                                   (ii)
 
 We can expand these using the standard trigonometric formulae for compound angles, like this:
 
@@ -97,7 +123,8 @@ We can expand these using the standard trigonometric formulae for compound angle
      = h * (sin(t) * cos(a) + cos(t) * sin(a))
      = h * sin(t) * cos(a) + h * cos(t) * sin(a)        (iv)
 ```
-						and finally we can substitute the values of x and y that we calculated from the first triangle above:
+						
+and finally we can substitute the values of x and y that we calculated from the first triangle above:
 
 ```
   x´ = h * cos(t) * cos(a) - h * sin(t) * sin(a)        (iii)
@@ -105,27 +132,37 @@ We can expand these using the standard trigonometric formulae for compound angle
   y´ = h * sin(t) * cos(a) + h * cos(t) * sin(a)        (iv)
      = y * cos(a) + x * sin(a)
 ```
-						So, to summarise, if we do a roll of angle a, then the ship at (x, y, z) will move to (x´, y´, z´), where:
+						
+So, to summarise, if we do a roll of angle a, then the ship at (x, y, z) will move to (x´, y´, z´), where:
 
-x´ = x * cos(a) - y * sin(a) y´ = y * cos(a) + x * sin(a) z´ = z
+  x´ = x * cos(a) - y * sin(a)
+  y´ = y * cos(a) + x * sin(a)
+  z´ = z
 
 ## Transformation matrices
 
             							 -----------------------
 
-						We can express the exact same thing in matrix form, like this:
+						
+We can express the exact same thing in matrix form, like this:
 
-[ cos(a) sin(a) 0 ] [ x ] [ x * cos(a) + y * sin(a) ] [ -sin(a) cos(a) 0 ] x [ y ] = [ y * cos(a) - x * sin(a) ] [ 0 0 1 ] [ z ] [ z ]
+  [  cos(a)  sin(a)  0 ]     [ x ]     [ x * cos(a) + y * sin(a) ]
+  [ -sin(a)  cos(a)  0 ]  x  [ y ]  =  [ y * cos(a) - x * sin(a) ]
+  [    0       0     1 ]     [ z ]     [            z            ]
 
 The matrix on the left is therefore the transformation matrix for rolling through an angle a.
 
 We can apply the exact same process to the pitch rotation, which gives us a transformation matrix for pitching through an angle b, as follows:
 
-[ 1 0 0 ] [ x ] [ x ] [ 0 cos(b) -sin(b) ] x [ y ] = [ y * cos(b) - z * sin(a) ] [ 0 sin(b) cos(b) ] [ z ] [ y * sin(b) + z * cos(b) ]
+  [ 1    0        0    ]     [ x ]     [            x            ]
+  [ 0  cos(b)  -sin(b) ]  x  [ y ]  =  [ y * cos(b) - z * sin(a) ]
+  [ 0  sin(b)   cos(b) ]     [ z ]     [ y * sin(b) + z * cos(b) ]
 
 Finally, we can multiply these two rotation matrices together to get a transformation matrix that applies roll and then pitch in one go:
 
-[ cos(a) sin(a) 0 ] [ x ] [ -sin(a) * cos(b) cos(a) * cos(b) -sin(b) ] x [ y ] [ -sin(a) * sin(b) cos(a) * sin(b) cos(b) ] [ z ]
+  [       cos(a)           sin(a)         0    ]     [ x ]
+  [ -sin(a) * cos(b)  cos(a) * cos(b)  -sin(b) ]  x  [ y ]
+  [ -sin(a) * sin(b)  cos(a) * sin(b)   cos(b) ]     [ z ]
 
 So, to move our enemy ship in space when we pitch and roll, we simply need to do this matrix multiplication. In 6502 assembly language. In a very small memory footprint. Oh, and it needs to be quick, too, because we're going to be using this routine a lot. Got that?
 
@@ -133,23 +170,30 @@ So, to move our enemy ship in space when we pitch and roll, we simply need to do
 
 													 -------------------------
 
-						Luckily we can simplify the maths considerably by applying the "small angle approximation". This states that for small angles in radians, the following approximations hold true:
+						
+Luckily we can simplify the maths considerably by applying the "small angle approximation". This states that for small angles in radians, the following approximations hold true:
 
-sin a ~= a cos a ~= 1 - (a^2 / 2) ~= 1 tan a ~= a
+  sin a ~= a
+  cos a ~= 1 - (a^2 / 2) ~= 1
+  tan a ~= a
 
 These approximations make sense when you look at the triangle geometry that is used to show the ratios of trigonometry, and imagine what happens when the angle gets small; for example, cosine is defined as the adjacent over the hypotenuse, and as the angle tends to 0, the hypotenuse "hinges" down on top of the adjacent, so it's intuitive that cos a tends to 1 for small angles.
 
 The approximations above state that cos a approximates to 1 - (a^2 / 2), but Elite actually uses cos a ~= 1 and corrects for the inaccuracy by regularly calling the TIDY routine to. So dropping the small angle approximations into our rotation calculation above gives the following, much simpler version:
 
-[ 1 a 0 ] [ x ] [ x + ay ] [ -a 1 -b ] x [ y ] = [ y - ax - bz ] [ -ab b 1 ] [ z ] [ z + b(y - ax) ]
+  [  1   a   0 ]     [ x ]     [    x + ay     ]
+  [ -a   1  -b ]  x  [ y ]  =  [ y - ax  - bz  ]
+  [ -ab  b   1 ]     [ z ]     [ z + b(y - ax) ]
 
 So to move rotate a point (x, y, z) around the origin (the centre of our ship) by the current pitch and roll angles (alpha and beta), we just need to calculate these three relatively simple equations:
 
-x -> x + alpha * y y -> y - alpha * x - beta * z z -> z + beta * (y - alpha * x)
+  x -> x + alpha * y
+  y -> y - alpha * x - beta * z
+  z -> z + beta * (y - alpha * x)
 
 There's a fascinating document on Ian Bell's Elite website that shows this exact calculation, in the author's own handwritten notes for the game. You can see it in the third image here:
 
-[http://www.elitehomepage.org/design/](http://www.elitehomepage.org/design/)
+  [http://www.elitehomepage.org/design/](http://www.elitehomepage.org/design/)
 
 just below the original design for the cockpit, before the iconic 3D scanner was added (which is a whole other story...).
 
@@ -157,19 +201,24 @@ just below the original design for the cockpit, before the iconic 3D scanner was
 
 													 --------------
 
-						So that's what this routine does... it transforms x, y and z when we roll and pitch. But there is a twist. Let's write the transformation equations as you might write them in code (and, indeed this is how the routine itself is structured).
+						
+So that's what this routine does... it transforms x, y and z when we roll and pitch. But there is a twist. Let's write the transformation equations as you might write them in code (and, indeed this is how the routine itself is structured).
 
 First, we do the roll calculations:
 
-y = y - alpha * x x = x + alpha * y
+  y = y - alpha * x
+  x = x + alpha * y
 
 and then we do the pitch calculations:
 
-y = y - beta * z z = z + beta * y
+  y = y - beta * z
+  z = z + beta * y
 
 At first glance this code looks the same as the matrix calculation above, but then you notice that the value of y used in the calculations of x and z is not the original value of y, but the updated value of y. In fact, the above code actually does the following transformation of (x, y, z):
 
-x -> x + alpha * (y - alpha * x) y -> y - alpha * x - beta * z z -> z + beta * (y - alpha * x - beta * z)
+  x -> x + alpha * (y - alpha * x)
+  y -> y - alpha * x - beta * z
+  z -> z + beta * (y - alpha * x - beta * z)
 
 Oops, that isn't what we wanted to calculate... except this version turns out to do a better job than our original matrix multiplication above. This new version, where we reuse the updated y in the calculations of x and z instead of the original y, was "invented by mistake when [Marvin Minsky] tried to save one register in a display hack", and inadvertently discovered a way to rotate points within a pretty good approximation of a circle without using complex maths. The method appeared as item 149 in the 1972 HAKMEM memo, and if that doesn't mean anything to you, see if you can take the time to look it up. It's worth the effort if you're interested in this kind of thing (and you're the one reading a commentary on 8-bit code from 1984, so I'm guessing this might include you - though if you're in a hurry, see [page 73 in this PDF](https://elite.bbcelite.com/pdfs/HAKMEM.pdf)).
 
@@ -177,11 +226,13 @@ Anyway, the rotation in Minsky's method doesn't describe a perfect circle, but i
 
 Roll calculations:
 
-nosev_y = nosev_y - alpha * nosev_x_hi nosev_x = nosev_x + alpha * nosev_y_hi
+  nosev_y = nosev_y - alpha * nosev_x_hi
+  nosev_x = nosev_x + alpha * nosev_y_hi
 
 Pitch calculations:
 
-nosev_y = nosev_y - beta * nosev_z_hi nosev_z = nosev_z + beta * nosev_y_hi
+  nosev_y = nosev_y - beta * nosev_z_hi
+  nosev_z = nosev_z + beta * nosev_y_hi
 
 And that's how we rotate a point around the origin by pitch alpha and roll beta, using the small angle approximation to make the maths easier, and incorporating the Minsky circle algorithm to make the rotation more stable.
 

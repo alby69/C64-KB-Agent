@@ -3,19 +3,19 @@ title: base:sprite_mirror [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_mirror
 category: tool
 topics:
-- sprite programming
 - graphics
 - memory management
+- sprite programming
 - assembly
 difficulty: beginner
 language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # base:sprite_mirror [Codebase64 wiki]

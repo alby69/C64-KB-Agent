@@ -4,36 +4,61 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Atriad_midislave_manager_
 category: tutorial
 topics:
 - sound generation
-- basic
 - input handling
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CIA
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- keyboard-handling
 - joystick-reading
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - sound-programming
+- sid-registers
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # 1. What is the triad midislave manager?
-
-### Table of Contents
 
 TRIAD MIDISLAVE MANAGER V1.1
 
 This helpfile contains:
 
-1. What is the Triad Midislave Manager? 2. Getting started 3. The main menu 4. The MIDI-mode screen a. Channel b. Transpose c. Programme d. Concate 5. The sound editor a. Sound Number b. Name c. Definition d. Pulsewidth e. CTRL-byte f. Attack/Decay/Sustain/Release g. Macro speed h. Fixed note i. Pitching j. Vibrato k. Pulse vibrato l. Filters m. Macro definition 6. Loading and saving sounds 7. Upgrade, and the future of this program 8. Known bugs 9. Technical notes 10. Thanks to... 11. Address
+1. What is the Triad Midislave Manager?
+2. Getting started
+3. The main menu
+4. The MIDI-mode screen
+  a. Channel
+  b. Transpose
+  c. Programme
+  d. Concate
+5. The sound editor
+  a. Sound Number
+  b. Name
+  c. Definition
+  d. Pulsewidth
+  e. CTRL-byte
+  f. Attack/Decay/Sustain/Release
+  g. Macro speed
+  h. Fixed note
+  i. Pitching
+  j. Vibrato
+  k. Pulse vibrato
+  l. Filters
+  m. Macro definition
+6. Loading and saving sounds
+7. Upgrade, and the future of this program
+8. Known bugs
+9. Technical notes
+10. Thanks to...
+11. Address
 
 # 1. What is the triad midislave manager?
 
@@ -75,7 +100,10 @@ This is where the tricky things start. You can see a screen saying “Triad Midi
 
 Keys you can use in this mode are:
 
-+/- To increase/decrease option Arrows up/down To choose option Run/Stop to return to the Main menu CTRL To shortcut to the sound editor
+  +/- To increase/decrease option
+  Arrows up/down To choose option
+  Run/Stop to return to the Main menu
+  CTRL To shortcut to the sound editor
 
 The meanings of the different options are:
 

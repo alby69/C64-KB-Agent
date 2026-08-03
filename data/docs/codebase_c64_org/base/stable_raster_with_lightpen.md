@@ -3,30 +3,30 @@ title: Stable Raster with Lightpen
 source_url: https://codebase.c64.org/doku.php?id=base%3Astable_raster_with_lightpen
 category: tutorial
 topics:
-- raster interrupts
+- basic
 - memory management
+- raster interrupts
 - input handling
 - sprite programming
 - assembly
-- basic
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
-- BASIC ROM
 - KERNAL
-- CIA
 - CPU
+- VIC-II
+- CIA
+- BASIC ROM
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -55,11 +55,11 @@ It's based on the fact that you can manually trigger the light pen and read off 
 
 Here's a step-by-step explanation but see the Vic-II doc by Christian Bauer for more technical details:
 
-- Connect the light pen to port B of CIA A
-- In your IRQ routine, trigger light pen by writing $ff then $00 to $dc01
-- Read light pen X coordinate from $d013
-- Convert this to a value from 0 to 7
-- Use value in a clockslide
+1. Connect the light pen to port B of CIA A
+2. In your IRQ routine, trigger light pen by writing $ff then $00 to $dc01
+3. Read light pen X coordinate from $d013
+4. Convert this to a value from 0 to 7
+5. Use value in a clockslide
 
 ## Code Example
 

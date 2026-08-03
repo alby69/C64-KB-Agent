@@ -3,36 +3,34 @@ title: Building a musicroutine by Cadaver
 source_url: https://codebase.c64.org/doku.php?id=base%3Abuilding_a_music_routine
 category: source-code
 topics:
-- sound generation
-- basic
 - raster interrupts
+- basic
+- sound generation
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Building a musicroutine by Cadaver
-
-### Table of Contents
 
 # Building a musicroutine by Cadaver
 
@@ -63,14 +61,14 @@ Now let's talk about a more advanced musicroutine. It should have:
 
 - The pattern data containing the notes themselves, commands to set note duration, change to a different instrument (sound) and any other imaginable things.
 
-- The possibility to control these things for each voice (usually, many of these features are stored within the instrument (sound) data.)- ADSR envelope
-- Pulsewidth, and modulating it (changing smoothly)
-- Vibrato (modulating the frequency of a note back and forth)
-- Sliding (smooth change of frequency, either up or down)
-- Waveforms and arpeggios. Usually combined under a single table
-- Hard restart. A few (usually two) frames before the start of a new note the gatebit is cleared and attack/decay + sustain/release are set to a preset value (usually 0), to make sure the attack of the next note starts reliably. In an advanced routine, this can be turned on and off at will, or several different methods of hardrestart can be chosen.
-- Tying notes to each other, that is just to change the frequency but to not clear the gatebit, perform hardrestart or re-init pulsewidth. This can be used to simulate guitar riffs using pull-off and hammer-on techniques…
- 
+- The possibility to control these things for each voice (usually, many of these features are stored within the instrument (sound) data.)
+  - ADSR envelope
+  - Pulsewidth, and modulating it (changing smoothly)
+  - Vibrato (modulating the frequency of a note back and forth)
+  - Sliding (smooth change of frequency, either up or down)
+  - Waveforms and arpeggios. Usually combined under a single table
+  - Hard restart. A few (usually two) frames before the start of a new note the gatebit is cleared and attack/decay + sustain/release are set to a preset value (usually 0), to make sure the attack of the next note starts reliably. In an advanced routine, this can be turned on and off at will, or several different methods of hardrestart can be chosen.
+  - Tying notes to each other, that is just to change the frequency but to not clear the gatebit, perform hardrestart or re-init pulsewidth. This can be used to simulate guitar riffs using pull-off and hammer-on techniques…
 
 - Filter control. There's only one filter so chaos would result if multiple voices tried to control it at the same time. Filter control can include changing the filter type, voices the filter affects, cutoff and resonance. Cutoff can also be changed smoothly (modulation).
 
@@ -119,7 +117,10 @@ Usually in the beginning of a new note, the pulsewidth is initialized to the fix
 
 As the note plays on, the pulsewidth can then be changed (modulated) for interesting effects. There are many ways to assign the parameters for this, one way is:
 
-Initial pulsewidth Pulsewidth modulation speed Pulsewidth limit low Pulsewidth limit high
+Initial pulsewidth
+Pulsewidth modulation speed
+Pulsewidth limit low
+Pulsewidth limit high
 
 So, the speed will be added/subtracted to pulsewidth on each frame and the limits tell when to change the direction (if pulsewidth crosses over its whole range from $fff back to $000 an ugly sound is heard, so it's a good idea to prevent that)
 
@@ -206,7 +207,10 @@ It's good to be memory-effective when storing the music data. This chapter offer
 
 It's most likely going to be 8-bit for effectiveness. If you want for example 128 different patterns, one possible encoding for sequence data bytes could be:
 
-$00-$7f - pattern numbers $80-$bf - transpose command $c0-$fe - repeat command $ff - jump command, followed by jump position byte
+$00-$7f - pattern numbers
+$80-$bf - transpose command
+$c0-$fe - repeat command
+$ff     - jump command, followed by jump position byte
 
 ## 3.2 Pattern data
 
@@ -214,11 +218,23 @@ Here it gets a lot more complicated. How do you represent notes with the smalles
 
 The approach I used in SadoTracker is a bit different, there bytes have encoded meanings like in the sequence data above. I don't remember the exact meanings of all byte ranges but it went something like this:
 
-$00-$5f - Note numbers $60-$bf - Note duration commands $c0-$df - Instrument change commands $e0-$ef - Arpeggio change commands $f0-$fe - Other commands (like setting tie-notes on and off) $ff - End of pattern-mark
+$00-$5f - Note numbers
+$60-$bf - Note duration commands
+$c0-$df - Instrument change commands
+$e0-$ef - Arpeggio change commands
+$f0-$fe - Other commands (like setting tie-notes on and off)
+$ff     - End of pattern-mark
 
 GoatTracker musicroutines have the following format:
 
-$00-$5d - Note numbers with command & commanddata bytes $5e - Keyoff (gatebit reset) -||- $5f - Rest (no action) -||- $60-$bd - Note numbers without command & commanddata bytes $be - Keyoff -||- $bf - Rest -||- $c0-$fe - Long rest, $fe is 2 rows, $fd 3 rows etc. $ff - End of pattern-mark
+$00-$5d - Note numbers           with command & commanddata bytes
+$5e     - Keyoff (gatebit reset)                -||-
+$5f     - Rest (no action)                      -||-
+$60-$bd - Note numbers           without command & commanddata bytes
+$be     - Keyoff                                -||-
+$bf     - Rest                                  -||-
+$c0-$fe - Long rest, $fe is 2 rows, $fd 3 rows etc.
+$ff     - End of pattern-mark
 
 ## 3.3 Instrument data
 

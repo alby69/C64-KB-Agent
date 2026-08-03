@@ -10,10 +10,10 @@ language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 
@@ -25,10 +25,10 @@ base:scpu_setscrncol
 
 Sets $d020 and $d021 to value passed to pseudocommand. Lowbyte of val sets $d020 and highbyte sets $d021
 
-| SYNTAX: | :ScreenColor val | ||
-| EXAMPLE: | :ScreenColor #$0201 | ||
+| SYNTAX: | :ScreenColor val |  |  | 
+| EXAMPLE: | :ScreenColor #$0201 |  |  | 
 | PARAMETERS: | Type | Minimum | Maximum | 
-| U16 | #$0000 | #$ffff | |
+|  | U16 | #$0000 | #$ffff | 
 
 Can with good advantage be improved to take advantage of the nativly defined color constants in Kickassembler allowing :ScreenColor BLUE : RED
 

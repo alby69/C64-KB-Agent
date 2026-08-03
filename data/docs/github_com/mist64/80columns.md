@@ -3,8 +3,8 @@ title: 'GitHub Repo: mist64/80columns'
 source_url: https://github.com/mist64/80columns
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: '2022-02-12T21:04:20Z'
 ---
 

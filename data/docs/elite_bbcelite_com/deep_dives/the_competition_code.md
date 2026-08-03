@@ -3,21 +3,21 @@ title: The competition code
 source_url: https://elite.bbcelite.com/deep_dives/the_competition_code.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # The competition code
@@ -32,7 +32,7 @@ Apart from your name and address, the postcard asked for two things: your credit
 
 ![The competition code in the BBC Micro disc version of Elite](https://elite.bbcelite.com/images/disc/competition_code.png) 
 
-						These two bits of information enabled Acornsoft to work out who was a legitimately amazing pilot, and who had cheated, using a decoding algorithm that was a closely guarded secret.
+These two bits of information enabled Acornsoft to work out who was a legitimately amazing pilot, and who had cheated, using a decoding algorithm that was a closely guarded secret.
 
 This algorithm can be seen in the BBC BASIC program called UNPACK that's included on the Elite source disc. Some lucky Acornsoft employee presumably had to sit there and enter these two bits of information into UNPACK, which would then tell them whether the cash levels on the postcard were correct, and most importantly, what the player's combat rank was. UNPACK could also tell them whether that person had tampered with their save file, and it also revealed which version of the game this code was from, which could then be cross-checked against the colour of the postcard (blue for the BBC Micro cassette version, brown for the BBC Micro disc version, and green for the Electron version).
 
@@ -44,7 +44,8 @@ People would have sold their grandmothers to get hold of UNPACK, so let's see ho
 
 													 ---------------------
 
-						The competition flags in variable [COK](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#cok) track three vital bits of information that get encoded into the final competition code. They are as follows:
+						
+The competition flags in variable [COK](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#cok) track three vital bits of information that get encoded into the final competition code. They are as follows:
 
 - Bit 0 is set in routine ptg if we hold CTRL during hyperspace to force a mis-jump into witchspace (having first paused the game and toggled on the author credits with X). UNPACK does not report the status of this bit, so presumably manually mis-jumping was not regarded as cheating by Acornsoft, but perhaps it was recorded to see if anyone found this way of hunting Thargoids.
 - Bit 1 is set if this commander file has ever been saved by the BBC Micro cassette version of Elite. Note that commander files can be loaded into and saved from any BBC Micro or Electron version of the game, so this flag indicates that it was, at some point, saved from the cassette version, and it can be set alongside the other platform bits, if applicable.
@@ -53,7 +54,7 @@ People would have sold their grandmothers to get hold of UNPACK, so let's see ho
 - Bit 4 is not set by any of the 6502 versions of Elite. If it is set in the commander file, the platform is reported as "Something else??" by UNPACK.
 - Bit 5 is set if this commander file has ever been saved by the bug-fixed disc version of BBC Micro Elite (where the refund and asteroid bugs have been squashed). Having a different code for the two versions enabled Acornsoft to know whether the player could have taken advantage of the refund bug, though it doesn't prove that the player actually exploited the bug.
 - Bit 6 is set if this commander file has ever been saved by the Commodore 64 version of Elite. If this bit is set then the BBC Micro version of UNPACK will report this as "Something else??".
-- Bit 7 is set if the [CHK](https://elite.bbcelite.com/cassette/main/variable/chk.html)and[CHK2](https://elite.bbcelite.com/cassette/main/variable/chk2.html)checksums in the commander file do not match, which indicates that the commander data has been tampered with. CHK2 is set to CHK EOR &A9 when the file is saved, so anyone tampering with the file would not only need to update the CHK checksum accordingly, they would also need to update CHK2 as well. The game hangs if you try to load a commander file with an incorrect CHK value, but it lets an incorrect CHK2 through, so the chances are a hacker wouldn't know that CHK2 needed to be correct for a valid competition entry.
+- Bit 7 is set if the [CHK](https://elite.bbcelite.com/cassette/main/variable/chk.html) and[CHK2](https://elite.bbcelite.com/cassette/main/variable/chk2.html) checksums in the commander file do not match, which indicates that the commander data has been tampered with. CHK2 is set to CHK EOR &A9 when the file is saved, so anyone tampering with the file would not only need to update the CHK checksum accordingly, they would also need to update CHK2 as well. The game hangs if you try to load a commander file with an incorrect CHK value, but it lets an incorrect CHK2 through, so the chances are a hacker wouldn't know that CHK2 needed to be correct for a valid competition entry.
 
 Note that the NES version doesn't use the competition flags in this way, though the same variable is still used to keep track of cheats. In this version, COK is set to 1 if you use the built-in cheat mode, but that's all; see the deep dive on [comparing NES Elite with the other versions](https://elite.bbcelite.com/comparing_nes_elite_with_the_other_versions.html) for details.
 
@@ -63,11 +64,15 @@ The competition flag is buried within the competition code that players had to c
 
 													 --------------------
 
-						The competition code is calculated and shown on screen in the [SVE](https://elite.bbcelite.com/cassette/main/subroutine/sve.html) routine when the commander file is saved. It's a four-byte number with a maximum value of 4,294,967,295, which fits nicely into the ten-box slot on the competition postcard.
+						
+The competition code is calculated and shown on screen in the [SVE](https://elite.bbcelite.com/cassette/main/subroutine/sve.html) routine when the commander file is saved. It's a four-byte number with a maximum value of 4,294,967,295, which fits nicely into the ten-box slot on the competition postcard.
 
 It is calculated into K(0 1 2 3), which is a big-endian number with the most significant byte in K and the least significant in K+3 (so it's stored in the same way that the player's cash is stored in location CASH, and it's printed out by the same BPRNT routine that displays the credit balance). The calculation is done in this order:
 
-K = CHK OR %10000000 K+2 = K EOR COK K+1 = K+2 EOR CASH+2 K+3 = K+1 EOR &5A EOR TALLY+1
+  K   = CHK OR %10000000
+  K+2 = K EOR COK
+  K+1 = K+2 EOR CASH+2
+  K+3 = K+1 EOR &5A EOR TALLY+1
 
 The result is then printed on-screen using BPRNT, and the file is saved.
 
@@ -75,23 +80,27 @@ The result is then printed on-screen using BPRNT, and the file is saved.
 
 													 -----------------------------------------
 
-						So to extract the various bits of information encoded in the competition code, we can apply the algorithm in UNPACK, described here using the same variable names as used UNPACK, so you can follow along if you want. The following makes use of the following facts about EOR:
+						
+So to extract the various bits of information encoded in the competition code, we can apply the algorithm in UNPACK, described here using the same variable names as used UNPACK, so you can follow along if you want. The following makes use of the following facts about EOR:
 
 - EOR is commutative:
 
-A EOR B = B EOR A
+  A EOR B = B EOR A
 
-(A EOR B) EOR C = A EOR (B EOR C)
+  (A EOR B) EOR C = A EOR (B EOR C)
 
-A EOR A = 0
+  A EOR A = 0
 
-A EOR 0 = 0 EOR A = A
+  A EOR 0 = 0 EOR A = A
 
 Given this, let's see how UNPACK extracts the data from the competition code.
 
 - Split the code into the four bytes by AND'ing as follows (UNPACK has to do some division to avoid BBC BASIC overflow errors, but this is effectively what it does):
 
-B1% = code AND &000000FF (i.e. K+3) B2% = code AND &0000FF00 (i.e. K+2) B3% = code AND &00FF0000 (i.e. K+1) B4% = code AND &FF000000 (i.e. K)
+  B1% = code AND &000000FF (i.e. K+3)
+  B2% = code AND &0000FF00 (i.e. K+2)
+  B3% = code AND &00FF0000 (i.e. K+1)
+  B4% = code AND &FF000000 (i.e. K)
 
 ```
   B% = B4% EOR B2%
@@ -119,9 +128,10 @@ B1% = code AND &000000FF (i.e. K+3) B2% = code AND &0000FF00 (i.e. K+2) B3% = co
      = TALLY+1
 ```
 						
-						So in this way we can extract the competition flags (COK), one byte of the cash amount (CASH+2) and the high byte of the combat rank (TALLY+1). We can check the extracted cash byte against the cash amount entered on the postcard, as follows:
+						
+So in this way we can extract the competition flags (COK), one byte of the cash amount (CASH+2) and the high byte of the combat rank (TALLY+1). We can check the extracted cash byte against the cash amount entered on the postcard, as follows:
 
-CASH+2 = (cash total from postcard * 10) AND &FF00
+  CASH+2 = (cash total from postcard * 10) AND &FF00
 
 and we can work out the combat rank from TALLY+1 using the same algorithm as the [STATUS](https://elite.bbcelite.com/cassette/main/subroutine/status.html) routine:
 

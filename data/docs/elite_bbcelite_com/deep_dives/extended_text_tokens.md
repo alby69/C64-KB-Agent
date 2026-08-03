@@ -3,26 +3,26 @@ title: Extended text tokens
 source_url: https://elite.bbcelite.com/deep_dives/extended_text_tokens.html
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
 - KERNAL
-- CIA
 - BASIC ROM
 - SID
+- CPU
+- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Extended text tokens
@@ -35,10 +35,10 @@ For example, here's the second briefing screen for [the Constrictor mission](htt
 
 ![The second briefing screen for the Constrictor mission in BBC Micro Elite](https://elite.bbcelite.com/images/missions/mission_1b.png) 
 
-						The two extended text token systems are as follows:
+The two extended text token systems are as follows:
 
-- There are 256 recursive tokens in the [TKN1](https://elite.bbcelite.com/6502sp/main/variable/tkn1.html)table that can be printed with the[DETOK](https://elite.bbcelite.com/6502sp/main/subroutine/detok.html)routine. This is the bulk of the extended token system, and contains any game text that isn't already covered by the standard text tokens or the special extended descriptions in RUTOK.
-- There are 27 special extended system descriptions in the [RUTOK](https://elite.bbcelite.com/6502sp/main/variable/rutok.html)table that can be printed with the[DETOK3](https://elite.bbcelite.com/6502sp/main/subroutine/detok3.html)routine. These override the procedurally generated descriptions for a small group of systems, typically during the two missions when they are used to guide the player towards their mission briefings and goals (though there are some non-mission descriptions in there that provide some interesting Easter eggs for the player to find).
+- There are 256 recursive tokens in the [TKN1](https://elite.bbcelite.com/6502sp/main/variable/tkn1.html) table that can be printed with the[DETOK](https://elite.bbcelite.com/6502sp/main/subroutine/detok.html) routine. This is the bulk of the extended token system, and contains any game text that isn't already covered by the standard text tokens or the special extended descriptions in RUTOK.
+- There are 27 special extended system descriptions in the [RUTOK](https://elite.bbcelite.com/6502sp/main/variable/rutok.html) table that can be printed with the[DETOK3](https://elite.bbcelite.com/6502sp/main/subroutine/detok3.html) routine. These override the procedurally generated descriptions for a small group of systems, typically during the two missions when they are used to guide the player towards their mission briefings and goals (though there are some non-mission descriptions in there that provide some interesting Easter eggs for the player to find).
 
 To print an extended token, we simply put the token number into the accumulator and call either DETOK or DETOK3. It's a lot simpler than the encoding system we have to use with TT27 for the standard tokens, though under the hood, the extended token system is just as complicated...
 
@@ -46,11 +46,12 @@ To print an extended token, we simply put the token number into the accumulator 
 
 													 -----------------------
 
-						Just like the standard text tokens, the tokens in the TKN1 and RUTOK tables are themselves composed of different types of token, though this complexity is hidden inside the routine that does the actual printing. This routine is known by two names, which are aliases of each other: [TT26](https://elite.bbcelite.com/6502sp/main/subroutine/tt26.html), which shares its name with the character printing routine in the BBC Micro cassette version, and DASC, which points to exactly the same routine. We'll talk about DASC here, as it's a slightly friendlier name.
+						
+Just like the standard text tokens, the tokens in the TKN1 and RUTOK tables are themselves composed of different types of token, though this complexity is hidden inside the routine that does the actual printing. This routine is known by two names, which are aliases of each other: [TT26](https://elite.bbcelite.com/6502sp/main/subroutine/tt26.html), which shares its name with the character printing routine in the BBC Micro cassette version, and DASC, which points to exactly the same routine. We'll talk about DASC here, as it's a slightly friendlier name.
 
 Like the standard token system, with its control codes, two-letter tokens and recursive tokens, there are quite a few different types of extended token that DASC prints. They are:
 
-- Jump tokens: Instead of printing, these tokens call the corresponding routine from the jump table at [JMTB](https://elite.bbcelite.com/6502sp/main/variable/jmtb.html). These can do anything from setting the letter case to rotating ships on screen while waiting for key presses.
+- Jump tokens: Instead of printing, these tokens call the corresponding routine from the jump table at [JMTB](https://elite.bbcelite.com/6502sp/main/variable/jmtb.html) . These can do anything from setting the letter case to rotating ships on screen while waiting for key presses.
 - Characters: These are standard ASCII characters, with the case determined by the extended token flags.
 - Random tokens: These are used to display the procedurally generated extended system descriptions, which use the random number generator to generate random sequences of tokens. This randomness can be controlled by seeding the random number generator before printing, which is how we ensure each system always has the same description.
 - Extended recursive tokens: These work in the same way as the recursive tokens from the standard text token system, allowing us to include tokens within tokens.
@@ -101,7 +102,8 @@ Let's now take a look at the various types of token that make up the extended te
 
 													 ------------------------------
 
-						Extended recursive tokens work in the same way as standard recursive tokens, in that tokens can contain other tokens. However, the range of extended tokens that can be included in other tokens is a bit smaller than in the standard system, where you can include all but three tokens recursively. There are 256 extended tokens in the TKN1 table that the DETOK routine can print, but only tokens in the range 129 to 215 can be included in other tokens.
+						
+Extended recursive tokens work in the same way as standard recursive tokens, in that tokens can contain other tokens. However, the range of extended tokens that can be included in other tokens is a bit smaller than in the standard system, where you can include all but three tokens recursively. There are 256 extended tokens in the TKN1 table that the DETOK routine can print, but only tokens in the range 129 to 215 can be included in other tokens.
 
 Apart from this, recursive tokens expand in the same way as in the standard system, and tokens can contain tokens that contain other tokens, recursing as deep as you like.
 
@@ -109,7 +111,8 @@ Apart from this, recursive tokens expand in the same way as in the standard syst
 
 													 -------------------------------
 
-						Also similar to the standard token system, the extended two-letter token system is based on the range of standard two-letter tokens from the table at [QQ16](https://elite.bbcelite.com/cassette/main/variable/qq16.html), but with an additional set of tokens, and four of the original tokens dropped. The full range of extended two-letter tokens is as follows:
+						
+Also similar to the standard token system, the extended two-letter token system is based on the range of standard two-letter tokens from the table at [QQ16](https://elite.bbcelite.com/cassette/main/variable/qq16.html), but with an additional set of tokens, and four of the original tokens dropped. The full range of extended two-letter tokens is as follows:
 
 | Token number | Two-letter token | 
 |---|---|
@@ -163,7 +166,8 @@ The new two-letter tokens can be found in the table at [TKN2](https://elite.bbce
 
 													 -------------------
 
-						Random tokens are encoded with values in the range 91-128. When DASC is asked to print a random token in this range, it subtracts 91 from the token number to get a number in the range 0 to 37, and then it fetches the corresponding entry from the table at [MTIN](https://elite.bbcelite.com/6502sp/main/variable/mtin.html), adds a random number in the range 0-4 to this number, and calls DETOK to print that token.
+						
+Random tokens are encoded with values in the range 91-128. When DASC is asked to print a random token in this range, it subtracts 91 from the token number to get a number in the range 0 to 37, and then it fetches the corresponding entry from the table at [MTIN](https://elite.bbcelite.com/6502sp/main/variable/mtin.html), adds a random number in the range 0-4 to this number, and calls DETOK to print that token.
 
 The ERND macro, which we use to encode random tokens in the TKN1 and RUTOK tables, takes an argument between 0 and 37, which corresponds to the lookup value in MTIN.
 
@@ -173,7 +177,8 @@ Random tokens are used to generate the extended descriptions for each system. Fo
 
 													 ----------------
 
-						Jump tokens do exactly that - they call subroutines instead of being printed. The jump token is a very powerful token type, and implements all sorts of functionality, from drawing boxes and setting letter case, to justifying text and fetching input from the keyboard.
+						
+Jump tokens do exactly that - they call subroutines instead of being printed. The jump token is a very powerful token type, and implements all sorts of functionality, from drawing boxes and setting letter case, to justifying text and fetching input from the keyboard.
 
 Jump tokens are in the range 1 to 31, though some tokens don't do anything. The best way to work out what each token does is to visit the relevant routine in the source. Here is a list of jump tokens in the original BBC Micro disc version of Elite, along with the subroutines that they call (the MT routines are listed in more detail below):
 

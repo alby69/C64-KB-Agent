@@ -3,14 +3,14 @@ title: SetBitmapMode
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_setbitmapmode
 category: reference
 topics:
-- basic
 - graphics
+- basic
 - assembly
 difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

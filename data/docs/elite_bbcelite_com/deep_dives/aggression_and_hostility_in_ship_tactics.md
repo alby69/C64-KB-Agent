@@ -3,8 +3,8 @@ title: Aggression and hostility in ship tactics
 source_url: https://elite.bbcelite.com/deep_dives/aggression_and_hostility_in_ship_tactics.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
@@ -13,10 +13,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Aggression and hostility in ship tactics
@@ -33,7 +33,8 @@ So some ships are peaceful, some are mildly aggressive and some are downright ho
 
 													 ------------------------------------------
 
-						Interestingly, in the BBC Micro cassette and Acorn Electron versions of Elite, you aren't being paranoid: pretty much everyone *is* out to get you, quite literally, it's just that some ships are not very aggressive, while others are itching for a fight. The tactics system is fairly simple in these standard versions of Elite; more subtle behaviour was introduced in the enhanced versions, which we'll look at in the next section, but let's start by looking at the simpler system.
+						
+Interestingly, in the BBC Micro cassette and Acorn Electron versions of Elite, you aren't being paranoid: pretty much everyone *is* out to get you, quite literally, it's just that some ships are not very aggressive, while others are itching for a fight. The tactics system is fairly simple in these standard versions of Elite; more subtle behaviour was introduced in the enhanced versions, which we'll look at in the next section, but let's start by looking at the simpler system.
 
 In the standard versions of Elite, there is no concept of ships being hostile or friendly (there is such a concept for space stations and missiles - see below - but not for ships). Instead, ship behaviour is determined purely by byte #32 of the ship data, which contains an "AI enabled" flag in bit 7, an "E.C.M. fitted" flag in bit 0, and an aggression level in bits 1 to 6. This gives the ship an aggression level in the range 0 to 63, with 0 representing a calm attitude and 63 representing high aggression.
 
@@ -49,7 +50,8 @@ The turning logic is interesting in that it uses the entire byte #32 to determin
   CMP INWK+32            \ If A >= byte #32 (the ship's AI flag) then
   BCS TA15               \ jump down to TA15 so it heads away from us
 ```
-						The ORA instruction ensures that bit 7 is ignored in the whole-byte comparison, but the CMP still includes bit 0, which determines whether the ship has E.C.M. fitted. Including bit 0 along with the aggression level in bits 1-6 only affects the aggression calculation very slightly, however. Specifically, ships with E.C.M. are 0.4% more likely to pick a fight than those without, as the E.C.M. flag in bit 0 adds a 1 in 256 chance to the chance of the ship turning towards us in an aggressive manner. This feels right somehow; ships who are more confident in their ship's defence are slightly more likely to turn and fight, which sounds correct.
+						
+The ORA instruction ensures that bit 7 is ignored in the whole-byte comparison, but the CMP still includes bit 0, which determines whether the ship has E.C.M. fitted. Including bit 0 along with the aggression level in bits 1-6 only affects the aggression calculation very slightly, however. Specifically, ships with E.C.M. are 0.4% more likely to pick a fight than those without, as the E.C.M. flag in bit 0 adds a 1 in 256 chance to the chance of the ship turning towards us in an aggressive manner. This feels right somehow; ships who are more confident in their ship's defence are slightly more likely to turn and fight, which sounds correct.
 
 In the standard versions of Elite, all ships with lasers will fire at us if we stray into their line of fire and aren't too far away, irrespective of whether we have attacked them, it's just that ships with low aggression will not bother to turn towards us, so the chances of them firing at us are slim. Aggressive ships, on the other hand, will keep trying to line up a shot, and missiles are just extremely aggressive ships that constantly try to fly towards their target, whether that target is us or another ship.
 
@@ -59,14 +61,14 @@ There is one more subtle aspect of aggression in Elite; if a ship is genuinely b
 
 In standard Elite, then, the spawning process creates ships with the following aggression levels:
 
-- Traders are always spawned using the Cobra Mk III (trader) blueprint. They are spawned in [part 1 of the main game loop](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_1_of_6.html), and are given a random aggression level in the range 0 to 63. So not all traders are peaceful, but the chances of getting a very aggressive trader are slim.
-- Pirates are always spawned using the Sidewinder or Mamba blueprints. They are spawned in [part 4 of the main game loop](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_4_of_6.html)using the[Ze](https://elite.bbcelite.com/cassette/main/subroutine/ze.html)routine, which spawns a fairly aggressive ship with a random aggression level in the range 32 to 63.
-- Bounty hunters are always spawned using the Mamba, Python or Cobra Mk III (bounty hunter) blueprints. They are also spawned in [part 4 of the main game loop](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_4_of_6.html)using the[Ze](https://elite.bbcelite.com/cassette/main/subroutine/ze.html)routine, so they also have random aggression levels in the range 32 to 63.
-- Thargoids and Thargons have their own dedicated ship blueprints. They are spawned by the [GTHG](https://elite.bbcelite.com/cassette/main/subroutine/gthg.html)routine, and they have the top aggression level possible, at 63 out of 63. When a Thargoid mothership is destroyed, the Thargon's AI flag is set to zero, giving it zero aggression and no AI.
-- Cops are always spawned using the Viper blueprint. There are two types of cop in terms of aggression level. If we attack a space station then cops with aggression levels of 56 out of 63 are spawned in [part 2 of the TACTICS routine](https://elite.bbcelite.com/disc/flight/subroutine/tactics_part_2_of_7.html). If we are in deep space and have a dodgy legal status, then the game may spawn cops using the[Ze](https://elite.bbcelite.com/cassette/main/subroutine/ze.html)routine in[part 3 of the main game loop](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_3_of_6.html), so they also have random aggression levels in the range 32 to 63. The worse our legal status, the higher the chances of the game spawning cops to take us down.
-- Escape pods are always spawned using the Escape Pod blueprint. They are spawned by the [SESCP](https://elite.bbcelite.com/cassette/main/subroutine/sescp.html)routine and have an aggression level of 63 out of 63, but they turn towards the planet rather than towards us, and they have no lasers, so instead their high aggression level actually means they are highly motivated to run away.
-- Missiles are always spawned using the Missile blueprint. Enemy missiles are spawned by the [SFRMIS](https://elite.bbcelite.com/cassette/main/subroutine/sfrmis.html)routine, while our own missiles are spawned by the[FRMIS](https://elite.bbcelite.com/cassette/main/subroutine/frmis.html)routine. They have an aggression level of 63 out of 63, and they always head towards their target. If it is an enemy missile then the target is us, while our own missiles head towards the target on which they are locked.
-- Cargo canisters and asteroids are spawned with zero aggression and no AI, so they just drift aimlessly through space. They are spawned in [part 11 of the main flight loop](https://elite.bbcelite.com/cassette/main/subroutine/main_flight_loop_part_11_of_16.html)when a ship is destroyed.
+- Traders are always spawned using the Cobra Mk III (trader) blueprint. They are spawned in [part 1 of the main game loop](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_1_of_6.html) , and are given a random aggression level in the range 0 to 63. So not all traders are peaceful, but the chances of getting a very aggressive trader are slim.
+- Pirates are always spawned using the Sidewinder or Mamba blueprints. They are spawned in [part 4 of the main game loop](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_4_of_6.html) using the[Ze](https://elite.bbcelite.com/cassette/main/subroutine/ze.html) routine, which spawns a fairly aggressive ship with a random aggression level in the range 32 to 63.
+- Bounty hunters are always spawned using the Mamba, Python or Cobra Mk III (bounty hunter) blueprints. They are also spawned in [part 4 of the main game loop](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_4_of_6.html) using the[Ze](https://elite.bbcelite.com/cassette/main/subroutine/ze.html) routine, so they also have random aggression levels in the range 32 to 63.
+- Thargoids and Thargons have their own dedicated ship blueprints. They are spawned by the [GTHG](https://elite.bbcelite.com/cassette/main/subroutine/gthg.html) routine, and they have the top aggression level possible, at 63 out of 63. When a Thargoid mothership is destroyed, the Thargon's AI flag is set to zero, giving it zero aggression and no AI.
+- Cops are always spawned using the Viper blueprint. There are two types of cop in terms of aggression level. If we attack a space station then cops with aggression levels of 56 out of 63 are spawned in [part 2 of the TACTICS routine](https://elite.bbcelite.com/disc/flight/subroutine/tactics_part_2_of_7.html) . If we are in deep space and have a dodgy legal status, then the game may spawn cops using the[Ze](https://elite.bbcelite.com/cassette/main/subroutine/ze.html) routine in[part 3 of the main game loop](https://elite.bbcelite.com/cassette/main/subroutine/main_game_loop_part_3_of_6.html) , so they also have random aggression levels in the range 32 to 63. The worse our legal status, the higher the chances of the game spawning cops to take us down.
+- Escape pods are always spawned using the Escape Pod blueprint. They are spawned by the [SESCP](https://elite.bbcelite.com/cassette/main/subroutine/sescp.html) routine and have an aggression level of 63 out of 63, but they turn towards the planet rather than towards us, and they have no lasers, so instead their high aggression level actually means they are highly motivated to run away.
+- Missiles are always spawned using the Missile blueprint. Enemy missiles are spawned by the [SFRMIS](https://elite.bbcelite.com/cassette/main/subroutine/sfrmis.html) routine, while our own missiles are spawned by the[FRMIS](https://elite.bbcelite.com/cassette/main/subroutine/frmis.html) routine. They have an aggression level of 63 out of 63, and they always head towards their target. If it is an enemy missile then the target is us, while our own missiles head towards the target on which they are locked.
+- Cargo canisters and asteroids are spawned with zero aggression and no AI, so they just drift aimlessly through space. They are spawned in [part 11 of the main flight loop](https://elite.bbcelite.com/cassette/main/subroutine/main_flight_loop_part_11_of_16.html) when a ship is destroyed.
 
 It's worth noting that there are two hostility flags that are present in all versions of Elite. The space station has its own hostility flag in bit 7 of byte #32, which is set if we attack the station (so it can send out Vipers to attack us and refuse docking permission). And missiles have a hostility flag in bit 6 of byte #32 that determines whether it is one of our missiles (when bit 6 is clear), or an enemy missile (when bit 6 is set). Enemy missiles are hostile and head towards us, while our own missiles head towards their intended targets.
 
@@ -74,7 +76,8 @@ It's worth noting that there are two hostility flags that are present in all ver
 
 													 ---------------------------------------------------
 
-						The enhanced versions of Elite have a rather more sophisticated system that determines ship behaviour using the NEWB flags - see the deep dive on [advanced tactics with the NEWB flags](https://elite.bbcelite.com/deep_dives/advanced_tactics_with_the_newb_flags.html) for details. This additional system works alongside the aggression level described above, and amongst other behavioural aspects, it adds the concept of hostile ships.
+						
+The enhanced versions of Elite have a rather more sophisticated system that determines ship behaviour using the NEWB flags - see the deep dive on [advanced tactics with the NEWB flags](https://elite.bbcelite.com/deep_dives/advanced_tactics_with_the_newb_flags.html) for details. This additional system works alongside the aggression level described above, and amongst other behavioural aspects, it adds the concept of hostile ships.
 
 In the enhanced versions, only ships that have the hostile flag set in the NEWB flags will turn towards us to attack us. Non-hostile ships will mind their own business, and they will only turn hostile if attacked. The [ANGRY](https://elite.bbcelite.com/disc/flight/subroutine/angry.html) routine, which gets called when we attack another ship, is more complicated in the enhanced versions, and it typically makes a ship hostile by setting bit 2 of the ship's NEWB flags in byte #36 of the ship data. This isn't always the case - for example, attacking innocent bystanders will actually make the station hostile rather than the attacked ship - but the point is that hostile ships have their own dedicated flag that is independent from their aggression level.
 

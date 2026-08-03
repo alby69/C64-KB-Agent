@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Fri, 02 Sep 2022 22:00:00 GMT
 ---
 
@@ -17,7 +17,7 @@ last_modified: Fri, 02 Sep 2022 22:00:00 GMT
 ## Commodore 64 machine instructions (sorted by instruction)
 
 | Instruction | - | # | ZP | ZP,X | ZP,Y | (ZP,X) | (ZP),Y | ABS | ABS,X | ABS,Y | (ABS) | REL | A | 
-|---|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | ADC |  | $69 | $65 | $75 |  | $61 | $71 | $6D | $7D | $79 |  |  |  | 
 | AND |  | $29 | $25 | $35 |  | $21 | $31 | $2D | $3D | $29 |  |  |  | 
 | ASL |  |  | $06 | $16 |  |  |  | $0E | $1E |  |  |  | $0A | 

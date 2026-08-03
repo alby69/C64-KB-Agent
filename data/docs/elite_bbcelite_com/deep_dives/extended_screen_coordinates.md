@@ -3,24 +3,24 @@ title: Extended screen coordinates
 source_url: https://elite.bbcelite.com/deep_dives/extended_screen_coordinates.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Extended screen coordinates
@@ -33,7 +33,7 @@ To maintain accuracy when projecting these shapes onto the screen, Elite uses 16
 
 ![A clipped planet BBC Micro Elite](https://elite.bbcelite.com/images/cassette/clipping.png) 
 
-						This is intentional, and happens all the time when you're speeding past enemy ships or slamming into the walls of a space station. Hammering the keyboard with a sudden pitch-and-roll manoeuvre brings ships into view that were otherwise minding their own business in the depths of space, but even though we couldn't see them, they were there all along.
+This is intentional, and happens all the time when you're speeding past enemy ships or slamming into the walls of a space station. Hammering the keyboard with a sudden pitch-and-roll manoeuvre brings ships into view that were otherwise minding their own business in the depths of space, but even though we couldn't see them, they were there all along.
 
 The extended screen coordinate system is a key part of the simulation. The [PROJ](https://elite.bbcelite.com/cassette/main/subroutine/proj.html) routine that projects space coordinates onto the screen produces 16-bit coordinates as a result of the projection, which then get clipped by the [LL145](https://elite.bbcelite.com/cassette/main/subroutine/ll145_part_1_of_4.html) routine, but the way these 16-bit coordinates relate to the screen is delightfully simple. Let's take a look.
 
@@ -41,7 +41,8 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
 
 													 -----------------
 
-						First, let's consider a 256x256 screen (the space view in Elite is actually 256 pixels wide and 192 pixels high, but we'll come to that in a moment). The screen (x, y) coordinates would look like this, when expressed in hexadecimal:
+						
+First, let's consider a 256x256 screen (the space view in Elite is actually 256 pixels wide and 192 pixels high, but we'll come to that in a moment). The screen (x, y) coordinates would look like this, when expressed in hexadecimal:
 
 ```
                         (&00, &00)      (&FF, &00)
@@ -52,7 +53,8 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
                                +----------+
                         (&00, &FF)      (&FF, &FF)
 ```
-						These coordinates are 8-bit values, as the screen is only 256 pixels wide. In the extended coordinate system, there's an additional high byte. Let's set that high byte for our screen to 0, so in terms of 16-bit coordinates, we have the following coordinates:
+						
+These coordinates are 8-bit values, as the screen is only 256 pixels wide. In the extended coordinate system, there's an additional high byte. Let's set that high byte for our screen to 0, so in terms of 16-bit coordinates, we have the following coordinates:
 
 ```
                      (&0000, &0000)    (&00FF, &0000)
@@ -63,7 +65,8 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
                                +----------+
                      (&0000, &00FF)    (&00FF, &00FF)
 ```
-						Let's describe this screen, where the high byte of the x- and y-coordinates is &00, like this:
+						
+Let's describe this screen, where the high byte of the x- and y-coordinates is &00, like this:
 
 ```
                                +----------+
@@ -72,7 +75,8 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
                                |          |
                                +----------+
 ```
-						Now let's tack another 256x256 screen onto the right of this one. The screen x-coordinates of this new screen would have a high byte of 1 instead of 0, like this:
+						
+Now let's tack another 256x256 screen onto the right of this one. The screen x-coordinates of this new screen would have a high byte of 1 instead of 0, like this:
 
 ```
                      (&0100, &0000)    (&01FF, &0000)
@@ -83,7 +87,8 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
                                +----------+
                      (&0100, &00FF)    (&01FF, &00FF)
 ```
-						which we can also write like this:
+						
+which we can also write like this:
 
 ```
                                +----------+
@@ -92,7 +97,8 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
                                |          |
                                +----------+
 ```
-						Putting the neighbours side by side, we get this:
+						
+Putting the neighbours side by side, we get this:
 
 ```
                          +----------+----------+
@@ -101,7 +107,8 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
                          |          |          |
                          +----------+----------+
 ```
-						We can also bolt another screen onto the bottom, like this:
+						
+We can also bolt another screen onto the bottom, like this:
 
 ```
                          +----------+----------+
@@ -114,7 +121,8 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
                          |          |
                          +----------+
 ```
-						and, if we consider the extended screen coordinates to be signed 16-bit values using two's complement, we can extend the screens in all directions, like this:
+						
+and, if we consider the extended screen coordinates to be signed 16-bit values using two's complement, we can extend the screens in all directions, like this:
 
 ```
   +----------+     +----------+----------+----------+     +----------+
@@ -147,13 +155,15 @@ The extended screen coordinate system is a key part of the simulation. The [PROJ
   |          |     |          |          |          |     |          |
   +----------+     +----------+----------+----------+     +----------+
 ```
-						This is the extended coordinate system used in Elite. You can think of it as a bank of individual screens, where the entire view is projected onto all the screens, but the game just shows the screen in the middle to the player. The extended coordinates cover a 256x256 mesh of individual 256x256 screens, which is easily enough space to project 3D space coordinates onto the screen in the middle.
+						
+This is the extended coordinate system used in Elite. You can think of it as a bank of individual screens, where the entire view is projected onto all the screens, but the game just shows the screen in the middle to the player. The extended coordinates cover a 256x256 mesh of individual 256x256 screens, which is easily enough space to project 3D space coordinates onto the screen in the middle.
 
 ## Checking whether a coordinate is on-screen
 
 													 ------------------------------------------
 
-						The clever part about all this is how quickly we can check whether a screen coordinate is visible in the space view, and how easy it is to get the actual screen coordinate we need for drawing. Given an extended screen coordinate, this is how we check whether it's on-screen:
+						
+The clever part about all this is how quickly we can check whether a screen coordinate is visible in the space view, and how easy it is to get the actual screen coordinate we need for drawing. Given an extended screen coordinate, this is how we check whether it's on-screen:
 
 - The first check is on the high byte. If either of the x- or y-coordinate's high bytes is non-zero, then the coordinate isn't in the &00, &00 screen in the above diagram, so it is definitely off-screen. If they are both zero, we move on to the next check.
 - If both high bytes are zero, then the second check is to make sure the coordinate is in the space view rather than the dashboard. This is a simple check whether the low byte of the y-coordinate is less than 192, as the space view is made up of the top 192 pixel rows. If it is less than 192, the coordinate is indeed in the space view, otherwise it's hidden by the dashboard.

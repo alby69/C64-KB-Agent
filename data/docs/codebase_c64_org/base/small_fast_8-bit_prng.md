@@ -12,12 +12,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- keyboard-handling
 - joystick-reading
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # An tiny, fast, 8-bit pseudo-random number generator in 6502 assembly
@@ -28,7 +28,7 @@ by White Flame
 
 (Thanks to bogax for pointing out the $80→$00 link)
 
-*This is my re-discovery of the well-known  Linear feedback shift register type of PRNG, having seen a bit of its implementation elsewhere.*
+*This is my re-discovery of the well-known [Linear feedback shift register](http://en.wikipedia.org/wiki/Linear_feedback_shift_register) type of PRNG, having seen a bit of its implementation elsewhere.*
 
 This simple routine is based on this mutation of a number:
 
@@ -68,13 +68,32 @@ noEor:  sta seed
 ```
 And that's it. In other words, these are our 4 cases:
 
-$00 : (shift and) perform EOR $80 : just shift %1xxxxxxx : shift and perform EOR %0xxxxxxx : just shift
+ $00 : (shift and) perform EOR
+ $80 : just shift
+ %1xxxxxxx : shift and perform EOR
+ %0xxxxxxx : just shift
 
 This yields a chain of all 256 8-bit values in pseudo-random, repeating order. The 256 different possible seeds you can give it will simply start the chain at a different point.
 
 To get a different chain (essentially a different PRNG altogether), the value of the EOR would have to be changed. I ran a loop to test what values would create a chain of all 256 numbers and found 16 of them:
 
-$1d (+29, %00011101) $2b (+43, %00101011) $2d (+45, %00101101) $4d (+77, %01001101) $5f (+95, %01011111) $63 (+99, %01100011) $65 (+101, %01100101) $69 (+105, %01101001) $71 (+113, %01110001) $87 (+135, %10000111) $8d (+141, %10001101) $a9 (+169, %10101001) $c3 (+195, %11000011) $cf (+207, %11001111) $e7 (+231, %11100111) $f5 (+245, %11110101)
+ 
+$1d (+29,  %00011101)
+$2b (+43,  %00101011)
+$2d (+45,  %00101101)
+$4d (+77,  %01001101)
+$5f (+95,  %01011111)
+$63 (+99,  %01100011)
+$65 (+101, %01100101)
+$69 (+105, %01101001)
+$71 (+113, %01110001)
+$87 (+135, %10000111)
+$8d (+141, %10001101)
+$a9 (+169, %10101001)
+$c3 (+195, %11000011)
+$cf (+207, %11001111)
+$e7 (+231, %11100111)
+$f5 (+245, %11110101)
 
 This gives 16 possible PRNGs, each with 256 possible starting seed points. Thus, by specifying 2 bytes as the seed (one for the value of 'seed' and one for the which PRNG's EOR value to use), you can have 4096 different chains of 256 numbers. To be a bit more clever, a 12-bit seed could include the 8-bit 'seed' value and a 4-bit index into the table of 16 possible EOR values. Of course, this is all optional and you could just as well hardcode the EOR instruction to one of the above values to get a consistent PRNG of period 256 that is seeded by a single 8-bit value, as in the above examples.
 

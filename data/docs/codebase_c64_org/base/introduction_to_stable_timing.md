@@ -11,10 +11,10 @@ hardware:
 - CPU
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 
@@ -32,7 +32,9 @@ Most commonly is to synchronize the CPU to the raster beam to achieve all those 
 
 To synchronize on the raster beam you could code something like:
 
-lda #$80 cmp $d012 bne *-3
+lda #$80
+cmp $d012
+bne *-3
 
 The problem with this approach is that the compare and the branch takes 7 cycles in total, so if $d012 wasn't at #$80 when the compare was executed the CPU won't recheck $d012 until 7 cycles later. Thus you'll have a 7 cycle jitter. I.e. you simply don't poll quickly enough. Quickly enough would have been polling $d012 every cycle, which is impossible.
 

@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Comparison of 6502 pseudo random generators
@@ -22,7 +22,7 @@ Each algorithm was implemented as stated in the linked articles. Code size, exec
 
 The quality was assessed by a test if the low byte hits all 256 numbers for 2000 random numbers and by a graphical check of the plot of 51200 random values. In every line n, the n&7-th bit of the result was plotted. For the results annotated with high quality, I could not identify any patterns in the plot. For good quality, some slight patterns or imbalances were visible. For low quality a direct repetition of values was visible.
 
-| result size | execution cycles | size (bytes) | seeding | quality | plot | |
+|  | result size | execution cycles | size (bytes) | seeding | quality | plot | 
 |---|---|---|---|---|---|---|
 | [798 Xorshift](https://codebase.c64.org/doku.php?id=base:16bit_xorshift_random_generator) | 16bit | 30 | 21 | all except 0 | high | ![](https://codebase.c64.org/lib/exe/fetch.php?w=200&tok=767528&media=base:rand_798xorshift.png)  | 
 | [X ABC](https://codebase.c64.org/doku.php?id=6502_6510_maths:x_abc_random_number_generator_8_16_bit) | 16bit | 38 | 28 | risk of short cycle | high | ![](https://codebase.c64.org/lib/exe/fetch.php?w=200&tok=8b1673&media=base:rand_x_abc.png)  | 

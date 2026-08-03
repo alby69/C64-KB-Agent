@@ -8,15 +8,15 @@ difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Acornsoft Elite... with music!
@@ -33,7 +33,8 @@ The docking music is integral to the experience of Elite on the Commodore 64, an
 
 													 -------------------------------------------
 
-						Happily, BBC Micro and Acorn Electron players can now enjoy the very same music as their Commodore friends, and all you need is 16K of sideways RAM (which is an optional extra on the BBC Micro and Acorn Electron, but comes as standard in the BBC Micro B+128 and BBC Master).
+						
+Happily, BBC Micro and Acorn Electron players can now enjoy the very same music as their Commodore friends, and all you need is 16K of sideways RAM (which is an optional extra on the BBC Micro and Acorn Electron, but comes as standard in the BBC Micro B+128 and BBC Master).
 
 As a bonus, I've extended the volume controls in BBC Master Elite so they change the volume of the music as well as the sound effects, and I've backported this feature to the BBC Micro and 6502 Second Processor versions, so everyone can now enjoy a quieter Elite experience.
 

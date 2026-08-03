@@ -3,27 +3,27 @@ title: base:code_frame_for_64_kb_crt-images_i.e._for_rgcd [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Acode_frame_for_64_kb_crt-images_i.e._for_rgcd
 category: reference
 topics:
-- raster interrupts
-- memory management
-- graphics
-- assembly
 - basic
+- graphics
+- memory management
+- raster interrupts
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -31,7 +31,24 @@ scraped_at: '2026-07-27'
 
 base:code_frame_for_64_kb_crt-images_i.e._for_rgcd
 
-                ; raw frame for generic 64KB cartridge images ; v 1.0 enthusi 06/2012 ; this 64 KB Cartridge framework was written for http://www.rgcd.co.uk ; feel free to use/change this code and give credits :) ; you will find this document also at http://codebase64.net ; this is a VERY simple but efficient approach, you can make more ; sophisticated usage of ROM using an own depacker routine etc.... ; sources are in XA format but no special features are used ; I strongly recommend the usage of cartconv which comes with vice ;---------------------------------------------------------- ; recent builds of VICE support the RGCD cartridge format, ; grab it at http://vice.pokefinder.org ;--------------------------------------------------------- ; example usage: ; xa -M frame64kb.asm -o game_raw.bin ; cartconv -t rgcd -i game_raw.bin -o game.crt ; x64sc -cartcrt frame.crt ;----------------------------------------------------------
+                ; raw frame for generic 64KB cartridge images
+; v 1.0 enthusi 06/2012
+; this 64 KB Cartridge framework was written for http://www.rgcd.co.uk
+; feel free to use/change this code and give credits :)
+; you will find this document also at http://codebase64.net
+; this is a VERY simple but efficient approach, you can make more 
+; sophisticated usage of ROM using an own depacker routine etc....
+; sources are in XA format but no special features are used
+; I strongly recommend the usage of cartconv which comes with vice
+;---------------------------------------------------------- 
+; recent builds of VICE support the RGCD cartridge format,
+; grab it at http://vice.pokefinder.org
+;---------------------------------------------------------
+; example usage:
+; xa -M frame64kb.asm -o game_raw.bin
+; cartconv -t rgcd -i game_raw.bin -o game.crt
+; x64sc -cartcrt frame.crt
+;----------------------------------------------------------
 
 ```
 ;no load-adress for bin-file, so no header here

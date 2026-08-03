@@ -12,10 +12,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # The dashboard indicators
@@ -26,7 +26,7 @@ The dashboard shows an awful lot of information, and the vast majority of the in
 
 ![The dashboard in the BBC Micro version of Elite](https://elite.bbcelite.com/images/cassette/dashboard.png) 
 
-						The game uses one routine to display all 11 of these indicators - routine [DILX](https://elite.bbcelite.com/cassette/main/subroutine/dilx.html), which is called repeatedly by the main dashboard routine at [DIALS](https://elite.bbcelite.com/cassette/main/subroutine/dials_part_1_of_4.html) - and that can lead to some interesting behaviour.
+The game uses one routine to display all 11 of these indicators - routine [DILX](https://elite.bbcelite.com/cassette/main/subroutine/dilx.html), which is called repeatedly by the main dashboard routine at [DIALS](https://elite.bbcelite.com/cassette/main/subroutine/dials_part_1_of_4.html) - and that can lead to some interesting behaviour.
 
 Each bar indicator is 16 pixels long, and the default entry point at DILX can show values from 0-255, with each pixel in the bar representing 16 units (so in the default mode, the last pixel, the 16th, is not used). For comparison, if the routine is called via the entry point at DIL, then the bar's range is 0-16, with each pixel representing 1 unit (and in this case, the 16th pixel can be used).
 
@@ -55,7 +55,7 @@ Note that the NES version doesn't have these issues, as it uses fixed patterns t
 
 ![The dashboard in the NES version of Elite](https://elite.bbcelite.com/images/nes/general/dashboard.png) 
 
-						The only other dashboard indicators are the missile indicators, the pitch and roll bars, the compass, the 3D scanner, and the space station and E.C.M. bulbs, all of which have their own individual routines.
+The only other dashboard indicators are the missile indicators, the pitch and roll bars, the compass, the 3D scanner, and the space station and E.C.M. bulbs, all of which have their own individual routines.
 
 ---
 *Fonte originale: [https://elite.bbcelite.com/deep_dives/the_dashboard_indicators.html](https://elite.bbcelite.com/deep_dives/the_dashboard_indicators.html)*

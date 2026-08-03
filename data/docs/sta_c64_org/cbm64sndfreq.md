@@ -9,18 +9,18 @@ language: none
 hardware:
 - SID
 related:
+- music-player
 - sid-registers
 - sound-programming
-- music-player
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 # Commodore 64 sound frequencies
 
-| Note | 440 Hz (Freq, SID value) | 435 Hz (Freq, SID value) | Note | 440 Hz (Freq, SID value) | 435 Hz (Freq, SID value) | ||||
+| **Note** | 440 Hz (Freq, SID value) |  | 435 Hz (Freq, SID value) |  | **Note** | 440 Hz (Freq, SID value) |  | 435 Hz (Freq, SID value) |  | 
 |---|---|---|---|---|---|---|---|---|---|
-| Octave 0 | Octave 4 | ||||||||
+| **Octave 0** |  |  |  |  | **Octave 4** |  |  |  |  | 
 | C-0 | 16.4 | $0115 | 16.2 | $0112 | C-4 | 261.6 | $1150 | 258.7 | $111E | 
 | C#0 | 17.3 | $0125 | 17.1 | $0122 | C#4 | 277.2 | $1258 | 274.0 | $1223 | 
 | D-0 | 18.4 | $0137 | 18.1 | $0133 | D-4 | 293.7 | $136F | 290.3 | $1337 | 
@@ -33,7 +33,7 @@ last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 | A-0 | 27.5 | $01D2 | 27.2 | $01CD | A-4 | 440.0 | $1D1E | 435.0 | $1CCA | 
 | A#0 | 29.1 | $01EE | 28.8 | $01E8 | A#4 | 466.2 | $1ED9 | 460.9 | $1E80 | 
 | H-0 | 30.9 | $020B | 30.5 | $0205 | H-4 | 493.9 | $20AE | 488.3 | $2050 | 
-| Octave 1 | Octave 5 | ||||||||
+| **Octave 1** |  |  |  |  | **Octave 5** |  |  |  |  | 
 | C-1 | 32.7 | $022A | 32.3 | $0224 | C-5 | 523.3 | $22A0 | 517.3 | $223C | 
 | C#1 | 34.6 | $024B | 34.3 | $0244 | C#5 | 554.4 | $24AF | 548.1 | $2446 | 
 | D-1 | 36.7 | $026E | 36.3 | $0267 | D-5 | 587.3 | $26DD | 580.7 | $266E | 
@@ -46,7 +46,7 @@ last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 | A-1 | 55.0 | $03A4 | 54.4 | $0399 | A-5 | 880.0 | $3A3B | 870.0 | $3994 | 
 | A#1 | 58.3 | $03DB | 57.6 | $03D0 | A#5 | 932.3 | $3DB2 | 921.7 | $3D00 | 
 | H-1 | 61.7 | $0416 | 61.0 | $040A | H-5 | 987.8 | $415C | 976.5 | $40A1 | 
-| Octave 2 | Octave 6 | ||||||||
+| **Octave 2** |  |  |  |  | **Octave 6** |  |  |  |  | 
 | C-2 | 65.4 | $0454 | 64.7 | $0448 | C-6 | 1046.5 | $4540 | 1034.6 | $4479 | 
 | C#2 | 69.3 | $0496 | 68.5 | $0489 | C#6 | 1108.8 | $495E | 1096.2 | $488C | 
 | D-2 | 73.4 | $04DC | 72.6 | $04CE | D-6 | 1174.7 | $4DBB | 1161.3 | $4CD3 | 
@@ -59,7 +59,7 @@ last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 | A-2 | 110.0 | $0747 | 108.8 | $0733 | A-6 | 1760.0 | $7476 | 1740.0 | $7328 | 
 | A#2 | 116.5 | $07B6 | 115.2 | $07A0 | A#6 | 1864.7 | $7B63 | 1843.5 | $7A01 | 
 | H-2 | 123.5 | $082C | 122.1 | $0814 | H-6 | 1975.5 | $82B9 | 1953.1 | $8142 | 
-| Octave 3 | Octave 7 | ||||||||
+| **Octave 3** |  |  |  |  | **Octave 7** |  |  |  |  | 
 | C-3 | 130.8 | $08A8 | 129.3 | $088F | C-7 | 2093.0 | $8A7F | 2069.2 | $88F2 | 
 | C#3 | 138.6 | $092C | 137.0 | $0911 | C#7 | 2217.5 | $92BC | 2192.3 | $9117 | 
 | D-3 | 146.8 | $09B7 | 145.2 | $099B | D-7 | 2349.3 | $9B75 | 2322.6 | $99B7 | 
@@ -71,12 +71,12 @@ last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 | G#3 | 207.7 | $0DBE | 205.3 | $0D96 | G#7 | 3322.4 | $DBD9 | 3284.6 | $D962 | 
 | A-3 | 220.0 | $0E8F | 217.5 | $0E65 | A-7 | 3520.0 | $E8ED | 3480.0 | $E650 | 
 | A#3 | 233.1 | $0F6C | 230.4 | $0F40 | A#7 | 3729.3 | $F6C6 | 3686.9 | $F402 | 
-| H-3 | 246.9 | $1057 | 244.1 | $1028 | H-7 | 3951.0 | 3906.1 | ||
+| H-3 | 246.9 | $1057 | 244.1 | $1028 | H-7 | 3951.0 |  | 3906.1 |  | 
 
 Notes:
 
-- This is a tempered scale: the factor between the frequency of two successive notes is the 12th root of 2. 
-- The SID value for the 435 Hz A-4 sound has been calibrated with a 435 Hz normal A tuning fork whose pitch has not changed audibly for a decade.
+1. This is a tempered scale: the factor between the frequency of two successive notes is the 12th root of 2.
+2. The SID value for the 435 Hz A-4 sound has been calibrated with a 435 Hz normal A tuning fork whose pitch has not changed audibly for a decade.
 
 ---
 *Fonte originale: [https://sta.c64.org/cbm64sndfreq.html](https://sta.c64.org/cbm64sndfreq.html)*

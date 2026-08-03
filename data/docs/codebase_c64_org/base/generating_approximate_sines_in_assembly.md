@@ -10,9 +10,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Generating Sine Tables from Parabolas
@@ -30,11 +30,56 @@ It's been a long-standing tradition in games & demos that sine waves can be appr
 
 Parabolas are easy to generate, as they can represent a value under constant acceleration, which is discretely defined as
 
-loop { x += dx dx += Constant }
+loop
+{
+  x += dx
+  dx += Constant
+}
 
 Here's a simple implementation ripped from from [Too(C)o(M)p(L)ex](http://noname.c64.org/csdb/release/?id=11730) by Cruzer/Camelot, and adjusted a bit for clarity.  The original source is in the download from the CSDb page, and uses self-modifying code to hold the value and delta.
 
-; ca65 syntax initSineTable: ldy #$3f ldx #$00 ; Accumulate the delta (normal 16-bit addition) : lda value clc adc delta sta value lda value+1 adc delta+1 sta value+1 ; Reflect the value around for a sine wave sta sine+$c0,x sta sine+$80,y eor #$ff sta sine+$40,x sta sine+$00,y ; Increase the delta, which creates the "acceleration" for a parabola lda delta adc #$10 ; this value adds up to the proper amplitude sta delta bcc :+ inc delta+1 : ; Loop inx dey bpl :-- rts value: .word 0 delta: .word 0 sine: .res 256
+; ca65 syntax
+ 
+initSineTable:
+ 
+ ldy #$3f
+ ldx #$00
+ 
+; Accumulate the delta (normal 16-bit addition)
+: lda value
+  clc
+  adc delta
+  sta value
+  lda value+1
+  adc delta+1
+  sta value+1
+ 
+; Reflect the value around for a sine wave
+  sta sine+$c0,x
+  sta sine+$80,y
+  eor #$ff
+  sta sine+$40,x
+  sta sine+$00,y
+ 
+; Increase the delta, which creates the "acceleration" for a parabola
+  lda delta
+  adc #$10   ; this value adds up to the proper amplitude
+  sta delta
+  bcc :+
+   inc delta+1
+:
+ 
+; Loop
+  inx
+  dey
+ bpl :--
+ 
+ rts
+ 
+value: .word 0
+delta: .word 0
+ 
+sine: .res 256
 
 ## Notes on the code
 
@@ -64,7 +109,12 @@ Thus, the sine values are unsigned with a DC offset of $80.
 
 Simply change how the output is written:
 
-; Reflect the value around for a cosine wave sta sine+$80,x sta sine+$40,y eor #$ff sta sine+$00,x sta sine+$c0,y
+; Reflect the value around for a cosine wave
+  sta sine+$80,x
+  sta sine+$40,y
+  eor #$ff
+  sta sine+$00,x
+  sta sine+$c0,y
 
 ### Amplitude
 

@@ -10,9 +10,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Fixed point arithmethic
@@ -43,7 +43,7 @@ fractional part:
 
 giving us:
 
-1*2^3+1*2^2+0*2^1+1*2^0 + 0*(2^-1)+1*(2^-2)+0*(2^-3)+1*(2^-4) = 13.3125
+1*2^3+1*2^2+0*2^1+1*2^0  +  0*(2^-1)+1*(2^-2)+0*(2^-3)+1*(2^-4) = 13.3125
 
 It's easyer to think of a 8.8 fixed number in a way that you have a 1 byte integer part, and a 1 byte fractional part where the fractional part represents a number which is: fractional part* 1/256.
 

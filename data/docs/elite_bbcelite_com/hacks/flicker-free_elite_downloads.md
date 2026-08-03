@@ -9,15 +9,15 @@ difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Playing flicker-free Elite
@@ -30,7 +30,8 @@ The [Elite Compendium](https://elite.bbcelite.com/elite_compendium.html) is a gr
 
 													 --------------
 
-						For the BBC Micro, BBC Master and Acorn Electron, you can play flicker-free Elite right here in your browser, or you can download disc or tape images for use in a real machine or an emulator. Most versions have both flicker-free ships and planets, though some only have flicker-free ships (as indicated). Here are the links:
+						
+For the BBC Micro, BBC Master and Acorn Electron, you can play flicker-free Elite right here in your browser, or you can download disc or tape images for use in a real machine or an emulator. Most versions have both flicker-free ships and planets, though some only have flicker-free ships (as indicated). Here are the links:
 
 - Flicker-free BBC Micro cassette Elite (ships only)
 - Flicker-free BBC Micro disc Elite
@@ -41,10 +42,10 @@ The [Elite Compendium](https://elite.bbcelite.com/elite_compendium.html) is a gr
 - Flicker-free 6502 Second Processor Elite
 - Flicker-free BBC Master 128 Elite
 - Flicker-free BBC Master Compact Elite
-								- [Play online](https://bbc.xania.org/?model=Master&autoboot&disc=https://elite.bbcelite.com/versions/flicker_free_elite/elite-master-flicker-free-compact.ssd)
-- [Download SSD](https://elite.bbcelite.com/versions/flicker_free_elite/elite-master-flicker-free-compact.ssd)(for DFS)
-- [Download ADL](https://elite.bbcelite.com/versions/flicker_free_elite/elite-master-flicker-free-compact.adl)(for ADFS)
- 
+								
+  - [Play online](https://bbc.xania.org/?model=Master&autoboot&disc=https://elite.bbcelite.com/versions/flicker_free_elite/elite-master-flicker-free-compact.ssd)
+  - [Download SSD](https://elite.bbcelite.com/versions/flicker_free_elite/elite-master-flicker-free-compact.ssd) (for DFS)
+  - [Download ADL](https://elite.bbcelite.com/versions/flicker_free_elite/elite-master-flicker-free-compact.adl) (for ADFS)
 - Flicker-free Elite-A (ships only)
 
 To load flicker-free Elite on a BBC, simply insert the disc image and press SHIFT-D-BREAK (for DFS), SHIFT-M-BREAK (for MMFS), SHIFT-S-BREAK (for Micro SPI) or use the *DBOOT command (for all SD card solutions); emulators tend to map BREAK to F12, so press SHIFT-D-F12. The disc will automatically load if you're playing it in a browser. To load the tape image on an Electron, refer to the instructions for your emulator or hardware tape simulator.
@@ -53,7 +54,8 @@ To load flicker-free Elite on a BBC, simply insert the disc image and press SHIF
 
 													 ------------------
 
-						For the Commodore 64 and Commodore Plus/4, both ships and planets are flicker-free. You can download disk images of flicker-free Elite from the following links:
+						
+For the Commodore 64 and Commodore Plus/4, both ships and planets are flicker-free. You can download disk images of flicker-free Elite from the following links:
 
 - Flicker-free Elite on the Commodore 64
 - Flicker-free Elite on the Commodore Plus/4
@@ -64,16 +66,19 @@ Head over to the [flicker-free Elite GitHub repository](https://github.com/markm
 
 													 ----------------
 
-						Ships in the original Apple II version of Elite are elready flicker-free, but the planets flicker a lot; this release fixes that. You can download disk images of flicker-free Elite from the following links:
+						
+Ships in the original Apple II version of Elite are elready flicker-free, but the planets flicker a lot; this release fixes that. You can download disk images of flicker-free Elite from the following links:
 
 - Flicker-free Apple II Elite
 
 To play flicker-free Elite with this DSK disk image, simply load the image into drive 1 and the game should run automatically.
 
+## 
 
 													 ---------------
 
-						Flicker-free Elite has had the following releases:
+						
+Flicker-free Elite has had the following releases:
 
 - 2021-03-29 - Initial release of the BBC Micro versions
 - 2021-04-27 - Initial release of the Acorn Electron version

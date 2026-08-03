@@ -9,7 +9,7 @@ difficulty: intermediate
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Detect Retro Replay hardware
@@ -24,7 +24,44 @@ This is a straight-forward detection routine to find out if a Retro Replay is ac
 
 Find the print routine [elsewhere](https://codebase.c64.org/doku.php?id=base:string_manipulation_routines). This routine is well tested and is believed to reliably identify either the presence or nonexistence of an RR.
 
-; Retro Replay detection using RR RAM writes by FMan/Tropyx !to "rrdetect.prg",cbm ; note that this code puts the computer in Ultimax mode ; a few times, so it must be located below $1000 in RAM *=$c00 RRDetect sei lda #66 sta $de01 ; configure the cart ldx #$a4 ldy #$6a lda #$2b ; select RAM bank 1 and sta $de00 ; invoke Ultimax mode to sty $8080 ; write into the RR RAM lda #$23 sta $de00 sta $8080 ; write to normal RAM now lda #$3b sta $de00 ; select RAM bank 3 and stx $8080 ; write another byte there lda #$28 sta $de00 cli cpy $8080 ; see if the original byte survived bne NoRR ; subsequent writes to same address lda #$38 sta $de00 ; do another check with the second cpx $8080 ; byte that was written to bank 3 beq RRFound NoRR lda #<NoRRstr sta dst lda #>NoRRstr sta dst+1 jsr print ; see note above rts RRFound nop ; continue your program using the Retro Replay rts NoRRstr !pet 13,"no retro replay was found.",13,0
+; Retro Replay detection using RR RAM writes by FMan/Tropyx
+	!to "rrdetect.prg",cbm
+; note that this code puts the computer in Ultimax mode
+; a few times, so it must be located below $1000 in RAM
+	*=$c00
+RRDetect
+	sei
+	lda #66
+	sta $de01	; configure the cart
+	ldx #$a4
+	ldy #$6a
+	lda #$2b	; select RAM bank 1 and
+	sta $de00	; invoke Ultimax mode to
+	sty $8080	; write into the RR RAM
+	lda #$23
+	sta $de00
+	sta $8080	; write to normal RAM now
+	lda #$3b
+	sta $de00	; select RAM bank 3 and
+	stx $8080	; write another byte there
+	lda #$28
+	sta $de00
+	cli
+	cpy $8080	; see if the original byte survived
+	bne NoRR	; subsequent writes to same address
+	lda #$38
+	sta $de00	; do another check with the second
+	cpx $8080	; byte that was written to bank 3
+	beq RRFound
+NoRR	lda #<NoRRstr
+	sta dst
+	lda #>NoRRstr
+	sta dst+1
+	jsr print	; see note above
+	rts
+RRFound	nop		; continue your program using the Retro Replay
+	rts
+NoRRstr	!pet 13,"no retro replay was found.",13,0
 
 base/rr_detect.txt · Last modified:  by 127.0.0.1
 

@@ -12,11 +12,11 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -28,8 +28,8 @@ by Achim
 
 If you use tile based maps for a game, you'll have to decode a whole screen first unless you want your scroll routine to scroll the background graphics onto the screen. Here's a piece of code that decodes 4×4 tiles to the screen. It colours the whole screen black (mc). Usually you've got two options:
 
-- Colour per tile
-- Colour per char
+1. Colour per tile
+2. Colour per char
 
 The first option is very useful when you want to save rastertime for the main program, but is obviously less colourful. The second option is more colourful, but needs more rastertime when it comes to colour RAM shifting.
 
@@ -56,7 +56,13 @@ loop:	ldy #$00
 ```
 Pseudo code for char colouring:
 
-ldx #$00 loop: ldy screenmem,x lda atttribtable,y sta colourmem,x inx bne loop ...
+	ldx #$00
+loop:	ldy screenmem,x
+	lda atttribtable,y
+	sta colourmem,x
+	inx
+	bne loop
+	...
 
 Change the example code the way you need it (65-72).
 

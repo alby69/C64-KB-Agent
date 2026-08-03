@@ -3,32 +3,32 @@ title: base:using_a_running_vice_session_for_development [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Ausing_a_running_vice_session_for_development
 category: manual
 topics:
+- raster interrupts
 - basic
 - sprite programming
-- raster interrupts
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
-- BASIC ROM
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
+- BASIC ROM
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -70,7 +70,15 @@ Getting VICE to act as a 'server' isn't hard:
 `x64 -remotemonitor`
 This will tell VICE to listen on port 6510 for connections. Now we can use netcat or telnet to send commands:
 
-compyx@aspire-7740 ~ $ telnet localhost 6510 Trying 127.0.0.1... Connected to localhost. Escape character is '^]'. reset 0 (C:$e5cf) ^]quit telnet> quit Connection closed.
+compyx@aspire-7740 ~ $ telnet localhost 6510
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+reset 0
+(C:$e5cf) ^]quit 
+ 
+telnet> quit
+Connection closed.
 
 We just told VICE to perform a soft reset. By using telnet we started an interactive session with the monitor, which halted the emulation, we can also send commands while the emulation keeps going, using netcat:
 
@@ -86,7 +94,8 @@ When using the stock KERNAL, we must wait for about 3 seconds before sending the
 
 We need to store $9f in $fd69 in the KERNAL to achieve this. This cannot be done using the monitor, we need to patch the actual KERNAL file of VICE and then tell VICE to use the patched KERNAL. Patching goes something like this:
 
-cp /usr/local/lib64/vice/C64/kernal kernal-quick-memtest echo "1d69: 9f" | xxd -r - kernal-quick-memtest
+cp /usr/local/lib64/vice/C64/kernal kernal-quick-memtest
+echo "1d69: 9f" | xxd -r - kernal-quick-memtest
 
 Any method of altering a binary can be used, I prefer to do it this way, so I can stick it in a Makefile and never have to worry about whether I patched the KERNAL or not.
 
@@ -106,7 +115,26 @@ But first, let's automate something.
 
 To automate the tedious process of patching the kernal and starting VICE with the proper arguments, I use a Makefile. For now it looks like this:
 
-# VICE's x64 binary X64=/usr/local/bin/x64 # Standard flags to pass to VICE during startup X64_FLAGS= # Original KERNAL KERNAL=/usr/local/lib64/vice/C64/kernal # Patched KERNAL KERNAL_PATCHED=kernal-quick-memtest # Generate patched KERNAL for faster reset (skip BASIC memtest) $(KERNAL_PATCHED): $(KERNAL) cp $(KERNAL) $(KERNAL_PATCHED) echo "1d69: 9f" | xxd -r - $(KERNAL_PATCHED) # Start VICE session with remote monitor and patched KERNAL session: $(KERNAL_PATCHED) $(X64) -remotemonitor -kernal $(KERNAL_PATCHED)
+# VICE's x64 binary
+X64=/usr/local/bin/x64
+# Standard flags to pass to VICE during startup
+X64_FLAGS=
+ 
+# Original KERNAL
+KERNAL=/usr/local/lib64/vice/C64/kernal
+# Patched KERNAL
+KERNAL_PATCHED=kernal-quick-memtest
+ 
+ 
+# Generate patched KERNAL for faster reset (skip BASIC memtest)
+$(KERNAL_PATCHED): $(KERNAL)
+	cp $(KERNAL) $(KERNAL_PATCHED)
+	echo "1d69: 9f" | xxd -r - $(KERNAL_PATCHED)
+ 
+ 
+# Start VICE session with remote monitor and patched KERNAL
+session: $(KERNAL_PATCHED)
+        $(X64) -remotemonitor -kernal $(KERNAL_PATCHED)
 
 This creates two rules: one to generate a patched KERNAL, and one to start the VICE remote monitor session. The session depends on the patched KERNAL, which is created if it doesn't exist.
 
@@ -119,13 +147,32 @@ make session > /dev/null 2>&1 &
 
 This will run the the session in the background while redirecting VICE's stdout and stderr to /dev/null, this avoids having to open another shell for running other commands, and keeping the shell clean. You can also adjust the Makefile to do this for you:
 
-# Start VICE session with remote monitor and patched KERNAL in the background session: $(KERNAL_PATCHED) $(X64) -remotemonitor -kernal $(KERNAL_PATCHED) \ > /dev/null 2>&1 &
+# Start VICE session with remote monitor and patched KERNAL in the background
+session: $(KERNAL_PATCHED)
+        $(X64) -remotemonitor -kernal $(KERNAL_PATCHED) \
+                > /dev/null 2>&1 &
 
 ##### Access VICE's output
 
 If you want to see VICE's messages, you redirect stdout and stderr to log files, which you inspect later, or just `tail -f` them.
 
-# VICE's x64 binary X64=/usr/local/bin/x64 # Standard flags to pass to VICE during startup X64_FLAGS= # Log file for x64's stdout (VICE's warning/error messages also go here) X64_STDOUT=vice.log # Log file for x64's stderr X64_STDERR=vice.err (useful when debug VICE itself) # Rule to start VICE with remote monitor, with patched KERNAl for quicker # reset and running it in the background with any output of VICE redirected to # log files session: $(KERNAL_PATCHED) $(X64) $(X64_FLAGS) -remotemonitor -kernal $(KERNAL_PATCHED) \ 1>$(X64_STDOUT) 2>$(X64_STDERR) &
+# VICE's x64 binary
+X64=/usr/local/bin/x64
+# Standard flags to pass to VICE during startup
+X64_FLAGS=
+ 
+# Log file for x64's stdout (VICE's warning/error messages also go here)
+X64_STDOUT=vice.log
+# Log file for x64's stderr
+X64_STDERR=vice.err (useful when debug VICE itself)
+ 
+ 
+# Rule to start VICE with remote monitor, with patched KERNAl for quicker
+# reset and running it in the background with any output of VICE redirected to
+# log files
+session: $(KERNAL_PATCHED)
+	$(X64) $(X64_FLAGS) -remotemonitor -kernal $(KERNAL_PATCHED) \
+		1>$(X64_STDOUT) 2>$(X64_STDERR) &
 
 ### Setting up the client side
 
@@ -137,11 +184,35 @@ This is where netcat comes in, we can send commands to VICE with netcat. Let's a
 
 We can now insert this into VICE and run it:
 
-# first reset VICE echo 'reset 0' | netcat localhost 6510 # insert binary into VICE echo 'l "demo.prg" 0' | netcat localhost 6510 # run demo.prg echo 'g 080d' | netcat localhost 6510
+# first reset VICE
+echo 'reset 0' | netcat localhost 6510
+# insert binary into VICE
+echo 'l "demo.prg" 0' | netcat localhost 6510
+# run demo.prg
+echo 'g 080d' | netcat localhost 6510
 
 Again, this becomes tedious, having to type this again and again, so we update our Makefile (just the new parts for now):
 
-ASM=64tass # Default make target: just assemble the program: all: demo.prg # Assemble program demo.prg: demo.s $(ASM) -a -C -o demo.prg demo.s # Inject program into VICE session and run it run: demo.prg # we need to wait one second for the reset to finish, so we use -q 1 echo 'reset 0' | netcat -q 1 localhost 6510 # load demo.prg from the virtual FS, our host OS echo 'l "demo.prg 0"' | netcat localhost 6510 # this assumes demo.prg starts at $080d echo 'g 080d' | netcat localhost 6510
+ASM=64tass
+ 
+ 
+# Default make target: just assemble the program:
+all: demo.prg
+ 
+ 
+# Assemble program
+demo.prg: demo.s
+        $(ASM) -a -C -o demo.prg demo.s
+ 
+ 
+# Inject program into VICE session and run it
+run: demo.prg
+        # we need to wait one second for the reset to finish, so we use -q 1
+        echo 'reset 0' | netcat -q 1 localhost 6510
+        # load demo.prg from the virtual FS, our host OS
+        echo 'l "demo.prg 0"' | netcat localhost 6510
+        # this assumes demo.prg starts at $080d
+        echo 'g 080d' | netcat localhost 6510
 
 The `-q 1` argument to netcat is required to allow the reset to properly finish. netcat does not wait for VICE to complete its task, it immediately exits on EOF, so we use `-q 1` to tell netcat to wait one second after EOF. You could also use `sleep 1` after issuing 'reset 0', it has the same effect (adjust to sleep 3 when using a non-patched KERNAL).
 
@@ -151,13 +222,95 @@ Since the 'run' target depends on 'demo.prg', that file automatically gets (re)b
 
 The same goes for loading labels into VICE: since we use a running instance, when we do 'load_labels', the old labels are still there, so when we've altered our binary, the labels might be different, but VICE keeps the old ones. So we do:
 
-echo 'clear_labels' | netcat -q 1 localhost 6510 echo 'load_labels "labels.txt"' | netcat localhost 6510
+echo 'clear_labels' | netcat -q 1 localhost 6510
+echo 'load_labels "labels.txt"' | netcat localhost 6510
 
 Again giving VICE time to process the 'clear_labels' command before sending the 'load_labels' command. Obviously not needed when issuing these commands from the shell, but using a Makefile, this is required.
 
 So, lets update our Makefile once again (nearly complete Makefile now):
 
-# vim: noet ts=8 sw=8 sts=8 # # Makefile for CB64 article 'Using a running VICE session for development' # This uses an SVN build of VICE, so adjust the paths to the x64 binary and # the KERNAL if using the 2.4 stable build (which is way too old) # Assembler (Soci's 64tass) ASM=64tass # Assembler flags (see the 64tass manual) ASM_FLAGS=--ascii --case-sensitive --shadow-check --m6502 # Flags needed to output VICE labels (see the 64tass manual) ASM_LABELS=--vice-labels -l $(LABEL_FILE) # file to output VICE labels to LABEL_FILE=labels.txt # VICE's x64 binary X64=/usr/local/bin/x64 # Standard flags to pass to VICE during startup X64_FLAGS= # Log file for x64's stdout output X64_STDOUT=vice.log # Log file for x64's stderr output X64_STDERR=vice.err # Our demo binary TARGET=demo.prg # Original KERNAL KERNAL=/usr/local/lib64/vice/C64/kernal # Patched KERNAL KERNAL_PATCHED=kernal-quick-memtest # Default make target, just our binary all: $(TARGET) # Rule to assemble our binary and output labels for VICE $(TARGET): demo.s $(ASM) $(ASM_FLAGS) $(ASM_LABELS) -o $@ $< # Rule to patch the KERNAL for quicker reset $(KERNAL_PATCHED): $(KERNAL) cp $(KERNAL) $(KERNAL_PATCHED) echo "1d69: 9f" | xxd -r - $(KERNAL_PATCHED) # Rule to start VICE with remote monitor, with patched KERNAl for quicker # reset and running it in the background with any output of VICE redirected to # log file files session: $(KERNAL_PATCHED) $(X64) $(X64_FLAGS) -remotemonitor -kernal $(KERNAL_PATCHED) \ 1>$(X64_STDOUT) 2>$(X64_STDERR) & # Rule to inject the program file and run it run: $(TARGET) # reset machine and wait for 1 second after EOF from machine echo 'reset 0' | netcat -q1 localhost 6510 # optional: load labels (we have to wait for one second to allow the # command to complete) echo 'clear_labels' | netcat -q1 localhost 6510 echo 'load_labels "$(LABEL_FILE)"' | netcat localhost 6510 # load binary echo 'l "$(TARGET)" 0' | netcat localhost 6510 # execute binary, ignoring BASIC interpreter echo 'g 080d' | netcat localhost 6510 # Clean up .PHONY: clean clean: rm -f demo.prg rm -f $(KERNAL_PATCHED)
+# vim: noet ts=8 sw=8 sts=8
+#
+# Makefile for CB64 article 'Using a running VICE session for development'
+ 
+# This uses an SVN build of VICE, so adjust the paths to the x64 binary and
+# the KERNAL if using the 2.4 stable build (which is way too old)
+ 
+ 
+# Assembler (Soci's 64tass)
+ASM=64tass
+# Assembler flags (see the 64tass manual)
+ASM_FLAGS=--ascii --case-sensitive --shadow-check --m6502
+# Flags needed to output VICE labels (see the 64tass manual)
+ASM_LABELS=--vice-labels -l $(LABEL_FILE)
+ 
+# file to output VICE labels to
+LABEL_FILE=labels.txt
+ 
+ 
+# VICE's x64 binary
+X64=/usr/local/bin/x64
+# Standard flags to pass to VICE during startup
+X64_FLAGS=
+# Log file for x64's stdout output
+X64_STDOUT=vice.log
+# Log file for x64's stderr output
+X64_STDERR=vice.err
+ 
+ 
+# Our demo binary
+TARGET=demo.prg
+ 
+# Original KERNAL
+KERNAL=/usr/local/lib64/vice/C64/kernal
+# Patched KERNAL
+KERNAL_PATCHED=kernal-quick-memtest
+ 
+ 
+# Default make target, just our binary
+all: $(TARGET)
+ 
+ 
+# Rule to assemble our binary and output labels for VICE
+$(TARGET): demo.s
+	$(ASM) $(ASM_FLAGS) $(ASM_LABELS) -o $@ $<
+ 
+ 
+# Rule to patch the KERNAL for quicker reset
+$(KERNAL_PATCHED): $(KERNAL)
+	cp $(KERNAL) $(KERNAL_PATCHED)
+	echo "1d69: 9f" | xxd -r - $(KERNAL_PATCHED)
+ 
+ 
+# Rule to start VICE with remote monitor, with patched KERNAl for quicker
+# reset and running it in the background with any output of VICE redirected to
+# log file files
+session: $(KERNAL_PATCHED)
+	$(X64) $(X64_FLAGS) -remotemonitor -kernal $(KERNAL_PATCHED) \
+		1>$(X64_STDOUT) 2>$(X64_STDERR) &
+ 
+ 
+# Rule to inject the program file and run it
+run: $(TARGET)
+	# reset machine and wait for 1 second after EOF from machine
+	echo 'reset 0' | netcat -q1 localhost 6510
+ 
+	# optional: load labels (we have to wait for one second to allow the
+	# command to complete)
+	echo 'clear_labels' | netcat -q1 localhost 6510
+	echo 'load_labels "$(LABEL_FILE)"' | netcat localhost 6510
+ 
+	# load binary
+	echo 'l "$(TARGET)" 0' | netcat localhost 6510
+        # execute binary, ignoring BASIC interpreter
+        echo 'g 080d' | netcat localhost 6510
+ 
+ 
+# Clean up
+.PHONY: clean
+clean:
+        rm -f demo.prg
+        rm -f $(KERNAL_PATCHED)
 
 There you have it, running and debugging code with a live VICE session, avoiding a lot of start up time. Unfortunately, when using this for code that **doesn't** set up IRQ's, we have a little problem.
 
@@ -169,17 +322,120 @@ So we need a way to do a proper 'RUN' after injecting our program. We can do thi
 
 Let's assume our demo.s looks like this:
 
-* = $0801 ; BASIC section: this becomes "2016 sys2061" .word (+), 2016 .null $9e, ^start + .word 0 start ; this is $080d lda #0 sta $d020 sta $d021 rts
+        * = $0801
+ 
+        ; BASIC section: this becomes "2016 sys2061"
+        .word (+), 2016
+        .null $9e, ^start
++       .word 0
+ 
+start   ; this is $080d
+        lda #0
+        sta $d020
+        sta $d021
+        rts
 
 When we run this using the Makefile shown, the border and background turn black, but we get a blinking cursor. So we need to somehow force BASIC to properly run this SYS line. This can be done with a little tweaking: (Thanks to Groepaz for coming up with the suggestion of simply putting 'RUN' into the keyboard buffer!)
 
 First we load the binary into VICE, then we set the end-of-basic pointer to $080d, fill the keyboard buffer with “RUN\r” and let the magic happen:
 
-# reset, and wait, otherwise the BASIC start-of-basic pointer gets overwritten to $0000 while loading echo 'reset 0' | netcat -q 1 localhost 6510 # load binary echo 'l "demo.prg" 0' localhost 6510 # put 'RUN\r' into the keyboard buffer echo 'f 0277 027a 52 55 4e 0d' | netcat localhost 6510 # set keyboard buffer size to $04 -> strlen("RUN\r") echo 'f 00c6 00c6 04' | netcat localhost 6510
+# reset, and wait, otherwise the BASIC start-of-basic pointer gets overwritten to $0000 while loading
+echo 'reset 0' | netcat -q 1 localhost 6510
+# load binary
+echo 'l "demo.prg" 0' localhost 6510
+# put 'RUN\r' into the keyboard buffer
+echo 'f 0277 027a 52 55 4e 0d' | netcat localhost 6510
+# set keyboard buffer size to $04 -> strlen("RUN\r")
+echo 'f 00c6 00c6 04' | netcat localhost 6510
 
 Putting this in our Makefile, we end up with this:
 
-# vim: noet ts=8 sw=8 sts=8 # # Makefile for CB64 article 'Using a running VICE session for development' # This uses an SVN build of VICE, so adjust the paths to the x64 binary and # the KERNAL if using the 2.4 stable build (which is way too old) # Assembler (Soci's 64tass) ASM=64tass # Assembler flags (see the 64tass manual) ASM_FLAGS=--ascii --case-sensitive --shadow-check --m6502 # Flags needed to output VICE labels (see the 64tass manual) ASM_LABELS=--vice-labels -l $(LABEL_FILE) # file to output VICE labels to LABEL_FILE=labels.txt # VICE's x64 binary X64=/usr/local/bin/x64 # Standard flags to pass to VICE during startup X64_FLAGS= # Log file for x64's stdout output X64_STDOUT=vice.log # Log file for x64's stderr output X64_STDERR=vice.err # Our demo binary TARGET=demo.prg # Original KERNAL KERNAL=/usr/local/lib64/vice/C64/kernal # Patched KERNAL KERNAL_PATCHED=kernal-quick-memtest # Default make target, just our binary all: $(TARGET) # Rule to assemble our binary and output labels for VICE $(TARGET): demo.s $(ASM) $(ASM_FLAGS) $(ASM_LABELS) -o $@ $< # Rule to patch the KERNAL for quicker reset $(KERNAL_PATCHED): $(KERNAL) cp $(KERNAL) $(KERNAL_PATCHED) echo "1d69: 9f" | xxd -r - $(KERNAL_PATCHED) # Rule to start VICE with remote monitor, with patched KERNAl for quicker # reset and running it in the background with any output of VICE redirected to # log file files session: $(KERNAL_PATCHED) $(X64) $(X64_FLAGS) -remotemonitor -kernal $(KERNAL_PATCHED) \ 1>$(X64_STDOUT) 2>$(X64_STDERR) & # Rule to inject the program file and run it run: $(TARGET) # reset machine and wait for 1 second after EOF from machine echo 'reset 0' | netcat -q1 localhost 6510 # optional: load labels (we have to wait for one second to allow the # command to complete) echo 'clear_labels' | netcat -q1 localhost 6510 echo 'load_labels "$(LABEL_FILE)"' | netcat localhost 6510 # load binary echo 'l "$(TARGET)" 0' | netcat localhost 6510 # run binary by putting 'RUN\r' into the keyboard buffer echo 'f 0277 027a 52 55 4e 0d' | netcat localhost 6510 echo 'f 00c6 00c6 04' | netcat localhost 6510 # now the BASIC interpreter notices it has data in its buffer and parses that, # resulting in a proper RUN being executed for our program. Even the KERNAL # itself does it, just look at $e5ee, the handler for Shift+Run/Stop .PHONY: clean clean: rm -f $(KERNAL_PATCHED) rm -f $(LABEL_FILE) $(X64_STDOUT) $(X64_STDERR) rm -f $(TARGET)
+# vim: noet ts=8 sw=8 sts=8
+#
+# Makefile for CB64 article 'Using a running VICE session for development'
+ 
+# This uses an SVN build of VICE, so adjust the paths to the x64 binary and
+# the KERNAL if using the 2.4 stable build (which is way too old)
+ 
+ 
+# Assembler (Soci's 64tass)
+ASM=64tass
+# Assembler flags (see the 64tass manual)
+ASM_FLAGS=--ascii --case-sensitive --shadow-check --m6502
+# Flags needed to output VICE labels (see the 64tass manual)
+ASM_LABELS=--vice-labels -l $(LABEL_FILE)
+ 
+# file to output VICE labels to
+LABEL_FILE=labels.txt
+ 
+ 
+# VICE's x64 binary
+X64=/usr/local/bin/x64
+# Standard flags to pass to VICE during startup
+X64_FLAGS=
+# Log file for x64's stdout output
+X64_STDOUT=vice.log
+# Log file for x64's stderr output
+X64_STDERR=vice.err
+ 
+ 
+# Our demo binary
+TARGET=demo.prg
+ 
+# Original KERNAL
+KERNAL=/usr/local/lib64/vice/C64/kernal
+# Patched KERNAL
+KERNAL_PATCHED=kernal-quick-memtest
+ 
+ 
+# Default make target, just our binary
+all: $(TARGET)
+ 
+ 
+# Rule to assemble our binary and output labels for VICE
+$(TARGET): demo.s
+	$(ASM) $(ASM_FLAGS) $(ASM_LABELS) -o $@ $<
+ 
+ 
+# Rule to patch the KERNAL for quicker reset
+$(KERNAL_PATCHED): $(KERNAL)
+	cp $(KERNAL) $(KERNAL_PATCHED)
+	echo "1d69: 9f" | xxd -r - $(KERNAL_PATCHED)
+ 
+ 
+# Rule to start VICE with remote monitor, with patched KERNAl for quicker
+# reset and running it in the background with any output of VICE redirected to
+# log file files
+session: $(KERNAL_PATCHED)
+	$(X64) $(X64_FLAGS) -remotemonitor -kernal $(KERNAL_PATCHED) \
+		1>$(X64_STDOUT) 2>$(X64_STDERR) &
+ 
+ 
+# Rule to inject the program file and run it
+run: $(TARGET)
+	# reset machine and wait for 1 second after EOF from machine
+	echo 'reset 0' | netcat -q1 localhost 6510
+ 
+	# optional: load labels (we have to wait for one second to allow the
+	# command to complete)
+	echo 'clear_labels' | netcat -q1 localhost 6510
+	echo 'load_labels "$(LABEL_FILE)"' | netcat localhost 6510
+ 
+	# load binary
+	echo 'l "$(TARGET)" 0' | netcat localhost 6510
+	# run binary by putting 'RUN\r' into the keyboard buffer
+	echo 'f 0277 027a 52 55 4e 0d' | netcat localhost 6510
+	echo 'f 00c6 00c6 04' | netcat localhost 6510
+        # now the BASIC interpreter notices it has data in its buffer and parses that,
+        # resulting in a proper RUN being executed for our program. Even the KERNAL
+        # itself does it, just look at $e5ee, the handler for Shift+Run/Stop
+ 
+ 
+.PHONY: clean
+clean:
+	rm -f $(KERNAL_PATCHED)
+	rm -f $(LABEL_FILE) $(X64_STDOUT) $(X64_STDERR)
+	rm -f $(TARGET)
 
 More later..
 

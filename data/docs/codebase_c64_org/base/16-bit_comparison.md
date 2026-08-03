@@ -12,12 +12,12 @@ hardware:
 - SID
 related:
 - music-player
-- keyboard-handling
 - joystick-reading
-- sid-registers
+- keyboard-handling
 - sound-programming
+- sid-registers
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # 16-Bit Comparison
@@ -85,7 +85,19 @@ Yes it takes a while…
 
 Different approach: instead of setting flags, goes to different destinations:
 
-; Val1 ≥ Val2 ? LDA Val1 +1 ; high bytes CMP Val2+1 BCC LsThan ; hiVal1 < hiVal2 --> Val1 < Val2 BNE GrtEqu ; hiVal1 ≠ hiVal2 --> Val1 > Val2 LDA Val1 ; low bytes CMP Val2 ;BEQ Equal ; Val1 = Val2 BCS GrtEqu ; loVal1 ≥ loVal2 --> Val1 ≥ Val2 LsThan ... GrtEqu ...
+; Val1 ≥ Val2 ?
+  LDA Val1 +1    ; high bytes
+  CMP Val2+1
+  BCC LsThan     ; hiVal1 < hiVal2 --> Val1 < Val2
+  BNE GrtEqu     ; hiVal1 ≠ hiVal2 --> Val1 > Val2
+  LDA Val1       ; low bytes
+  CMP Val2
+  ;BEQ Equal     ; Val1 = Val2
+  BCS GrtEqu     ; loVal1 ≥ loVal2 --> Val1 ≥ Val2
+LsThan
+...
+GrtEqu
+...
 
 Note! The above fails in handling the N flag. If for exampel A = #$0080 and M = #$0000, the BCS GrtEqu will branch since #$80 > #$00, but it will also set the N Flag which should not be set as #$0080 - #$0000 = #$0080 (Positive).
 

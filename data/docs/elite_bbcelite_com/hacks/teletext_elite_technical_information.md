@@ -3,21 +3,21 @@ title: Technical information for Teletext Elite
 source_url: https://elite.bbcelite.com/hacks/teletext_elite_technical_information.html
 category: source-code
 topics:
-- graphics
-- assembly
 - raster interrupts
+- graphics
 - basic
+- assembly
 difficulty: advanced
 language: mixed
 hardware:
 - KERNAL
 related:
-- raster-interrupts
-- sprite-programming
 - kernal-routines
+- sprite-programming
 - memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Technical information for Teletext Elite
@@ -26,11 +26,11 @@ scraped_at: '2026-07-27'
 
 ![Teletext Elite rear space view](https://elite.bbcelite.com/images/teletext_elite/station_view.png) 
 
-						Under the hood, Teletext Elite is identical to the disc version of BBC Micro Elite, but instead of setting up a mode 4/5 split-screen mode and poking pixels into screen memory, we stay in mode 7 and poke sixels and text characters into screen memory.
+Under the hood, Teletext Elite is identical to the disc version of BBC Micro Elite, but instead of setting up a mode 4/5 split-screen mode and poking pixels into screen memory, we stay in mode 7 and poke sixels and text characters into screen memory.
 
 To make this process easier, we can scale from the original mode 4/5 screen pixels to mode 7 sixels as follows:
 
-- The original Elite screen mode is 256x248 pixels, with 256x192 pixels for the space view and 256x56 pixels for the dashboard (see the deep dive on [the split-screen mode](https://elite.bbcelite.com/deep_dives/the_split-screen_mode.html)for details).
+- The original Elite screen mode is 256x248 pixels, with 256x192 pixels for the space view and 256x56 pixels for the dashboard (see the deep dive on [the split-screen mode](https://elite.bbcelite.com/deep_dives/the_split-screen_mode.html) for details).
 - Mode 7 is 40x25 characters, with columns 0 to 39 and rows 0 to 24. Each character is three sixels high by two sixels wide, so that gives us a resolution of 80x75 sixels.
 - A quick divide-by-4 converts the 256x192 pixels of the space view into 64x48 sixels (i.e. 16 mode 7 character rows of 32 characters each).
 - This leaves nine mode 7 character rows, which I split between the title, message bar and dashboard. This gives seven character rows for the dashboard, which works out at exactly one character row for each of the seven controls.
@@ -64,7 +64,7 @@ Next, here's a full list of routines that poke into screen memory; these are the
 | [PIXEL](https://elite.bbcelite.com/disc/flight/subroutine/pixel.html) | Draw a 1-pixel dot, 2-pixel dash or 4-pixel square | 
 | [CHPR](https://elite.bbcelite.com/disc/docked/subroutine/chpr.html) | Print a character at the text cursor (docked) | 
 | [TT26](https://elite.bbcelite.com/disc/flight/subroutine/tt26.html) | Print a character at the text cursor (flight) | 
-| [CLYNS](https://elite.bbcelite.com/disc/flight/subroutine/clyns.html)/[LYN](https://elite.bbcelite.com/disc/flight/subroutine/lyn.html) | Clear the bottom three text rows of the mode 4 screen | 
+| [CLYNS](https://elite.bbcelite.com/disc/flight/subroutine/clyns.html) /[LYN](https://elite.bbcelite.com/disc/flight/subroutine/lyn.html) | Clear the bottom three text rows of the mode 4 screen | 
 | [CPIX2](https://elite.bbcelite.com/disc/flight/subroutine/cpix2.html) | Draw a single-height dash on the dashboard | 
 | [DILX](https://elite.bbcelite.com/disc/flight/subroutine/dilx.html) | Update a bar-based indicator on the dashboard | 
 | [DIL2](https://elite.bbcelite.com/disc/flight/subroutine/dil2.html) | Update the roll or pitch indicator on the dashboard | 
@@ -85,10 +85,12 @@ Finally, in addition to the above, the loader has been updated in a few importan
 
 You can see every single modification made in Teletext Elite in the source code (see the next section).
 
+## 
 
 													 ----------------------------------------
 
-						The source code for Teletext Elite is available for you to explore. It is fully documented and fully buildable on modern computers, and includes labelled modifications in the main game's source code so you can see exactly how I modified the original disc version of Elite to bring it into the world of sixels.
+						
+The source code for Teletext Elite is available for you to explore. It is fully documented and fully buildable on modern computers, and includes labelled modifications in the main game's source code so you can see exactly how I modified the original disc version of Elite to bring it into the world of sixels.
 
 To see the source and learn how to build Teletext Elite on your own machine, visit the project's [GitHub repository](https://github.com/markmoxon/teletext-elite).
 

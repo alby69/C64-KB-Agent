@@ -7,13 +7,13 @@ difficulty: intermediate
 language: none
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 # Commodore 64 PETSCII code to color code conversion
 
-| PETSCII code (dec, hex) | Color code (dec, hex) | Color | ||
+| PETSCII code (dec, hex) |  | Color code (dec, hex) |  | Color | 
 |---|---|---|---|---|
 | 5 | $05 | 1 | $01 | white | 
 | 28 | $1C | 2 | $02 | red | 

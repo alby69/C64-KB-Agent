@@ -6,12 +6,12 @@ topics: []
 difficulty: intermediate
 language: basic
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # The elusive Cougar
@@ -24,11 +24,11 @@ But just how rare is she? Let's see if we can work it out mathematically...
 
 ![The Cougar in the BBC Master version of Elite](https://elite.bbcelite.com/images/master/cougar.png) 
 
-						During the main game loop's spawning routine (which happens in [1 out of 256 main loop iterations](https://elite.bbcelite.com/6502sp/main/subroutine/main_game_loop_part_2_of_6.html)), all the following have to happen in sequence:
+During the main game loop's spawning routine (which happens in [1 out of 256 main loop iterations](https://elite.bbcelite.com/6502sp/main/subroutine/main_game_loop_part_2_of_6.html)), all the following have to happen in sequence:
 
-- [Skip asteroid spawning](https://elite.bbcelite.com/6502sp/main/subroutine/main_game_loop_part_2_of_6.html)(87% chance)
-- [Skip cop spawning](https://elite.bbcelite.com/6502sp/main/subroutine/main_game_loop_part_3_of_6.html)(0.4% chance)
-- [Skip Thargoid spawning](https://elite.bbcelite.com/6502sp/main/subroutine/main_game_loop_part_4_of_6.html)(3.2% chance)
+- [Skip asteroid spawning](https://elite.bbcelite.com/6502sp/main/subroutine/main_game_loop_part_2_of_6.html) (87% chance)
+- [Skip cop spawning](https://elite.bbcelite.com/6502sp/main/subroutine/main_game_loop_part_3_of_6.html) (0.4% chance)
+- [Skip Thargoid spawning](https://elite.bbcelite.com/6502sp/main/subroutine/main_game_loop_part_4_of_6.html) (3.2% chance)
 
 This means that there is a 0.011% chance of spawning a Cougar during each ship spawning routine, which is around 1 in 9000 ship spawnings.
 
@@ -38,7 +38,8 @@ To put this in context, it takes 6400 kills to become Elite, so it is quite poss
 
 													 ---------------
 
-						The Cougar is not only vanishingly rare, it's also vanishing... literally. There is some debate about whether the Cougar appears on the scanner, as there are rumours that it has a cloaking device that hides it from prying eyes. In the 6502 Second Processor version, the Cougar does appear on the scanner, in very obvious cyan, but in the later Commodore 64 and BBC Master versions, it does indeed have a cloaking device that hides it from the 3D ellipse.
+						
+The Cougar is not only vanishingly rare, it's also vanishing... literally. There is some debate about whether the Cougar appears on the scanner, as there are rumours that it has a cloaking device that hides it from prying eyes. In the 6502 Second Processor version, the Cougar does appear on the scanner, in very obvious cyan, but in the later Commodore 64 and BBC Master versions, it does indeed have a cloaking device that hides it from the 3D ellipse.
 
 Whether or not this is intentional is an interesting question, as the cloaking-device effect is caused by a change in ship type between the two versions. In the 6502 Second Processor version, the Elite logo is ship type 32 and the Cougar is ship type 33, and the entries in the [scacol](https://elite.bbcelite.com/6502sp/main/variable/scacol.html) table ensure that the logo is hidden from the scanner, while the Cougar is visible. In the Commodore 64 and BBC Master versions, there is no Elite logo as it's only used in the [demo mode](https://elite.bbcelite.com/6502sp_demo_mode.html) that is unique to the Second Processor version, so the gap closes up, with the Cougar inheriting the logo's old type of 32. The [scacol](https://elite.bbcelite.com/master/main/variable/scacol.html) table, however, remains unchanged, so the Cougar inherits the logo's scanner colour, and gets hidden from the scanner. Was this intentional, or just a happy accident of removing the Elite logo? Presumably only the scientists of Her Majesty's Space Navy know the answer...
 

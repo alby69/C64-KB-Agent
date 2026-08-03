@@ -3,21 +3,21 @@ title: Packing bitfields evenly into bytes
 source_url: https://codebase.c64.org/doku.php?id=base%3Astreaming_1_2_4_8-bit_numbers_without_spanning_bytes
 category: reference
 topics:
-- basic
 - memory management
+- basic
 difficulty: beginner
 language: basic
 hardware:
-- BASIC ROM
-- SID
 - KERNAL
+- SID
+- BASIC ROM
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Packing bitfields evenly into bytes
@@ -34,55 +34,55 @@ The writer packs only tokens of the same bit length into each byte, creating a n
 
 Example of writing this arbitrary token stream:
 
-0 1 0 0011 10 1100 10101010 0 11 11 11 0101
+ 0 1 0 0011 10 1100 10101010 0 11 11 11 0101
 
 0: Allocate a new 1-bit buffer byte in the stream:
 
-.......0
+ .......0
 
 1: Add to the 1-bit buffer byte:
 
-......10
+ ......10
 
 0: And another 0:
 
-.....010
+ .....010
 
 0011: Now we need to output a 4-bit token. Allocate a new buffer byte in the stream for it:
 
-.....010 ....0011
+ .....010 ....0011
 
 10: Now for a 2-bit token. Alocate a new buffer byte for it:
 
-.....010 ....0011 ......10
+ .....010 ....0011 ......10
 
 1100: Another 4-bit token, goes into its buffer byte:
 
-.....010 11000011 ......10
+ .....010 11000011 ......10
 
 10101010: Full bytes always go at the end of the stream:
 
-.....010 11000011 ......10 10101010
+ .....010 11000011 ......10 10101010
 
 0: Write into the 1-bit buffer byte:
 
-....0010 11000011 ......10 10101010
+ ....0010 11000011 ......10 10101010
 
 11: Write into the 2-bit buffer byte:
 
-....0010 11000011 ....1110 10101010
+ ....0010 11000011 ....1110 10101010
 
 11: Write into the 2-bit buffer byte:
 
-....0010 11000011 ..111110 10101010
+ ....0010 11000011 ..111110 10101010
 
 11: Write into the 2-bit buffer byte:
 
-....0010 11000011 11111110 10101010
+ ....0010 11000011 11111110 10101010
 
 0101: Since the 4-bit buffer byte is full, create a new byte at the end of the stream for it:
 
-....0010 11000011 11111110 10101010 ....0101
+ ....0010 11000011 11111110 10101010 ....0101
 
 When the specifically 1/2/4/8-bit reads are done in the same order as the writes were, all ordering is preserved.
 

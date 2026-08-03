@@ -11,11 +11,11 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Extract row from tile based map
@@ -28,7 +28,10 @@ by Achim
 
 Example 4×4 tile:
 
-aabb ccdd eeff gghh
+aabb
+ccdd
+eeff
+gghh
 
 Tile data stored in memory:
 
@@ -48,11 +51,68 @@ mapX = number of tiles left to right. In case of 4×4 tiles: mapX=#$0a, in case 
 
 Pseudo code for scrolling down (player moving up):
 
-lda tileY bne samemaprow //top tile row done? lda map //map - mapX sec sbc mapX sta map lda map+1 sbc #$00 sta map+1 lda #$10 //tileY=0c samemaprow: sec sbc #$04 sta tileY lda map //don't mess up map pointer... sta maptmp lda map+1 sta maptmp+1 lda lo-bytescreentop ldx hi-bytescreentop jsr extractrow ...
+		
+		lda tileY
+		bne samemaprow		//top tile row done?
+			
+		lda map			//map - mapX
+		sec
+		sbc mapX
+		sta map
+		lda map+1
+		sbc #$00
+		sta map+1			
+		lda #$10		//tileY=0c
+samemaprow:	sec
+		sbc #$04
+		sta tileY		
+		lda map			//don't mess up map pointer...
+		sta maptmp
+		lda map+1
+		sta maptmp+1
+			
+		lda lo-bytescreentop
+		ldx hi-bytescreentop
+		jsr extractrow
+		...
 
 Pseudo code for scrolling up (player moving down):
 
-lda map //using tmp again sta maptmp lda map+1 sta maptmp+1 ldx numbertiles //number of tiles top-bottom !: lda maptmp //calculate map row bottom clc adc mapX sta maptmp lda maptmp+1 adc #$00 sta maptmp+1 dex bpl !- lda lo-bytescreenbottom ldx hi-bytescreenbottom jsr extractrow lda tileY cmp #$0c //lowest tile row done? bne !+ lda map //map + mapX clc adc mapX sta map lda map+1 adc #$00 sta map+1 lda #$fc //tileY=00 !: clc adc #$04 sta tileY ...
+			
+		lda map			//using tmp again
+		sta maptmp
+		lda map+1
+		sta maptmp+1	
+		ldx numbertiles		//number of tiles top-bottom
+!:		lda maptmp		//calculate map row bottom
+		clc
+		adc mapX
+		sta maptmp			
+		lda maptmp+1
+		adc #$00
+		sta maptmp+1
+		dex
+		bpl !-
+						
+		lda lo-bytescreenbottom
+		ldx hi-bytescreenbottom
+		jsr extractrow
+			
+		lda tileY
+		cmp #$0c		//lowest tile row done?
+		bne !+
+		lda map			//map + mapX
+		clc
+		adc mapX
+		sta map
+		lda map+1
+		adc #$00
+		sta map+1
+		lda #$fc		//tileY=00
+!:		clc
+		adc #$04
+		sta tileY
+		...
 
 Extracting a row is pretty simple…
 

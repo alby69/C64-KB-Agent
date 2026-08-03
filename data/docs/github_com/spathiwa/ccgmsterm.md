@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: '2016-10-06T06:36:44Z'
 ---
 
@@ -19,7 +19,7 @@ last_modified: '2016-10-06T06:36:44Z'
 **Description:** CCGMS Term, Commodore Color Graphics Terminal program for C=64.
 
 **GitHub URL:** https://github.com/spathiwa/ccgmsterm
-**Stars:** 24
+**Stars:** 25
 **Last Updated:** 2016-10-06T06:36:44Z
 
 

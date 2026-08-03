@@ -3,22 +3,22 @@ title: Combat rank
 source_url: https://elite.bbcelite.com/deep_dives/combat_rank.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Combat rank
@@ -31,7 +31,7 @@ There is, however, an overarching "point" to the game, and that's to increase yo
 
 ![The Status Mode screen in the BBC Micro disc version of Elite](https://elite.bbcelite.com/images/disc/status_mode.png) 
 
-						These are the ranks that are burned into the memories of anyone who's played this game seriously:
+These are the ranks that are burned into the memories of anyone who's played this game seriously:
 
 - Harmless
 - Mostly Harmless
@@ -49,7 +49,8 @@ Let's take a deeper look at what's involved in progressing from Harmless to the 
 
 													 --------------------------------
 
-						The current combat rank is stored as the number of kills, in a 16-bit variable at [TALLY(1 0)](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#tally) in the [T% workspace](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html) - so the high byte is in TALLY+1 and the low byte in TALLY.
+						
+The current combat rank is stored as the number of kills, in a 16-bit variable at [TALLY(1 0)](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#tally) in the [T% workspace](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html) - so the high byte is in TALLY+1 and the low byte in TALLY.
 
 If the high byte in TALLY+1 is 0 then we have between 0 and 255 kills, so our rank is Harmless, Mostly Harmless, Poor, Average, Above Average or Competent, according to the value of the low byte in TALLY. This is how the lower ranks pan out:
 
@@ -81,7 +82,8 @@ These ranges don't have shift-friendly binary values, so the [STATUS](https://el
 
 													 -------------------
 
-						The lower ranks come and go fairly quickly, once you've got the hang of combat, but although reaching Competent with 128 kills feels like an achievement - and it is! - it's still only 2% of the way to Elite, despite being the sixth rank of ten. To encourage players to keep on grinding through the ranks, the game flashes up the encouraging message "Right On Commander!" on-screen every 256 kills - in other words, every time the high byte of TALLY gets incremented. The checks for this are done in the [EXNO2](https://elite.bbcelite.com/cassette/main/subroutine/exno2.html) routine, which is called after every kill to increment the tally.
+						
+The lower ranks come and go fairly quickly, once you've got the hang of combat, but although reaching Competent with 128 kills feels like an achievement - and it is! - it's still only 2% of the way to Elite, despite being the sixth rank of ten. To encourage players to keep on grinding through the ranks, the game flashes up the encouraging message "Right On Commander!" on-screen every 256 kills - in other words, every time the high byte of TALLY gets incremented. The checks for this are done in the [EXNO2](https://elite.bbcelite.com/cassette/main/subroutine/exno2.html) routine, which is called after every kill to increment the tally.
 
 The first "Right On Commander!" shows when you have achieved Competent rank and then earned a further 128 kill points, at which point the high byte in TALLY+1 gets updated to 1 to indicate a grand total of 256 kills. It then happens every 256 kills until you reach Elite, and it keeps on going beyond that. When you become Elite in Elite Dangerous, the message from the Pilots Federation starts off with "Right on Commander!", and although the phrase isn't quite so important in the later games, it's still a popular sign-off amongst Elite veterans, along with "See you in the black" and "o7" (the latter representing a commander saluting).
 
@@ -89,7 +91,8 @@ The first "Right On Commander!" shows when you have achieved Competent rank and 
 
 													 -------------------------------------
 
-						In the BBC Micro, 6502 Second Processor and Electron versions of Elite, you get one kill for each ship you destroy. It doesn't actually matter what you kill, you still get one point towards your combat rank. Asteroids: one kill point. Harmless traders: one kill point. Cargo canisters: one kill point. This led to people sitting outside space stations, armed to the teeth with military lasers, where they would simply point their sights at the docking slot and wipe out the police as they launched; after all, even for mass murderers, your legal status eventually cools down, and you're still left with one kill point per Viper. It's easy pickings.
+						
+In the BBC Micro, 6502 Second Processor and Electron versions of Elite, you get one kill for each ship you destroy. It doesn't actually matter what you kill, you still get one point towards your combat rank. Asteroids: one kill point. Harmless traders: one kill point. Cargo canisters: one kill point. This led to people sitting outside space stations, armed to the teeth with military lasers, where they would simply point their sights at the docking slot and wipe out the police as they launched; after all, even for mass murderers, your legal status eventually cools down, and you're still left with one kill point per Viper. It's easy pickings.
 
 This all changed with the Commodore 64 version, which the authors started work on once the BBC versions had proven such a success. Instead of one point per kill, the authors implemented different kill points for each ship type, along with support for fractional kills. This same approach was carried over into the BBC Master, Apple II and NES versions of Elite, where the kill points are as follows (with the most lucrative shown first):
 

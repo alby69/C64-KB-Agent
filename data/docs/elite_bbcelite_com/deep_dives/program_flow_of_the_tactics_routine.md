@@ -7,19 +7,19 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Program flow of the tactics routine
@@ -34,7 +34,8 @@ The heart of Elite's convincing AI is the [TACTICS](https://elite.bbcelite.com/c
 
 													 ------------
 
-						Let's see how ships in Elite are brought to life by stepping through the TACTICS routine. You might want to start with part 2, as that's where the main entry point is (the following is in the order in which it appears in the source code).
+						
+Let's see how ships in Elite are brought to life by stepping through the TACTICS routine. You might want to start with part 2, as that's where the main entry point is (the following is in the order in which it appears in the source code).
 
 - Entry point for missile tactics at TA34, called from part 1 for missiles only
 - If E.C.M. is active, destroy the missile
@@ -67,11 +68,11 @@ The heart of Elite's convincing AI is the [TACTICS](https://elite.bbcelite.com/c
 - If we are in the ship's crosshairs, register some damage to our ship, slow down the attacking ship, make the noise of us being hit by laser fire (which could end in DEATH), and we're done
 
 - Work out which direction the ship should be moving, depending on whether it's an escape pod, where it is, which direction it is pointing, and how aggressive it is. At this point XX15 contains the normalised vector from our ship to the ship we are applying AI tactics to (or the normalised vector from the target to the missile - in both cases it's the vector from the potential victim to the attacker). We now check these conditions:
-								- This is a trader (in enhanced versions) or escape pod (in standard versions) and XX15 is pointing towards the planet
-- The ship is pretty close to us, or it's just not very aggressive (though there is a random factor at play here too), and XX15 is still pointing from our ship towards the enemy ship
-- The ship is aggressive (though again, there's an element of randomness here), and XX15 is pointing from the enemy ship towards our ship
-- This is a missile heading for a target, and XX15 is pointing from the missile towards the target
- 
+								
+  - This is a trader (in enhanced versions) or escape pod (in standard versions) and XX15 is pointing towards the planet
+  - The ship is pretty close to us, or it's just not very aggressive (though there is a random factor at play here too), and XX15 is still pointing from our ship towards the enemy ship
+  - The ship is aggressive (though again, there's an element of randomness here), and XX15 is pointing from the enemy ship towards our ship
+  - This is a missile heading for a target, and XX15 is pointing from the missile towards the target
 - Set the pitch and roll counters to head in that direction
 - Speed up or slow down, depending on where the ship is in relation to us
 

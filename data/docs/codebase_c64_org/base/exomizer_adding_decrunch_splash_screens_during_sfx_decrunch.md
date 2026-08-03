@@ -3,18 +3,18 @@ title: Exomizer - Adding PETSCII decrunch screens
 source_url: https://codebase.c64.org/doku.php?id=base%3Aexomizer_adding_decrunch_splash_screens_during_sfx_decrunch
 category: tutorial
 topics:
-- sprite programming
 - graphics
+- sprite programming
 - assembly
 difficulty: beginner
 language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 
@@ -32,7 +32,8 @@ For this example/tutorial I will be using TND PETSCII logo by Shine and CETI 22 
 
 The first step is to use the Exomizer on your program. Please take a look at this shell command below as an example: (note that the -x command is optional, you can do whatever effect you like or just use -n for no effect).
 
-exomizer.exe sfx $6580 ceti22.prg -o ceti22_crunched.prg -s "jsr highest_addr_out" -x "dec $d020 inc $d020"
+exomizer.exe sfx $6580 ceti22.prg -o ceti22_crunched.prg -s "jsr highest_addr_out" 
+-x "dec $d020 inc $d020"
 
 #### Step 2
 

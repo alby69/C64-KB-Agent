@@ -3,24 +3,24 @@ title: BBC Master Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_master.html
 category: source-code
 topics:
-- graphics
-- assembly
-- memory management
 - basic
+- graphics
+- memory management
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- SID
 - BASIC ROM
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # BBC Master Elite memory map
@@ -37,9 +37,114 @@ Let's take a quick look at the memory map first, and then we'll talk about how t
 
 													 ---------------------
 
-						The following setup gives us a generous memory footprint when compared to the BBC Micro, though the Master version of Elite still manages to fill most of it up. Here's the memory map of Elite on the BBC Master.
+						
+The following setup gives us a generous memory footprint when compared to the BBC Micro, though the Master version of Elite still manages to fill most of it up. Here's the memory map of Elite on the BBC Master.
 
-+-----------------------------------+ &FFFF | | | Machine Operating System (MOS) | | | +-----------------------------------+ &C000 | | | &B200-&BFFF unused | | | +-----------------------------------+ &B200 | | | Text tokens, sin/cos tables | | | +-----------------------------------+ &A000 =[QQ18](https://elite.bbcelite.com/master/game_data/variable/qq18.html)| | | &9D95-&9FFF unused | | | +-----------------------------------+ &9D95 | | | Ship blueprints (SHIPS.bin) | | | Shadow RAM +-----------------------------------+-- &8000 =[XX21](https://elite.bbcelite.com/master/game_data/variable/xx21.html)-------------------+ | | | | &7F48-&7FFF unused | | | | | +--------------------- &7F48 =[F%](https://elite.bbcelite.com/master/main/variable/f_per_cent.html)--+ &7E00-&7FFF unused | | | | | | | | | | | +-- &7E00 --------------------------+ | | | | | Screen memory | | | | | Main game code (BCODE.bin) +-- &4000 --------------------------+ | | | | | Zero page swap space | | | | | +-- &3000 --------------------------+ | | | | | | +-----------------------------------+ &1300 =[TVT3](https://elite.bbcelite.com/master/main/variable/tvt3.html)| | | &12AA-&12FF unused | | | +-----------------------------------+ &12AA | | | WP workspace | | | +-----------------------------------+ &0E41 =[WP](https://elite.bbcelite.com/master/main/workspace/wp.html)| | | &0E00-&0E40 unused | | | +-----------------------------------+ &0E00 | | | Sideways ROM and NMI workspace | | | +-----------------------------------+ &0D00 | | | Hangar ship line heap | | | +-----------------------------------+ &0B00 | | | &0900-&0AFF unused | | | +-----------------------------------+ &0900 | | | MOS sound/printer workspace | | | +-----------------------------------+ &0800 = LS% | | | Ship line heap descends from LS% | | | +-----------------------------------+ SLSP | | . . . . . . . . . . | | +-----------------------------------+ &05BB when all ship slots are used | | | Ship data blocks ascend from K% | | | +-----------------------------------+ &0400 =[K%](https://elite.bbcelite.com/master/main/workspace/k_per_cent.html)| | | MOS VDU and tape workspace | | | +-----------------------------------+ &0300 | | | MOS general workspace | | | +-----------------------------------+ &0200 | | | 6502 stack descends from &01FF | | | +-----------------------------------+ &0194 | | | Heap space ascends from XX3 | | | +-----------------------------------+ &0100 =[XX3](https://elite.bbcelite.com/master/main/workspace/xx3.html)| | | Zero page workspace | | | +-----------------------------------+ &0000 =[ZP](https://elite.bbcelite.com/master/main/workspace/zp.html)
+  +-----------------------------------+   &FFFF
+  |                                   |
+  | Machine Operating System (MOS)    |
+  |                                   |
+  +-----------------------------------+   &C000
+  |                                   |
+  | &B200-&BFFF unused                |
+  |                                   |
+  +-----------------------------------+   &B200
+  |                                   |
+  | Text tokens, sin/cos tables       |
+  |                                   |
+  +-----------------------------------+   &A000 = [QQ18](https://elite.bbcelite.com/master/game_data/variable/qq18.html)
+  |                                   |
+  | &9D95-&9FFF unused                |
+  |                                   |
+  +-----------------------------------+   &9D95
+  |                                   |
+  | Ship blueprints (SHIPS.bin)       |
+  |                                   |                         Shadow RAM
+  +-----------------------------------+-- &8000 = [XX21](https://elite.bbcelite.com/master/game_data/variable/xx21.html) -------------------+
+  |                                   |                                   |
+  | &7F48-&7FFF unused                |                                   |
+  |                                   |                                   |
+  +--------------------- &7F48 = [F%](https://elite.bbcelite.com/master/main/variable/f_per_cent.html) --+                &7E00-&7FFF unused |
+  |                                   |                                   |
+  |                                   |                                   |
+  |                                   |                                   |
+  |                                   +-- &7E00 --------------------------+
+  |                                   |                                   |
+  |                                   |                     Screen memory |
+  |                                   |                                   |
+  | Main game code (BCODE.bin)        +-- &4000 --------------------------+
+  |                                   |                                   |
+  |                                   |              Zero page swap space |
+  |                                   |                                   |
+  |                                   +-- &3000 --------------------------+
+  |                                   |
+  |                                   |
+  |                                   |
+  +-----------------------------------+   &1300 = [TVT3](https://elite.bbcelite.com/master/main/variable/tvt3.html)
+  |                                   |
+  | &12AA-&12FF unused                |
+  |                                   |
+  +-----------------------------------+   &12AA
+  |                                   |
+  | WP workspace                      |
+  |                                   |
+  +-----------------------------------+   &0E41 = [WP](https://elite.bbcelite.com/master/main/workspace/wp.html)
+  |                                   |
+  | &0E00-&0E40 unused                |
+  |                                   |
+  +-----------------------------------+   &0E00
+  |                                   |
+  | Sideways ROM and NMI workspace    |
+  |                                   |
+  +-----------------------------------+   &0D00
+  |                                   |
+  | Hangar ship line heap             |
+  |                                   |
+  +-----------------------------------+   &0B00
+  |                                   |
+  | &0900-&0AFF unused                |
+  |                                   |
+  +-----------------------------------+   &0900
+  |                                   |
+  | MOS sound/printer workspace       |
+  |                                   |
+  +-----------------------------------+   &0800 = LS%
+  |                                   |
+  | Ship line heap descends from LS%  |
+  |                                   |
+  +-----------------------------------+   SLSP
+  |                                   |
+  .                                   .
+  .                                   .
+  .                                   .
+  .                                   .
+  .                                   .
+  |                                   |
+  +-----------------------------------+   &05BB when all ship slots are used
+  |                                   |
+  | Ship data blocks ascend from K%   |
+  |                                   |
+  +-----------------------------------+   &0400 = [K%](https://elite.bbcelite.com/master/main/workspace/k_per_cent.html)
+  |                                   |
+  | MOS VDU and tape workspace        |
+  |                                   |
+  +-----------------------------------+   &0300
+  |                                   |
+  | MOS general workspace             |
+  |                                   |
+  +-----------------------------------+   &0200
+  |                                   |
+  | 6502 stack descends from &01FF    |
+  |                                   |
+  +-----------------------------------+   &0194
+  |                                   |
+  | Heap space ascends from XX3       |
+  |                                   |
+  +-----------------------------------+   &0100 = [XX3](https://elite.bbcelite.com/master/main/workspace/xx3.html)
+  |                                   |
+  | Zero page workspace               |
+  |                                   |
+  +-----------------------------------+   &0000 = [ZP](https://elite.bbcelite.com/master/main/workspace/zp.html)
 
 On the left is the game code in main memory, while on the right are the various blocks of extra memory in the Master, so let's look at those in more detail.
 
@@ -47,7 +152,8 @@ On the left is the game code in main memory, while on the right are the various 
 
 													 -------------------------
 
-						The Master's extra memory comes in three main chunks, and Elite uses all of them.
+						
+The Master's extra memory comes in three main chunks, and Elite uses all of them.
 
 - First of all, sideways RAM bank 6 is switched into main memory at &8000 to &BFFF. In the BBC Micro, this address range always contains one of the paged ROMs (such as BASIC), but in the Master it's available as user RAM, so we can use it for storing the ship blueprints, text tokens and so on.
 - Next up is shadow RAM, also known as LYNNE, which sits alongside the main memory. We can switch the memory block from &3000 to &7FFF between main memory and shadow RAM, and we can also set up LYNNE to host the screen memory, from &4000 to &7DFF. In this way screen memory doesn't steal RAM from the main memory, and we can just switch to shadow RAM to poke our graphics directly to the screen.
@@ -59,7 +165,8 @@ Throughout the source code, you will see memory access being switched between sh
 
 													 --------------------
 
-						The main game code on the left of the memory map is fairly straightforward, but it's worth mentioning the zero page swap space in shadow RAM at &3000. This setup was inherited from the Commodore 64 and Apple II versions of Elite, on which the BBC Master version is based (see the [Commodore 64 Elite memory map](https://elite.bbcelite.com/the_elite_memory_map_commodore_64.html) for more details).
+						
+The main game code on the left of the memory map is fairly straightforward, but it's worth mentioning the zero page swap space in shadow RAM at &3000. This setup was inherited from the Commodore 64 and Apple II versions of Elite, on which the BBC Master version is based (see the [Commodore 64 Elite memory map](https://elite.bbcelite.com/the_elite_memory_map_commodore_64.html) for more details).
 
 Whenever the game does any filing system work, such as cataloguing discs or saving commander files, it first swaps out the top part of zero page (&0090 to &00EF) with a copy that's been stored at the start of LYNNE. This part of zero page is used by the MOS to store various filing system variables, so this process effectively stores a "filing system-compatible" version of zero page in LYNNE, and swaps it in whenever we do any filing work. This enables the game to share this part of zero page with the operating system, but without corrupting the filing system.
 
@@ -67,11 +174,12 @@ Whenever the game does any filing system work, such as cataloguing discs or savi
 
 													 ----------------------
 
-						To see just how big BBC Master Elite is, we can convert the main game binary into an image, with one byte per pixel, and a greyscale showing each byte's value, with 0 being shown as black, 255 being shown as white, and interim values as greyscale pixels. The result is a 213-pixel square, like this (shown here at double size, so you can see the pixels more clearly):
+						
+To see just how big BBC Master Elite is, we can convert the main game binary into an image, with one byte per pixel, and a greyscale showing each byte's value, with 0 being shown as black, 255 being shown as white, and interim values as greyscale pixels. The result is a 213-pixel square, like this (shown here at double size, so you can see the pixels more clearly):
 
 ![The game binary for BBC Master Elite as an image](https://elite.bbcelite.com/images/master/code.png) 
 
-						This image contains the entire main game, including all the game data.
+This image contains the entire main game, including all the game data.
 
 ## Codice Estratto
 

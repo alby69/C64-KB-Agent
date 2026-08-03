@@ -3,8 +3,8 @@ title: Optimal Sort (for 8-Bit Elements)
 source_url: https://codebase.c64.org/doku.php?id=base%3Aoptimal_sort_8-bit_elements
 category: tutorial
 topics:
-- sprite programming
 - memory management
+- sprite programming
 - assembly
 difficulty: beginner
 language: mixed
@@ -14,14 +14,14 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Optimal Sort (for 8-Bit Elements)
@@ -38,7 +38,7 @@ The [bubble sort](https://codebase.c64.org/doku.php?id=base:bubble_sort_8-bit_el
 
 I'll use the same example, i.e.:
 
-05 03 04 01 02
+05  03  04  01  02
 
 My algorithm uses an “outer loop” that is run through as many time as there are elements (i.e. in this case 5 times) and an “inner loop” that gets shorter and shorter when the outer loop progresses. The easiest way to explain the algorithm should be to simply apply it to this short sequence.
 
@@ -60,23 +60,23 @@ As the last element now has been reached the first run through the inner loop is
 
 When this has been done the new sequence is
 
-02 03 04 01 05
+02  03  04  01  05
 
 It is known that the largest value now is at the very end and what remain to be sorted is
 
-02 03 04 01
+02  03  04  01
 
 The second step in the outer loop is therefore to find the largest element in this new shorter sequence and to put this largest element at the end of this new sequence using exactly the same inner loop. As this new sequence only have 4 elements the inner loop only has to use 4 steps. After this second step of the outer loop the total sequence is
 
-02 03 01 04 05
+02  03  01  04  05
 
 Next step in the outer loop will then produce the sequence
 
-02 01 03 04 05
+02  01  03  04  05
 
 and the final step
 
-01 02 03 04 05
+01  02  03  04  05
 
 The 6502 code for this algorithm is as follows:
 

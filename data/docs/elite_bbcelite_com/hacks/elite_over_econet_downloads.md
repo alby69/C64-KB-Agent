@@ -3,26 +3,26 @@ title: Playing Elite over Econet
 source_url: https://elite.bbcelite.com/hacks/elite_over_econet_downloads.html
 category: reference
 topics:
-- input handling
-- assembly
 - basic
+- assembly
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Playing Elite over Econet
@@ -49,35 +49,39 @@ For details of how to download and install Elite over Econet for the 8-bit machi
 
 For more information about the 32-bit version, see [Elite over Econet on the Acorn Archimedes](https://elite.bbcelite.com/elite_over_econet_acorn_archimedes.html).
 
+## 
 
 													 --------------------------------------------
 
-						If you have a PiEconetBridge that is connected to the TNMoC Cloud (the community Econet service from the National Museum of Computing's Acorn team), then you can play Elite over Econet without installing a thing.
+						
+If you have a PiEconetBridge that is connected to the TNMoC Cloud (the community Econet service from the National Museum of Computing's Acorn team), then you can play Elite over Econet without installing a thing.
 
 To play on a networked BBC Micro or BBC Master, enable Econet and enter the following:
 
-*I AM 63.13 BOOT
+  *I AM 63.13 BOOT
 
 This will load a friendly menu from which you can choose various options:
 
 ![Loading BBC Micro Elite over the TNMoC Econet Cloud](https://elite.bbcelite.com/images/elite_over_econet/fileserver_menu.png) 
 
-						To run Elite on a networked Acorn Electron, enable Econet and enter the following:
+To run Elite on a networked Acorn Electron, enable Econet and enter the following:
 
-*I AM 63.13 ELITE
+  *I AM 63.13 ELITE
 
 This will run Elite without showing a menu, as there is only one version for the Electron.
 
 The cloud can be a bit slow at times and you will be sharing the commander file space with other players, but it's a good way to get started if you don't want to install Elite on your own fileserver. You're also guaranteed to be playing the very latest version of the game, as the 63.13 server is hosted by me and lives just beneath the desk where I do all my Elite hacking.
 
+## 
 
 													 -------------------------
 
-						If you have installed Elite on your own fileserver, then the rest of this page is for you.
+						
+If you have installed Elite on your own fileserver, then the rest of this page is for you.
 
 Once the game is installed on the fileserver, you can play Elite on a BBC Micro, BBC Master or Acorn Electron by typing:
 
-*Elite
+  *Elite
 
 This will load the correct version of Elite for the machine you are using to access your network. The command is case insensitive, so *ELITE and *elite will also work.
 
@@ -85,16 +89,18 @@ If you are running the game on a BBC Micro Model B or B+, then the loading proce
 
 If Elite has only been installed for specific users (as opposed to all users), then they will need to *DIR into their own EliteCmdrs directory first, like this:
 
-*DIR *DIR EliteCmdrs *Elite
+  *DIR
+  *DIR EliteCmdrs
+  *Elite
 
 You can also pass parameters to the *Elite command, as follows:
 
 | Command | Effect | 
 |---|---|
 | *Elite V | Show the version details and build date for the installed game | 
-| *Elite X | Run the Executive version of 6502 Second Processor Elite (see [secrets of the Executive version](https://elite.bbcelite.com/deep_dives/secrets_of_the_executive_version.html)for more details) | 
-| *Elite S | Run the Elite over Econet scoreboard (see [the Elite multiplayer scoreboard](https://elite.bbcelite.com/elite_over_econet_scoreboard.html)) | 
-| *Elite D | Run the Elite over Econet debugger (see [the Elite multiplayer scoreboard](https://elite.bbcelite.com/elite_over_econet_scoreboard.html)) | 
+| *Elite X | Run the Executive version of 6502 Second Processor Elite (see [secrets of the Executive version](https://elite.bbcelite.com/deep_dives/secrets_of_the_executive_version.html) for more details) | 
+| *Elite S | Run the Elite over Econet scoreboard (see [the Elite multiplayer scoreboard](https://elite.bbcelite.com/elite_over_econet_scoreboard.html) ) | 
+| *Elite D | Run the Elite over Econet debugger (see [the Elite multiplayer scoreboard](https://elite.bbcelite.com/elite_over_econet_scoreboard.html) ) | 
 
 If you are playing the game on an Archimedes and want to send scores to a multiplayer scoreboard over Econet, then you should load Elite as usual, and run the EliteNet application alongside it (see [Elite over Econet on the Acorn Archimedes](https://elite.bbcelite.com/elite_over_econet_acorn_archimedes.html) for details). You can install both Elite and EliteNet on an Econet fileserver if you want, but this isn't essential; it's probably quicker to load them from a hard disc.
 
@@ -102,7 +108,8 @@ If you are playing the game on an Archimedes and want to send scores to a multip
 
 													 --------------------------------------
 
-						Elite over Econet contains updated versions of Acornsoft Elite that work when loaded from a fileserver over Econet (unlike the originals). The *Elite loader will load the correct version for the system it is being run on. Here's a summary of which versions run on which hardware:
+						
+Elite over Econet contains updated versions of Acornsoft Elite that work when loaded from a fileserver over Econet (unlike the originals). The *Elite loader will load the correct version for the system it is being run on. Here's a summary of which versions run on which hardware:
 
 - The cut-down BBC Micro version works on the unexpanded Model B and Model B+.
 - The full-featured BBC Micro sideways RAM version works on the Model B with 16K sideways RAM, the Model B+ with 16K sideways RAM, and the Model B+128.
@@ -120,10 +127,12 @@ The Acorn Electron version of Elite over Econet has a number of extra features t
 
 As noted above, the *Elite loader will load the correct version for the system it is being run on. For the BBC Micro version, the loader looks for 16K of sideways RAM, and if it finds it, it loads the fully featured sideways RAM variant of BBC Micro disc Elite. If there is no sideways RAM, it loads the cut-down version of BBC Micro disc Elite that is missing the docking computer animation and detailed planets.
 
+## 
 
 													 -------------------------
 
-						Here are some notes on playing Elite over Econet:
+						
+Here are some notes on playing Elite over Econet:
 
 - Commander files will be saved into each individual user's EliteCmdrs directory.
 - Each user has access to a commander file called MAX that they can load from the game menu. This contains a maxed-out commander, to give players a head start.
@@ -141,13 +150,14 @@ See [the Elite multiplayer scoreboard](https://elite.bbcelite.com/elite_over_eco
 
 													 ---------------------
 
-						Because memory is really tight, the BBC Micro version needs to configure the machine correctly for Elite to work. Specifically, the value of PAGE has to be &1200 or less for the game to work, as otherwise the Econet OSWORD calls will corrupt the game code. The BBC Master and 6502 Second Processor versions are much more forgiving - this is only an issue on the BBC Micro.
+						
+Because memory is really tight, the BBC Micro version needs to configure the machine correctly for Elite to work. Specifically, the value of PAGE has to be &1200 or less for the game to work, as otherwise the Econet OSWORD calls will corrupt the game code. The BBC Master and 6502 Second Processor versions are much more forgiving - this is only an issue on the BBC Micro.
 
 To make it easier to set up your BBC Micro for playing Elite over Econet, the loader tries to free up enough free memory by disabling all ROMs except for NFS and BASIC. This should bring PAGE down to the correct level. If you try to run Elite and PAGE is too high, then follow the on-screen instructions:
 
 ![Freeing up enough memory in BBC Micro Elite over Econet](https://elite.bbcelite.com/images/elite_over_econet/fixpage.png) 
 
-						This should bring PAGE down to &1200, ready for you to run Elite. The loader might not be able to disable all ROMs, but it should work for most setups (in particular, DFS 0.9 can't be disabled, so you won't be able run Elite over Econet with this version).
+This should bring PAGE down to &1200, ready for you to run Elite. The loader might not be able to disable all ROMs, but it should work for most setups (in particular, DFS 0.9 can't be disabled, so you won't be able run Elite over Econet with this version).
 
 Note that even with the loader trying to free up memory, Elite will not work with ANFS on a BBC Micro, as it is too memory-hungry; for the BBC Micro version, you need to use NFS or DNFS. ANFS is fine on a BBC Master or a BBC Micro with 6502 Second Processor, it's just the standard BBC Micro that has problems. If you have both ANFS and NFS fitted to your BBC Micro, then the loader will try to disable ANFS and use NFS, which should work.
 

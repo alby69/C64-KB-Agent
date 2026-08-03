@@ -3,22 +3,22 @@ title: Commodore 64 BASIC data conversion functions
 source_url: https://sta.c64.org/cbm64basconv.html
 category: reference
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 # Commodore 64 BASIC data conversion functions
 
-| Address | Function | 
+| **Address** | Function | 
 |---|---|
 | $A96B | Fetch line number from BASIC program and put result to memory addresses $0014-$0015; if first character not a digit then the result is 0; if result is 64000 or above then display "SYNTAX ERROR". (Must call $0073, CHRGET beforehands.) | 
 | $A9C4 | Assign value to integer variable; convert FAC to integer and write into variable pointed by memory addresses $0049-$004A. | 

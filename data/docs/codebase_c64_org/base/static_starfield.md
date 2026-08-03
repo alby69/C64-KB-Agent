@@ -8,15 +8,15 @@ difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 
@@ -32,18 +32,23 @@ Locus classicus for this effect is Uridium: Fast scrolling graphics with fixed s
 
 Only two steps necessary to achieve this effect:
 
-- Manipulate one char corresponding to the soft scroll registers in $d016
-- Check wether this char can be printed on its screen position or not
+1. Manipulate one char corresponding to the soft scroll registers in $d016
+2. Check wether this char can be printed on its screen position or not
 
 ### 1) Char manipulation
 
 First you've got to reserve one blank char in your charset. Then set up a table with eight values:
 
-star: .byte $80, $40, $20, $10, $08, $04, $02, $01
+star:	.byte	$80, $40, $20, $10, $08, $04, $02, $01
 
 This table is nothing but one bit shifted from left to right. To make the starfield static while the screen is scrolling use the soft scroll registers as an index.
 
-lda softscroll ;bits 0-3 = value 0-7, manipulated by the main program tay ;make it an index ora #$30 sta $d016 ;soft scroll lda star,y ;read bit from table sta char ;write bit to first byte of reserved char
+lda softscroll	;bits 0-3 = value 0-7, manipulated by the main program
+tay		;make it an index
+ora #$30			
+sta $d016	;soft scroll
+lda star,y	;read bit from table
+sta char	;write bit to first byte of reserved char
 
 This has to be done in the interrupt. Now 'char' is always one centered bit, while the rest is scrolling left or right.
 
@@ -51,7 +56,8 @@ This has to be done in the interrupt. Now 'char' is always one centered bit, whi
 
 Some screen positions have to be defined. Set up two tables (hi-byte and offset) for each screen position.
 
-starhi: .byte $00, $00, $01, $01, $02, $02, $03, $03 ;relative hi-bytes for eight stars staroffset: .byte $xx, $xx, ... ;some offset values from $00-$ff
+starhi:		.byte	$00, $00, $01, $01, $02, $02, $03, $03		;relative hi-bytes for eight stars
+staroffset:	.byte	$xx, $xx, ...					;some offset values from $00-$ff
 
 The hi-bytes have to be relative values in order to make them usable for double buffering. Double buffering means that the main program switches between two screen buffers after scrolling one char length. The main program should handle two variables for both screen buffers, 'activescreen' and 'inactivescreen' and switch between both.
 
@@ -76,11 +82,11 @@ skip	inx
 ```
 The star will be printed if there's a blank char (in this case char #$00='space') at specific screen position. This has to be done at the right moment. A typical procedure for double buffering would look like this:
 
-- initiate scrolling + shift first half from active to inactive screen buffer
-- shift second half to inactive screen buffer
-- print new chars to inactive screen buffer
-- switch screens and shift colour RAM
-- end of scroll, one char length done
+1. initiate scrolling + shift first half from active to inactive screen buffer
+2. shift second half to inactive screen buffer
+3. print new chars to inactive screen buffer
+4. switch screens and shift colour RAM
+5. end of scroll, one char length done
 
 The check can be done after step 2) or 3). Next thing to do is to delete stars from previous scroll procedure as they have moved left or right. After printing the star, increment or decrement (dependent on scroll direction) y-reg and write a blank char.
 
@@ -90,7 +96,16 @@ One thing left to do: Write colour RAM to make the star white. Otherwise the sta
 
 The same can be done for a multidirectional scrolling game. Only the first step has to be changed to make the stars fixed for vertical scrolling as well. Now the centered bit has to be shifted bytewise through the reserved char. The reserved char should be blanked out every frame. Then the centered bit can be written.
 
-lda softscrollx ;left-right scrolling tay ;make it an index ora #$30 sta $d016 ;soft scroll x lda star,y ;read bit from table ldy softscrolly ;up-down-scrolling as index sta char,y ;write bit to specific byte of reserved char tya ora #$10 sta $d011 ;soft scroll y
+lda softscrollx	     ;left-right scrolling
+tay		     ;make it an index
+ora #$30			
+sta $d016	     ;soft scroll x
+lda star,y	     ;read bit from table
+ldy softscrolly      ;up-down-scrolling as index
+sta char,y	     ;write bit to specific byte of reserved char
+tya
+ora #$10
+sta $d011            ;soft scroll y
 
 ## Codice Estratto
 

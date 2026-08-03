@@ -3,8 +3,8 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-4-reading-from-a-data-table
 category: tutorial
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
@@ -12,12 +12,12 @@ hardware:
 - SID
 - CPU
 related:
-- kernal-routines
 - music-player
-- sound-programming
 - memory-map
 - sid-registers
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # 
@@ -26,11 +26,9 @@ scraped_at: '2026-07-27'
 
 **Topics:** We will understand the first demo effect which is cycling a color pattern on some text. To achieve this we must know how to iterate over table data.  
 
-**Download via  dust:** $ dust tutorials (select 'first intro') 
+**Download via [dust](http://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool):** $ dust tutorials (select 'first intro') 
 
-**Github Repository:**
-
-[First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)
+**Github Repository:** [First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)  
 
 - [Episode 2-1: Let's compile and run C64 code](http://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro)
 - [Episode 2-2: Writing to the C64 Screen](http://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-2-writing-to-the-c64-screen)
@@ -44,18 +42,18 @@ We have put some text on the screen and now we want a nice effect to happen. A g
 
 **There are two extra challenges:**
 
-- We need to change the foreground colors of all letters with every screen refresh.
-- We want that the color moves from right to left in the upper line of text and r*eturn*from left to right in the second line of text. With this we achieve a little optical illusion of a rotating color cycle across both lines.
+1. We need to change the foreground colors of all letters with every screen refresh.
+2. We want that the color moves from right to left in the upper line of text and r*eturn*  from left to right in the second line of text. With this we achieve a little optical illusion of a rotating color cycle across both lines.
 
 We need to define what colors we want to use for the effect and put it in a table we can iterate over. The tricky part is to write down a pattern auf color codes that actually look good in our pseudo motion. You can experiment by changing color information in the data tables. 
 
 **Open code/sub_colorwash.asm**
 
-There is the first mystery -  we want to load some information from somewhere labeled *color+$00 *ut there is no such label in that file. I actually like to organize code in as many chunks as possible and that is why you find the table data with the color information in a different file. So additionally  open** code/data_colorwash.asm. **
+There is the first mystery -  we want to load some information from somewhere labeled *color+$00* ut there is no such label in that file. I actually like to organize code in as many chunks as possible and that is why you find the table data with the color information in a different file. So additionally  open **code/data_colorwash.asm.** 
 
 Now we have everything we need to understand the code. First of all, why would we use two tables? or simplicity actually - with some more thoughts put into a good routine one table is probably sufficient. But this is something you do on C64 all the time - looking for optimizations. In this example we use two tables so it's easier to follow what is going on.
 
-The two tables in *data_colorwash.asm* are labeled with *color* and *color2*. ACMEs pseudo opcode !byte wrote al the values consecutively into memory. A subroutine can now retrieve the data by referencing to the labels *color* and *color2 *- this is what we do in *sub_colorwash.asm*.   The way the tables are formatted is not of importance, I used an 8x5 matrix because it looked fine for 40 values.  We use 40 values because we are manipulating 40 positions per row.  The values are numbers ranging form 1 to 15 ($00 - $0F) as there are 16 colors available on the Commodore C64 to work with.  
+The two tables in *data_colorwash.asm* are labeled with *color* and *color2*. ACMEs pseudo opcode !byte wrote al the values consecutively into memory. A subroutine can now retrieve the data by referencing to the labels *color* and *color2* - this is what we do in *sub_colorwash.asm*.   The way the tables are formatted is not of importance, I used an 8x5 matrix because it looked fine for 40 values.  We use 40 values because we are manipulating 40 positions per row.  The values are numbers ranging form 1 to 15 ($00 - $0F) as there are 16 colors available on the Commodore C64 to work with.  
 
 If you would stop the effect while running the intro you get a visualization of the color pattern. You need to experiment a bit with different colors to generate for example some kind of shining effect like this one.
 
@@ -75,13 +73,13 @@ There is one not obvious complexity in the code that is due to how I designed th
 
 You may want to read through the blog comments to get the whole picture but the important thing is that we need a temporary location to store one color value while iterating in the process. You will understand in a bit.
 
-**Let's focus again and continue to step through the code with the just said in mind. **
+**Let's focus again and continue to step through the code with the just said in mind.** 
 
 I will dissect exactly what happens in the first iteration of the loop. We start by initializing the x-register with the number of iterations we need to do. Then, for our first line of text, we load the last color of the first color table, that is the 40th byte - that is position $27/#39 when you count from zero.
 
 Now the actual loop starts. We grab the next color from the end of the color table which is at this point at position #38 and temporarily store it into the y-register. The table location we read that color from is then overwritten with the color that is still stored in our accumulator from the initialization process at start. That would be the color formerly known as color number #40. It is written into Color Ram for the character in column position $27/#39 of the row that starts at Color Ram location $d990. That memory address $d990 maps exactly the color information for our characters in the Screen Ram location starting at $0590.  If you *check init_static_text.asm*, you see that this is exactly the row we use for our first line of text. 
 
-So what we did here in the first iteration is to move the color from the formerly 40th position of the color table to the 39th position **and** **before that **kept a note of the color that was previously stored at position 39 for later use. That information is now restored using the implicit *tya* operator which transfers the content of y to accumulator.  We can now decrement x and check if we already did 39 iterations. If we did, we only need to write our final 40th color to beginning of our  Color Ram of the first line of text at $d990. Thanks to the y-register that final value has been remembered and moved to the accumulator in the last iteration. 
+So what we did here in the first iteration is to move the color from the formerly 40th position of the color table to the 39th position **and** **before that** kept a note of the color that was previously stored at position 39 for later use. That information is now restored using the implicit *tya* operator which transfers the content of y to accumulator.  We can now decrement x and check if we already did 39 iterations. If we did, we only need to write our final 40th color to beginning of our  Color Ram of the first line of text at $d990. Thanks to the y-register that final value has been remembered and moved to the accumulator in the last iteration. 
 
 That was a bit of heavy stuff, mainly because of the temporary storage strategy. Maybe it clicks when we do the reverse approach for the second line of text. This time we wash our colors from left to right to achieve those sort of rotor-effect in the intro. This requires some minor changes but the principle remains exactly the same.
 

@@ -3,26 +3,26 @@ title: Working with the Apple II keyboard
 source_url: https://elite.bbcelite.com/deep_dives/working_with_the_apple_ii_keyboard.html
 category: deep-dive
 topics:
-- input handling
-- assembly
 - basic
+- assembly
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Working with the Apple II keyboard
@@ -37,7 +37,8 @@ But there are some aspects that feel as if the hardware is overly hidden from th
 
 													 -----------------
 
-						The other versions of 6502 Elite contain some pretty sophisticated keyboard routines. The game originated on the BBC Micro, whose keyboard is a thing of beauty, and the authors took full advantage of this sophisticated hardware, building a key logging system that enables multiple flight keys to be read at the same time (see the deep dive on [the key logger](https://elite.bbcelite.com/the_key_logger.html) for details).
+						
+The other versions of 6502 Elite contain some pretty sophisticated keyboard routines. The game originated on the BBC Micro, whose keyboard is a thing of beauty, and the authors took full advantage of this sophisticated hardware, building a key logging system that enables multiple flight keys to be read at the same time (see the deep dive on [the key logger](https://elite.bbcelite.com/the_key_logger.html) for details).
 
 This same model is used in all the versions of 6502 Elite, from the Commodore 64's keyboard to the NES version's controllers, as discussed in the deep dives on [reading the Commodore 64 keyboard matrix](https://elite.bbcelite.com/reading_the_commodore_64_keyboard_matrix.html) and [bolting NES controllers onto the key logger](https://elite.bbcelite.com/bolting_nes_controllers_onto_the_key_logger.html). The result is a game in which you can roll and pitch and fire lasers and speed up, all at the same time; all you need are lots of fingers.
 
@@ -51,7 +52,8 @@ You can see this in action in the [RDKEY](https://elite.bbcelite.com/apple/main/
 
 													 ------------------
 
-						Not surprisingly, this one-key limitation makes the flight controls feel pretty different. Apple II Elite is perfectly playable on the keyboard, and if you grew up with this as your only version, then you wouldn't know what you were missing. But switch from the BBC Micro to the Apple II version, and the difference in the keyboard controls is quite profound.
+						
+Not surprisingly, this one-key limitation makes the flight controls feel pretty different. Apple II Elite is perfectly playable on the keyboard, and if you grew up with this as your only version, then you wouldn't know what you were missing. But switch from the BBC Micro to the Apple II version, and the difference in the keyboard controls is quite profound.
 
 For example, one of my favourite moves in Elite is to roll and pitch at the same time - it's an efficient way of getting those pesky pirates into your sights. But you simply can't do this on the Apple version: when you press a key, the game forgets about any other keys that you are holding down, and it only processes the latest key press. So if you press climb ("X") and then roll right (">"), you will only roll right, as that's the last key you pressed. And if you are pitching down ("S") and decide to fire your lasers at your foe ("A"), the game will forget that you are holding down the "S" key, and you will slowly stop pitching down as the damping kicks in, even though you are still holding down "S". To add to the confusion, if you then release the "A" key to stop firing but continue to hold down "S", the game will not take any notice, and you won't start pitching down again unless you release the key and press it again.
 

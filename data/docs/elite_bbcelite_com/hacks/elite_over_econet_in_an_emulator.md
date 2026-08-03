@@ -8,15 +8,15 @@ difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Playing Elite over Econet in an emulator
@@ -27,7 +27,7 @@ If you don't have your own personal Econet network but you want to see what the 
 
 ![Elite over Econet in BeebEm](https://elite.bbcelite.com/images/elite_over_econet/beebem_level2.png) 
 
-						It's also possible to set up multiple BeebEm instances on different machines on your network and connect them together, though be warned: this is all pretty experimental stuff, so your mileage may vary.
+It's also possible to set up multiple BeebEm instances on different machines on your network and connect them together, though be warned: this is all pretty experimental stuff, so your mileage may vary.
 
 If anyone tries this, I'd love to know how you get on.  You can ask me questions or tell me how it went in [this Stardot thread](https://www.stardot.org.uk/forums/viewtopic.php?t=29058).
 
@@ -35,23 +35,25 @@ If anyone tries this, I'd love to know how you get on.  You can ask me questions
 
 													 ------------------------------
 
-						The first step is to install BeebEm and configure an emulated Econet network. You can either set up a local cluster of five machines on the same PC, or you can try connecting machines across your entire network. If this is your first attempt, I highly recommend the first option.
+						
+The first step is to install BeebEm and configure an emulated Econet network. You can either set up a local cluster of five machines on the same PC, or you can try connecting machines across your entire network. If this is your first attempt, I highly recommend the first option.
 
-- Download and install [BeebEm](http://www.mkw.me.uk/beebem/).
-- Have a quick read of [the instructions](https://acorn.huininga.nl/pub/software/BeebEm/BeebEm-4.14.68000-20160619/Help/econet.html)for configuring BeebEm to emulate Econet. You don't need to do anything here, as you can just follow the steps below, but it's handy to skim these instructions anyway, just to get an idea of what's involved. We're going to be installing a Level 2 fileserver.
+- Download and install [BeebEm](http://www.mkw.me.uk/beebem/) .
+- Have a quick read of [the instructions](https://acorn.huininga.nl/pub/software/BeebEm/BeebEm-4.14.68000-20160619/Help/econet.html) for configuring BeebEm to emulate Econet. You don't need to do anything here, as you can just follow the steps below, but it's handy to skim these instructions anyway, just to get an idea of what's involved. We're going to be installing a Level 2 fileserver.
 - For the quick and easy local server setup, you can create up to five BeebEm instances on one machine, in which case the last part of your Econet.cfg file should look like this (i.e. just remove the comments from the default file):
 # Example network configuration. # Fileserver (station number 254) and 4 stations on the local PC: 0 254 127.0.0.1 32768 # Stations: 0 101 127.0.0.1 10101 0 102 127.0.0.1 10102 0 103 127.0.0.1 10103 0 104 127.0.0.1 10104 You should also untick Options > Freeze when Inactive in BeebEm, so when you run your five BeebEm instances, they can all run concurrently.
 - If you want to try something more complicated (but also more unreliable), then you can set up BeebEm on different physical PCs on the same local network. I recommend you first try the simpler setup above, but if you want to move to the next level, then the last part of Econet.cfg should list all your different PCs, mapping their IPs to Econet station numbers, like this example:
 # Fileserver (station number 254): 0 254 192.168.0.80 32768 # Stations: 0 101 192.168.0.64 10101 0 102 192.168.0.87 10102 0 103 192.168.0.156 10103 In this example, the machine with IP 192.168.0.80 is the fileserver, while 64, 87 and 156 are user machines. Local IP address formats can vary from network to network, so you need to check what they actually are.
  For multiple PCs over the network, you should set Econet.cfg to be exactly the same on every instance of BeebEm that you want to connect over the network.
  I have also tried multiple machines from one machine on the latter, and it works. So adding this line to the above, for example:0 250 192.168.0.80 10250 will enable two separate BeebEm instances to run on the server machine, one as station 254 (the server) and the other as station 250 (which could be a scoreboard, for example). Don't forget to untick Options > Freeze when Inactive in BeebEm, so they can all run concurrently.
- The above worked for me, but having said that, my test network wasn't terribly stable when actually loading Elite (it was fine when Elite had loaded and the scores were the only traffic, though). Econet in BeebEm is experimental, so your mileage may vary. See the BeebEm instructions for some things you can try to fix this, or see the notes in section 6 below.
+The above worked for me, but having said that, my test network wasn't terribly stable when actually loading Elite (it was fine when Elite had loaded and the scores were the only traffic, though). Econet in BeebEm is experimental, so your mileage may vary. See the BeebEm instructions for some things you can try to fix this, or see the notes in section 6 below.
 
 ## 2. Get the fileserver working
 
 													 -----------------------------
 
-						The second step is to create a Level 2 Econet fileserver containing Elite over Econet.
+						
+The second step is to create a Level 2 Econet fileserver containing Elite over Econet.
 
 - Start an instance of BeebEm to act as the fileserver (you can either double-click BeebEm or run it from the command line).
 - Configure it via the Hardware menu as a BBC Model B with a 65C02 second processor, with Econet On.
@@ -61,7 +63,7 @@ If anyone tries this, I'd love to know how you get on.  You can ask me questions
 - Type *FS and Return to start the Level 2 software.
 - Enter any date before 1999 - I enter 11/11/84, for example.
 - Enter 1 for the no. of drives.
-- Download the [econet_level_2_elite.dsd](https://elite.bbcelite.com/versions/elite_over_econet/econet_level_2_elite.dsd)disc image, which is a Level 2 data disc containing Elite.
+- Download the [econet_level_2_elite.dsd](https://elite.bbcelite.com/versions/elite_over_econet/econet_level_2_elite.dsd) disc image, which is a Level 2 data disc containing Elite.
 - To make this disc image easier to attach to BeebEm, you can optionally copy it into the UserData\DiscIms folder where you installed BeebEm, so it's easily available in the disc menu.
 - When you see the "Command:" prompt, attach the downloaded econet_level_2_elite.dsd disc image to drive 0 (i.e. File > Load Disc 0... and choose the econet_level_2_elite.dsd image).
 - Make sure that drive 0 is writable (i.e. make sure that File > Disc options > Write Protect 0 is unticked).
@@ -74,7 +76,8 @@ If anyone tries this, I'd love to know how you get on.  You can ask me questions
 
 													 ------------------------
 
-						The third step is to start up the Elite scoreboard on one of the emulated machines.
+						
+The third step is to start up the Elite scoreboard on one of the emulated machines.
 
 - Start an instance of BeebEm to act as the scoreboard (you can either double-click BeebEm or run it from the command line).
 - Any machine type will do, but I tend to configure it as a plain BBC Model B; just make sure Econet is On.
@@ -88,7 +91,8 @@ If anyone tries this, I'd love to know how you get on.  You can ask me questions
 
 													 ----------------------------
 
-						The fourth step is to start running Elite itself.
+						
+The fourth step is to start running Elite itself.
 
 - For each player, start an instance of BeebEm to run Elite (you can either double-click BeebEm or run it from the command line).
 - Configure it via the Hardware menu to the machine type for the version you'd like to play (i.e. BBC Model B, BBC Model B with 6502 Second Processor or BBC Master 128) and make sure Econet is enabled.
@@ -106,7 +110,8 @@ If anyone tries this, I'd love to know how you get on.  You can ask me questions
 
 													 --------------------------------------------------------
 
-						The fifth step is to set up network communication from Elite to the scoreboard.
+						
+The fifth step is to set up network communication from Elite to the scoreboard.
 
 - In each instance of Elite, start by saving your commander under a unique name that you want to use in the multiplayer game (you can either do this by pressing "Y" on the title screen, or pressing "@" in-game). If you don't do this then you will have lots of players called JAMESON or MAX, which isn't ideal.
 - Exit the save/load menu into the main game.
@@ -122,26 +127,27 @@ If anyone tries this, I'd love to know how you get on.  You can ask me questions
 
 													 --------
 
-						Here are some notes.
+						
+Here are some notes.
 
 - I've had some intermittent issues with line jam errors when running BeebEm locally, despite trying the fix in the documentation. For reference, I've tried running BeebEm like this on my PC:
 C:\Users\Mark\Documents\Files\Emulators\BeebEm\BeebEm.exe -EcoFF 50000 but it doesn't seem to make any difference compared to double-clicking BeebEm to run an instance. Your mileage may vary, of course.
 - As the default BBC Model B configuration in BeebEm has sideways RAM enabled, players will show up with a machine type of "B+" in the scoreboard. You can disable sideways RAM via the Hardware menu (Edit ROM configuration) to get the authentic Model B experience.
-- If you would like to create the Elite Level 2 data disc yourself (i.e. the [econet_level_2_elite.dsd](https://elite.bbcelite.com/versions/elite_over_econet/econet_level_2_elite.dsd)disc image from step 2 above), then this is how I did it in BeebEm. This process is based on[BeebMaster's excellent guide](https://www.beebmaster.co.uk/Econet/Level2.html).- Configure BeebEm via the Hardware menu as a BBC Model B with a 65C02 second processor, with Econet On.
-- Attach the Level 2 Econet utilities disc image that comes with BeebEm to drive 0 (i.e. File > Load Disc 0... and choose the econet_level_2_utils.ssd image)
-- Enter CHAIN "DSCMGR"
-- Create a blank 80-track double-sided disc image in drive 1 called econet_level_2_elite.dsd (i.e. File > Disc Options > New Disc 1... and choose "Double Sided Disc (*.dsd)")
-- Make sure that drive 1 is writable (i.e. make sure that File > Disc options > Write Protect 1 is unticked).
-- Choose option I, enter drive 1, press RETURN and wait for formatting to happen
-- Enter a disc name: ELITE
-- Enter a date: 11/11/84
-- Password File: Y
-- User name 1: ELITE
-- Just press RETURN for user name 2
-- At the Your Choice prompt press Q to quit
-- Follow the instructions in the "2. Get the fileserver working" section above to get the Level 2 server running with our newly created (but blank) data disc
-- Install Elite on the Level 2 data disc by following the standard [installation instructions](https://elite.bbcelite.com/elite_over_econet_installing.html)
- 
+- If you would like to create the Elite Level 2 data disc yourself (i.e. the [econet_level_2_elite.dsd](https://elite.bbcelite.com/versions/elite_over_econet/econet_level_2_elite.dsd) disc image from step 2 above), then this is how I did it in BeebEm. This process is based on[BeebMaster's excellent guide](https://www.beebmaster.co.uk/Econet/Level2.html) .
+  - Configure BeebEm via the Hardware menu as a BBC Model B with a 65C02 second processor, with Econet On.
+  - Attach the Level 2 Econet utilities disc image that comes with BeebEm to drive 0 (i.e. File > Load Disc 0... and choose the econet_level_2_utils.ssd image)
+  - Enter CHAIN "DSCMGR"
+  - Create a blank 80-track double-sided disc image in drive 1 called econet_level_2_elite.dsd (i.e. File > Disc Options > New Disc 1... and choose "Double Sided Disc (*.dsd)")
+  - Make sure that drive 1 is writable (i.e. make sure that File > Disc options > Write Protect 1 is unticked).
+  - Choose option I, enter drive 1, press RETURN and wait for formatting to happen
+  - Enter a disc name: ELITE
+  - Enter a date: 11/11/84
+  - Password File: Y
+  - User name 1: ELITE
+  - Just press RETURN for user name 2
+  - At the Your Choice prompt press Q to quit
+  - Follow the instructions in the "2. Get the fileserver working" section above to get the Level 2 server running with our newly created (but blank) data disc
+  - Install Elite on the Level 2 data disc by following the standard [installation instructions](https://elite.bbcelite.com/elite_over_econet_installing.html)
 
 That's it. You can ask me questions or tell me how it went in [this Stardot thread](https://www.stardot.org.uk/forums/viewtopic.php?t=29058). If anyone manages to get this working, do let me know...
 

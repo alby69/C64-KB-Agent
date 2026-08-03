@@ -3,26 +3,26 @@ title: About BBC Master Elite on the BBC Micro B+
 source_url: https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite.html
 category: manual
 topics:
-- input handling
-- assembly
 - basic
+- assembly
+- input handling
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # About BBC Master Elite on the BBC Micro B+
@@ -31,7 +31,7 @@ scraped_at: '2026-07-27'
 
 ![My signed BBC Micro B+ playing BBC Master Elite](https://elite.bbcelite.com/images/bbc_b_plus/bbc_micro_b_plus_master_elite.jpg) 
 
-						The BBC Micro B+ is perhaps the most overlooked Acorn machine of all. Launched in mid-1985, more than three years after the original BBC Micro's late-1981 debut, the B+ was an attempt to address the main criticism of the original Beeb: the low 32K memory count. But the B+ didn't win people over, partly because the machine was expensive for what it was, but mainly because the excellent BBC Master came along at the start of 1986 and did things properly, leaving the B+ as a textbook example of too little, too late.
+The BBC Micro B+ is perhaps the most overlooked Acorn machine of all. Launched in mid-1985, more than three years after the original BBC Micro's late-1981 debut, the B+ was an attempt to address the main criticism of the original Beeb: the low 32K memory count. But the B+ didn't win people over, partly because the machine was expensive for what it was, but mainly because the excellent BBC Master came along at the start of 1986 and did things properly, leaving the B+ as a textbook example of too little, too late.
 
 This is a shame, as the B+ is a sweet little machine. Outwardly it looks exactly like the BBC Micro; the only clue that it's different is a diminutive "64K" next to the BBC owl logo on the clear function key strip holder. But inside, the motherboard has been completely redesigned, with the sideways ROMs easily accessible and not tucked away under the keyboard, and not only can it handle 32K ROMs as well as the original 16K of the Model B, but it comes with an extra 32K of RAM, with 20K allocated to shadow RAM (for storing the screen) and the spare 12K allocated to so-called "private RAM".
 
@@ -45,11 +45,11 @@ But then, while browsing eBay, I saw a listing for a BBC Micro, signed by none o
 
 ![David Braben's signature on a BBC Micro B+](https://elite.bbcelite.com/images/bbc_b_plus/signature.jpg) 
 
-						The listing only talked about it being a BBC Micro, but one of the pictures showed a startup banner of "Acorn OS 64K", which I knew made this a B+:
+The listing only talked about it being a BBC Micro, but one of the pictures showed a startup banner of "Acorn OS 64K", which I knew made this a B+:
 
 ![David Braben's signature on a BBC Micro B+](https://elite.bbcelite.com/images/bbc_b_plus/startup.jpg) 
 
-						That was enough for me to put in a speculative bid, as I already own a BBC Micro, but I didn't own a B+, so there were two good reasons to make this an attractive collector's item.
+That was enough for me to put in a speculative bid, as I already own a BBC Micro, but I didn't own a B+, so there were two good reasons to make this an attractive collector's item.
 
 And as the only bidder, I won!
 
@@ -57,11 +57,11 @@ As expected, the B+ needed a really good clean and some of the keys were dead, b
 
 ![My cleaned-up signed BBC Micro B+](https://elite.bbcelite.com/images/bbc_b_plus/cleaned.jpg) 
 
-						And here's the icing on the cake, carefully revealed from under all that accumulated space dust:
+And here's the icing on the cake, carefully revealed from under all that accumulated space dust:
 
 ![The signature on my cleaned-up signed BBC Micro B+](https://elite.bbcelite.com/images/bbc_b_plus/signature_cleaned.jpg) 
 
-						In return for a bit of affection, my new B+ inspired me. I realised that the best tribute to both the signature and the signature-bearer would be to create a souped-up version of Elite that would take advantage of the whole extra 32K - both the 20K of shadow RAM and the 12K of private RAM. A quick calculation shows that the size of the BBC Master Elite binary is pretty similar to the size of the B+ memory map, so I decided to go the whole hog and try porting BBC Master Elite to the B+.
+In return for a bit of affection, my new B+ inspired me. I realised that the best tribute to both the signature and the signature-bearer would be to create a souped-up version of Elite that would take advantage of the whole extra 32K - both the 20K of shadow RAM and the 12K of private RAM. A quick calculation shows that the size of the BBC Master Elite binary is pretty similar to the size of the B+ memory map, so I decided to go the whole hog and try porting BBC Master Elite to the B+.
 
 This hack is the result. It works perfectly, and despite the extra colours and features, it still runs at the same speed as BBC Master Elite. I even found room for all the extra features from the [Elite Compendium](https://elite.bbcelite.com/elite_compendium.html):
 

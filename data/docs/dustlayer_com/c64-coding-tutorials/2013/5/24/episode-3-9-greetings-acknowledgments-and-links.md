@@ -3,25 +3,25 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-9-greetings-acknowledgments-and-links
 category: tutorial
 topics:
-- input handling
 - sprite programming
+- input handling
 difficulty: intermediate
 language: basic
 hardware:
+- VIC-II
 - SID
 - CIA
-- VIC-II
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- sound-programming
-- cia-registers
-- sid-registers
-- raster-interrupts
 - joystick-reading
+- sid-registers
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 # 
@@ -30,11 +30,9 @@ scraped_at: '2026-07-27'
 
 **Synopsis:** The Greetings and Acknowledgments for Spritro. Without the help and resources it would have taken much longer to publish this Episode. 
 
-**Download via  dust:** $ dust tutorials (select 'spritro') 
+**Download via [dust](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite):** $ dust tutorials (select 'spritro') 
 
-**Github Repository:**
-
-[Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)
+**Github Repository:** [Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)  
 
 - [Episode 3-1: Spritro - An Intro with a Sprite](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite)
 - [Episode 3-2: Creating the Shapes - Hello SpritePad](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad)
@@ -42,7 +40,7 @@ scraped_at: '2026-07-27'
 - [Episode 3-4: Flying the Space Ship off Course](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-4-flying-the-space-ship-off-course)
 - [Episode 3-5: Taking Command of the Ship Controls](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-5-taking-command-of-the-ship-controls)
 - [Episode 3-6: Custom Character Sets - Hello CharPad](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-6-custom-character-sets-hello-charpad)
-- [Episode 3-7: Creating Pseudo Timers for Color Cycle](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-7-creating-pseudo-timers-for-color-cycle)d
+- [Episode 3-7: Creating Pseudo Timers for Color Cycle](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-7-creating-pseudo-timers-for-color-cycle) d
 - [Episode 3-8: If the SID doesn't fit, use a bigger Hammer](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-8-if-the-sid-doesnt-fit-use-a-bigger-hammer)
 - **Episode 3-9: Greetings, Acknowledgments and Links**
 
@@ -56,27 +54,27 @@ Writing this Episode would have not been possible without lots of information sp
 
 **Episode 3-2: Creating the Shapes - Hello SpritePad**
 
-SpritePad 1.8.1 is a program by SubChrist Software [[Download]](http://csdb.dk/release/?id=100657)
+SpritePad 1.8.1 is a program by SubChrist Software [\[Download\]](http://csdb.dk/release/?id=100657)
 
-WineBottler is a program by Mike Kronenberg [[Download]](http://winebottler.kronenberg.org/)
+WineBottler is a program by Mike Kronenberg [\[Download\]](http://winebottler.kronenberg.org/)
 
 **Episode 3-4: Flying the Space Ship off Course**
 
-Top/Bottom Border Routine by HCL/Booze Design [[Link]](http://codebase64.org/doku.php?id=base:removing_the_top_bottom_border)
+Top/Bottom Border Routine by HCL/Booze Design [\[Link\]](http://codebase64.org/doku.php?id=base:removing_the_top_bottom_border)
 
-Explanation inspired by Forums Post by Ferris[ [Link]](http://www.dbfinteractive.com/forum/index.php?topic=4477.0)
+Explanation inspired by Forums Post by Ferris [\[Link\]](http://www.dbfinteractive.com/forum/index.php?topic=4477.0)
 
 **Episode 3-5: Taking Command of the Ship Controls**
 
-Keyboard Matrix based on an ASCII Table by TWW [[Link]](http://codebase64.org/doku.php?id=base:reading_the_keyboard#dc00_dc01_reference_for_english_keyboards)
+Keyboard Matrix based on an ASCII Table by TWW [\[Link\]](http://codebase64.org/doku.php?id=base:reading_the_keyboard#dc00_dc01_reference_for_english_keyboards)
 
 **Episode 3-6: Custom Character Sets - Hello CharPad**
 
-CharPad 1.8.3 is a program by SubChrist Software [[Download]](http://csdb.dk/release/?id=101863)
+CharPad 1.8.3 is a program by SubChrist Software [\[Download\]](http://csdb.dk/release/?id=101863)
 
 **Episode 3-8: If the SID doesn't fit, use a bigger Hammer**
 
-SidReloc is an utility coded by Linus Akesson [[Download]](http://www.linusakesson.net/software/sidreloc/)
+SidReloc is an utility coded by Linus Akesson [\[Download\]](http://www.linusakesson.net/software/sidreloc/)
 
 ### Greetings
 

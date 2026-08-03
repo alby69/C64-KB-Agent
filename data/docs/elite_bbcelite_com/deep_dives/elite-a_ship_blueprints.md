@@ -3,25 +3,25 @@ title: Ship blueprints in Elite-A
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_ship_blueprints.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Ship blueprints in Elite-A
@@ -32,13 +32,14 @@ The disc version of BBC Micro Elite contains 29 distinct ship designs, spread ac
 
 ![The Elite-A Encyclopedia Galactica entry for the Bushmaster](https://elite.bbcelite.com/images/elite-a/encyclopedia_bushmaster.png) 
 
-						Not to be outdone, Angus Duggan added nine more ship designs when he created Elite-A, giving a whopping 38 designs in total. Not only that, but he also redesigned the way that these different ship designs are managed. We're going to take a look at that new system here, but first, let's recap how the original versions of Elite support all these different types of ship.
+Not to be outdone, Angus Duggan added nine more ship designs when he created Elite-A, giving a whopping 38 designs in total. Not only that, but he also redesigned the way that these different ship designs are managed. We're going to take a look at that new system here, but first, let's recap how the original versions of Elite support all these different types of ship.
 
 ## Ship blueprints in the original Elite
 
 													 -------------------------------------
 
-						All versions of Elite use a system of ship blueprints to define each ship's characteristics. Blueprints cover flight characteristics such as the number of missiles or the ship's maximum speed, and they also contain the 3D ship model, stored as vertices, edges and faces. See the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html) for details on ship blueprints and what they contain, and the deep dive on [drawing ships](https://elite.bbcelite.com/drawing_ships.html) for more information on 3D ship models.
+						
+All versions of Elite use a system of ship blueprints to define each ship's characteristics. Blueprints cover flight characteristics such as the number of missiles or the ship's maximum speed, and they also contain the 3D ship model, stored as vertices, edges and faces. See the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html) for details on ship blueprints and what they contain, and the deep dive on [drawing ships](https://elite.bbcelite.com/drawing_ships.html) for more information on 3D ship models.
 
 The disc version introduces a large number of extra ships over the cassette version, each with a new blueprint, but in the unexpanded BBC Micro, there just isn't enough memory to load them all at the same time. So the disc version supports 16 different files, each containing a different set of ship blueprints. Only one ship blueprints file is loaded into memory at any one time, and a new one is loaded by the [LOMOD](https://elite.bbcelite.com/disc/flight/subroutine/lomod.html) routine each time we launch from a space station or hyperspace into a new system. See the deep dive on [ship blueprints in the disc version](https://elite.bbcelite.com/ship_blueprints_in_the_disc_version.html) for details on how the disc version manages its ship blueprints.
 
@@ -54,7 +55,8 @@ Now that we've covered the original versions, let's take a look at what Elite-A 
 
 													 --------------------------
 
-						The biggest change in Elite-A is to break the relationship between positions in the XX21 table and ship types. For example, in the disc version of Elite, position 11 is always an innocent Cobra Mk III with an escape pod. In Elite-A, position 11 can contain a whole range of different ship types, including but not restricted to the Cobra Mk III - for example, position 11 contains a Monitor in [file A](https://elite.bbcelite.com/elite-a/ship_blueprints_a/variable/xx21.html), a Ghavial in [file B](https://elite.bbcelite.com/elite-a/ship_blueprints_b/variable/xx21.html), a Python in [file C](https://elite.bbcelite.com/elite-a/ship_blueprints_c/variable/xx21.html), a Boa in [file D](https://elite.bbcelite.com/elite-a/ship_blueprints_d/variable/xx21.html), and so on. As in disc Elite, some positions can be empty as well, though the core positions like the missile and space station are always populated.
+						
+The biggest change in Elite-A is to break the relationship between positions in the XX21 table and ship types. For example, in the disc version of Elite, position 11 is always an innocent Cobra Mk III with an escape pod. In Elite-A, position 11 can contain a whole range of different ship types, including but not restricted to the Cobra Mk III - for example, position 11 contains a Monitor in [file A](https://elite.bbcelite.com/elite-a/ship_blueprints_a/variable/xx21.html), a Ghavial in [file B](https://elite.bbcelite.com/elite-a/ship_blueprints_b/variable/xx21.html), a Python in [file C](https://elite.bbcelite.com/elite-a/ship_blueprints_c/variable/xx21.html), a Boa in [file D](https://elite.bbcelite.com/elite-a/ship_blueprints_d/variable/xx21.html), and so on. As in disc Elite, some positions can be empty as well, though the core positions like the missile and space station are always populated.
 
 Instead of tying ship types to blueprint positions, Elite-A allocates ship *behaviour* to blueprint positions, so positions 11 to 14 are all traders, positions 17 to 24 are all pirates, and so on. Some positions are still fixed to specific types, but that's only because there is only one type with that behaviour: position 1 is always the missile, and there's only one missile blueprint; position 3 is always the escape pod, and there's only one of those; position 16 is always the resident cop, which is always a Viper; and so on. Most positions, though, can contain a whole range of different blueprints, depending on that position's behaviour.
 
@@ -64,22 +66,22 @@ This is how ship positions in Elite-A are allocated:
 - Position 2 is allocated to the space station. It is always populated with either the Coriolis or Dodo blueprint.
 - Position 3 is allocated to the escape pod. It is always populated with the escape pod blueprint.
 - Positions 4 to 5 are allocated to cargo:
-								- Position 4 is allocated to the alloy plate. It is not always populated, but when it is, it is populated with the alloy plate blueprint.
-- Position 5 is allocated to the cargo canister. It is always populated with the cargo canister blueprint.
- 
-- Positions 6-8 are allocated to mining, and are spawned in [part 2 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_2_of_6.html):- Position 6 is allocated to the boulder. It is not always populated, but when it is, it is populated with the boulder blueprint.
-- Position 7 is allocated to the asteroid. It is not always populated, but when it is, it is populated with the asteroid blueprint.
-- Position 8 is allocated to the splinter. It is not always populated, but when it is, it is populated with the splinter blueprint.
- 
-- Position 9 is allocated to the shuttle. It is not always populated, but when it is, it is populated with either the Shuttle or the Shuttle Mk II blueprint. Shuttles are spawned in [part 2 of TACTICS](https://elite.bbcelite.com/elite-a/flight/subroutine/tactics_part_2_of_7.html).
-- Position 10 is allocated to the transporter. It is not always populated, but when it is, it is populated with the Transporter blueprint. Transporters are spawned in [part 2 of TACTICS](https://elite.bbcelite.com/elite-a/flight/subroutine/tactics_part_2_of_7.html).
-- Positions 11-14 are allocated to traders. There is always at least one trader in each ship blueprints file. Traders are spawned in [part 1 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_1_of_6.html).
-- Positions 14-15 are allocated to a large/small ship pair, where the large ship can spawn instances of the small ship. These positions are not always populated, but when they are, the pair is either an Anaconda/Worm pair, or a Dragon/Sidewinder pair. Ship pairs are spawned in [part 4 of TACTICS](https://elite.bbcelite.com/elite-a/flight/subroutine/tactics_part_4_of_7.html).
-- Position 16 is allocated to the cop. It is always populated with the Viper blueprint. Cops are spawned in [part 3 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_3_of_6.html)for deep space spawning, or in[part 2 of TACTICS](https://elite.bbcelite.com/elite-a/flight/subroutine/tactics_part_2_of_7.html)for station defence.
-- Positions 17-24 are allocated to pirates. There are always at least three pirates in each ship blueprints file. Pirates are spawned in [part 4 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_4_of_6.html).
-- Positions 25-28 are allocated to bounty hunters. There is always at least one bounty hunter in each ship blueprints file. Bounty hunters are spawned in [part 4 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_4_of_6.html).
+								
+  - Position 4 is allocated to the alloy plate. It is not always populated, but when it is, it is populated with the alloy plate blueprint.
+  - Position 5 is allocated to the cargo canister. It is always populated with the cargo canister blueprint.
+- Positions 6-8 are allocated to mining, and are spawned in [part 2 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_2_of_6.html) :
+  - Position 6 is allocated to the boulder. It is not always populated, but when it is, it is populated with the boulder blueprint.
+  - Position 7 is allocated to the asteroid. It is not always populated, but when it is, it is populated with the asteroid blueprint.
+  - Position 8 is allocated to the splinter. It is not always populated, but when it is, it is populated with the splinter blueprint.
+- Position 9 is allocated to the shuttle. It is not always populated, but when it is, it is populated with either the Shuttle or the Shuttle Mk II blueprint. Shuttles are spawned in [part 2 of TACTICS](https://elite.bbcelite.com/elite-a/flight/subroutine/tactics_part_2_of_7.html) .
+- Position 10 is allocated to the transporter. It is not always populated, but when it is, it is populated with the Transporter blueprint. Transporters are spawned in [part 2 of TACTICS](https://elite.bbcelite.com/elite-a/flight/subroutine/tactics_part_2_of_7.html) .
+- Positions 11-14 are allocated to traders. There is always at least one trader in each ship blueprints file. Traders are spawned in [part 1 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_1_of_6.html) .
+- Positions 14-15 are allocated to a large/small ship pair, where the large ship can spawn instances of the small ship. These positions are not always populated, but when they are, the pair is either an Anaconda/Worm pair, or a Dragon/Sidewinder pair. Ship pairs are spawned in [part 4 of TACTICS](https://elite.bbcelite.com/elite-a/flight/subroutine/tactics_part_4_of_7.html) .
+- Position 16 is allocated to the cop. It is always populated with the Viper blueprint. Cops are spawned in [part 3 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_3_of_6.html) for deep space spawning, or in[part 2 of TACTICS](https://elite.bbcelite.com/elite-a/flight/subroutine/tactics_part_2_of_7.html) for station defence.
+- Positions 17-24 are allocated to pirates. There are always at least three pirates in each ship blueprints file. Pirates are spawned in [part 4 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_4_of_6.html) .
+- Positions 25-28 are allocated to bounty hunters. There is always at least one bounty hunter in each ship blueprints file. Bounty hunters are spawned in [part 4 of the main game loop](https://elite.bbcelite.com/elite-a/flight/subroutine/main_game_loop_part_4_of_6.html) .
 - Positions 29-30 are allocated to Thargoids:
-- Position 31 is allocated to the Constrictor. It is only populated in ship [file G](https://elite.bbcelite.com/elite-a/ship_blueprints_g/variable/xx21.html), where it is populated with the Constrictor blueprint.
+- Position 31 is allocated to the Constrictor. It is only populated in ship [file G](https://elite.bbcelite.com/elite-a/ship_blueprints_g/variable/xx21.html) , where it is populated with the Constrictor blueprint.
 
 Having a range of different ship types in the different positions gives Elite-A a much bigger range of ships to choose from. For example, in [blueprint file J](https://elite.bbcelite.com/elite-a/ship_blueprints_j/variable/xx21.html), the range of pirate ships is quite impressive: Mamba, Sidewinder, Gecko, Bushmaster, Moray, Worm and Fer-de-Lance. In the same file, both the Fer-de-Lance and Moray can also be traders or bounty hunters, which is much more flexible than in the disc version, where only the Python and Cobra Mk III can have multiple roles.
 
@@ -89,7 +91,8 @@ There is one more change in the Elite-A ship blueprint system that's worth notin
 
 													 ----------------------------------
 
-						Not only has the structure of the ship blueprint files changed in Elite-A, but so have the number of ship files and the logic for loading them. Elite-A has 23 ship blueprint files, named S.A to S.W, compared to the 16 files in the disc version, named D.MOA to D.MOP, and these are loaded by an updated version of the [LOMOD](https://elite.bbcelite.com/elite-a/flight/subroutine/lomod.html) routine.
+						
+Not only has the structure of the ship blueprint files changed in Elite-A, but so have the number of ship files and the logic for loading them. Elite-A has 23 ship blueprint files, named S.A to S.W, compared to the 16 files in the disc version, named D.MOA to D.MOP, and these are loaded by an updated version of the [LOMOD](https://elite.bbcelite.com/elite-a/flight/subroutine/lomod.html) routine.
 
 The extra logic that loads the additional blueprint files is a very simple twist on the existing routine. In the disc version, the LOMOD routine chooses a number from 0 to 15 to choose which file to load - see the deep dive on [ship blueprints in the disc version](https://elite.bbcelite.com/ship_blueprints_in_the_disc_version.html) for details of how it does this. Elite-A uses the same algorithm, but it adds the galaxy number in GCNT to the result. The galaxy number runs from 0 to 7, so this changes the number to be in the range 0 to 22, corresponding with the 23 blueprint files.
 
@@ -103,21 +106,22 @@ It also means that Thargoids and Thargons, which appear in ship files C and D on
 
 													 ----------------------------------------------------
 
-						Just like the official 6502 Second Processor version of Elite, the 6502 Second Processor version of Elite-A has enough memory to load all the ship blueprints into memory at one time. In the official version, this simply means that the game has a fully populated XX21 table, but because Elite-A has more ship blueprints than there are positions in the XX21 table, we need a new routine to work out which ships should be available at any one time.
+						
+Just like the official 6502 Second Processor version of Elite, the 6502 Second Processor version of Elite-A has enough memory to load all the ship blueprints into memory at one time. In the official version, this simply means that the game has a fully populated XX21 table, but because Elite-A has more ship blueprints than there are positions in the XX21 table, we need a new routine to work out which ships should be available at any one time.
 
 The following process does just this, and is run every time we arrive in a new system or launch from the station, but instead of loading a ship blueprints file from disc, it populates the XX21 table with a new selection of ships each time. We start with a version of the [XX21 table](https://elite.bbcelite.com/elite-a/parasite/variable/xx21.html) that has all the fixed positions already populated (i.e. those positions that only ever contain a specific ship). The [LOMOD](https://elite.bbcelite.com/elite-a/parasite/subroutine/lomod.html) routine, which is different in the 6502 Second Processor version, then works through all the blank positions, filling them up according to a specific set of rules:
 
 - First, we populate the space station in position 2 with a Dodo or Coriolis station, depending on the tech level (so the 6502 Second Processor version of Elite-A doesn't flip the station type every other galaxy, unlike the standard version).
 - Next, we work our way from position 9 to 28, skipping positions 15 and 16 (15 is the small ship which is dealt with separately, and 16 is the cop position, which is already populated by the Viper). We do this by setting up a loop to work through each position in turn, so let's call this position counter Y, which loops through positions 9-14 then 17-28. For each position Y, we do the following:
-								- Pick a random number between 0 and the total number of different ship blueprints, and set this as the ship type we would like to try to install in this position. Let's call it X.
-- Check the [ship_bits table](https://elite.bbcelite.com/elite-a/parasite/variable/ship_bits.html)to see if ship type X is allowed in this ship blueprint position. This table lists all allowed positions for each of the different blueprints in Elite-A, so the Cobra Mk III is allowed in positions 11-13 and 21-28, for example, while the Dragon is only allowed in position 14.
-- If the ship type we are trying to install is not allowed in this position, we jump back to the previous step to generate another random type X to try.
-- If we get here then this ship type is allowed in this position, so we now generate a random number in the range 0-255, and test it against the probability figure for this type, which we get from the first byte in the [ship_bytes table](https://elite.bbcelite.com/elite-a/parasite/variable/ship_bytes.html). This figure gives the probability (out of 256) of us being able to install this ship into a position in which it is allowed. So, if the figure is 100 (as it is for the Mamba and Sidewinder), then the chance of us being able to add this ship to a blueprint position is 100/256, or a 39% chance, while the much rarer Dragon has a value of 3, so its probability of being added is 3/256, or a 1.2% chance. This process makes some ships rarer than others.
-- If the random number is greater than the probability figure, we jump back to the previous step to generate another random type X to try.
-- If we get here then we are now OK to install the blueprint for ship type X into position Y. As part of this, we check the second byte in the [ship_bytes table](https://elite.bbcelite.com/elite-a/parasite/variable/ship_bytes.html)to see if this ship type comes with an escape pod fitted, and if so, we set the relevant bit for this type in the default NEWB flag table at E%, so all spawned ships of this type have the correct escape pod setting.
-- If we just decided to add an Anaconda or a Dragon (which will only be the case for position 14, according to the ship_bits table), then we also add the relevant small ship into position 15, i.e. a Worm or Sidewinder respectively.
-- We now increment Y to point to the next position, and loop back up to populate it, until we have populated all the positions in the XX21 table.
- 
+								
+  - Pick a random number between 0 and the total number of different ship blueprints, and set this as the ship type we would like to try to install in this position. Let's call it X.
+  - Check the [ship_bits table](https://elite.bbcelite.com/elite-a/parasite/variable/ship_bits.html) to see if ship type X is allowed in this ship blueprint position. This table lists all allowed positions for each of the different blueprints in Elite-A, so the Cobra Mk III is allowed in positions 11-13 and 21-28, for example, while the Dragon is only allowed in position 14.
+  - If the ship type we are trying to install is not allowed in this position, we jump back to the previous step to generate another random type X to try.
+  - If we get here then this ship type is allowed in this position, so we now generate a random number in the range 0-255, and test it against the probability figure for this type, which we get from the first byte in the [ship_bytes table](https://elite.bbcelite.com/elite-a/parasite/variable/ship_bytes.html) . This figure gives the probability (out of 256) of us being able to install this ship into a position in which it is allowed. So, if the figure is 100 (as it is for the Mamba and Sidewinder), then the chance of us being able to add this ship to a blueprint position is 100/256, or a 39% chance, while the much rarer Dragon has a value of 3, so its probability of being added is 3/256, or a 1.2% chance. This process makes some ships rarer than others.
+  - If the random number is greater than the probability figure, we jump back to the previous step to generate another random type X to try.
+  - If we get here then we are now OK to install the blueprint for ship type X into position Y. As part of this, we check the second byte in the [ship_bytes table](https://elite.bbcelite.com/elite-a/parasite/variable/ship_bytes.html) to see if this ship type comes with an escape pod fitted, and if so, we set the relevant bit for this type in the default NEWB flag table at E%, so all spawned ships of this type have the correct escape pod setting.
+  - If we just decided to add an Anaconda or a Dragon (which will only be the case for position 14, according to the ship_bits table), then we also add the relevant small ship into position 15, i.e. a Worm or Sidewinder respectively.
+  - We now increment Y to point to the next position, and loop back up to populate it, until we have populated all the positions in the XX21 table.
 
 There is one more thing to note. Every time we fail to install a blueprint and have another go - i.e. when a ship type is not allowed in a certain position, or our random number is greater than the probability figure - then a one-byte counter is decremented. If this counter counts 256 failures, then we give up on the current position and move on to the next one, setting the skipped position to empty, and resetting the counter. This means that positions can still be empty, particularly those that only allow a small number of ship types, and it also guarantees that the whole process takes a finite amount of time.
 

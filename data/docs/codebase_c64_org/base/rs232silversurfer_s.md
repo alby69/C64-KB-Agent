@@ -3,8 +3,8 @@ title: silver surfer polling mode driver for cc65
 source_url: https://codebase.c64.org/doku.php?id=base%3Ars232silversurfer.s
 category: reference
 topics:
-- raster interrupts
 - memory management
+- raster interrupts
 - assembly
 difficulty: advanced
 language: assembly
@@ -12,11 +12,11 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # silver surfer polling mode driver for cc65

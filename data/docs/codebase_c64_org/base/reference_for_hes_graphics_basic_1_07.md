@@ -4,31 +4,31 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Areference_for_hes_graphi
 category: reference
 topics:
 - basic
+- graphics
+- sound generation
 - input handling
 - sprite programming
-- graphics
 - assembly
-- sound generation
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # base:reference_for_hes_graphics_basic_1.07 [Codebase64 wiki]
@@ -45,7 +45,22 @@ Initial document by Kurious
 
 Colors: There are identifiers for the 16 colors
 
-BLACK WHITE RED CYAN PURPLE GREEN BLUE YELLOW PEACH BROWN PINK GRAY1 GRAY2 LGREEN SKY GRAY3
+ BLACK
+ WHITE
+ RED
+ CYAN
+ PURPLE
+ GREEN
+ BLUE
+ YELLOW
+ PEACH
+ BROWN
+ PINK
+ GRAY1
+ GRAY2
+ LGREEN
+ SKY
+ GRAY3
 
 Parameters:
 
@@ -60,7 +75,25 @@ Parameters:
 ```
 Graphics commands:
 
-HIRES and MULTI modes display the same graphics buffer in different ways The origin (0,0) lies at the lower left corner; coordinates are used as in typical math TEXT - Switch to text mode HIRES - Switch to HIRES mode MULTI - Switch to MULTI mode BACKGROUND <color> - Choose background color BORDER <color> - Choose border color HIRES COLOR <color> ON <color> - Choose foreground and background hires colors MULTI COLOR <color>,<color>,<color> - Choose multicolor colors CLEAR [<pattern>] - Clear the graphics buffer using pattern (0-255), default 0 FILL <x>,<y> - Fill at the specified coordinate DOT <x>,<y> - Draw a dot at the specified coordinate LINE <x1>,<y1> TO <x2>,<y2> - Draw a line BOX <x1>,<y1> TO <x2>,<y2> - Draw the outline of a box GPRINT <string> - Print the string within the graphics buffer SETORIGIN <x>,<y> - Change the location of the origin WINDOW <x1>,<y1>,<x2>,<y2> - Clip graphics commands to occur within this window WINDOW - Issue without parameters to remove the window SCALE <x>,<y> - Choose a different scale (NOTE: Command is accepted but doesn't seem to work)
+ HIRES and MULTI modes display the same graphics buffer in different ways
+ The origin (0,0) lies at the lower left corner; coordinates are used as in typical math
+ TEXT - Switch to text mode
+ HIRES - Switch to HIRES mode
+ MULTI - Switch to MULTI mode
+ BACKGROUND <color> - Choose background color
+ BORDER <color> - Choose border color
+ HIRES COLOR <color> ON <color> - Choose foreground and background hires colors
+ MULTI COLOR <color>,<color>,<color> - Choose multicolor colors
+ CLEAR [<pattern>] - Clear the graphics buffer using pattern (0-255), default 0
+ FILL <x>,<y> - Fill at the specified coordinate
+ DOT <x>,<y> - Draw a dot at the specified coordinate
+ LINE <x1>,<y1> TO <x2>,<y2> - Draw a line
+ BOX <x1>,<y1> TO <x2>,<y2> - Draw the outline of a box
+ GPRINT <string> - Print the string within the graphics buffer
+ SETORIGIN <x>,<y> - Change the location of the origin
+ WINDOW <x1>,<y1>,<x2>,<y2> - Clip graphics commands to occur within this window
+ WINDOW - Issue without parameters to remove the window
+ SCALE <x>,<y> - Choose a different scale (NOTE: Command is accepted but doesn't seem to work)
 
 Sprite commands:
 
@@ -106,19 +139,34 @@ Keyboard commands:
 ```
 Flow control:
 
-ON ERROR GOTO <line-number> - Choose a non-existing line number to disable error control PROCEDURE <procedure-name>[(<parameter>[,<parameter>...])] - Must be in code, only a marker DO <procedure-name>[(<argument>[,<argument>...])] - Calls the given procedure and pass values ELSE <statement> - Must be in a line by itself, matches last IF RESET - The same as pressing [RUN/STOP]+[RESTORE]
+ ON ERROR GOTO <line-number> - Choose a non-existing line number to disable error control
+ PROCEDURE <procedure-name>[(<parameter>[,<parameter>...])] - Must be in code, only a marker
+ DO <procedure-name>[(<argument>[,<argument>...])] - Calls the given procedure and pass values
+ ELSE <statement> - Must be in a line by itself, matches last IF
+ RESET - The same as pressing [RUN/STOP]+[RESTORE]
 
 Convenience commands:
 
-FIND <string> - Shows lines of code containing strings that contain the given string CHANGE <string> TO <string> - Changes substrings within strings within the code REN [<increment>[,<first-line-number>] - Renumber lines of code EDIT - Enter sprite editor, to exit press Q (NOTE: Keyboard commands currently unknown-TO DO)
+ FIND <string> - Shows lines of code containing strings that contain the given string
+ CHANGE <string> TO <string> - Changes substrings within strings within the code
+ REN [<increment>[,<first-line-number>] - Renumber lines of code
+ EDIT - Enter sprite editor, to exit press Q (NOTE: Keyboard commands currently unknown-TO DO)
 
 Other commands:
 
-JOY(<port>) - Returns the value at the joystick port, 1 or 2
+ JOY(<port>) - Returns the value at the joystick port, 1 or 2
 
 Existing keywords with usage currently unknown:
 
-CIRCLE COPY EZE FROM HIT - Likely to be sprite related MOVE NE ROLL SCROLL
+ CIRCLE
+ COPY
+ EZE
+ FROM
+ HIT - Likely to be sprite related
+ MOVE
+ NE
+ ROLL
+ SCROLL
 
 base/reference_for_hes_graphics_basic_1.07.txt · Last modified:  by 127.0.0.1
 

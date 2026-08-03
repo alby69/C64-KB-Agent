@@ -3,26 +3,26 @@ title: The local bubble of universe
 source_url: https://elite.bbcelite.com/deep_dives/the_local_bubble_of_universe.html
 category: source-code
 topics:
+- basic
+- assembly
 - memory management
 - sprite programming
-- assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CIA
 - CPU
+- CIA
 related:
-- raster-interrupts
 - sprite-programming
-- kernal-routines
 - keyboard-handling
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+- memory-map
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # The local bubble of universe
@@ -35,7 +35,7 @@ The answer is in the "local bubble of universe", which stores all the details of
 
 ![BBC Micro Elite screenshot](https://elite.bbcelite.com/images/general/Elite-BBCMicro.png) 
 
-						In this local bubble, there are 12 ships that we can see on the 3D scanner, plus the sun and planet (the latter being off-screen). Interestingly, the standard BBC Micro version only supports a maximum of ten ships (plus the sun and planet), so this is either a doctored screenshot or an enhanced version of the game - I suspect it's the former, as that would be a lot easier than trying to squeeze more ship slots into the memory-starved BBC Micro.
+In this local bubble, there are 12 ships that we can see on the 3D scanner, plus the sun and planet (the latter being off-screen). Interestingly, the standard BBC Micro version only supports a maximum of ten ships (plus the sun and planet), so this is either a doctored screenshot or an enhanced version of the game - I suspect it's the former, as that would be a lot easier than trying to squeeze more ship slots into the memory-starved BBC Micro.
 
 To see just how big the local bubble is, see the deep dive on [a sense of scale](https://elite.bbcelite.com/a_sense_of_scale.html).
 
@@ -45,7 +45,8 @@ Let's start by looking at how the local bubble is stored in-game.
 
 													 -----------------------------------
 
-						The local bubble is made up of the following data structures:
+						
+The local bubble is made up of the following data structures:
 
 - The ship slots at [FRIN](https://elite.bbcelite.com/cassette/main/workspace/wp.html#frin)
 - The ship data block lookup table at [UNIV](https://elite.bbcelite.com/cassette/main/variable/univ.html)
@@ -62,7 +63,8 @@ Let's look at these structures in more detail.
 
 													 ----------------------
 
-						Each ship in our local bubble of universe has its own "ship slot" in the table at FRIN. Ships get added to slots by the NWSHP routine, and when they get killed or fly too far away to be in the bubble, they get removed from the table by the KILLSHP routine, and the whole table gets shuffled down to close up the gap. This means that the next free gap is always at the end of the table, assuming it isn't full (if it is, NWSHP returns with a flag to say that no new ship was created).
+						
+Each ship in our local bubble of universe has its own "ship slot" in the table at FRIN. Ships get added to slots by the NWSHP routine, and when they get killed or fly too far away to be in the bubble, they get removed from the table by the KILLSHP routine, and the whole table gets shuffled down to close up the gap. This means that the next free gap is always at the end of the table, assuming it isn't full (if it is, NWSHP returns with a flag to say that no new ship was created).
 
 The local bubble always contains the planet, plus either the sun or the space station (but not both). The first two slots are reserved for this purpose as follows.
 
@@ -86,7 +88,8 @@ Note that some ships come in multiple flavours, and some ships share blueprints.
 
 													 ----------------------------------------
 
-						For each occupied ship slot in the table at FRIN, there is a corresponding address in the lookup table at UNIV that points to that ship's data block. The ship data blocks are stored in the K% workspace, and the addresses in UNIV map to the ship slots in FRIN just as you would expect:
+						
+For each occupied ship slot in the table at FRIN, there is a corresponding address in the lookup table at UNIV that points to that ship's data block. The ship data blocks are stored in the K% workspace, and the addresses in UNIV map to the ship slots in FRIN just as you would expect:
 
 - UNIV points to the ship data block for the planet in slot FRIN
 - UNIV+1 points to the ship data block for the sun or space station in slot FRIN+1
@@ -99,11 +102,40 @@ Note that some ships come in multiple flavours, and some ships share blueprints.
 
 													 --------------------------
 
-						As noted above, the local bubble of universe can contain up to #NOSH ships, one for each slot in FRIN and address in UNIV. Each of those ships has its own ship data block of 36 (NI%) bytes that contains information such as the ship's position in space, its speed, its rotation, its energy levels and so on. It also contains a pointer to that ship's ship line heap which is where we store details of all the lines that are required to draw the ship on-screen, so that it's easy to remove the ship from the screen by redrawing the exact same shape again (see the deep dive on [drawing ships](https://elite.bbcelite.com/drawing_ships.html) for more details).
+						
+As noted above, the local bubble of universe can contain up to #NOSH ships, one for each slot in FRIN and address in UNIV. Each of those ships has its own ship data block of 36 (NI%) bytes that contains information such as the ship's position in space, its speed, its rotation, its energy levels and so on. It also contains a pointer to that ship's ship line heap which is where we store details of all the lines that are required to draw the ship on-screen, so that it's easy to remove the ship from the screen by redrawing the exact same shape again (see the deep dive on [drawing ships](https://elite.bbcelite.com/drawing_ships.html) for more details).
 
 In the BBC Micro cassette and disc versions of Elite, these 12 blocks of ship data live in the first 432 bytes of the workspace at K% (&0900 to &0AD4), while the ship line heaps are stored in descending order from the start of the WP workspace. This is the layout of the ship data blocks and ship line heaps in memory, shown when we are in the process of adding a new ship to the local bubble in the NWSHP routine:
 
-+-----------------------------------+ &0F34 | | | WP workspace | | | +-----------------------------------+ &0D40 = WP | | | Current ship line heap | | | +-----------------------------------+ SLSP | | | Proposed heap for new ship | | | +-----------------------------------+ INWK(34 33) | | . . . . . . . . . . | | +-----------------------------------+ INF + NI% | | | Proposed data block for new ship | | | +-----------------------------------+ INF | | | Existing ship data blocks | | | +-----------------------------------+ &0900 = K%
+  +-----------------------------------+   &0F34
+  |                                   |
+  | WP workspace                      |
+  |                                   |
+  +-----------------------------------+   &0D40 = WP
+  |                                   |
+  | Current ship line heap            |
+  |                                   |
+  +-----------------------------------+   SLSP
+  |                                   |
+  | Proposed heap for new ship        |
+  |                                   |
+  +-----------------------------------+   INWK(34 33)
+  |                                   |
+  .                                   .
+  .                                   .
+  .                                   .
+  .                                   .
+  .                                   .
+  |                                   |
+  +-----------------------------------+   INF + NI%
+  |                                   |
+  | Proposed data block for new ship  |
+  |                                   |
+  +-----------------------------------+   INF
+  |                                   |
+  | Existing ship data blocks         |
+  |                                   |
+  +-----------------------------------+   &0900 = K%
 
 If we want to update a ship's data, which we want to do when moving the ship in space during the main flight loop, then instead of working with the data in the K% workspace, we first copy the whole block to the INWK workspace. This "inner workspace" is in zero page, where it is much quicker and more efficient to access memory locations. When we are done updating the ship's data, we copy it back to the relevant location in K%, as pointed to by the UNIV table.
 
@@ -113,7 +145,8 @@ See the deep dive on [ship data blocks](https://elite.bbcelite.com/ship_data_blo
 
 													 ---------------------------
 
-						Each ship type has an associated ship blueprint that contains fixed data about that specific ship type, such as its maximum speed or the size of the target area we need to hit with our lasers to cause damage. The blueprints also contain data on the ship's vertices, faces and edges, which are used to draw the ship on-screen.
+						
+Each ship type has an associated ship blueprint that contains fixed data about that specific ship type, such as its maximum speed or the size of the target area we need to hit with our lasers to cause damage. The blueprints also contain data on the ship's vertices, faces and edges, which are used to draw the ship on-screen.
 
 The table at XX21 contains the blueprint addresses for the various ship types. See the deep dive on [ship blueprints](https://elite.bbcelite.com/ship_blueprints.html) for more details of the blueprints and the information that they contain.
 

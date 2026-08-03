@@ -9,19 +9,19 @@ difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 - CIA
 related:
-- keyboard-handling
+- cia-registers
 - music-player
-- kernal-routines
-- sound-programming
+- joystick-reading
 - memory-map
 - sid-registers
-- joystick-reading
-- cia-registers
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 # 
@@ -30,11 +30,8 @@ scraped_at: '2026-07-27'
 
 **Topics:** The last chapter of this introduction episode to C64 coding will be about including SID music into the intro. 
 
-**Download via  dust:** $ dust tutorials (select 'first intro') 
-
-**Github Repository:**
-
-[First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)
+**Download via [dust](http://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool):** $ dust tutorials (select 'first intro') 
+**Github Repository:** [First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)  
 
 - [Episode 2-1: Let's compile and run C64 code](http://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro)
 - [Episode 2-2: Writing to the C64 Screen](http://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-2-writing-to-the-c64-screen)
@@ -52,11 +49,11 @@ Our intro would not be half as cool if I had not included a catchy tune so let's
 
 **Let's have a look at code/load_resource.asm**
 
-We need to get our music into the intro. For this we need to specify a loading address, that is where is the SID stored in memory. I already set up a symbol earlier in *init_symbols.asm* which assigns $1000 to the symbol *address_music .  *With* * = address_music* we therefor tell ACME that the next instruction should be put in memory at $1000. ****
+We need to get our music into the intro. For this we need to specify a loading address, that is where is the SID stored in memory. I already set up a symbol earlier in *init_symbols.asm* which assigns $1000 to the symbol *address_music .*  With ** = address_music* we therefor tell ACME that the next instruction should be put in memory at $1000. ****
 
 This instruction is once again a very handy pseudo opcode by ACME. !bin loads a file from your harddisk into your C64 code. It also allows for a few parameters we need to work with SID files as provided on the net, e.g. from the HVSC database. Those SIDs come with a special header with some extra information for various cross platform music players which we need to remove when importing the file into our codebase. Luckily the !bin command lets us remove that extra information.
 
-Once we loaded the resource, how do we playback the SID? This is a two-step process. First we need to initialize the music replay routine and then we need to trigger the actual music player routine with every screen refresh.  Do do either, we need to know the start address of the initialization routine and the start address of the replay routine. That information is encoded within the SID.  A very common init address for SIDs is $1000 and for the playback routine $1003. The command line tool *sidreloc* which is installed by *DUST *can be used to move the SID so init address and play routine address can be adjusted to what makes sense for your demo. I will write a an article on *sidreloc* at some other time. 
+Once we loaded the resource, how do we playback the SID? This is a two-step process. First we need to initialize the music replay routine and then we need to trigger the actual music player routine with every screen refresh.  Do do either, we need to know the start address of the initialization routine and the start address of the replay routine. That information is encoded within the SID.  A very common init address for SIDs is $1000 and for the playback routine $1003. The command line tool *sidreloc* which is installed by *DUST* can be used to move the SID so init address and play routine address can be adjusted to what makes sense for your demo. I will write a an article on *sidreloc* at some other time. 
 
 With this information the whole music playing is actually dead simple. We jump once to the sub routine at $1000 - this is done in code/main.asm - and from that point on we execute the actual replay subroutine with every screen refresh in our custom interrupt. And if you wonder where the actual code for the playback resides - it is always supplied with the SID file itself so all we need to know is where to jump to within the memory we put the SID into.
 

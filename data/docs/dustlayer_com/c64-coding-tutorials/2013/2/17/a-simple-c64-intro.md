@@ -3,24 +3,24 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro
 category: tutorial
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
-- SID
 - VIC-II
+- SID
+- KERNAL
 related:
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
 - memory-map
 - sid-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+scraped_at: '2026-08-03'
 ---
 
 
@@ -30,11 +30,7 @@ scraped_at: '2026-07-27'
 
 **Topics:** In this first tutorial I want to cover some basics like loading code, writing text to screen, adding effects and include music. No indepth explanations yet, let's get an initial feeling for C64 coding.  
 
-**Download via  dust:** $ dust tutorials (select 'first intro')
-
-**Github Repository:**
-
-[First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)
+**Download via [dust](http://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool):** $ dust tutorials (select 'first intro')**Github Repository:** [First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)  
 
 - **Episode 2-1: Let's compile and run C64 code**
 - [Episode 2-2: Writing to the C64 Screen](http://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-2-writing-to-the-c64-screen)

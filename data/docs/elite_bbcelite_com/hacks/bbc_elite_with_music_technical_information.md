@@ -3,27 +3,27 @@ title: Technical information for musical Acornsoft Elite
 source_url: https://elite.bbcelite.com/hacks/bbc_elite_with_music_technical_information.html
 category: source-code
 topics:
-- assembly
-- memory management
-- raster interrupts
-- sound generation
 - basic
+- memory management
+- sound generation
+- assembly
+- raster interrupts
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
 - kernal-routines
 - music-player
 - memory-map
+- raster-interrupts
+- sid-registers
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Technical information for musical Acornsoft Elite
@@ -38,7 +38,8 @@ In this article we'll take a look at how this particular plan came together, and
 
 													 ----------------------
 
-						The music player in this hack is based on the VGM music player for the BBC Micro by Simon Morris, which you can read all about in the [project's GitHub page](https://github.com/simondotm/vgm-player-bbc). Huffman encoding is not used in this instance, as we need all the memory we can get.
+						
+The music player in this hack is based on the VGM music player for the BBC Micro by Simon Morris, which you can read all about in the [project's GitHub page](https://github.com/simondotm/vgm-player-bbc). Huffman encoding is not used in this instance, as we need all the memory we can get.
 
 The idea to use Simon's player in Elite was down to Kieran Connell; he was also the inspiration for [Teletext Elite](https://elite.bbcelite.com/teletext_elite.html) and [Elite 3D](https://elite.bbcelite.com/elite_3d.html), and it was Kieran who [got me into disassembling Elite in the first place](https://elite.bbcelite.com/about_site/about_this_project.html), so he has form! After we had a quick chat about what might be possible, Kieran refactored Simon's player to work in sideways RAM, as there is simply no spare memory when Elite is running, so sideways RAM is the only viable option for storing the music (see the deep dive on the [Elite memory map](https://elite.bbcelite.com/deep_dives/the_elite_memory_map.html) to see what I mean).
 
@@ -50,7 +51,8 @@ The result of all this work was a ROM image that I could load into sideways RAM,
 
 													 ------------------------------------
 
-						The next stage was to add this music to the game code for the BBC Micro disc version of Elite. I took Kieran's ROM image, loaded it into sideways RAM, and modded the Elite source to incorporate calls to the music player at the relevant points in the game. So I added a set of ROM calls into the docked code to make the title music play alongside the spinning Cobra on the title screen, and I added a second set of calls into the flight code to switch the Blue Danube on and off along with the docking computer.
+						
+The next stage was to add this music to the game code for the BBC Micro disc version of Elite. I took Kieran's ROM image, loaded it into sideways RAM, and modded the Elite source to incorporate calls to the music player at the relevant points in the game. So I added a set of ROM calls into the docked code to make the title music play alongside the spinning Cobra on the title screen, and I added a second set of calls into the flight code to switch the Blue Danube on and off along with the docking computer.
 
 That makes it sound easy, but memory is astonishingly tight in Elite, so not only is it a real challenge to add any new code at all, but if that code needs variable storage stage - as is the case with the music ROM - then things can get quite difficult, quite quickly.
 
@@ -70,7 +72,8 @@ The final step was to put the game code together with a boot loader. The loader 
 
 													 ------------------------------
 
-						There is also a BBC Master version of musical Elite that works in the same way as the disc version, except the code doesn't have to worry about staying in place between the docked and flight code, as the entire game is resident in memory the whole time. On top of this, the loader can use the Master's built-in SRLOAD command to load the ROM. The only other gotcha is that Elite uses sideways RAM bank 6 for the game itself, so we have to make sure not to use that one for the music (though the Master has three other RAM banks, so this isn't much of a problem). See the [music branch](https://github.com/markmoxon/elite-source-code-bbc-master/tree/music) of the repository for details.
+						
+There is also a BBC Master version of musical Elite that works in the same way as the disc version, except the code doesn't have to worry about staying in place between the docked and flight code, as the entire game is resident in memory the whole time. On top of this, the loader can use the Master's built-in SRLOAD command to load the ROM. The only other gotcha is that Elite uses sideways RAM bank 6 for the game itself, so we have to make sure not to use that one for the music (though the Master has three other RAM banks, so this isn't much of a problem). See the [music branch](https://github.com/markmoxon/elite-source-code-bbc-master/tree/music) of the repository for details.
 
 Also, there's a version for the BBC Micro with 6502 Second Processor and 16K of sideways RAM. Surprisingly there isn't enough spare memory to load the music into main memory, as Elite only leaves 3.2K free in the parasite and 3.7K free in the I/O Processor; the music takes up around 13K, so we still need to have 16K of sideways RAM to load it. The sideways RAM detection and loading routines need to check memory in the I/O Processor, on the other side of the Tube, and the 6502 version's API needs to be extended to support playing music, stopping music, swapping tunes and so on. Luckily there are enough free OSWORD calls to support these new functions, which you can see in the [OSWVECS routine in the elite-z.asm source](https://github.com/markmoxon/elite-source-code-6502-second-processor/blob/music/1-source-files/main-sources/elite-z.asm#L6521-L6525) in the [music branch](https://github.com/markmoxon/elite-source-code-6502-second-processor/tree/music) of the repository.
 

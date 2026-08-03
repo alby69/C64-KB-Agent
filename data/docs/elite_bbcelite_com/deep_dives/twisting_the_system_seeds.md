@@ -3,8 +3,8 @@ title: Twisting the system seeds
 source_url: https://elite.bbcelite.com/deep_dives/twisting_the_system_seeds.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Twisting the system seeds
@@ -27,7 +27,7 @@ The starting point is a system called Tibedied in the first galaxy - so this is 
 
 ![The Long-range Chart showing Tibedied in the BBC Micro version of Elite](https://elite.bbcelite.com/images/cassette/tibedied.png) 
 
-						The seeds for Tibedied are s0 = &5A4A, s1 = &0248 and s2 = &B753, and all 2048 of the unique systems in Elite are derived from this one set of seeds (that's 256 systems in each of the eight galaxies)
+The seeds for Tibedied are s0 = &5A4A, s1 = &0248 and s2 = &B753, and all 2048 of the unique systems in Elite are derived from this one set of seeds (that's 256 systems in each of the eight galaxies)
 
 It is therefore no exaggeration that the twisting process implemented in the [TT20](https://elite.bbcelite.com/cassette/main/subroutine/tt20.html) and [TT54](https://elite.bbcelite.com/cassette/main/subroutine/tt54.html) routines is the fundamental building block of Elite's "universe in a bottle" approach, which enabled the authors to squeeze eight galaxies of 256 planets out of nothing more than three initial numbers and a short twisting routine (and they could have had far larger galaxies and many more of them, if they had wanted, but they made the wise decision to limit the number).
 
@@ -37,25 +37,33 @@ Let's look at how this twisting process works.
 
 													 -------------------------
 
-						The three seeds that describe a system represent three consecutive numbers in a Tribonacci sequence, where each number is equal to the sum of the preceding three numbers (the name is a play on Fibonacci sequence, in which each number is equal to the sum of the preceding two numbers). Twisting is the process of moving along the sequence by one place. So, say our seeds currently point to these numbers in the sequence:
+						
+The three seeds that describe a system represent three consecutive numbers in a Tribonacci sequence, where each number is equal to the sum of the preceding three numbers (the name is a play on Fibonacci sequence, in which each number is equal to the sum of the preceding two numbers). Twisting is the process of moving along the sequence by one place. So, say our seeds currently point to these numbers in the sequence:
 
 ```
   0   0   1   1   2   4   7   13   24   44   ...
                       ^   ^    ^
 ```
-						so they are 4, 7 and 13, then twisting would move them all along by one place, like this:
+						
+so they are 4, 7 and 13, then twisting would move them all along by one place, like this:
 
 ```
   0   0   1   1   2   4   7   13   24   44   ...
                           ^    ^    ^
 ```
-						giving us 7, 13 and 24. To generalise this, if we start with seeds s0, s1 and s2 and we want to work out their new values after we perform a twist (let's call the new values s0´, s1´ and s2´), then:
+						
+giving us 7, 13 and 24. To generalise this, if we start with seeds s0, s1 and s2 and we want to work out their new values after we perform a twist (let's call the new values s0´, s1´ and s2´), then:
 
-s0´ = s1 s1´ = s2 s2´ = s0 + s1 + s2
+  s0´ = s1
+  s1´ = s2
+  s2´ = s0 + s1 + s2
 
 So given an existing set of seeds in s0, s1 and s2, we can get the new values s0´, s1´ and s2´ simply by doing the above sums. And if we want to do the above in-place without creating three new s´ variables, then we can do the following:
 
-tmp = s0 + s1 s0 = s1 s1 = s2 s2 = tmp + s1
+  tmp = s0 + s1
+  s0 = s1
+  s1 = s2
+  s2 = tmp + s1
 
 In Elite, the numbers we're dealing with are two-byte, 16-bit numbers, and because these 16-bit numbers can only hold values up to 65535, the sequence wraps around at the end. But the maths is the same, it just has to be done on 16-bit numbers, one byte at a time.
 
@@ -69,7 +77,14 @@ The seeds are stored as little-endian 16-bit numbers, so the low (least signific
 
 If we denote the low byte of s0 as s0_lo and the high byte as s0_hi, then the twist operation above can be rewritten for 16-bit values like this, assuming the additions include the C flag:
 
-tmp_lo = s0_lo + s1_lo (tmp = s0 + s1) tmp_hi = s0_hi + s1_hi s0_lo = s1_lo (s0 = s1) s0_hi = s1_hi s1_lo = s2_lo (s1 = s2) s1_hi = s2_hi s2_lo = tmp_lo + s1_lo (s2 = tmp + s1) s2_hi = tmp_hi + s1_hi
+  tmp_lo = s0_lo + s1_lo          (tmp = s0 + s1)
+  tmp_hi = s0_hi + s1_hi
+  s0_lo  = s1_lo                  (s0 = s1)
+  s0_hi  = s1_hi
+  s1_lo  = s2_lo                  (s1 = s2)
+  s1_hi  = s2_hi
+  s2_lo  = tmp_lo + s1_lo         (s2 = tmp + s1)
+  s2_hi  = tmp_hi + s1_hi
 
 And that's exactly what the [TT20](https://elite.bbcelite.com/cassette/main/subroutine/tt20.html) and [TT54](https://elite.bbcelite.com/cassette/main/subroutine/tt54.html) routines do to twist our three 16-bit seeds to the next values in the sequence, using X to store tmp_lo and Y to store tmp_hi.
 
@@ -77,9 +92,10 @@ And that's exactly what the [TT20](https://elite.bbcelite.com/cassette/main/subr
 
 													 -------------------------
 
-						The [Ghy](https://elite.bbcelite.com/cassette/main/subroutine/ghy.html) routine updates the galaxy seeds to point to the next galaxy. Using a galactic hyperdrive rotates each seed byte to the left, rolling each byte left within itself like this:
+						
+The [Ghy](https://elite.bbcelite.com/cassette/main/subroutine/ghy.html) routine updates the galaxy seeds to point to the next galaxy. Using a galactic hyperdrive rotates each seed byte to the left, rolling each byte left within itself like this:
 
-01234567 -> 12345670
+  01234567 -> 12345670
 
 to get the seeds for the next galaxy. So after 8 galactic jumps, the seeds roll round to those of the first galaxy again.
 

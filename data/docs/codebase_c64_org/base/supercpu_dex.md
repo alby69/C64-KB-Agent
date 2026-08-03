@@ -10,9 +10,9 @@ hardware:
 - CIA
 related:
 - keyboard-handling
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+scraped_at: '2026-08-03'
 ---
 
 # DEX

@@ -10,22 +10,22 @@ difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
+- VIC-II
 - SID
 - CIA
-- VIC-II
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
-- cia-registers
+- joystick-reading
 - memory-map
 - sid-registers
-- raster-interrupts
-- joystick-reading
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 
@@ -35,11 +35,9 @@ scraped_at: '2026-07-27'
 
 **Synopsis:** Moving an animated Sprite is cool, but moving it across borders of the C64 results in +1 in Street Credibility.  
 
-**Download via  dust:** $ dust tutorials (select 'spritro') 
+**Download via [dust](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite):** $ dust tutorials (select 'spritro') 
 
-**Github Repository:**
-
-[Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)
+**Github Repository:** [Spritro Source Code on Github](https://github.com/actraiser/dust-tutorial-c64-spritro)  
 
 - [Episode 3-1: Spritro - An Intro with a Sprite](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite)
 - [Episode 3-2: Creating the Shapes - Hello SpritePad](https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad)
@@ -55,14 +53,14 @@ scraped_at: '2026-07-27'
 
 It's about time to to move the Sprite and update it's animations so we have a nice rotating Space Ship flying from right to left. This challenge will actually turn out to be easily achievable. All we need to do is to update the X-Coordinate with every screen refresh and accordingly set our Sprite Pointer to the next shape in the timeline of consecutive Sprite Shapes.
 
-But first we want to check** main.asm** because this is where we call our subroutines for the move and animate action plus we open the top and bottom borders!
+But first we want to check **main.asm** because this is where we call our subroutines for the move and animate action plus we open the top and bottom borders!
 
 I have removed some of the Custom Interrupt Setup Code as it is identical with the one from the ["First Intro" Tutorial](http://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-3-did-i-interrupt-you). 
 
 Not surprisingly our main routine has only two responsibilities
 
-- run any subroutine which needs to be executed once at the beginning of the intro
-- install a custom interrupt and run any routines which needs to be executed repeatedly on each screen refresh
+1. run any subroutine which needs to be executed once at the beginning of the intro
+2. install a custom interrupt and run any routines which needs to be executed repeatedly on each screen refresh
 
 What is different compared to the last tutorial is that the custom interrupt also executes some code after it processed our subroutines. That extra code exploits a VIC-II bug that opens the top and bottom border of the Commodore C64. I will explain this easy but very cool exploit before we continue with the actual trivial Sprite animations and movement. 
 
@@ -90,7 +88,7 @@ The VIC-II internally holds an ON and OFF state for both, the top/bottom and the
 
 In 24 Row Mode the state switching Border Drawing ON and OFF happens in Raster Line 54 and in Raster Line 246 accordingly.  Understood the procedure? **Good, because here comes the actual exploit!** 
 
-Let's assume we are in 25 rows mode. We start drawing the first Lines of the Top border, that is the Border State is set to ON. The VIC-II turns OFF border at Raster Line 50 as expected. We know that the next time the VIC-II will turn border state ON is at line 250. What we do is to let the VIC-II draw the screen until it reaches Raster Line 249 that is the 25th Row, hence the last visible row on the screen. We wait until it finished drawing that last line in this final row **AND THEN **we clear the Bit#3 of $d011 to instantly switch to 24 rows mode. **There we fooled the VIC-II! **
+Let's assume we are in 25 rows mode. We start drawing the first Lines of the Top border, that is the Border State is set to ON. The VIC-II turns OFF border at Raster Line 50 as expected. We know that the next time the VIC-II will turn border state ON is at line 250. What we do is to let the VIC-II draw the screen until it reaches Raster Line 249 that is the 25th Row, hence the last visible row on the screen. We wait until it finished drawing that last line in this final row **AND THEN** we clear the Bit#3 of $d011 to instantly switch to 24 rows mode. **There we fooled the VIC-II!** 
 
 What, you ask? What did we do? We switched to 24 Rows Mode **while we already passed the 24th Row**, in fact we are at Row 25. But in 24 Row Mode the VIC-II is supposed to turns Border State ON in Raster Line 246 - a line we already passed. And since  we already passed this Raster Line, the VIC-II does not turn ON the border state - it will remain OFF, no Border is drawn.  
 
@@ -110,19 +108,19 @@ Now that we have opened the borders we want to move the ship from right to left 
 
 Since both Moving the Ship and Cycling through the different Shapes is done in this routine we need to delay the latter within the subroutine because otherwise the playback of the animation is simply too fast.
 
-Coming from our Custom Interrupt Routine in **main.as****m ** we jump to the label **update_ship **in** sub_update_ship.asm**.
+Coming from our Custom Interrupt Routine in **main.as****m**  we jump to the label **update_ship** in **sub_update_ship.asm**.
 
 We decrease the X-Coordinate register for Sprite#0 at $d000 and check if it it has become #$00 yet. When this happens we need to branch to the label **ship_x_high** and flip the 9th Bit for Sprite#0 accordingly and start over.  This will make sure that our Sprite will not reappear in the middle of the screen when reaching the left side of the screen but in fact is set back to the outer right below the side border. 
 
-The next thing we check is the **delay_animation_pointer **- we did set up this Byte in **config_sprites.asm** before to flip between two states. This is achieved with **eor #$01** which will flip the corresponding Bit#0 between high and low. Whenever the Bit is low we want to delay the animation and just take a short cut and return from the subroutine to wait for the next refresh. 
+The next thing we check is the **delay_animation_pointer** - we did set up this Byte in **config_sprites.asm** before to flip between two states. This is achieved with **eor #$01** which will flip the corresponding Bit#0 between high and low. Whenever the Bit is low we want to delay the animation and just take a short cut and return from the subroutine to wait for the next refresh. 
 
-If Bit#0 in the **delay_animation_pointer** is set high on the other hand, we want to go forward one step in our animation - that is exchange the current Sprite Shape with the next one. We branch to the **dec_ship_frame **label where increase the Sprite Pointer for Sprite#0 by 1. If there was the value #$80 written in the Sprite Pointer register it now becomes #$81, and in fact, this works fine because #$81 determines the next Sprite Shape location which is residing at $2040. So #$81  is pointing to the next block of 64 Bytes after the first Sprite Shape. 
+If Bit#0 in the **delay_animation_pointer** is set high on the other hand, we want to go forward one step in our animation - that is exchange the current Sprite Shape with the next one. We branch to the **dec_ship_frame** label where increase the Sprite Pointer for Sprite#0 by 1. If there was the value #$80 written in the Sprite Pointer register it now becomes #$81, and in fact, this works fine because #$81 determines the next Sprite Shape location which is residing at $2040. So #$81  is pointing to the next block of 64 Bytes after the first Sprite Shape. 
 
 With this pattern we can just go forward step by step in our 16 shapes by manipulating the Sprite Pointer at the end of Screen RAM by counting up the value.
 
 We additionally need to decrease the current frame counter in the process as we need to keep track somewhere whether we have played back all 16 Shapes yet. 
 
-Once this is the case we will reset all pointers back to the beginning. We branch to the label** reset_ship_frames** and simply load the **sprite_ship_current_frame w****ith the total numbers of frames, that is 16. That is how we initialized it in the first place in ****config_sprites.asm**. Then we load the original value for the Sprite#0 pointer into the respective Pointer Register at $07f7 and everything is ready for restart. 
+Once this is the case we will reset all pointers back to the beginning. We branch to the label **reset_ship_frames** and simply load the **sprite_ship_current_frame w****ith the total numbers of frames, that is 16. That is how we initialized it in the first place in** **config_sprites.asm**. Then we load the original value for the Sprite#0 pointer into the respective Pointer Register at $07f7 and everything is ready for restart. 
 
 That's it - not much magic here, the most challenging part is to keep track of Bit#9 for the X-Coord. 
 

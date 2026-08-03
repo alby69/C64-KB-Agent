@@ -3,31 +3,31 @@ title: Technical information for Elite 3D
 source_url: https://elite.bbcelite.com/hacks/elite_3d_technical_information.html
 category: source-code
 topics:
-- sprite programming
-- assembly
 - raster interrupts
 - basic
+- assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
+- KERNAL
+- SID
 - VIC-II
 - CPU
-- KERNAL
 - CIA
-- SID
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Technical information for Elite 3D
@@ -36,7 +36,7 @@ scraped_at: '2026-07-27'
 
 Anaglyph 3D is a bit of a mindbender, and getting the algorithm wrong can literally make you boggle-eyed; for quite a long period during the development of Elite 3D, I was accidentally applying the eye separation in the wrong direction, and it took me ages to work out why I was getting mildly cross-eyed every time I wore my coloured glasses. But I've made these developmental mistakes so you don't have to, so here's a technical breakdown of how I've modified the 6502 Second Processor version of Acornsoft Elite to incorporate the third dimension, 1980s-style.
 
-You can see all the code changes in the project's accompanying repository, in the [anaglyph-3d branch of the elite-source-code-6502-second-processor repository](https://github.com/markmoxon/elite-source-code-6502-second-processor/tree/anaglyph-3d). If you search the source code for "Mod:" then you will find every change I've made to the original 6502 Second Processor version of Elite. The changes are split between the [parasite](https://github.com/markmoxon/elite-source-code-6502-second-processor/blob/anaglyph-3d/1-source-files/main-sources/elite-source.asm) and [I/O processor](https://github.com/markmoxon/elite-source-code-6502-second-processor/blob/anaglyph-3d/1-source-files/main-sources/elite-z.asm) sources, as appropriate.
+You can see all the code changes in the [project's GitHub repository](https://github.com/markmoxon/elite-3d). If you search the source code for "Mod:" then you will find every change I've made to the original 6502 Second Processor version of Elite. The changes are split between the [parasite](hhttps://github.com/markmoxon/elite-3d/blob/main/1-source-files/main-sources/elite-source.asm) and [I/O processor](https://github.com/markmoxon/elite-3d/blob/main/1-source-files/main-sources/elite-z.asm) sources, as appropriate.
 
 Let's start with a quick overview of anaglyph 3D, before moving on to the actual implementation.
 
@@ -44,7 +44,8 @@ Let's start with a quick overview of anaglyph 3D, before moving on to the actual
 
 													 ------------------------------
 
-						In essence, we see in three dimensions because we have two eyes that point in the same direction, and which are set apart from each other. Each eye sees the world in two dimensions but from a slightly different position, and our brains combine these two 2D images into a spatially aware three-dimensional image. Of course, this is a huge simplification of the complex world of eyesight, but it's good enough to explain the basis for anaglyph 3D.
+						
+In essence, we see in three dimensions because we have two eyes that point in the same direction, and which are set apart from each other. Each eye sees the world in two dimensions but from a slightly different position, and our brains combine these two 2D images into a spatially aware three-dimensional image. Of course, this is a huge simplification of the complex world of eyesight, but it's good enough to explain the basis for anaglyph 3D.
 
 The core idea behind anaglyph 3D is to combine both the left and right 2D eye images into a single 2D image that we can display on a screen. Glasses with different-coloured lenses then allow the left eye to see only the left image and the right eye to see only the right image. As long as we ensure that the left and right images that are encoded into the screen differ as they would in the real world, the brain will get tricked into thinking that it is seeing a three-dimensional image. For a much more detailed look at how the effect works, see the [Wikipedia entry on anaglyph 3D](https://en.wikipedia.org/wiki/Anaglyph_3D).
 
@@ -54,11 +55,12 @@ For the purposes of adding anaglyph 3D to Elite, we therefore need two things: a
 
 													 --------------------------------------
 
-						The most common anaglyph 3D glasses have a red lens for the left eye and a cyan lens for the right eye, like the top two pairs below; you will also find red and blue glasses, like the clip-on lenses at the bottom:
+						
+The most common anaglyph 3D glasses have a red lens for the left eye and a cyan lens for the right eye, like the top two pairs below; you will also find red and blue glasses, like the clip-on lenses at the bottom:
 
 ![Various pairs of 3D anaglyph glasses](https://elite.bbcelite.com/images/elite_3d/3d_specs.jpg) 
 
-						In a typical anaglyph image, the left-eye image is therefore shown with a red filter applied and the right-eye image is shown with a cyan filter applied; the two images are then printed on top of one another on paper, or they're merged together on a screen. Only red light passes through the left eye's red lens, so the left eye only sees the red left image, and only cyan light passes through the right eye's cyan lens, so the right eye only sees the cyan right image. The two colours are chosen so they're opposite - cyan light does not pass through a red lens, and red light does not pass through a cyan lens.
+In a typical anaglyph image, the left-eye image is therefore shown with a red filter applied and the right-eye image is shown with a cyan filter applied; the two images are then printed on top of one another on paper, or they're merged together on a screen. Only red light passes through the left eye's red lens, so the left eye only sees the red left image, and only cyan light passes through the right eye's cyan lens, so the right eye only sees the cyan right image. The two colours are chosen so they're opposite - cyan light does not pass through a red lens, and red light does not pass through a cyan lens.
 
 With modern technology this is a pretty easy effect to implement, and graphics engines and image editors often contain add-ons or filters that will generate anaglyph images from photographs with little more than a click or two.
 
@@ -68,7 +70,7 @@ If you look at the following screenshot, you can see clearly the red and cyan im
 
 ![A planet and asteroid in Elite 3D](https://elite.bbcelite.com/images/elite_3d/planet.png) 
 
-						In terms of implementation, we can use exclusive-or (EOR) plotting to support both eyes on the same screen at the same time. EOR plotting looks at what is already on-screen and EORs our new pixel into the screen, rather than simply overwriting what's there. In Elite, EOR-plotting the space view means we can draw a wireframe on-screen, and then redraw the same wireframe to erase it; this is because 1 EOR 1 = 0, so drawing a white pixel on top of a white pixel will turn that pixel black. For more details of EOR plotting and how it is used in Elite, see the deep dive on [drawing monochrome pixels in mode 4](https://elite.bbcelite.com/deep_dives/drawing_monochrome_pixels_in_mode_4.html).
+In terms of implementation, we can use exclusive-or (EOR) plotting to support both eyes on the same screen at the same time. EOR plotting looks at what is already on-screen and EORs our new pixel into the screen, rather than simply overwriting what's there. In Elite, EOR-plotting the space view means we can draw a wireframe on-screen, and then redraw the same wireframe to erase it; this is because 1 EOR 1 = 0, so drawing a white pixel on top of a white pixel will turn that pixel black. For more details of EOR plotting and how it is used in Elite, see the deep dive on [drawing monochrome pixels in mode 4](https://elite.bbcelite.com/deep_dives/drawing_monochrome_pixels_in_mode_4.html).
 
 The 6502 Second Processor version of Elite has a four-colour space view rather than the monochrome space view of the original BBC Micro release, so it has the right number of colours for an anaglyph image. The space view uses screen mode 1, so to support our anaglyph 3D palette, all we need to do is define the screen palette as follows:
 
@@ -85,7 +87,8 @@ The fact that Elite already uses EOR plotting to draw everything in the space vi
 
 													 -------------------------------
 
-						Now that we have a way of drawing two different eye images onto the same screen, we now need to work out what to draw. I have implemented three different anaglyph algorithms in Elite 3D, as follows:
+						
+Now that we have a way of drawing two different eye images onto the same screen, we now need to work out what to draw. I have implemented three different anaglyph algorithms in Elite 3D, as follows:
 
 - Eye separation is used to project two different images, one from each eye, with the eyes separated horizontally. This can be thought of as giving "solidity" to 3D objects.
 - Skew is used to bring objects at a specific distance into focus (that distance is known as the "projection plane"). This can be thought of as the "focal point" of the image.
@@ -97,7 +100,8 @@ Let's run through these in turn, starting with eye separation.
 
 													 --------------
 
-						To apply eye separation, we project the 3D world onto the 2D screen twice, once from the camera viewpoint of the left eye, and again from the camera viewpoint of the right eye. For objects in the far distance these viewpoints will be very similar, but for close-by objects, they can be very different; hold something in front of your nose and cover up each eye in turn, and you'll see what I mean. The left eye gets to look around the left side of the object, while the right eye gets to look around the right side of the object, so the information in the combined images gives closer objects a more solid feel, giving the objects more depth.
+						
+To apply eye separation, we project the 3D world onto the 2D screen twice, once from the camera viewpoint of the left eye, and again from the camera viewpoint of the right eye. For objects in the far distance these viewpoints will be very similar, but for close-by objects, they can be very different; hold something in front of your nose and cover up each eye in turn, and you'll see what I mean. The left eye gets to look around the left side of the object, while the right eye gets to look around the right side of the object, so the information in the combined images gives closer objects a more solid feel, giving the objects more depth.
 
 Also, when you look through your left eye at a close-by object, the object appears towards the right of the overall image, and when you look through your right eye, the object appears towards the left; faraway objects, however, don't move at all, and look the same in both eyes. So when we draw both images on-screen and put on our anaglyph 3D specs, distant objects will appear in white as their images overlap, but close-by images will separate more, with a bigger separation the closer they are to us. The effect is that every object feels as if it is this side of the screen, as the colour separation makes our eyes converge and go slightly cross-eyed, like when you try to look at the end of your nose.
 
@@ -105,7 +109,7 @@ To see this in action, take a look at the following screenshot:
 
 ![The Elite title screen in anaglyph 3D](https://elite.bbcelite.com/images/elite_3d/title.png) 
 
-						The Cobra is close to us, so the left eye's red image appears to the right and the right eye's cyan image appears to the left. When looking at this through anaglyph 3D specs, our eyes converge on each line, and we perceive this as an object that is in front of the screen.
+The Cobra is close to us, so the left eye's red image appears to the right and the right eye's cyan image appears to the left. When looking at this through anaglyph 3D specs, our eyes converge on each line, and we perceive this as an object that is in front of the screen.
 
 The amount of eye separation can be configured in the configuration tool; see the page on [configuring Elite 3D](https://elite.bbcelite.com/elite_3d_configuration.html) for details.
 
@@ -113,7 +117,8 @@ The amount of eye separation can be configured in the configuration tool; see th
 
 													 ----
 
-						Clearly, we can't play Elite in 3D if every object is in front of the screen; not only would this be exhausting for our poor crossed eyes, but we'd be missing out on a whole universe on the other side of the screen. The solution to this is to add skew.
+						
+Clearly, we can't play Elite in 3D if every object is in front of the screen; not only would this be exhausting for our poor crossed eyes, but we'd be missing out on a whole universe on the other side of the screen. The solution to this is to add skew.
 
 To understand skew, we need to talk about the projection plane. The projection plane is parallel to the screen, and we conceptually place it at the distance into the screen, along the z-axis, where we want the eyes to focus; if you imagine holding a piece of paper in front of you and moving it into the screen until it reaches the place where we want to focus our eyes, then this is essentially what the projection plane looks like. By default, Elite 3D places the projection plane at a distance of &400 coordinates into the screen; for reference, the Cobra Mk III on the game's opening title screen is a distance of &100 coordinates into the screen at its closest point.
 
@@ -127,7 +132,7 @@ To see this in action, take a look at the following screenshot:
 
 ![A space station and transporter in Elite 3D](https://elite.bbcelite.com/images/elite_3d/station.png) 
 
-						The leftmost edge of the space station has a subtly different line in the left and right eyes, while most of the middle portion of the station is white. This means the left eye (the red lens) sees the leftmost edge (the red line) a little more to the left when compared to the cyan right eye. This is because the station is a fair distance away - beyond the plane of projection - so instead of our eyes converging on a close object, they now diverge slightly, which is interpreted by our brains as a more distant object. The laser sights are white, which means they appear on the projection plane, and if you look at this image through anaglyph 3D glasses, the station does indeed appear to be further away than the laser sights.
+The leftmost edge of the space station has a subtly different line in the left and right eyes, while most of the middle portion of the station is white. This means the left eye (the red lens) sees the leftmost edge (the red line) a little more to the left when compared to the cyan right eye. This is because the station is a fair distance away - beyond the plane of projection - so instead of our eyes converging on a close object, they now diverge slightly, which is interpreted by our brains as a more distant object. The laser sights are white, which means they appear on the projection plane, and if you look at this image through anaglyph 3D glasses, the station does indeed appear to be further away than the laser sights.
 
 In contrast, the Transporter in the top-right corner has the red left-eye image further to the right, because it is closer than the projection plane, as it is flying out of the station and slightly towards us. When looking at this wireframe, our eyes converge and we go slightly cross-eyed, just as we do when looking at close-by objects.
 
@@ -137,7 +142,8 @@ The projection plane can be moved in the configuration tool; see the page on [co
 
 													 --------
 
-						The final stage in Elite 3D's anaglyph is to add some parallax. The eye separation and skew calculations do a good job of adding three dimensions, and they are technically enough on their own, but I found that adding an extra twist helps make those ships really pop into and out of the screen.
+						
+The final stage in Elite 3D's anaglyph is to add some parallax. The eye separation and skew calculations do a good job of adding three dimensions, and they are technically enough on their own, but I found that adding an extra twist helps make those ships really pop into and out of the screen.
 
 Adding parallax effectively increases the depth of field, so objects feel more distant or closer. It's a simple calculation; given a vertex in space, we simply calculate the distance in the z-axis between the vertex and the projection plane, giving positive values for vertices beyond the plane, negative values for vertices this side of the plane, and a value of zero for vertices on the plane. We then scale this distance by the parallax level (which we can configure to be off, low, medium or high) and move the vertex along the x-axis by the result.
 
@@ -151,7 +157,8 @@ The parallax level can be configured or disabled altogether in the configuration
 
 													 -----------------------------
 
-						Now that we've covered eye separation, skew and parallax, here's a summary of how I've applied them to the ships, planets, suns, scanner and stardust in Elite 3D.
+						
+Now that we've covered eye separation, skew and parallax, here's a summary of how I've applied them to the ships, planets, suns, scanner and stardust in Elite 3D.
 
 - For the wireframe ships, stations, asteroids and canisters, I apply all three methods: I generate each eye view separately, according to the configured eye separation, and then apply skew to bring the projection plane into focus. I then apply positive or negative parallax according to the z-distance between the ship and the projection plane, to enhance the depth of field.
 - For the planet and sun, I apply the maximum configured positive parallax only, as they are too distant for the eye separation and skew to make any difference.
@@ -166,7 +173,8 @@ As you can see, there is a fair amount of smoke-and-mirrors here. The only fully
 
 													 -------------------------------------
 
-						Elite 3D needs a fair amount of extra memory when compared to the original version. Luckily there is a bit of spare memory when Elite runs in the 6502 Second Processor, though not as much as you might think; Elite 3D needs pretty much all of it.
+						
+Elite 3D needs a fair amount of extra memory when compared to the original version. Luckily there is a bit of spare memory when Elite runs in the 6502 Second Processor, though not as much as you might think; Elite 3D needs pretty much all of it.
 
 The main memory requirements are for the various graphics caches, as we're effectively drawing everything twice. Here are the details:
 
@@ -189,56 +197,58 @@ See the [6502 Second Processor Elite memory map](https://elite.bbcelite.com/deep
 
 													 -----------------------------
 
-						Here's a brief breakdown of the extra anaglyph code that I've added to the main ship-drawing routines, in case you want to follow along with [the source code](https://github.com/markmoxon/elite-source-code-6502-second-processor/blob/anaglyph-3d/1-source-files/main-sources/elite-source.asm).
+						
+Here's a brief breakdown of the extra anaglyph code that I've added to the main ship-drawing routines, in case you want to follow along with [the source code](https://github.com/markmoxon/elite-3d/blob/main/1-source-files/main-sources/elite-source.asm).
 
 - LL9 (Part 1)
-								- Set rHeap(1 0) to the address of the second half of the ship's line heap (right eye)
- 
+								
+  - Set rHeap(1 0) to the address of the second half of the ship's line heap (right eye)
 - LL9 (Part 7)
-								- Calculate the 3D coordinates of the current vertex, moving them left and right by the eye separation
-- Store the x-coordinate for the left eye as usual
-- Store the x-coordinate for right eye in xRightEye(1 0)
- 
+								
+  - Calculate the 3D coordinates of the current vertex, moving them left and right by the eye separation
+  - Store the x-coordinate for the left eye as usual
+  - Store the x-coordinate for right eye in xRightEye(1 0)
 - LL9 (Part 8)
-								- Project the left eye line onto the screen and save the results in the XX3 heap
-- Project the right eye line onto the screen and save the results in the XX3r heap
-- Apply skew to the x-coordinates in XX3 and XX3r, according to the value of zPlane(1 0)
-- Apply parallax to x-coordinates in XX3 and XX3r according to the z-distance from the plane
- 
+								
+  - Project the left eye line onto the screen and save the results in the XX3 heap
+  - Project the right eye line onto the screen and save the results in the XX3r heap
+  - Apply skew to the x-coordinates in XX3 and XX3r, according to the value of zPlane(1 0)
+  - Apply parallax to x-coordinates in XX3 and XX3r according to the z-distance from the plane
 - LL9 (Part 9)
-								- Draw the enemy laser lines in each eye, if an enemy is firing at us
-- If the laser line is only visible in one eye, draw the other eye as a null line (Y2 = 255) to keep the two heaps in sync
- 
+								
+  - Draw the enemy laser lines in each eye, if an enemy is firing at us
+  - If the laser line is only visible in one eye, draw the other eye as a null line (Y2 = 255) to keep the two heaps in sync
 - LL9 (Part 10)
-								- Clip both eyes' lines
- 
+								
+  - Clip both eyes' lines
 - LL9 (Part 11)
-								- Draw both eyes' lines into the ship line heap
-- Store the left eye coordinates in the first half of heap, as usual, and store the right eye coordinates in the second half of heap, at rHeap(1 0)
-- If only one eye's line is visible, draw the other eye as a null line (Y2 = 255) to keep the two heaps in sync
-- Loop back to part 10 until all the edges are drawn
- 
+								
+  - Draw both eyes' lines into the ship line heap
+  - Store the left eye coordinates in the first half of heap, as usual, and store the right eye coordinates in the second half of heap, at rHeap(1 0)
+  - If only one eye's line is visible, draw the other eye as a null line (Y2 = 255) to keep the two heaps in sync
+  - Loop back to part 10 until all the edges are drawn
 - LL9 (Part 12)
-								- Draw both eyes' lines from the ship line heap, one in red and the other in cyan, using the flicker-free algorithm from the BBC Master
- 
+								
+  - Draw both eyes' lines from the ship line heap, one in red and the other in cyan, using the flicker-free algorithm from the BBC Master
 - SHPPT
-								- Draw ship dots for both eyes, after adding eye separation and skew
- 
+								
+  - Draw ship dots for both eyes, after adding eye separation and skew
 - ADDBYT (I/O processor)
-								- When lines are sent to the I/O processor for drawing, skip any null lines (i.e. ignore any lines where Y2 = 255)
- 
+								
+  - When lines are sent to the I/O processor for drawing, skip any null lines (i.e. ignore any lines where Y2 = 255)
 
 ## Applying anaglyph 3D to the sun
 
 													 -------------------------------
 
-						The sun in Elite is drawn as a set of raster lines. The details are stored in the sun line heap, which consists of the x-coordinate of the centre vertical line of the sun, and a half-width value for each pixel line in the space view (see the deep dive on [drawing the sun](https://elite.bbcelite.com/deep_dives/drawing_the_sun.html) for details). The sun line heap is pretty large, so to save duplicating the heap for a second eye, we can use the same heap values as in normal 2D Elite, and simply apply parallax to the sun lines algorithmically, as we draw them.
+						
+The sun in Elite is drawn as a set of raster lines. The details are stored in the sun line heap, which consists of the x-coordinate of the centre vertical line of the sun, and a half-width value for each pixel line in the space view (see the deep dive on [drawing the sun](https://elite.bbcelite.com/deep_dives/drawing_the_sun.html) for details). The sun line heap is pretty large, so to save duplicating the heap for a second eye, we can use the same heap values as in normal 2D Elite, and simply apply parallax to the sun lines algorithmically, as we draw them.
 
 The easiest place to add parallax is in the HLOIN routine in the I/O processor. This routine draws each horizontal sun line, given the line's y-coordinate, the x-coordinate of the sun's centre, and the half-width of the sun line at that point. To add a 3D effect, all we need to do is draw a 3D horizontal line rather than a 2D one, and we're done.
 
 ![The first screenshot from the manual in Elite 3D](https://elite.bbcelite.com/images/elite_3d/manual.png) 
 
-						How do we do that? Well, the sun is in the far distance so we only need to add the currently configured maximum positive parallax to make it appear in the far distance, so given a sun line from the 2D sun line heap, we can change this into an anaglyph 3D line by shifting the line left to get the red line for the left eye, and shifting it right to get the cyan line for the right eye. All we need to do for each frame, then, is to draw both left- and right-eye sun lines as they appear on-screen to erase them (using the values in the sun line heap), and then redraw them both in their new positions. This will give us a 3D sun that updates every frame.
+How do we do that? Well, the sun is in the far distance so we only need to add the currently configured maximum positive parallax to make it appear in the far distance, so given a sun line from the 2D sun line heap, we can change this into an anaglyph 3D line by shifting the line left to get the red line for the left eye, and shifting it right to get the cyan line for the right eye. All we need to do for each frame, then, is to draw both left- and right-eye sun lines as they appear on-screen to erase them (using the values in the sun line heap), and then redraw them both in their new positions. This will give us a 3D sun that updates every frame.
 
 Unfortunately it isn't that simple: if we do this, then it works, but the sun not only flickers, with black horizontal lines dancing over its surface, but it's also extremely slow. What is going on?
 
@@ -252,11 +262,12 @@ The I/O processor looks for lines with Y1 = 255, and when it does it knows this 
 
 													 -------------------------------
 
-						When it comes to drawing the planets in 3D, we want to avoid duplicating the circle and meridian/crater calculations, as they contain some complex maths and are therefore pretty expensive in terms of CPU time. As the planet is always in the far distance, we only need to add the currently configured maximum positive parallax to the planet to get each eye - the left and right versions of the planet can be identical, they just need to be moved sideways in opposite directions. This means we only need to calculate the circle coordinates once, and then translate the result to the left and right.
+						
+When it comes to drawing the planets in 3D, we want to avoid duplicating the circle and meridian/crater calculations, as they contain some complex maths and are therefore pretty expensive in terms of CPU time. As the planet is always in the far distance, we only need to add the currently configured maximum positive parallax to the planet to get each eye - the left and right versions of the planet can be identical, they just need to be moved sideways in opposite directions. This means we only need to calculate the circle coordinates once, and then translate the result to the left and right.
 
 ![A planet and asteroid in Elite 3D](https://elite.bbcelite.com/images/elite_3d/planet.png) 
 
-						To do this, we calculate the circle's screen coordinates, as in the original Elite, and save the results in in XX3r (for the planet circle) and XX3 (for the crater or meridians) via the routines at BLINEHeapPlanet (for the planet) and BLINEHeapCrater (for the crater or meridians).
+To do this, we calculate the circle's screen coordinates, as in the original Elite, and save the results in in XX3r (for the planet circle) and XX3 (for the crater or meridians) via the routines at BLINEHeapPlanet (for the planet) and BLINEHeapCrater (for the crater or meridians).
 
 We can then draw the left and right eyes on-screen by applying parallax in the DrawAnaglyphPlanet routine. This calls the BLINE routine for each eye. To get BLINE to work with one eye and then the other, I've recoded the routine to look up all heap-related addresses from vectors, which get set by UseLeftBallLine and UseRightBallLine. Specifically, the LSX2S(1 0) vector points to either LSX2 or LSX2r, the LSY2S(1 0) vector points to LSY2 or LSY2r, and the LSPS vector points to LSP, so we can use the same BLINE routine to draw the ball line from each heap individually, changing colour each time.
 

@@ -3,9 +3,9 @@ title: Drawing colour pixels on the BBC Micro
 source_url: https://elite.bbcelite.com/deep_dives/drawing_colour_pixels_in_mode_5.html
 category: deep-dive
 topics:
+- basic
 - graphics
 - memory management
-- basic
 difficulty: beginner
 language: basic
 hardware:
@@ -14,10 +14,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Drawing colour pixels on the BBC Micro
@@ -30,29 +30,36 @@ Mode 5 is used for the four-colour dashboard in the BBC Micro version:
 
 ![BBC Micro Elite screenshot](https://elite.bbcelite.com/images/general/Elite-BBCMicro.png) 
 
-						As with mode 4, the mode 5 screen is laid out in memory using character blocks. Indeed, the character blocks are the same size and height in terms of bits and bytes, and pixel coordinates are identical in both screen modes (both screen modes are 256 coordinates wide), so as far as the end used is concerned, the screen modes are really similar. At the screen memory level, however, there are some key differences.
+As with mode 4, the mode 5 screen is laid out in memory using character blocks. Indeed, the character blocks are the same size and height in terms of bits and bytes, and pixel coordinates are identical in both screen modes (both screen modes are 256 coordinates wide), so as far as the end used is concerned, the screen modes are really similar. At the screen memory level, however, there are some key differences.
 
 The main difference is that each pixel can be one of four colours rather than two, so as a result each pixel takes up twice as much memory (2 bits as opposed to 1 bit). If we look at the way character blocks are laid out in terms of bits, it looks the same as for mode 4 - here's what two neighbouring character blocks look like in both modes:
 
-01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567
+  01234567 01234567
+  01234567 01234567
+  01234567 01234567
+  01234567 01234567
+  01234567 01234567
+  01234567 01234567
+  01234567 01234567
+  01234567 01234567
 
 However, while in mode 4 each bit represents one pixel, so the above block would be 16 pixels across and 8 pixels high, in mode 5 each pixel takes up two bits, so the above block shows as 8 pixels across and 8 pixels high. Pixels in mode 5 are stretched out so they appear twice as wide as they are high, so everything still fits on-screen in a sensible manner.
 
 So we know that a character block row in mode 5 consists of four pixels in one byte. The complicated part is how that byte stores those four pixels. If we consider a character row byte like this:
 
-01234567
+  01234567
 
 then the first pixel is defined by bits 0 and 4, the second by bits 1 and 5, and so on. If we split it up into nibbles:
 
-0123 4567
+  0123 4567
 
 then the first pixel is defined by the first bits of each nibble (0 and 4), the second is defined by the second bits of each nibble (1 and 5), and so on with bits 2 and 6, and bits 3 and 7. So consider this character row byte:
 
-1111 0000
+  1111 0000
 
 Each of the four bits has a 1 as the first bit and a 0 as the second bit, giving %10, or 2, so this defines four pixels in a row of colour 2. And this one:
 
-1010 0011
+  1010 0011
 
 contains the following pixels: %10, %00, %11 and %01, so this is a four-pixel row consisting of pixel colours 2, 0, 3 and 1.
 
@@ -63,11 +70,11 @@ That aside, modes 4 and 5 work in the same way. Each character row takes up 256 
 
 We can even use a similar system to the [TWOS](https://elite.bbcelite.com/cassette/main/variable/twos.html) table that we use in [PIXEL](https://elite.bbcelite.com/cassette/main/subroutine/pixel.html), but this time it's set up for the nibble system above. As a reminder, the TWOS table provides ready-made bytes for plotting single pixels, such as this one for plotting the third pixel in the row (out of 8):
 
-TWOS+2 = %00100000
+  TWOS+2  = %00100000
 
 We can do the same for mode 5, but using the [CTWOS](https://elite.bbcelite.com/cassette/main/variable/ctwos.html) table instead. For the third pixel in the row (out of 4), the table returns this value instead:
 
-CTWOS+2 = %00100010
+  CTWOS+2  = %00100010
 
 which breaks up into 0010 0010, or %11 in the third pixel. As with TWOS, we can use this byte as a mask onto a 4-pixel colour byte to work out what to poke into screen memory.
 

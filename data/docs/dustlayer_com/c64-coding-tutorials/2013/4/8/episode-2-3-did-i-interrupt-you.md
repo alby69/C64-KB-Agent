@@ -4,30 +4,30 @@ source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-3-did-
 category: tutorial
 topics:
 - sprite programming
-- basic
 - assembly
+- basic
 - raster interrupts
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CPU
 - CIA
 - VIC-II
+- CPU
 - SID
 related:
-- keyboard-handling
+- cia-registers
 - vic-ii-registers
 - music-player
-- kernal-routines
-- sound-programming
-- cia-registers
+- joystick-reading
 - memory-map
 - sid-registers
-- raster-interrupts
-- joystick-reading
 - sprite-programming
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+- raster-interrupts
+- keyboard-handling
+scraped_at: '2026-08-03'
 ---
 
 
@@ -37,11 +37,9 @@ scraped_at: '2026-07-27'
 
 **Topics:** Many C64 programmers did avoid dealing with interrupts yet it is only thing that lets us create really cool things on the C64. There are various types of interrupts, we start with a very simple one.  
 
-**Download via  dust:** $ dust tutorials (select 'first intro') 
+**Download via [dust](http://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool):** $ dust tutorials (select 'first intro') 
 
-**Github Repository:**
-
-[First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)
+**Github Repository:** [First Intro on Github](https://github.com/actraiser/dust-tutorial-c64-first-intro)  
 
 - [Episode 2-1: Let's compile and run C64 code](http://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro)
 - [Episode 2-2: Writing to the C64 Screen](http://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-2-writing-to-the-c64-screen)
@@ -85,9 +83,9 @@ Luckily there is not only the automatic system interrupt but lots of other sourc
 
 **Let's clarify what we need to do:**
 
-- change a vector within the regular system interrupt process to point to some custom code every time the system interrupt is triggered
-- we want to execute subroutines when reaching a defined moment in time, in our case when the raster beam has reached a certain line on the screen. We have to do this because executing our subroutines 60 times per second respectively 50 times per second is usually too fast.
-- when the subroutines have completed execution we point back to the regular system interrupt routine which is $EA31 - **we have come full circle**!
+1. change a vector within the regular system interrupt process to point to some custom code every time the system interrupt is triggered
+2. we want to execute subroutines when reaching a defined moment in time, in our case when the raster beam has reached a certain line on the screen. We have to do this because executing our subroutines 60 times per second respectively 50 times per second is usually too fast.
+3. when the subroutines have completed execution we point back to the regular system interrupt routine which is $EA31 - **we have come full circle** !
 
 To meet this behaviour we need to do only two things. Setup the hijacking of the system interrupt and within that ask the VIC-II controller to let us know when the raster beam has reached a certain position. Let's check the example code.
 
@@ -96,13 +94,13 @@ To meet this behaviour we need to do only two things. Setup the hijacking of the
 
 We start with the first part of the code in the main routine.
 
-In the setup code we first need to tell the C64 to stop triggering interrupts for a brief moment. Why is this of importance? Think about that we change the vector at $314/$315 to point to our own routine. For that we consecutively change the byte in $314 and then in $315. But what happens when an interrupt just occurs after we wrote to $314? The vector will point to the wrong address and the system will probably crash. To avoid this there is the machine language command SEI. It sets the *Interrupt Disable Flag* in the status register to 1 and from that point on no interrupt is triggered until the flag has been cleared again using the complementary command *CLI *which clears that **disabling** flag again. hile we turn off the system interrupt there will be no cursor  blinking and RUN-STOP key will not function either. Of course since we only disable the interrupt for a fraction of a second, we will not notice this as a user. 
+In the setup code we first need to tell the C64 to stop triggering interrupts for a brief moment. Why is this of importance? Think about that we change the vector at $314/$315 to point to our own routine. For that we consecutively change the byte in $314 and then in $315. But what happens when an interrupt just occurs after we wrote to $314? The vector will point to the wrong address and the system will probably crash. To avoid this there is the machine language command SEI. It sets the *Interrupt Disable Flag* in the status register to 1 and from that point on no interrupt is triggered until the flag has been cleared again using the complementary command *CLI* which clears that **disabling** flag again. hile we turn off the system interrupt there will be no cursor  blinking and RUN-STOP key will not function either. Of course since we only disable the interrupt for a fraction of a second, we will not notice this as a user. 
 
 Before we finally redirect the system interrupt vector we also take the opportunity and do some one time initializations like clearing the screen, then writing the two lines of text for our intro and we also initialize the SID music routine. Those are the parts of our intro that only need to be executed once so we don't want that to be included in the routines happening 60 times per second.
 
 After this there follows a block which disables other sources of interrupts and does some clean up work so there are no interferences to be expected. I will go into the various sources of interrupts in a dedicated Interrupt article at some point.
 
-The important part of the setup code as far as the hijacking idea plan goes is where we finally load the accumulator and the X-Index-Register with the memory location the label *irq is pointing to and  store it into $314/$315. *
+The important part of the setup code as far as the hijacking idea plan goes is where we finally load the accumulator and the X-Index-Register with the memory location the label *irq is pointing to and  store it into $314/$315.* 
 
 **There we have hijacked the system interrupt routine!**
 
@@ -117,20 +115,20 @@ Last but not least we need to consider that the C64 has a mechanism to check if 
 We actually need 9 Bits to really check all available raster lines. And that is exactly what the C64 is asking for. It borrows Bit#7 of the register $d011 to use it as extra Bit. When the raster beam has passed the 256 possible values in $d012 it will set Bit#0 on $d011 and restarts counting in $d012 until it reached the end of the screen. Then it clears Bit#0 in $d011 again. As we know that our text is written somewhere in the middle of the screen we want to make sure that Bit#0 in $d011 is not set by accident when we start our intro. This could be the case when for example certain Fastloader cartridges are inserted.
 
 
-Our setup code is complete - whenever the raster beam reaches line zero, our custom routine at label *irq *is executed.
+Our setup code is complete - whenever the raster beam reaches line zero, our custom routine at label *irq* is executed.
 
 
 ### The custom IRQ routine
 
 Our custom IRQ routine is actually very simple. All it does is acknowledging the IRQ and reset the register then it runs two sub routines. One is for the color wash effect and the other is for playing back the music. Once both subroutines have returned we jump to $EA31, the original system interrupt routine.
 
-The acknowledging command **dec $d019 **might actually be confusing and needs clarification.
+The acknowledging command **dec $d019** might actually be confusing and needs clarification.
 
 What we need to do every time our custom IRQ routine is executed is to tell via register $d019 that everything is fine and that we want another notification with the next screen refresh, that is the next time the raster beam reaches line zero on the screen. To make this happen the process is to read the content of $d019 and write it back to the same register. This will reset $d019 and our interrupt triggered from the VIC-II chip will be executed again as configured in $d012 before. The Read/Write pattern to do the reset is a special behavior of that $d019 register.
 
 Now as coders are looking for optimization all the time somebody found out that the decrement command *dec* can be used to do both operations with just one single command. This works because dec is a so-called Read-Modify-Write command that writes back the original value during the modify cycle.
 
-Using *dec $d019* instead of  executing the two consecutive commands *lda $d019* and* sta $d019* will save us some time in typing and system cycles. 
+Using *dec $d019* instead of  executing the two consecutive commands *lda $d019* and *sta $d019* will save us some time in typing and system cycles. 
 
 This is all you need to know about the interrupt for this first example intro. In the next two chapters we will look at the two subroutines we execute on our raster beam interrupt.
 

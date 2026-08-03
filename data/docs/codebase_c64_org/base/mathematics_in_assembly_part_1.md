@@ -3,8 +3,8 @@ title: Prologue
 source_url: https://codebase.c64.org/doku.php?id=base%3Amathematics_in_assembly_part_1
 category: tutorial
 topics:
-- basic
 - memory management
+- basic
 - assembly
 difficulty: beginner
 language: mixed
@@ -12,9 +12,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Prologue
@@ -51,7 +51,9 @@ Shifting left doubles, shifting right halves a number. Now we should be a bit mo
 
 The reason is clear, the upmost bit was lost before. Now it becomes obvious why the command shifting left has different “properties” than the one shifting right: left is “arithmetic” (ASL), and right is only “logical” (LSR) because the correct sign is preserved when shifting left in opposite to shifting right. So what to do? Very simple. The sign just has to be preserved when shifting right. Shifting a negative number right, the result has to be negative, too. This is the first time the rotate commands are useful. Some small example code:
 
-LDA #$EC ; -20 CMP #$80 ; MSB to carry bit ROR ; halve
+LDA #$EC ; -20
+CMP #$80 ; MSB to carry bit
+ROR      ; halve
 
 Now the correct result, $F6 (-10, %11110110), is computed. This routine of course also gives correct results for positive numbers. The absolute value of a doubled number must not be larger than 127 ($7F), otherwise the number range had to be enlarged to more than 8 bits. As mentioned before, the carry bit can be used to help if doubled number exceeds the number range, as an ASL or ROL commands pushes the upmost bit to the carry bit which can be taken care of afterwards.
 

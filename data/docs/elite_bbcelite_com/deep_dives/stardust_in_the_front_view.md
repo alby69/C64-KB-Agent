@@ -4,25 +4,25 @@ source_url: https://elite.bbcelite.com/deep_dives/stardust_in_the_front_view.htm
 category: deep-dive
 topics:
 - input handling
-- sprite programming
 - assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
-- KERNAL
 - CIA
+- KERNAL
 - CPU
+- VIC-II
 related:
-- raster-interrupts
 - sprite-programming
-- kernal-routines
 - keyboard-handling
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+- memory-map
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Stardust in the front view
@@ -41,7 +41,8 @@ The STARS6 routine processes stardust in the rear view, and is essentially the r
 
 													 -------------------
 
-						The process in STARS1 breaks down into three stages:
+						
+The process in STARS1 breaks down into three stages:
 
 - Moving the stardust towards us
 - Applying roll to the stardust
@@ -57,17 +58,22 @@ Each of the coordinates is stored as 16-bit sign-magnitude value, as in (x_hi x_
 
 													 ------------------------------
 
-						The following calculations move the stardust away from the centre of the screen by a distance proportionate to our speed, so dust that is further away from us (i.e. with a high value of z) moves by a smaller amount to create a sense of perspective.
+						
+The following calculations move the stardust away from the centre of the screen by a distance proportionate to our speed, so dust that is further away from us (i.e. with a high value of z) moves by a smaller amount to create a sense of perspective.
 
 These are the calculations:
 
-1. q = 64 * speed / z_hi 2. z = z - speed * 64 3. y = y + |y_hi| * q 4. x = x + |x_hi| * q
+  1. q = 64 * speed / z_hi
+  2. z = z - speed * 64
+  3. y = y + |y_hi| * q
+  4. x = x + |x_hi| * q
 
 We move the particle towards us by reducing the z-coordinate by the current speed - that's the easy part. We then calculate a factor q that determines how far we should move the stardust particle away from the centre point, and apply that factor by multiplying the x and y screen coordinates by (1 + q), which has the effect of making particles near the centre (small x and y) move less than particles near the edges (high x and y).
 
 Essentially, this is using the fact that when we project 3D (x, y, z) coordinates onto a 2D screen, the calculation is essentially:
 
-x_screen = x / z y_screen = y / z
+  x_screen = x / z
+  y_screen = y / z
 
 so if we reduce z (i.e. move the particle near to us) then the x and y screen coordinates should increase by an inverse but proportional amount.
 
@@ -75,9 +81,11 @@ so if we reduce z (i.e. move the particle near to us) then the x and y screen co
 
 													 -----------------------------
 
-						The following calculations apply the current roll angle alpha to the stardust:
+						
+The following calculations apply the current roll angle alpha to the stardust:
 
-5. y = y + alpha * x / 256 6. x = x - alpha * y / 256
+  5. y = y + alpha * x / 256
+  6. x = x - alpha * y / 256
 
 These are essentially the same as the roll equations from MVS4, which work in the same way when projected onto the 2D screen, as we can ignore the z axis when rolling.
 
@@ -85,9 +93,11 @@ These are essentially the same as the roll equations from MVS4, which work in th
 
 													 ------------------------------
 
-						The following calculations apply the current pitch angle beta to the stardust:
+						
+The following calculations apply the current pitch angle beta to the stardust:
 
-7. x = x + 2 * (beta * y / 256) ^ 2 8. y = y - beta * 256
+  7. x = x + 2 * (beta * y / 256) ^ 2
+  8. y = y - beta * 256
 
 The second one is essentially the same as the pitch equation from MVS4, just applied to the y-coordinate projected into 2D (i.e. divided by z).
 

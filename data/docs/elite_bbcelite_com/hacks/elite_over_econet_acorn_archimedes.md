@@ -3,8 +3,8 @@ title: Elite over Econet on the Acorn Archimedes
 source_url: https://elite.bbcelite.com/hacks/elite_over_econet_acorn_archimedes.html
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
@@ -13,10 +13,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Elite over Econet on the Acorn Archimedes
@@ -27,7 +27,7 @@ If you are playing Archimedes Elite and want to send scores to a multiplayer sco
 
 ![The EliteNet application](https://elite.bbcelite.com/images/elite_over_econet/elitenet.png) 
 
-						Once you have both ArcElite and EliteNet installed on your system, you can load Elite as usual, and simply run the EliteNet application alongside, as in the screenshot above. Archimedes Elite already works fine when loaded from an Econet fileserver, so you can install Elite and EliteNet on your network if you want, but this isn't essential; you might find it quicker to load the game from a hard disc.
+Once you have both ArcElite and EliteNet installed on your system, you can load Elite as usual, and simply run the EliteNet application alongside, as in the screenshot above. Archimedes Elite already works fine when loaded from an Econet fileserver, so you can install Elite and EliteNet on your network if you want, but this isn't essential; you might find it quicker to load the game from a hard disc.
 
 Configuring EliteNet to point to the scoreboard is pretty simple: you just fill in the configuration window and enable transmissions, and your scores should appear in the scoreboard (though note scores are only transmitted when you are actually in the game). Alternatively you can load an existing configuration from an EliteNet file by double-clicking the file or by dragging it to the application's window or icon bar icon.
 
@@ -41,7 +41,8 @@ Let's look at how EliteNet works under hood, but first here's some advice on how
 
 													 ----------------------------------
 
-						Archimedes Elite is similar to BBC Master Elite in that each combat kill awards a variable number of kill points, with more difficult kills giving more points. To make things fair in multiplayer competitions, the BBC Master version reverts to the one-point-per-kill approach of the original BBC Micro version, so everyone is on a level playing field.
+						
+Archimedes Elite is similar to BBC Master Elite in that each combat kill awards a variable number of kill points, with more difficult kills giving more points. To make things fair in multiplayer competitions, the BBC Master version reverts to the one-point-per-kill approach of the original BBC Micro version, so everyone is on a level playing field.
 
 To do the same with Archimedes Elite, the EliteNet application observes the game running alongside it, rather than hacking into it (see below for the details). To obtain the combat score, it checks the player's rank twice every second, and if the rank has gone up since the last check, it awards one kill point in the multiplayer scoreboard.
 
@@ -53,7 +54,8 @@ For the rest of this article, let's take a look at exactly how this observing is
 
 													 ---------------------------------------------
 
-						I haven't disassembled Archimedes Elite, and as quite a bit of it was written in C, I'm not sure I ever will. So if we can't easily hack the transmission routines into the game code, how can we persuade it to send scores to a multiplayer scoreboard over Econet?
+						
+I haven't disassembled Archimedes Elite, and as quite a bit of it was written in C, I'm not sure I ever will. So if we can't easily hack the transmission routines into the game code, how can we persuade it to send scores to a multiplayer scoreboard over Econet?
 
 The answer is buried inside the !EliteNet application directory, which contains a relocatable module called EliteOverEconet that looks after the whole thing. Indeed, the application is little more than a friendly user interface that sits on top of the module to make it easier to configure, and it's the module itself that does all the hard work. If you want to, it's possible to do away with the desktop application altogether and configure the module purely via star-commands or SWIs.
 
@@ -73,7 +75,7 @@ If you want to find out exactly how this is all done, the source code for the El
 
 To see a full list of star-commands supported by the module, load the module (or run EliteNet), press F12 and enter:
 
-*HELP EL.
+  *HELP EL.
 
 The module also supports two SWIs, Elite_GetStatus and Elite_SetStatus. To find out more about these, look at the comments in the SWI_Elite_GetStatus and SWI_Elite_SetStatus routines in the [module's source](https://github.com/markmoxon/elite-over-econet-acorn-archimedes/blob/main/1-source-files/main-sources/EliteOverEconet.arm). You can see these SWIs being used in the application's [!RunImage source](https://github.com/markmoxon/elite-over-econet-acorn-archimedes/blob/main/1-source-files/main-sources/!RunImage.bas) - search for "XElite" to see how they can be called.
 

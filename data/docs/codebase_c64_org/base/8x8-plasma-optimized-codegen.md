@@ -3,24 +3,24 @@ title: 8x8 Plasma w/ Optimized Speedcode Generator
 source_url: https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-optimized-codegen
 category: reference
 topics:
+- basic
+- graphics
 - raster interrupts
 - sprite programming
-- graphics
 - assembly
-- basic
 difficulty: advanced
 language: assembly
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 related:
 - vic-ii-registers
+- joystick-reading
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

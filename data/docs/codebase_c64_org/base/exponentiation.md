@@ -8,7 +8,7 @@ difficulty: beginner
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Exponentiation
@@ -21,7 +21,124 @@ The algorithm is recursive and at each iteration breaks the exponentiation in a 
 
 The multiplication algorithm provided is tailored for this routine: it accepts 32bit values and will produce a 32bit result.
 
-Num1=25 Num2=5 example lda #>Num1 sta B+1 lda #<Num1 sta B lda #Num2 jmp Exponent ; ************************************ ; ; Exponent ; ; input: B value to be raised ; .A exponent ; ; algo: if .A=0 res=1 ; if .A=1 res=B ; _ ; | B if E=1 ; Exp(B,E)= | B*Exp(B,E-1) if E is odd ; |_Exp(B,E/2)*Exp(B,E/2) if E is even ; ; ************************************ P = $fb M = $62 N = $6a ;E = $2 B = $3 Exponent tax beq res1 ; is E==0 ? lda B lsr ora B+1 beq resB ; if B==0 or B==1 then result=B txa cmp #1 bne ExpSub resB lda #0 ; E==1 | B==1 | B==0, result=B sta P+2 sta P+3 lda B sta P lda B+1 sta P+1 rts res1 sta P+1 ; E=0, result=1 sta P+2 sta P+3 lda #1 sta P rts ExpSub lsr ; E = int(E/2) beq resB ; E is 1 bcs ExpOdd ; E is Odd ExpEven jsr ExpSub ; E is Even ldx #$3 _ldP lda p,x ; multiply P by itself sta m,x ; P is the result of a previous mult sta n,x ; copy P in M and N dex bpl _ldP jmp Mult32 ExpOdd asl ; E = 2*int(E/2) (=E-1) jsr ExpSub ldx #$4 _ldD lda <p-1,x ; multiply P by B sta <m-1,x ; P is the result of a previous mult dex ; copy P in M bne _ldD lda B ; copy B in N sta N lda B+1 sta N+1 ;lda #0 stx N+2 stx N+3 jmp Mult32 Mult32 ; 32=32*32 lda #0 sta P sta P+1 sta P+2 sta P+3 ldy #$20 _loop asl p rol p+1 rol p+2 rol p+3 asl N rol N+1 rol N+2 rol N+3 bcc _skip clc ldx #$fc _add lda <p-252,x adc <m-252,x sta <p-252,x inx bne _add _skip dey bne _loop rts
+Num1=25      
+Num2=5
+ 
+example lda #>Num1
+        sta B+1
+        lda #<Num1
+        sta B
+        lda #Num2
+        jmp Exponent
+ 
+ 
+ 
+; ************************************
+;
+;       Exponent
+;
+;       input:  B value to be raised
+;               .A exponent
+;
+; algo:  if .A=0 res=1
+;        if .A=1 res=B
+;             _
+;            | B if E=1
+;  Exp(B,E)= | B*Exp(B,E-1) if E is odd
+;            |_Exp(B,E/2)*Exp(B,E/2) if E is even
+;
+; ************************************
+ 
+P = $fb
+M = $62
+N = $6a
+;E = $2
+B = $3
+ 
+ 
+ 
+Exponent
+        tax
+        beq res1        ; is E==0 ?
+        lda B
+        lsr
+        ora B+1
+        beq resB        ; if B==0 or B==1 then result=B
+        txa
+        cmp #1
+        bne ExpSub
+ 
+resB    lda #0          ; E==1 | B==1 | B==0, result=B
+        sta P+2
+        sta P+3
+        lda B
+        sta P
+        lda B+1
+        sta P+1
+        rts
+ 
+res1    sta P+1         ; E=0, result=1
+        sta P+2
+        sta P+3
+        lda #1
+        sta P
+        rts
+ 
+ExpSub  lsr             ; E = int(E/2)
+        beq resB        ; E is 1
+        bcs ExpOdd      ; E is Odd
+ 
+ExpEven jsr ExpSub      ; E is Even
+        ldx #$3
+_ldP    lda p,x         ; multiply P by itself
+        sta m,x         ; P is the result of a previous mult
+        sta n,x         ; copy P in M and N
+        dex
+        bpl _ldP
+        jmp Mult32      
+ 
+ExpOdd  asl             ; E = 2*int(E/2) (=E-1)
+        jsr ExpSub
+        ldx #$4
+_ldD    lda <p-1,x      ; multiply P by B
+        sta <m-1,x      ; P is the result of a previous mult
+        dex             ; copy P in M
+        bne _ldD
+        lda B           ; copy B in N
+        sta N
+        lda B+1
+        sta N+1
+        ;lda #0
+        stx N+2
+        stx N+3
+        jmp Mult32
+ 
+Mult32          ; 32=32*32
+        lda #0
+        sta P
+        sta P+1
+        sta P+2
+        sta P+3
+        ldy #$20
+_loop   asl p
+        rol p+1
+        rol p+2
+        rol p+3
+        asl N
+        rol N+1
+        rol N+2
+        rol N+3
+        bcc _skip
+        clc
+        ldx #$fc
+_add    lda <p-252,x
+        adc <m-252,x
+        sta <p-252,x
+        inx
+        bne _add
+_skip   dey 
+        bne _loop
+        rts
 
 ## Codice Estratto
 

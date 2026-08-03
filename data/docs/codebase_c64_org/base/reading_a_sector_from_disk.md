@@ -11,12 +11,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- keyboard-handling
 - joystick-reading
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Reading a sector from disk
@@ -35,7 +35,14 @@ A speciality of this command is the channel parameter. Actually you can't simply
 
 BASIC code:
 
-10 SA=8192 20 OPEN 2,8,2,"#" 30 OPEN 15,8,15,"U1 2 0 18 0" 40 FOR I=0 TO 255 50 GET#2,A$:IF A$="" THEN A$=CHR$(0) 60 POKE SA,ASC(A$):SA=SA+1 70 NEXT I 80 CLOSE 15:CLOSE 2
+10 SA=8192
+20 OPEN 2,8,2,"#"
+30 OPEN 15,8,15,"U1 2 0 18 0"
+40 FOR I=0 TO 255
+50 GET#2,A$:IF A$="" THEN A$=CHR$(0)
+60 POKE SA,ASC(A$):SA=SA+1
+70 NEXT I
+80 CLOSE 15:CLOSE 2
 
 Assembler code:
 

@@ -3,28 +3,28 @@ title: NES Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_nes.html
 category: deep-dive
 topics:
+- basic
+- memory management
 - graphics
 - assembly
-- memory management
 - sprite programming
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- SID
 - CPU
+- SID
+- VIC-II
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
 - kernal-routines
 - music-player
 - memory-map
+- raster-interrupts
+- sid-registers
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # NES Elite memory map
@@ -41,7 +41,83 @@ The VRAM is managed by the PPU and isn't directly accessible from the game code.
 
 That leaves the game code in ROM, and the two banks of WRAM that the game can access directly. The ROM is mapped into memory from $8000 to $FFFF, the 8K of battery-backed cartridge RAM is from $6000 to $7FFF, and the 2K of built-in RAM is from $0000 to $07FF. They are laid out in memory as follows, with the top three blocks being ROM, and the rest being WRAM:
 
-+-----------------------------------+ $FFFF | | | Vectors (in ROM bank 7) | | | +-----------------------------------+ $FFFA =[Vectors_b7](https://elite.bbcelite.com/nes/bank_7/variable/vectors_b7.html)| | | ROM bank 7 | | | +-----------------------------------+ $C000 =[ResetMMC1_b7](https://elite.bbcelite.com/nes/bank_7/variable/resetmmc1_b7.html)| | | Currently paged ROM bank (0 to 6) | | | +-----------------------------------+ $8000 =[ResetMMC1_b0](https://elite.bbcelite.com/nes/bank_0/subroutine/resetmmc1_b0.html)| | | $7FD8-$7FFF unused | | | +-----------------------------------+ $7FD8 | | | Saved commander slots | | | +-----------------------------------+ $7800 | | | Attribute buffer 1 | | | +-----------------------------------+ $77C0 | | | Nametable buffer 1 | | | +-----------------------------------+ $7400 | | | Attribute buffer 0 | | | +-----------------------------------+ $73C0 | | | Nametable buffer 0 | | | +-----------------------------------+ $7000 | | | Pattern buffer 1 | | | +-----------------------------------+ $6800 | | | Pattern buffer 0 | | | +-----------------------------------+ $6000 =[Cartridge WRAM](https://elite.bbcelite.com/nes/common/workspace/cartridge_wram.html)| | . . . . . . . . . . | | +-----------------------------------+ $0750 when all ship slots are used | | | Ship data blocks ascend from K% | | | +-----------------------------------+ $0600 =[K%](https://elite.bbcelite.com/nes/common/workspace/k_per_cent.html)| | | WP workspace | | | +-----------------------------------+ $0300 =[WP](https://elite.bbcelite.com/nes/common/workspace/wp.html)| | | Sprite buffer | | | +-----------------------------------+ $0200 =[ySprite0](https://elite.bbcelite.com/nes/common/workspace/sprite_buffer.html)| | | 6502 stack descends from $01FF | | | +-----------------------------------+ &0194 | | | Heap space ascends from XX3 | | | +-----------------------------------+ $0100 =[XX3](https://elite.bbcelite.com/nes/common/workspace/xx3.html)| | | Zero page workspace | | | +-----------------------------------+ $0000 =[ZP](https://elite.bbcelite.com/nes/common/workspace/zp.html)
+  +-----------------------------------+   $FFFF
+  |                                   |
+  | Vectors (in ROM bank 7)           |
+  |                                   |
+  +-----------------------------------+   $FFFA = [Vectors_b7](https://elite.bbcelite.com/nes/bank_7/variable/vectors_b7.html)
+  |                                   |
+  | ROM bank 7                        |
+  |                                   |
+  +-----------------------------------+   $C000 = [ResetMMC1_b7](https://elite.bbcelite.com/nes/bank_7/variable/resetmmc1_b7.html)
+  |                                   |
+  | Currently paged ROM bank (0 to 6) |
+  |                                   |
+  +-----------------------------------+   $8000 = [ResetMMC1_b0](https://elite.bbcelite.com/nes/bank_0/subroutine/resetmmc1_b0.html)
+  |                                   |
+  | $7FD8-$7FFF unused                |
+  |                                   |
+  +-----------------------------------+   $7FD8
+  |                                   |
+  | Saved commander slots             |
+  |                                   |
+  +-----------------------------------+   $7800
+  |                                   |
+  | Attribute buffer 1                |
+  |                                   |
+  +-----------------------------------+   $77C0
+  |                                   |
+  | Nametable buffer 1                |
+  |                                   |
+  +-----------------------------------+   $7400
+  |                                   |
+  | Attribute buffer 0                |
+  |                                   |
+  +-----------------------------------+   $73C0
+  |                                   |
+  | Nametable buffer 0                |
+  |                                   |
+  +-----------------------------------+   $7000
+  |                                   |
+  | Pattern buffer 1                  |
+  |                                   |
+  +-----------------------------------+   $6800
+  |                                   |
+  | Pattern buffer 0                  |
+  |                                   |
+  +-----------------------------------+   $6000 = [Cartridge WRAM](https://elite.bbcelite.com/nes/common/workspace/cartridge_wram.html)
+  |                                   |
+  .                                   .
+  .                                   .
+  .                                   .
+  .                                   .
+  .                                   .
+  |                                   |
+  +-----------------------------------+   $0750 when all ship slots are used
+  |                                   |
+  | Ship data blocks ascend from K%   |
+  |                                   |
+  +-----------------------------------+   $0600 = [K%](https://elite.bbcelite.com/nes/common/workspace/k_per_cent.html)
+  |                                   |
+  | WP workspace                      |
+  |                                   |
+  +-----------------------------------+   $0300 = [WP](https://elite.bbcelite.com/nes/common/workspace/wp.html)
+  |                                   |
+  | Sprite buffer                     |
+  |                                   |
+  +-----------------------------------+   $0200 = [ySprite0](https://elite.bbcelite.com/nes/common/workspace/sprite_buffer.html)
+  |                                   |
+  | 6502 stack descends from $01FF    |
+  |                                   |
+  +-----------------------------------+   &0194
+  |                                   |
+  | Heap space ascends from XX3       |
+  |                                   |
+  +-----------------------------------+   $0100 = [XX3](https://elite.bbcelite.com/nes/common/workspace/xx3.html)
+  |                                   |
+  | Zero page workspace               |
+  |                                   |
+  +-----------------------------------+   $0000 = [ZP](https://elite.bbcelite.com/nes/common/workspace/zp.html)
 
 The game code is split into eight different ROM banks, with bank 7 permanently mapped into the top of memory from $C000 to $FFFF. Routines in bank 7 can page the other ROM banks into memory at $8000, enabling the game binary to be 128K in size, with only 32K of this being paged into memory at any one time (16K for bank 7 and 16K for one of banks 0 to 6). This process is controlled by the MMC1 mapper, and is described in the deep dive on [splitting NES Elite across multiple ROM banks](https://elite.bbcelite.com/splitting_nes_elite_across_multiple_rom_banks.html).
 
@@ -64,11 +140,12 @@ That's a total of 5670 free bytes of ROM. There are also 40 bytes of unused RAM 
 
 													 ----------------------
 
-						To see just how big NES Elite is, we can convert the main game binary into an image, with one byte per pixel, and a greyscale showing each byte's value, with 0 being shown as black, 255 being shown as white, and interim values as greyscale pixels. The result is a 363-pixel square, like this:
+						
+To see just how big NES Elite is, we can convert the main game binary into an image, with one byte per pixel, and a greyscale showing each byte's value, with 0 being shown as black, 255 being shown as white, and interim values as greyscale pixels. The result is a 363-pixel square, like this:
 
 ![The game binary for NES Elite as an image](https://elite.bbcelite.com/images/nes/code.png) 
 
-						This is easily the biggest version of Elite on the 6502, and you can clearly see the division into the eight ROM banks.
+This is easily the biggest version of Elite on the 6502, and you can clearly see the division into the eight ROM banks.
 
 ## Codice Estratto
 

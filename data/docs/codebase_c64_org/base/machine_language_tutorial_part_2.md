@@ -10,18 +10,18 @@ language: mixed
 hardware:
 - CPU
 - CIA
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- keyboard-handling
 - joystick-reading
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - sound-programming
+- sid-registers
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Machine Language Tutorial Part 2 - Memory Manipulation
@@ -34,25 +34,37 @@ The 6510 has three registers that can all hold 8 bits of data (this is why the C
 
 To load a byte into registers, use these commands:
 
-LDA - load into A LDX - load into X LDY - load into Y
+LDA - load into A
+LDX - load into X
+LDY - load into Y
 
 So the “LDA $1234” example from last part would load whatever was in $1234 into A.
 
 To store registers into memory, use these commands:
 
-STA - store A into STX - store X into STY - store Y into
+STA - store A into
+STX - store X into
+STY - store Y into
 
 So the “STA $4321” example from last part would store whatever was in A into $4321.
 
 To transfer data between registers, use these commands:
 
-TAX - transfer A to X TAY - transfer A to Y TXA - transfer X to A TYA - transfer Y to A
+TAX - transfer A to X
+TAY - transfer A to Y
+TXA - transfer X to A
+TYA - transfer Y to A
 
 These commands have no operand, so just “TAX” would be sufficient.
 
 To increment or decrement registers or memory, use these commands:
 
-INC - increment memory INX - increment X INY - increment Y DEC - decrement memory DEX - decrement X DEY - decrement Y
+INC - increment memory
+INX - increment X
+INY - increment Y
+DEC - decrement memory
+DEX - decrement X
+DEY - decrement Y
 
 So “INC $1111” would increment $1111. INX and INY have no operand. You'll use INX/DEX/INY/DEY a lot, so remember them!
 

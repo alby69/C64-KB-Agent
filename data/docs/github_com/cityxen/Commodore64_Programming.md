@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: '2026-06-04T10:39:01Z'
 ---
 
@@ -19,7 +19,7 @@ last_modified: '2026-06-04T10:39:01Z'
 **Description:** Commodore 64 Programming KickAssembler Library and Examples
 
 **GitHub URL:** https://github.com/cityxen/Commodore64_Programming
-**Stars:** 55
+**Stars:** 56
 **Last Updated:** 2026-06-04T10:39:01Z
 
 

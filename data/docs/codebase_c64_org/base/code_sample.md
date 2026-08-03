@@ -3,32 +3,32 @@ title: How to code for the EasyFlash cart
 source_url: https://codebase.c64.org/doku.php?id=base%3Acode_sample
 category: tool
 topics:
-- raster interrupts
+- basic
 - memory management
+- raster interrupts
 - input handling
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -67,13 +67,24 @@ $de02 selects the configuration:
 
 In practice this means:
 
-lda #%00000100 ;Cartridge ROM off (256 Bytes of RAM still available at $dfxx) lda #%00000101 ;Ultimax Mode (low bank at $8000, high bank at $e000) lda #%00000110 ; 8 Kb cart (low bank at $8000) lda #%00000111 ;16 Kb cart (low bank at $8000, high bank at $a000) sta $de02
+lda #%00000100 ;Cartridge ROM off (256 Bytes of RAM still available at $dfxx)
+lda #%00000101 ;Ultimax Mode (low bank at $8000, high bank at $e000)
+lda #%00000110 ; 8 Kb cart (low bank at $8000)
+lda #%00000111 ;16 Kb cart  (low bank at $8000, high bank at $a000)
+sta $de02
 
 Example:
 
 To access 8Kb low and 8Kb high of Bank 0:
 
-lda #$37 ;enable CART ROM sta $01 lda #$00 ;select bank sta $de00 lda #%00000111 ;select 16 Kb configuration, low at $8000, high at $a000 sta $de02 ldx #00 lda $8000,x ;access data from EasyFlash ($8000-$bfff in this case)
+lda #$37 ;enable CART ROM
+sta $01
+lda #$00 ;select bank
+sta $de00
+lda #%00000111 ;select 16 Kb configuration, low at $8000, high at $a000
+sta $de02
+ldx #00
+lda $8000,x ;access data from EasyFlash ($8000-$bfff in this case)
 
 *$de00 and $de02 are WRITE ONLY, so you can not use INC or DEC to change banks or settings.*
 

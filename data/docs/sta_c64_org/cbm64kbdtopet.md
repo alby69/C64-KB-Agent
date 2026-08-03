@@ -9,16 +9,16 @@ language: none
 hardware:
 - CIA
 related:
+- keyboard-handling
 - cia-registers
 - joystick-reading
-- keyboard-handling
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 # Commodore 64 keyboard matrix code to PETSCII code conversion
 
-| Key | Matrix code (dec, hex) | Normal (dec, hex) | Shift (dec, hex) | Commodore (dec, hex) | Control (dec, hex) | |||||
+| Key | Matrix code (dec, hex) |  | Normal (dec, hex) |  | Shift (dec, hex) |  | Commodore (dec, hex) |  | Control (dec, hex) |  | 
 |---|---|---|---|---|---|---|---|---|---|---|
 | A | 10 | $0A | 65 | $41 | 193 | $C1 | 176 | $B0 | 1 | $01 | 
 | B | 28 | $1C | 66 | $42 | 194 | $C2 | 191 | $BF | 2 | $02 | 
@@ -56,30 +56,30 @@ last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 | 7 | 24 | $18 | 55 | $37 | 39 | $27 | 154 | $9A | 31 | $1F | 
 | 8 | 27 | $1B | 56 | $38 | 40 | $28 | 155 | $9B | 158 | $9E | 
 | 9 | 32 | $20 | 57 | $39 | 41 | $29 | 41 | $29 | 18 | $12 | 
-| * (asterisk) | 49 | $31 | 42 | $2A | 192 | $C0 | 223 | $DF | ||
+| * (asterisk) | 49 | $31 | 42 | $2A | 192 | $C0 | 223 | $DF |  |  | 
 | @ (at) | 46 | $2E | 64 | $40 | 186 | $BA | 164 | $A4 | 0 | $00 | 
 | : (colon) | 45 | $2D | 58 | $3A | 91 | $5B | 91 | $5B | 27 | $1B | 
-| , (comma) | 47 | $2F | 44 | $2C | 60 | $3C | 60 | $3C | ||
+| , (comma) | 47 | $2F | 44 | $2C | 60 | $3C | 60 | $3C |  |  | 
 | = (equal) | 53 | $35 | 61 | $3D | 61 | $3D | 61 | $3D | 31 | $1F | 
 | ← (left arrow) | 57 | $39 | 95 | $5F | 95 | $5F | 95 | $5F | 6 | $06 | 
-| – (minus) | 43 | $2B | 45 | $2D | 221 | $DD | 220 | $DC | ||
-| . (period) | 44 | $2C | 46 | $2E | 62 | $3E | 62 | $3E | ||
+| – (minus) | 43 | $2B | 45 | $2D | 221 | $DD | 220 | $DC |  |  | 
+| . (period) | 44 | $2C | 46 | $2E | 62 | $3E | 62 | $3E |  |  | 
 | £ (pound) | 48 | $30 | 92 | $5C | 169 | $A9 | 168 | $A8 | 28 | $1C | 
-| + (plus) | 40 | $28 | 43 | $2B | 219 | $DB | 166 | $A6 | ||
+| + (plus) | 40 | $28 | 43 | $2B | 219 | $DB | 166 | $A6 |  |  | 
 | ; (semicolon) | 50 | $32 | 59 | $3B | 93 | $5D | 93 | $5D | 29 | $1D | 
-| / (slash) | 55 | $37 | 47 | $2F | 63 | $3F | 63 | $3F | ||
+| / (slash) | 55 | $37 | 47 | $2F | 63 | $3F | 63 | $3F |  |  | 
 | ↑ (up arrow) | 54 | $36 | 94 | $5E | 222 | $DE | 222 | $DE | 30 | $1E | 
-| F1/F2 | 4 | $04 | 133 | $85 | 137 | $89 | 137 | $89 | ||
-| F3/F4 | 5 | $05 | 134 | $86 | 138 | $8A | 138 | $8A | ||
-| F5/F6 | 6 | $06 | 135 | $87 | 139 | $8B | 139 | $8B | ||
-| F7/F8 | 3 | $03 | 136 | $88 | 140 | $8C | 140 | $8C | ||
-| Clear/Home | 51 | $33 | 19 | $13 | 147 | $93 | 147 | $93 | ||
-| cursor left/right | 2 | $02 | 29 | $1D | 157 | $9D | 157 | $9D | ||
-| cursor up/down | 7 | $07 | 17 | $11 | 145 | $91 | 145 | $91 | ||
-| Insert/Delete | 0 | $00 | 20 | $14 | 148 | $94 | 148 | $94 | ||
-| Return | 1 | $01 | 13 | $0D | 141 | $8D | 141 | $8D | ||
-| Run/Stop | 63 | $3F | 3 | $03 | 131 | $83 | 131 | $83 | ||
-| Space | 60 | $3C | 32 | $20 | 160 | $A0 | 160 | $A0 | ||
+| F1/F2 | 4 | $04 | 133 | $85 | 137 | $89 | 137 | $89 |  |  | 
+| F3/F4 | 5 | $05 | 134 | $86 | 138 | $8A | 138 | $8A |  |  | 
+| F5/F6 | 6 | $06 | 135 | $87 | 139 | $8B | 139 | $8B |  |  | 
+| F7/F8 | 3 | $03 | 136 | $88 | 140 | $8C | 140 | $8C |  |  | 
+| Clear/Home | 51 | $33 | 19 | $13 | 147 | $93 | 147 | $93 |  |  | 
+| cursor left/right | 2 | $02 | 29 | $1D | 157 | $9D | 157 | $9D |  |  | 
+| cursor up/down | 7 | $07 | 17 | $11 | 145 | $91 | 145 | $91 |  |  | 
+| Insert/Delete | 0 | $00 | 20 | $14 | 148 | $94 | 148 | $94 |  |  | 
+| Return | 1 | $01 | 13 | $0D | 141 | $8D | 141 | $8D |  |  | 
+| Run/Stop | 63 | $3F | 3 | $03 | 131 | $83 | 131 | $83 |  |  | 
+| Space | 60 | $3C | 32 | $20 | 160 | $A0 | 160 | $A0 |  |  |
 
 ---
 *Fonte originale: [https://sta.c64.org/cbm64kbdtopet.html](https://sta.c64.org/cbm64kbdtopet.html)*

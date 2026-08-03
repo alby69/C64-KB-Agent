@@ -9,9 +9,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Fast 8bit ranged random numbers
@@ -64,9 +64,9 @@ for i in range(1,bytes,1):
 ```
 However, this method has a major drawback: You can't map a set of 256 numbers to an arbitrary range of numbers while keeping the same probability for each number. For example, when you want to get values from 0 to 156 then it is obvious that some numbers would appear twice in your table, while others appear just once. This has of course a huge impact on the randomness of your results. A better, although much slower way to get random numbers in a choosen interval is:
 
-- extend the above described mechanism to create 24-bit random numbers
-- multiply the random number with your max. number
-- use the highbyte of the result
+1. extend the above described mechanism to create 24-bit random numbers
+2. multiply the random number with your max. number
+3. use the highbyte of the result
 
 ## Codice Estratto
 

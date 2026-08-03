@@ -9,15 +9,15 @@ difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Mathematics in Assembly - Part 6
@@ -34,11 +34,11 @@ Here we go.
 
 But at first the snag: having the speed mentioned before is only 8 bits wide, relatively inaccurate and a table is needed that's growing quite fast when enlarging the range of calculation or accuracy. But the ratio of accuracy and memory expense can be changed arbitrarily, but more on that later. So, without any further delay, the actual simple approach is the following: there is a certain logarithm law, looking like this:
 
-log[a] (u*v) = log[a] (u) + log[a] (v)
+ log[a] (u*v) = log[a] (u) + log[a] (v)
 
 Spinning the wheel a little further:
 
-a^log[a] (u*v) = a^(log[a] (u) + log[a] (v))...y u * v = a^(log[a] (u) + log[a] (v))
+ a^log[a] (u*v) = a^(log[a] (u) + log[a] (v))...y u  *  v  = a^(log[a] (u) + log[a] (v))
 
 In plain english, we calculate the logarithms to an arbitrary base of both factors, add them, raise the base with that sumand get our product. Sounds quite complicated, but actually isn't. Because we can't simply logarithmize or raise to a certain power, we first need to generate some tables, and that's best done using our good old BASIC.
 
@@ -50,15 +50,21 @@ There is a specific value, the integer factor, which is to be “scaled” with 
 
 So at first we need a table holding the binary algorith for arguments from 1 to 255. The zero is ignored here as its logarithm is not defined. So the table values range from 0 (log]2[ (1)) to 7.99435344 (log]2[ (255)). To store these numbers rounded would be very inaccurate, so they first need to be scaled to a larger number range. As the logarithm values have a width of 8 bits, a factor scaling the biggest one to exactly 255 would be just right. This value, let's call it “f”, calculated from:
 
-f = 255/log[2] (255).
+ f = 255/log[2] (255). 
 
 Sounds logical. Now only the logarithm table needs to be calculated in BASIC:
 
-1 for x=1 to 255 2 y= f*log(x)/log(2)+.5 3 poke log2tab+x,y 4 next
+1 for x=1 to 255
+2 y= f*log(x)/log(2)+.5
+3 poke log2tab+x,y
+4 next
 
 In line 2, the value is calculated. As BASIC only calculates the natural algorithm, it first needs to be transformed to the binary one (log(x)/log(2)), the .5 is just added to round the number. The values of this table are now ranging from 0 to 255. The biggest exponent for base 2 would be 255+255=510 ($01FE). That is, the second needed table, the power table with base 2 running from 1 (2^0) to 254,003906 (2^(log]2[..(255)+log]2[ (255/256)) need to be scaled to a range of $0 to $01FE, and, on the other hand, the rounded values for the table must be scaled to 0 to 255 * 255/256. In BASIC, this looks like:
 
-1 for x= 0 to 510 2 y=2^(x/f-8)+.5 3 poke pow2tab+x,y 4 next
+1 for x= 0 to 510
+2 y=2^(x/f-8)+.5
+3 poke pow2tab+x,y
+4 next
 
 The -8 in line 2 is caused by the fact that the result is divided by 256 (i.e. multiplied with 2^-8), as the second factor only ranges from 0 to 255/256, so its bits having a valency decreased by 8 each(2^-8 to 2^-1).
 
@@ -78,11 +84,19 @@ Before execution, the x- and y-registers hold the two factors, after execution, 
 
 Now this routine works quite well but for operations like for instance $70 * $80/256 it doesn't calculate, as expected, the half of $70 but $37 instead of $38. If that's not okay, one needs to enlarge the accuracy. That means to enlarge the table accordingly. I'm just mentioning a case where the results won't be more accurate with a growing table, so to say the maximum case. The logarithm values are now multiplied with 256 instead of about 32, like before. So they range from 0 to 2046.55448 (about $07ff). As this won't fit in 8 bits, a table for the lobyte and one for the hibyte of the scaled algorithm needs to be generated:
 
-1 for x= 1 to 255 2 y= 256*log(x)/log(2)+.5 3 poke log2tab1+x,y and 255 4 poke log2tbh0+x,y/256 5 poke log2tbh1+x,y/256 + pow2tab/256 6 next
+1 for x= 1 to 255
+2 y= 256*log(x)/log(2)+.5
+3 poke log2tab1+x,y and 255
+4 poke log2tbh0+x,y/256
+5 poke log2tbh1+x,y/256 + pow2tab/256
+6 next
 
 I'll explain later on why there are two hibyte tables generated here. Good, now for the power table which is now 2*$07FF+1=$0FFF (4095) bytes long:
 
-1 for x=0 to 4094 2 y=2^(x/256-8)+.5 3 poke pow2tab+x,y 4 next
+1 for x=0 to 4094
+2 y=2^(x/256-8)+.5
+3 poke pow2tab+x,y
+4 next
 
 Now the actual calculation routine looks a little different:
 

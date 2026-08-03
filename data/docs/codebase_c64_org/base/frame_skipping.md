@@ -10,13 +10,13 @@ language: assembly
 hardware:
 - SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- sprite-programming
+- music-player
+- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # Frame skipping
@@ -27,7 +27,19 @@ base:frame_skipping
 
 Once in a while you created some effect that just goes too quick when you update it every frame. The option is to have a check in order to skip your routine every other frame. Put this inside your IRQ.
 
-start: inc skipper+1 // increase the check byte skipper: lda #$00 // check byte and #$01 // check first bit (even or odd number?) beq passroutine // skip routine on even numbers routine: // routine that will be executed every other frame passroutine: // the rest, executed every frame
+start:
+   inc skipper+1      // increase the check byte
+   
+skipper:
+   lda #$00           // check byte
+   and #$01           // check first bit (even or odd number?)
+   beq passroutine    // skip routine on even numbers
+   
+routine:
+   // routine that will be executed every other frame
+   
+passroutine:
+   // the rest, executed every frame
 
 base/frame_skipping.txt · Last modified:  by 127.0.0.1
 

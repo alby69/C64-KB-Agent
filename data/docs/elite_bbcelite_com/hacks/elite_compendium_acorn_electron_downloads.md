@@ -3,25 +3,25 @@ title: Playing the Compendium version of Acorn Electron Elite
 source_url: https://elite.bbcelite.com/hacks/elite_compendium_acorn_electron_downloads.html
 category: reference
 topics:
-- input handling
-- assembly
 - basic
+- assembly
+- input handling
 difficulty: intermediate
 language: mixed
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Playing the Compendium version of Acorn Electron Elite
@@ -36,13 +36,14 @@ This page looks at the requirements for running the Compendium version of Acorn 
 
 													 ---------------------
 
-						To run the Compendium version of Elite on the Acorn Electron, you'll need 16K of sideways RAM and a proper storage system (i.e. floppy disc, SD card or similar). There are both traditional and modern options that provide these features.
+						
+To run the Compendium version of Elite on the Acorn Electron, you'll need 16K of sideways RAM and a proper storage system (i.e. floppy disc, SD card or similar). There are both traditional and modern options that provide these features.
 
 - If you want to stick to original hardware, the Compendium will work with Acorn's Plus 1 expansion system with a sideways RAM cartridge, and with the Plus 3 disc drive. All of these could be bought back in the 1980s, though they don't necessarily come cheap these days.
 - If you're OK with a modern solution, there are lots of options:
-								- The easiest and most cost-effective solutions are from [Ramtop Retro](http://www.ramtop-retro.uk/). The Elite Compendium works out-of-the-box on the ElkSD64, ElkSD128, ElkSD-Plus1 and Plus 1 Mini; I actually developed the game on the latter, and I really like this bit of kit. All of the above products come with at least 16K of sideways RAM and an SD card interface, and the Plus 1 Mini and ElkSD128 also support digital joysticks (but not analogue joysticks). These are all highly recommended options.
-- If you want all the bells and whistles, including support for both analogue joysticks and digital joysticks, then [Retro Hardware](https://www.ebay.co.uk/usr/daveejh)sells the mighty New Plus 1. This has a built-in SD card interface, and sideways RAM can be added either in cartridge form (available from the same seller), or as a single 62256 RAM chip (if you have the AP6 version of the New Plus 1). The New Plus 1 costs more than the Ramtop Plus 1 Mini, but it does more too. It's pretty great.
- 
+								
+  - The easiest and most cost-effective solutions are from [Ramtop Retro](http://www.ramtop-retro.uk/) . The Elite Compendium works out-of-the-box on the ElkSD64, ElkSD128, ElkSD-Plus1 and Plus 1 Mini; I actually developed the game on the latter, and I really like this bit of kit. All of the above products come with at least 16K of sideways RAM and an SD card interface, and the Plus 1 Mini and ElkSD128 also support digital joysticks (but not analogue joysticks). These are all highly recommended options.
+  - If you want all the bells and whistles, including support for both analogue joysticks and digital joysticks, then [Retro Hardware](https://www.ebay.co.uk/usr/daveejh) sells the mighty New Plus 1. This has a built-in SD card interface, and sideways RAM can be added either in cartridge form (available from the same seller), or as a single 62256 RAM chip (if you have the AP6 version of the New Plus 1). The New Plus 1 costs more than the Ramtop Plus 1 Mini, but it does more too. It's pretty great.
 - The easiest and most cost-effective solutions are from 
 
 You can also combine old and new hardware - for example, if you have an original Plus 1, then Ramtop Retro's ElkSD-Plus1 will provide everything you need to run the Compendium. Elite should work with most other storage and sideways RAM expansion options, as they are all pretty standard, but if you have any problems, let me know [via this Stardot thread](https://www.stardot.org.uk/forums/viewtopic.php?t=31334) and I'll investigate.
@@ -55,7 +56,8 @@ Finally, the Delta 14B joystick support in the musical version of the Compendium
 
 													 ---------
 
-						The Compendium version of Elite supports three different types of joystick: analogue joysticks via the Plus 1, and digital joysticks via the Slogger and First Byte interfaces.
+						
+The Compendium version of Elite supports three different types of joystick: analogue joysticks via the Plus 1, and digital joysticks via the Slogger and First Byte interfaces.
 
 For the Slogger interface, you need to configure the address it uses to &FCD0 by setting the left switch to A and the right switch to D. If you are using a Ramtop Retro product with a joystick interface, such as the ElkSD128 or Plus 1 Mini, then it will already be configured this way.
 
@@ -79,10 +81,12 @@ If you are using Slogger or First Byte digital joysticks, then the fire button w
 
 Note that some interfaces, like the ElkSD128 and Plus 1 Mini, allow you to map digital joysticks to the Plus 1 analogue port. This will enable you to use a digital joystick when Plus 1 joysticks are configured, by mapping each direction on the joystick to a full movement of the analogue joystick (i.e. to full pitch or roll). Note that this works differently to the Slogger or First Byte interfaces, which use the same joystick code as the BBC Master Compact version of Elite; with these latter options, each direction on the joystick is effectively mapped to the keyboard controls, so the longer you hold the joystick in one direction, the steeper the climb or roll becomes. The ElkSD128 and Plus 1 Mini support all three joystick options, so you can choose the one that best suits your flying style.
 
+## 
 
 													 ---------------
 
-						The Compendium version of Acorn Electron Elite has had the following releases:
+						
+The Compendium version of Acorn Electron Elite has had the following releases:
 
 - 2025-07-09 - Initial release
 - 2025-07-20 - Fixed an issue with file deletion in ADFS on the Acorn Electron
@@ -94,10 +98,12 @@ Note that some interfaces, like the ElkSD128 and Plus 1 Mini, allow you to map d
 
 You can check the release for a given disc image by loading the disc and typing *TYPE README to display the credits. The build date is at the end.
 
+## 
 
 													 ------------
 
-						In version 2.00 of the ACP DFS, the disc catalogue gets a bit scrambled (it works but is pretty hard to read). Upgrading to version 2.20 fixes this.
+						
+In version 2.00 of the ACP DFS, the disc catalogue gets a bit scrambled (it works but is pretty hard to read). Upgrading to version 2.20 fixes this.
 
 ---
 *Fonte originale: [https://elite.bbcelite.com/hacks/elite_compendium_acorn_electron_downloads.html](https://elite.bbcelite.com/hacks/elite_compendium_acorn_electron_downloads.html)*

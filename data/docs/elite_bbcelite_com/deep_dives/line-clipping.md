@@ -3,8 +3,8 @@ title: Line-clipping
 source_url: https://elite.bbcelite.com/deep_dives/line-clipping.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
@@ -13,10 +13,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Line-clipping
@@ -31,7 +31,7 @@ The second part of the solution is efficient line-clipping, which ensures that l
 
 ![A clipped planet BBC Micro Elite](https://elite.bbcelite.com/images/cassette/clipping.png) 
 
-						The extended screen coordinate system caters for objects outside of the screen bounds, so when the game actually comes to draw these objects in the space view, it needs to work out exactly which lines to draw on-screen, and that's where the line-clipping routines come in. They take lines made up of 16-bit coordinates and work out whether any of that line is on-screen, and return the portion that's visible. In a sense, the screen is a small portal onto the wider universe, and line-clipping is the process of working out what we can see through that portal.
+The extended screen coordinate system caters for objects outside of the screen bounds, so when the game actually comes to draw these objects in the space view, it needs to work out exactly which lines to draw on-screen, and that's where the line-clipping routines come in. They take lines made up of 16-bit coordinates and work out whether any of that line is on-screen, and return the portion that's visible. In a sense, the screen is a small portal onto the wider universe, and line-clipping is the process of working out what we can see through that portal.
 
 Line-clipping is done in two stages. The first stage in routine [LL145](https://elite.bbcelite.com/cassette/main/subroutine/ll145_part_1_of_4.html) works out whether the line intersects the screen at any point, and if it does, then the second stage in routine [LL118](https://elite.bbcelite.com/cassette/main/subroutine/ll118.html) clips the line and returns the portion that appears on-screen, which we then need to draw.
 
@@ -41,7 +41,8 @@ Let's see how these two stages work.
 
 													 -----------------------------------------
 
-						The line-clipping routine starts with a call to LL145, which checks whether the line is worth clipping - in other words, whether the line passes through the screen at any point. As the actual clipping process the LL118 routine, is quite involved, it's worth spending time checking whether we need to call it at all.
+						
+The line-clipping routine starts with a call to LL145, which checks whether the line is worth clipping - in other words, whether the line passes through the screen at any point. As the actual clipping process the LL118 routine, is quite involved, it's worth spending time checking whether we need to call it at all.
 
 Here's a breakdown of how LL145 determines whether a line is partly or wholly on screen, and therefore whether it's worth sending to LL118 to be clipped.
 
@@ -53,9 +54,9 @@ Here's a breakdown of how LL145 determines whether a line is partly or wholly on
 - If moving both points up by one screen doesn't move at least one of them past the top edge of the screen (i.e. if neither of them is in the horizontal screen-high strip below the bottom of the screen), return with failure (this test needs to be done only using the space view portion of the screen)
 
 - Calculate the line gradient from the 16-bit coordinates, calculating it the right way round to make it a fractional gradient:
-								- Calculate (delta_x / delta_y) if delta_x < delta_y
-- Calculate (delta_y / delta_x) if delta_x >= delta_y
- 
+								
+  - Calculate (delta_x / delta_y) if delta_x < delta_y
+  - Calculate (delta_y / delta_x) if delta_x >= delta_y
 
 - Do the actual clipping by calling LL118 to move one end of the line at a time (so if both points need moving on-screen, we call LL118 twice)
 - If both the original coordinates were off-screen, double-check that the clipped line is indeed on-screen, and if not return with failure
@@ -65,7 +66,8 @@ Here's a breakdown of how LL145 determines whether a line is partly or wholly on
 
 													 ----------------------
 
-						[LL118](https://elite.bbcelite.com/cassette/main/subroutine/ll118.html) is called by LL145 when we think a line crosses the screen. It only clips one end of the line, so if LL145 finds that both ends need clipping, it calls LL118 twice, once for each end.
+						
+[LL118](https://elite.bbcelite.com/cassette/main/subroutine/ll118.html) is called by LL145 when we think a line crosses the screen. It only clips one end of the line, so if LL145 finds that both ends need clipping, it calls LL118 twice, once for each end.
 
 This is how it works. Given a point (x1, y1), we move the point along the line until it is on-screen, which effectively clips the (x1, y1) end of a line to be on the screen. The movement process depends on the line's gradient, the direction of slope (i.e. top left to bottom right, or top right to bottom left), and the steepness of slope (i.e. is it more vertical than horizontal).
 

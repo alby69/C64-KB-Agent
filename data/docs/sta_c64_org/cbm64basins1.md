@@ -7,19 +7,19 @@ topics:
 difficulty: intermediate
 language: basic
 hardware:
-- CIA
 - BASIC ROM
+- CIA
 related:
+- keyboard-handling
 - cia-registers
 - joystick-reading
-- keyboard-handling
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Mon, 03 Mar 2025 00:00:00 GMT
 ---
 
 # Commodore 64 BASIC instructions (sorted by instruction)
 
-| Instruction | Token (hex, dec) | Exec address | Type | ||
+| **Instruction** |  | Token (hex, dec) |  | Exec address | Type | 
 |---|---|---|---|---|---|
 | ABS | abs | $B6 | 182 | $BC58 | Function, numerical | 
 | AND | aN | $AF | 175 | $AFE9 | Operator, logical | 
@@ -63,7 +63,7 @@ last_modified: Mon, 03 Mar 2025 00:00:00 GMT
 | PEEK | pE | $C2 | 194 | $B80E | Function, numerical | 
 | POKE | pO | $97 | 151 | $B824 | Instruction/command | 
 | POS | pos | $B9 | 185 | $B39E | Function, numerical, special | 
-| ? | $99 | 153 | $AAA0 | Instruction/command | |
+|  | ? | $99 | 153 | $AAA0 | Instruction/command | 
 | PRINT# | pR | $98 | 152 | $AA80 | Instruction/command | 
 | READ | rE | $87 | 135 | $AC06 | Instruction | 
 | REM | rem | $8F | 143 | $A93B | Instruction/command | 

@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Rotate byte and perform an action on each bit set to 1
@@ -20,7 +20,12 @@ Invented by Hoogo. Written by Frantic.
 
 Sometimes you've got a byte value and for each bit you want to perform some action if the bit is set to 1 and do nothing, or something else, if the bit is set to 0. Hoogo came up with [a nice way of doing that on CSDb](http://csdb.dk/forums/?roomid=11&topicid=115488#115562) which doesn't clobber any registers except for the status register.
 
-asl pattern bcc no_action inc pattern ;Perform action here ... no_action:
+	asl pattern
+	bcc no_action
+	inc pattern
+	;Perform action here
+	...
+no_action:
 
 This works fine because ASL always shifts in a 0 as the new lsb in the byte and the INC, which changes the lsb to 1, is only executed if a 1 was shifted out into the carry flag by the ASL instruction.
 

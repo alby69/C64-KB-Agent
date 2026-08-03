@@ -3,21 +3,21 @@ title: Auto-playing the NES combat demo
 source_url: https://elite.bbcelite.com/deep_dives/auto-playing_the_combat_demo.html
 category: deep-dive
 topics:
+- basic
+- assembly
 - memory management
 - sprite programming
-- assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 related:
-- raster-interrupts
-- sprite-programming
 - kernal-routines
+- sprite-programming
 - memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Auto-playing the NES combat demo
@@ -28,7 +28,7 @@ If you leave NES Elite sitting idle on the Start screen for long enough, then th
 
 ![The combat demo in NES Elite](https://elite.bbcelite.com/images/nes/demo/combat_practice.png) 
 
-						The computer pilot behaves a little differently depending on which language is currently chosen, so the combat aspect of the auto-play demo has a different flavour in English, German and French. All three ships get taken out pretty quickly, whichever language is chosen, and then the combat demo finishes and we end up at the title screen.
+The computer pilot behaves a little differently depending on which language is currently chosen, so the combat aspect of the auto-play demo has a different flavour in English, German and French. All three ships get taken out pretty quickly, whichever language is chosen, and then the combat demo finishes and we end up at the title screen.
 
 It's fun to watch, but the auto-play system isn't finished, not by a long way. It now embarks on a grand tour of the game itself, doing the following steps completely automatically (and only stopping if a button is pressed on one of the controllers):
 
@@ -57,7 +57,8 @@ It's quite a thrill ride! Let's see how it all happens.
 
 													 -----------------------------
 
-						The auto-play system is triggered by the [ChooseLanguage](https://elite.bbcelite.com/nes/bank_6/subroutine/chooselanguage.html) routine. If it sits idle for a specific amount of time without any buttons being pressed, then it calls the [SetDemoAutoPlay](https://elite.bbcelite.com/nes/bank_5/subroutine/setdemoautoplay.html) routine to enable auto-play (the PAL version waits for longer than the NTSC version before jumping into auto-play, incidentally). SetDemoAutoPlay then initialises the demo universe via [SetupDemoUniverse](https://elite.bbcelite.com/nes/bank_7/subroutine/setupdemouniverse.html) and sets bit 7 of the autoPlayDemo variable.
+						
+The auto-play system is triggered by the [ChooseLanguage](https://elite.bbcelite.com/nes/bank_6/subroutine/chooselanguage.html) routine. If it sits idle for a specific amount of time without any buttons being pressed, then it calls the [SetDemoAutoPlay](https://elite.bbcelite.com/nes/bank_5/subroutine/setdemoautoplay.html) routine to enable auto-play (the PAL version waits for longer than the NTSC version before jumping into auto-play, incidentally). SetDemoAutoPlay then initialises the demo universe via [SetupDemoUniverse](https://elite.bbcelite.com/nes/bank_7/subroutine/setupdemouniverse.html) and sets bit 7 of the autoPlayDemo variable.
 
 When bit 7 of autoPlayDemo is set, the [NMI handler](https://elite.bbcelite.com/nes/bank_7/subroutine/nmi.html) calls the [AutoPlayDemo](https://elite.bbcelite.com/nes/bank_7/subroutine/autoplaydemo.html) routine every VBlank (so that's 50 times a second on a PAL system, or 60 times a second on NTSC). The AutoPlayDemo routine is the heart of the auto-play system, and it "presses" keys from a set of tables to play the game without needing any human interaction. Let's see how it works.
 
@@ -73,7 +74,8 @@ Before we look at the contents of the autoPlayKeys tables, it's worth noting tha
 
 													 ---------------------
 
-						As mentioned above, the [AutoPlayDemo](https://elite.bbcelite.com/nes/bank_7/subroutine/autoplaydemo.html) routine is called every VBlank while bit 7 of autoPlayDemo is set. The NMI handler then auto-plays the combat demo by "pressing" buttons automatically, taking those button presses from auto-play commands in the relevant autoPlayKeys table. The process starts with the auto-play commands in the chosen language table (autoPlayKeys1_EN, autoPlayKeys1_DE or autoPlayKeys1_FR), and then moves on to the auto-play commands in the autoPlayKeys2 table.
+						
+As mentioned above, the [AutoPlayDemo](https://elite.bbcelite.com/nes/bank_7/subroutine/autoplaydemo.html) routine is called every VBlank while bit 7 of autoPlayDemo is set. The NMI handler then auto-plays the combat demo by "pressing" buttons automatically, taking those button presses from auto-play commands in the relevant autoPlayKeys table. The process starts with the auto-play commands in the chosen language table (autoPlayKeys1_EN, autoPlayKeys1_DE or autoPlayKeys1_FR), and then moves on to the auto-play commands in the autoPlayKeys2 table.
 
 The AutoPlayDemo routine processes one command from the autoPlayKeys table in each VBlank. It works by fetching a byte from the autoPlayKeys table and then interpreting that byte as a command (and, depending on the command, it can also process up to three of the following bytes).
 
@@ -107,19 +109,23 @@ Bit 7 is always clear in button-press bytes so the value is between 0 and $7F, w
 
 Let's look at some examples. The following auto-play command does nothing for 8 * 4 = 32 VBlanks:
 
-EQUB $88
+  EQUB $88
 
 This auto-play command presses the down and B buttons (%00100100) for 31 VBlanks to reduce our speed:
 
-EQUB %00100100 EQUB 31
+  EQUB %00100100
+  EQUB 31
 
 This auto-play command presses the right and B buttons (%00100001) for 18 VBlanks, which moves the icon bar pointer to the right:
 
-EQUB %00100001 EQUB 18
+  EQUB %00100001
+  EQUB 18
 
 This auto-play command presses the up button (%00001000) while bit 7 of [MSTG](https://elite.bbcelite.com/disc/docked/workspace/zp.html#mstg) is set, so we pull up until our missile locks onto a target:
 
-EQUB $C3 EQUB %00001000 EQUW MSTG
+  EQUB $C3
+  EQUB %00001000
+  EQUW MSTG
 
 In this way the combat demo plays out according to the script of auto-play commands, and because the random number seeds have been set to a fixed value, the whole thing pans out as planned, with the three enemy ships meeting a fiery end.
 
@@ -129,44 +135,45 @@ Interestingly, the auto-play system doesn't work properly in the NTSC version. T
 
 													 -----------------------
 
-						For reference, the [AutoPlayDemo](https://elite.bbcelite.com/nes/bank_7/subroutine/autoplaydemo.html) routine interprets auto-play commands using the following algorithm, where the bytes in each command are numbered from 1 to 4:
+						
+For reference, the [AutoPlayDemo](https://elite.bbcelite.com/nes/bank_7/subroutine/autoplaydemo.html) routine interprets auto-play commands using the following algorithm, where the bytes in each command are numbered from 1 to 4:
 
 - If byte #1 has bit 7 clear:
-								- Fetch the next byte (let's call it byte #2)
-- Repeat the button presses in byte #1 for byte #2 repetitions
- 
+								
+  - Fetch the next byte (let's call it byte #2)
+  - Repeat the button presses in byte #1 for byte #2 repetitions
 - If byte #1 has bit 7 set:
-								- If byte #1 = $80, terminate auto-play
-- If byte #1 has bit 6 clear:
-										- Do nothing for 4 * byte #1 repetitions (ignoring bit 7 of byte #1 in this calculation)
- 
-- If byte #1 has bit 6 set:
-										- If byte #1 = $C0:
-												- Switch to the autoPlayKeys2 table and start processing commands from there in the next VBlank
- 
-- Otherwise byte #1 is of the form $Cx where x is non-zero, so:
-												- Fetch the next three bytes (let's call them bytes #2 to #4)
-- Set addr(1 0) = (byte #4 byte #3)
-- If byte #1 = $C1:
-														- Repeat the button presses in byte #2 in each subsequent VBlank while addr(1 0) <> 0, and then continue processing with the command after byte #3
- 
-- If byte #1 = $C2:
-														- Repeat the button presses in byte #2 in each subsequent VBlank while addr(1 0) = 0, and then continue processing with the command after byte #3
- 
-- If byte #1 = $C3:
-														- Repeat the button presses in byte #2 in each subsequent VBlank while bit 7 of addr(1 0) is set, and then continue processing with the command after byte #3
- 
-- If byte #1 = $C4:
-														- Repeat the button presses in byte #2 in each subsequent VBlank while bit 7 of addr(1 0) is clear, and then continue processing with the command after byte #3
- 
-- If byte #1 = $C5:
-														- Press the Start button and do nothing for 22 VBlanks before continuing with the command after byte #1
- 
- 
- 
-- If byte #1 = $C0:
+								
+  - If byte #1 = $80, terminate auto-play
+  - If byte #1 has bit 6 clear:
+										
+    - Do nothing for 4 * byte #1 repetitions (ignoring bit 7 of byte #1 in this calculation)
+  - If byte #1 has bit 6 set:
+										
+    - If byte #1 = $C0:
 												
- 
+      - Switch to the autoPlayKeys2 table and start processing commands from there in the next VBlank
+    - Otherwise byte #1 is of the form $Cx where x is non-zero, so:
+												
+      - Fetch the next three bytes (let's call them bytes #2 to #4)
+      - Set addr(1 0) = (byte #4 byte #3)
+      - If byte #1 = $C1:
+														
+        - Repeat the button presses in byte #2 in each subsequent VBlank while addr(1 0) <> 0, and then continue processing with the command after byte #3
+      - If byte #1 = $C2:
+														
+        - Repeat the button presses in byte #2 in each subsequent VBlank while addr(1 0) = 0, and then continue processing with the command after byte #3
+      - If byte #1 = $C3:
+														
+        - Repeat the button presses in byte #2 in each subsequent VBlank while bit 7 of addr(1 0) is set, and then continue processing with the command after byte #3
+      - If byte #1 = $C4:
+														
+        - Repeat the button presses in byte #2 in each subsequent VBlank while bit 7 of addr(1 0) is clear, and then continue processing with the command after byte #3
+      - If byte #1 = $C5:
+														
+        - Press the Start button and do nothing for 22 VBlanks before continuing with the command after byte #1
+  - If byte #1 = $C0:
+												
 
 It's a simple structure, but when paired with the ability to wait for flight variables to hit certain values, it's surprisingly flexible.
 

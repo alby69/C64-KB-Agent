@@ -9,10 +9,10 @@ language: assembly
 hardware:
 - SID
 related:
-- music-player
-- sound-programming
 - sid-registers
-scraped_at: '2026-07-27'
+- sound-programming
+- music-player
+scraped_at: '2026-08-03'
 ---
 
 # FB-SSID (Stereophonic-SID)

@@ -3,22 +3,22 @@ title: The key logger
 source_url: https://elite.bbcelite.com/deep_dives/the_key_logger.html
 category: deep-dive
 topics:
-- input handling
-- assembly
 - basic
+- assembly
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- CIA
 - CPU
+- CIA
 related:
 - kernal-routines
 - keyboard-handling
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+- memory-map
+scraped_at: '2026-08-03'
 ---
 
 # The key logger
@@ -39,16 +39,17 @@ Interestingly, the NES conversion of Elite also uses the key logger, even though
 
 													 ------------------------
 
-						The heart of the key logger system is the table at location [KL](https://elite.bbcelite.com/cassette/main/workspace/zp.html#kl). This contains one byte for each of the 15 flight controls listed in the keyboard lookup table at [KYTB](https://elite.bbcelite.com/cassette/main/variable/kytb.html), starting from KL+1 for "?" (slow down) and going through to KL+15 for "C" (which turns on the docking computer). Each key logger location has its own label, so KY1 = KL+1, KY2 = KL+2 up to KY15 = KL+15, where KY1 corresponds to the internal key number in KYTB+1, KY2 to the key number in KYTB+2, and so on.
+						
+The heart of the key logger system is the table at location [KL](https://elite.bbcelite.com/cassette/main/workspace/zp.html#kl). This contains one byte for each of the 15 flight controls listed in the keyboard lookup table at [KYTB](https://elite.bbcelite.com/cassette/main/variable/kytb.html), starting from KL+1 for "?" (slow down) and going through to KL+15 for "C" (which turns on the docking computer). Each key logger location has its own label, so KY1 = KL+1, KY2 = KL+2 up to KY15 = KL+15, where KY1 corresponds to the internal key number in KYTB+1, KY2 to the key number in KYTB+2, and so on.
 
 The various keyboard scanning routines can set the relevant byte in the KL table to &FF to denote that a particular key is being pressed. The logger is cleared to zero (to denote that no keys are being pressed) by the U% routine.
 
 The main routines that populate the key logger in the BBC Micro version are:
 
-- [DKS4](https://elite.bbcelite.com/cassette/main/subroutine/dks4.html), which scans the keyboard for a specific key
-- [DKS1](https://elite.bbcelite.com/cassette/main/subroutine/dks1.html), which calls DKS4 and updates the key logger with the result
-- [DOKEY](https://elite.bbcelite.com/cassette/main/subroutine/dokey.html), which calls DKS1 for each of the primary flight controls
-- [DK4](https://elite.bbcelite.com/cassette/main/subroutine/dk4.html), which scans for the secondary flight controls
+- [DKS4](https://elite.bbcelite.com/cassette/main/subroutine/dks4.html) , which scans the keyboard for a specific key
+- [DKS1](https://elite.bbcelite.com/cassette/main/subroutine/dks1.html) , which calls DKS4 and updates the key logger with the result
+- [DOKEY](https://elite.bbcelite.com/cassette/main/subroutine/dokey.html) , which calls DKS1 for each of the primary flight controls
+- [DK4](https://elite.bbcelite.com/cassette/main/subroutine/dk4.html) , which scans for the secondary flight controls
 
 If a key is being pressed that is not in the keyboard table at KYTB, then it can be stored in the first location in the key logger, KL, as this isn't mapped to a KYTB key. This is done in routine DK4, for example, so we almost never miss a key press.
 

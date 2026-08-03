@@ -3,23 +3,23 @@ title: The Trumbles mission
 source_url: https://elite.bbcelite.com/deep_dives/the_trumbles_mission.html
 category: deep-dive
 topics:
-- sprite programming
-- assembly
 - basic
+- assembly
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
-- KERNAL
 - BASIC ROM
+- KERNAL
 - CPU
+- VIC-II
 related:
-- raster-interrupts
-- sprite-programming
 - kernal-routines
+- sprite-programming
 - memory-map
+- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # The Trumbles mission
@@ -30,12 +30,13 @@ Compared to the BBC Micro version from which it was converted, the Commodore 64 
 
 ![The Trumbles mission briefing view in Commodore 64 Elite](https://elite.bbcelite.com/images/c64/trumbles_mission.png) 
 
-						This mission is also present in the NES version, where the invitation looks like this:
+This mission is also present in the NES version, where the invitation looks like this:
 
 ![The Trumbles mission briefing view in NES Elite](https://elite.bbcelite.com/images/nes/missions/trumbles.png) 
 
-						In a more readable form, this is the invitation:
+In a more readable form, this is the invitation:
 
+							
 Good day Commander MARK, allow me to introduce myself. I am the Merchant Prince of Thrun and I find myself forced to sell my most treasured possession.
 
 I am offering you, for the paltry sum of just 5000CR the rarest thing in the Known Universe.
@@ -49,23 +50,23 @@ Who wouldn't say yes to this, even if it takes away most of our hard-earned cash
 
 ![The Trumbles inventory view in NES Elite](https://elite.bbcelite.com/images/nes/missions/trumbles_inventory_1.png) 
 
-						Thing is, if you play the game and come back to your inventory, this happens:
+Thing is, if you play the game and come back to your inventory, this happens:
 
 ![The Trumbles inventory view in NES Elite](https://elite.bbcelite.com/images/nes/missions/trumbles_inventory_2.png) 
 
-						And then this happens:
+And then this happens:
 
 ![The Trumbles inventory view in NES Elite](https://elite.bbcelite.com/images/nes/missions/trumbles_inventory_3.png) 
 
-						And then this happens:
+And then this happens:
 
 ![The Trumbles inventory view in NES Elite](https://elite.bbcelite.com/images/nes/missions/trumbles_inventory_4.png) 
 
-						And in case you think that having a Commodore 64 makes you immune, this happens:
+And in case you think that having a Commodore 64 makes you immune, this happens:
 
 ![The Trumbles inventory view in Commodore 64 Elite](https://elite.bbcelite.com/images/c64/trumbles_inventory.png) 
 
-						And so on. The problem is, this furry, friendly, cuddly and cute cargo really likes to breed, filling up the hold with offspring and devouring any food we might buy; you can even hear them chattering away as they keep multiplying.
+And so on. The problem is, this furry, friendly, cuddly and cute cargo really likes to breed, filling up the hold with offspring and devouring any food we might buy; you can even hear them chattering away as they keep multiplying.
 
 Incidentally, as you can see above, the Commodore 64 version calls these critters "Trumbles" in the inventory, but in the NES version they are "Little Squeakys" - perhaps Nintendo felt that the term Trumbles was a bit too close to their trademarked inspiration, the Tribbles from Star Trek.
 
@@ -86,7 +87,8 @@ It's a bit of light relief rather than a full-blown mission, but until you know 
 
 													 --------------------
 
-						Out of all the 6502 versions of Elite, the Trumbles mission only appears in the Commodore 64 and NES versions. The Commodore 64 version is the only one with sprites; the NES version is purely text-based.
+						
+Out of all the 6502 versions of Elite, the Trumbles mission only appears in the Commodore 64 and NES versions. The Commodore 64 version is the only one with sprites; the NES version is purely text-based.
 
 As with the other missions, the [DOENTRY](https://elite.bbcelite.com/nes/bank_0/subroutine/doentry.html) routine contains all the Trumble logic, and the [TP](https://elite.bbcelite.com/disc/docked/workspace/up.html#tp) variable in the save file contains our status. The Trumble mission can be triggered at any point after we reach 6553.6 credits, so the only check is whether CASH+1 is greater than zero. If it is and we haven't already done the mission (i.e. bit 4 of TP is clear), then the mission briefing in text token 199 is shown by calling the [TBRIEF](https://elite.bbcelite.com/nes/bank_0/subroutine/tbrief.html) routine.
 
@@ -98,7 +100,7 @@ In the Commodore 64 version, as you get more and more Trumbles, they start to ap
 
 ![The Trumbles in Commodore 64 Elite](https://elite.bbcelite.com/images/c64/trumbles_on_screen.png) 
 
-						The high temperatures near the sun finally kill off our troublesome cargo, thanks to the code in [part 15 of the main flight loop](https://elite.bbcelite.com/nes/bank_0/subroutine/main_flight_loop_part_15_of_16.html). Not surprisingly, they make a racket as they go, until finally TRIBBLE reaches zero and our furry fun is over.
+The high temperatures near the sun finally kill off our troublesome cargo, thanks to the code in [part 15 of the main flight loop](https://elite.bbcelite.com/nes/bank_0/subroutine/main_flight_loop_part_15_of_16.html). Not surprisingly, they make a racket as they go, until finally TRIBBLE reaches zero and our furry fun is over.
 
 Goodness knows what would happen if you fed them after midnight. Best not to think about it...
 

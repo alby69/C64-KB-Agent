@@ -10,9 +10,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 
@@ -32,7 +32,34 @@ This is another way to print a 8 bit integer value as a HEX value on a C64 Scree
         jsr OUTHEX      ; print $3F
         rts             ; bye
 ```
-; Syntax for DASM BSOUT = $ffd2 ; Print character in accu ;************************** ; print Akku hex value ;************************** OUTHEX tax ; save value for low nibble and #$f0 ; High nibble clc ; clear carry ror ; rotate one bit right ror ; rotate one bit right ror ; rotate one bit right ror ; rotate one bit right jsr NIB2HEX ; print nibble txa ; restore value and #$0f ; Low nibble jsr NIB2HEX ; print nibble rts ;********************* ;* Akku low Nibble to Hex ;********************* NIB2HEX cmp #$0a ; Accu >= 10? bcs HEX ; Yes DIGIT clc ; Accu < 10 adc #$30 ; Accu + $30 jmp OUT ; print HEX clc ; adc #$37 ; Accu + $37 OUT jmp BSOUT ; Print Accu (HEX nibble) and bye
+; Syntax for DASM
+BSOUT  = $ffd2	; Print character in accu
+;**************************
+; print Akku hex value
+;**************************
+OUTHEX	tax		; save value for low nibble
+	and #$f0	; High nibble
+	clc		; clear carry
+	ror		; rotate one bit right
+	ror		; rotate one bit right
+	ror		; rotate one bit right
+	ror		; rotate one bit right
+	jsr NIB2HEX	; print nibble
+	txa		; restore value
+	and #$0f	; Low nibble
+	jsr NIB2HEX	; print nibble
+	rts
+;*********************
+;* Akku low Nibble to Hex
+;*********************
+NIB2HEX cmp #$0a	; Accu >= 10?
+	bcs HEX		; Yes
+DIGIT	clc		; Accu < 10
+	adc #$30	; Accu + $30
+	jmp OUT		; print
+HEX	clc		;
+	adc #$37	; Accu + $37
+OUT	jmp BSOUT	; Print Accu (HEX nibble) and bye
 
 Slight optimization:
 

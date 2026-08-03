@@ -3,9 +3,9 @@ title: Scheduling tasks with the main loop counter
 source_url: https://elite.bbcelite.com/deep_dives/scheduling_tasks_with_the_main_loop_counter.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
@@ -14,10 +14,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Scheduling tasks with the main loop counter
@@ -36,11 +36,16 @@ Let's see how this works.
 
 													 -----------------------------------
 
-						The main loop counter is stored in location MCNT. It gets decremented every time the main loop restarts, just after routine TT100 is entered. Some routines set the counter to specific values to ensure certain actions will or won't happen (see below), but for the most part the counter decrements from 255 down to 0 and back up to 255 again.
+						
+The main loop counter is stored in location MCNT. It gets decremented every time the main loop restarts, just after routine TT100 is entered. Some routines set the counter to specific values to ensure certain actions will or won't happen (see below), but for the most part the counter decrements from 255 down to 0 and back up to 255 again.
 
 At various points in the code, we check the counter value to determine what we need to do. One way of doing this is to use a logical AND to implement a modulo operation, as follows. Consider the following code:
 
-LDA MCNT AND #7 BNE skip ... code gets run once every 8 iterations ... .skip
+  LDA MCNT
+  AND #7
+  BNE skip
+  ... code gets run once every 8 iterations ...
+  .skip
 
 In binary, 7 is %00000111, so we perform the skip if any of the three lowest bits of MCNT are non-zero. In other words, we run the code only when the three lowest bits are all zero, which happens once every 8 iterations. This is the same as saying "do the action when MCNT mod 8 = 0".
 
@@ -48,7 +53,16 @@ In general, if n is a power of 2, we can use AND #n-1 to calculate modulo n, so 
 
 Another approach is to calculate the modulo and then compare the value to a fixed number, to spread operations out within a specific batch of iterations. For example:
 
-LDA MCNT AND #31 CMP #10 BNE skip1 ... code gets run once at iteration 10 out of every 32 iterations ... .skip1 CMP #20 BNE skip2 ... code gets run once at iteration 20 out of every 32 iterations ... .skip2
+  LDA MCNT
+  AND #31
+  CMP #10
+  BNE skip1
+  ... code gets run once at iteration 10 out of every 32 iterations ...
+  .skip1
+  CMP #20
+  BNE skip2
+  ... code gets run once at iteration 20 out of every 32 iterations ...
+  .skip2
 
 There are some minor variations on the above in the game code, but the basic approach is the same: check the counter and perform actions accordingly. Let's take a look at how the main loop counter is used to determine what happens when in the main loop's iterations.
 
@@ -56,7 +70,8 @@ There are some minor variations on the above in the game code, but the basic app
 
 													 --------------------
 
-						Here's a breakdown of all events that are dependent on the value of MCNT. The counts are given within each iteration batch, so "every 4 iterations on count 0/4" means we do the action when MCNT is 0, 4, 8, 12 and so on, while "every 32 iterations on count 10/32" means we do it when MCNT is 10, 42, 74 and so on.
+						
+Here's a breakdown of all events that are dependent on the value of MCNT. The counts are given within each iteration batch, so "every 4 iterations on count 0/4" means we do the action when MCNT is 0, 4, 8, 12 and so on, while "every 32 iterations on count 10/32" means we do it when MCNT is 10, 42, 74 and so on.
 
 - Every 4 iterations on count 0/4: Update the non-essential dashboard bar indicators (i.e. everything except speed, pitch and roll, scanner and compass, which update every iteration)
 - Every 8 iterations on count 0/8: Regenerate ship energy and shields
@@ -73,7 +88,8 @@ There are some minor variations on the above in the game code, but the basic app
 
 													 ---------------------
 
-						The MCNT counter is reset in various ways, to affect the state of the various actions it triggers:
+						
+The MCNT counter is reset in various ways, to affect the state of the various actions it triggers:
 
 - It gets set to 0 when we buy fuel, launch from a space station, arrive in a new system, or launch an escape pod, so the main loop won't consider spawning new ships for at least 256 iterations (as the counter will be decremented to 255 as soon as the main loop is entered)
 - It gets set to 1 after completing an in-system jump, so the next iteration through the main loop will potentially spawn ships (as the counter will be decremented to 0 as soon as the main loop is entered)

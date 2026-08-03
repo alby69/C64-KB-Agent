@@ -7,13 +7,13 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- CPU
 - KERNAL
+- CPU
 related:
 - kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
-last_modified: '2026-07-16T21:04:23Z'
+scraped_at: '2026-08-03'
+last_modified: '2026-08-03T00:33:26Z'
 ---
 
 # GitHub Repo: irmen/prog8
@@ -24,7 +24,7 @@ last_modified: '2026-07-16T21:04:23Z'
 
 **GitHub URL:** https://github.com/irmen/prog8
 **Stars:** 198
-**Last Updated:** 2026-07-16T21:04:23Z
+**Last Updated:** 2026-08-03T00:33:26Z
 
 
 ---

@@ -10,9 +10,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Tiny .A to ASCII routine
@@ -25,11 +25,28 @@ From somebody in comp.sys.cbm, don't remember who nor if I tweaked it further to
 
 Converts .A to 3 ASCII/PETSCII digits: .Y = hundreds, .X = tens, .A = ones
 
-ldy #$2f ldx #$3a sec - iny sbc #100 bcs - - dex adc #10 bmi - adc #$2f rts
+  ldy #$2f
+  ldx #$3a
+  sec
+- iny
+  sbc #100
+  bcs -
+- dex
+  adc #10
+  bmi -
+  adc #$2f
+  rts
 
 Converts .A to 2 ASCII/PETSCII digits: .X = tens, .A = ones
 
-ldx #$3a sec sbc #$64 - dex adc #$0a bmi - adc #$2f rts
+  ldx #$3a
+  sec
+  sbc #$64
+- dex
+  adc #$0a
+  bmi -
+  adc #$2f
+  rts
 
 base/tiny_.a_to_ascii_routine.txt · Last modified:  by 127.0.0.1
 

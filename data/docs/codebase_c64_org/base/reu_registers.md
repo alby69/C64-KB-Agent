@@ -10,18 +10,18 @@ difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # REU registers
@@ -38,13 +38,29 @@ The MOS 8726 REC (RAM Expansion Controller) is used in the Commodore REUs (RAM E
 
 The REC has 5 connected register selection lines, although it only has 11 registers. The unconnected registers return $FF upon reading. The REU is located normally at $DF00. As it has 5 register selection lines, the REU actually shows up at $DF00-$DF0A, $DF20-$DF2A, $DF40-$DF4A and so on, up to $DFE0-$DFEA.
 
-Address Bits Function 0 Status register - read only 7 Interrupt Pending (1=interrupt waiting to be serviced) 6 End of Block (1=transfer complete) 5 Fault (1=block verify error) 4 Size (tells if a jumper is cut in the REU) 3-0 Version number (0 on the REU I tested) Note: Bits 7-5 are cleared when this register is read.
+Address	Bits	Function
+0		Status register - read only
+	7	Interrupt Pending (1=interrupt waiting to be serviced)
+	6	End of Block (1=transfer complete)
+	5	Fault (1=block verify error)
+	4	Size (tells if a jumper is cut in the REU)
+	3-0	Version number (0 on the REU I tested)
+	Note: Bits 7-5 are cleared when this register is read.
 
 The bit 4 only tells if a jumper is cut in the REU. Do not count on it, measure the REU size with a program instead.
 
 Other registers are R/W:
 
-1 Command Register 7 Execute (1=initiate transfer per current config) 6 reserved (returns 0 upon reading) 5 Load (1=enable AUTOLOAD option) 4 FF00 (1=disable FF00 decode) 3-2 reserved (0 upon reading) 1-0 Transfer type: 00=C64->REU 01=REU->C64 10=swap 11=verify
+1		Command Register
+	7	Execute (1=initiate transfer per current config)
+	6	reserved (returns 0 upon reading)
+	5	Load (1=enable AUTOLOAD option)
+	4	FF00 (1=disable FF00 decode)
+	3-2	reserved (0 upon reading)
+	1-0	Transfer type:	00=C64->REU
+				01=REU->C64
+				10=swap
+				11=verify
 
 AUTOLOAD: When you select this option, the C64 base address registers, the expansion memory base address registers (including bank) and the byte counter registers at the end of a transfer are automatically reloaded. This is useful if one operation is to be executed repeatedly on one particular block of data. Note that if AUTOLOAD is selected in verify mode, the address where the verify error occurred is lost. Ordinarily, upon finding a verify error, the REC halts the DMA cycle and both address registers and the bank register point to one location above the address that failed.
 
@@ -52,21 +68,35 @@ FF00 decode means that the REU won't begin the transfer right away after the exe
 
 If you like obfuscated code, here's a nice trick to use with FF00 decode: Start the transfer with a read-modify-write instruction, like “inc $ff00”. As you should know, RMW instructions in NMOS 65xx series microprocessors first write unmodified data, then modified. So, an RMW instruction does two writes, and the REU will start the transfer already on the first write. It asserts the DMA signal, thus tri-stating the processor's address and data bus and the R/-W signal. As you should also know, NMOS processors don't stop during writes. So, the processor will try to write the modified data back to $FF00, but it can't, as its bus is disabled. So, the $FF00 data will effectively remain the same.
 
-2 7-0 C64 start address (LSB) 3 7-0 C64 start address (MSB)
+2	7-0	C64 start address (LSB)
+3	7-0	C64 start address (MSB)
 
 (address overflow is not detected; it will continue from $0000)
 
-4 7-0 REU start address (LSB) 5 7-0 REU start address (More SB) 6 2-0 REU start address (most significant bits)
+4	7-0	REU start address (LSB)
+5	7-0	REU start address (More SB)
+6	2-0	REU start address (most significant bits)
 
 Editor's note: This is referred as bank; however it is like start address, because if a 64kB “bank” boundary is crossed, the bank will be incremented. Note that the maximum amount of memory is 2^19 bytes=512 kB. The upper bits of this register are unused, so if someone cloned the chip, it could address up to 2^24 bytes=16 MB. You can achieve this with an external latch, too. Actually, there is an expansion that uses this trick.
 
-7 7-0 Transfer length (LSB) ($0000=64 kB) 8 7-0 Transfer length (MSB) 9 Interrupt Mask Register 7 Interrupt enable (1=interrupts enabled) 6 End of Block mask (1=interrupt on end of block) 5 Verify error (1=interrupt on verify error) 4-0 unused (1 upon reading)
+7	7-0	Transfer length (LSB) ($0000=64 kB)
+8	7-0	Transfer length (MSB)
+9		Interrupt Mask Register
+	7	Interrupt enable (1=interrupts enabled)
+	6	End of Block mask (1=interrupt on end of block)
+	5	Verify error (1=interrupt on verify error)
+	4-0	unused (1 upon reading)
 
 Editor's note: The interrupt capability is useless, as the processor won't run anything during the transfer process. It just initiates the transfer, waits for it to be completed, and continues executing the program. Thus, the interrupt would occur right after the transfer command in the program.
 
 Note: If the interrupts are used, you have to read the status register (0) at least once between successive transfers for proper operation.
 
-A 7-6 Address Control Register 00=increment both addresses 01=fix expansion address 10=fix C64 address 11=fix both addresses 5-0 unused (1 upon reading)
+A	7-6	Address Control Register
+		00=increment both addresses
+		01=fix expansion address
+		10=fix C64 address
+		11=fix both addresses
+	5-0	unused (1 upon reading)
 
 Editor's note: The mode 10, fix C64 address, could be used to play digitized music or to digitize it. No other applications come to my mind. And the sampling frequency is a bit too high, about 1 MHz. You can transfer only 64kB per request, so it would last less than 0,0665 seconds.)
 
@@ -86,7 +116,22 @@ When using the Autoload option, the REC register values will be copied from the 
 
 The initial configuration after RESET is as follows:
 
-Reg Value Meaning 0 $10 Status Register No bits set except Size (which can be reset as well) 1 $10 Command Register Bit 4: disable FF00 decode 2 $00 C64 start address, LSB 3 $00 C64 start address, MSB 4 $00 REU start address, LSB 5 $00 REU start address, more SB 6 $f8 REU start address, MSB 7 $ff Transfer length, LSB ($ffff=65535 bytes) 8 $ff Transfer length, MSB 9 $1f Interrupt Mask Register No interrupts enabled. A $3f Address Control Register Increment both addresses
+Reg	Value	Meaning
+0	$10	Status Register
+		 No bits set except Size (which can be reset as well)
+1	$10	Command Register
+		 Bit 4: disable FF00 decode
+2	$00	C64 start address, LSB
+3	$00	C64 start address, MSB
+4	$00	REU start address, LSB
+5	$00	REU start address, more SB
+6	$f8	REU start address, MSB
+7	$ff	Transfer length, LSB ($ffff=65535 bytes)
+8	$ff	Transfer length, MSB
+9	$1f	Interrupt Mask Register
+		 No interrupts enabled.
+A	$3f	Address Control Register
+		 Increment both addresses
 
 ## Codice Estratto
 

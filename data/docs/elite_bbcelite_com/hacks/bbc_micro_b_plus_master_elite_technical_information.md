@@ -3,27 +3,27 @@ title: Technical information for BBC Master Elite on the BBC Micro B+
 source_url: https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite_technical_information.html
 category: source-code
 topics:
-- graphics
-- assembly
-- memory management
 - basic
+- graphics
+- memory management
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Technical information for BBC Master Elite on the BBC Micro B+
@@ -32,12 +32,12 @@ scraped_at: '2026-07-27'
 
 ![A transporter in the BBC Master version of Elite](https://elite.bbcelite.com/images/master/transporter_station.png) 
 
-						The BBC Micro B+ has 64K of RAM, double that of the original BBC Micro's 32K. It turns out that this is just enough memory to load the BBC Master version of Elite, but using that extra RAM for program space is not as simple as you might hope. In this article, I'll look at how we can use this extra memory to run the full version of BBC Master Elite on the unexpanded BBC Micro B+.
+The BBC Micro B+ has 64K of RAM, double that of the original BBC Micro's 32K. It turns out that this is just enough memory to load the BBC Master version of Elite, but using that extra RAM for program space is not as simple as you might hope. In this article, I'll look at how we can use this extra memory to run the full version of BBC Master Elite on the unexpanded BBC Micro B+.
 
 If you want to see exactly how the code for the Compendium version of Elite differs from the code in the original Acornsoft version, you can check out the compendium-related branches in the accompanying repositories:
 
-- See the [bbc-micro-b-plus branch](https://github.com/markmoxon/elite-source-code-bbc-master/tree/bbc-micro-b-plus/1-source-files/main-sources)for modifications related to the standard version of BBC Master Elite on the BBC Micro B+.
-- The [bbc-micro-b-plus-music branch](https://github.com/markmoxon/elite-source-code-bbc-master/tree/bbc-micro-b-plus-music/1-source-files/main-sources)for modifications related to the musical version of BBC Master Elite on the BBC Micro B+.
+- See the [bbc-micro-b-plus branch](https://github.com/markmoxon/elite-source-code-bbc-master/tree/bbc-micro-b-plus/1-source-files/main-sources) for modifications related to the standard version of BBC Master Elite on the BBC Micro B+.
+- The [bbc-micro-b-plus-music branch](https://github.com/markmoxon/elite-source-code-bbc-master/tree/bbc-micro-b-plus-music/1-source-files/main-sources) for modifications related to the musical version of BBC Master Elite on the BBC Micro B+.
 
 You can search the source code files in these branches for "Mod:" to see every single modification that I've made to the original code to produce the Compendium version.
 
@@ -45,7 +45,8 @@ You can search the source code files in these branches for "Mod:" to see every s
 
 													 -----------------
 
-						The B+ memory map is almost identical to the standard BBC Micro, just with 32K tacked onto the side. This extra 32K is split into two parts: 20K of shadow RAM and 12K of so-called "private RAM".
+						
+The B+ memory map is almost identical to the standard BBC Micro, just with 32K tacked onto the side. This extra 32K is split into two parts: 20K of shadow RAM and 12K of so-called "private RAM".
 
 Note that the B+ comes with the MOS 2.00 operating system rather than the MOS 1.20 of the original BBC, but this doesn't affect the memory map in any significant way, and for the purposes of Elite we can ignore any differences between the two.
 
@@ -55,7 +56,36 @@ When you switch on the B+, the memory map is identical to the standard BBC Micro
 
 In this configuration, the B+ behaves exactly like the standard BBC Micro, with screen memory taking up the top part of user RAM. Consider the situation where we turn on our B+ and switch to screen mode 1; the upper part of the memory map will look like this:
 
-+-----------------------------------+ &FFFF | | | Machine Operating System (MOS) | | | +-----------------------------------+ &C000 | | | | | Paged ROMs | | | | | +-----------------------------------+ &8000 | | | | | | | | | | | Screen memory for mode 1 | | | | | | | | | | | +-----------------------------------+ &3000 | | | User RAM | | | +-----------------------------------+ &1100 | | : : : :
+  +-----------------------------------+   &FFFF
+  |                                   |
+  | Machine Operating System (MOS)    |
+  |                                   |
+  +-----------------------------------+   &C000
+  |                                   |
+  |                                   |
+  | Paged ROMs                        |
+  |                                   |
+  |                                   |
+  +-----------------------------------+   &8000
+  |                                   |
+  |                                   |
+  |                                   |
+  |                                   |
+  |                                   |
+  | Screen memory for mode 1          |
+  |                                   |
+  |                                   |
+  |                                   |
+  |                                   |
+  |                                   |
+  +-----------------------------------+   &3000
+  |                                   |
+  | User RAM                          |
+  |                                   |
+  +-----------------------------------+   &1100
+  |                                   |
+  :                                   :
+  :                                   :
 
 The B+ comes with the DFS disc filing system fitted as standard, so memory below &1100 has the same structure as for the BBC Micro, so it's a mixture of DFS workspaces, MOS workspaces, user RAM, the 6502 stack and zero page; see the [BBC Micro disc Elite memory map](https://elite.bbcelite.com/deep_dives/the_elite_memory_map_disc.html) for details.
 
@@ -65,7 +95,36 @@ These two banks can be paged into the memory map independently. When shadow RAM 
 
 Here's the same part of the B+ memory map when both shadow RAM and private RAM are enabled and we are in shadow screen mode 1:
 
-+-----------------------------------+ &FFFF | | | Machine Operating System (MOS) | | | +-----------------------------------+ &C000 | | | +-- &B000 --------------------------+ | Paged ROMs | | | | Private RAM | | | | +-----------------------------------+-- &8000 --------------------------+ | | | | | | | | | | | | | | | | | Shadow RAM (screen memory) | | | | | User RAM | | | | | | | | | | | | +-- &3000 --------------------------+ | | | | | | +-----------------------------------+ &1100 | | : : : :
+  +-----------------------------------+   &FFFF
+  |                                   |
+  | Machine Operating System (MOS)    |
+  |                                   |
+  +-----------------------------------+   &C000
+  |                                   |
+  |                                   +-- &B000 --------------------------+
+  | Paged ROMs                        |                                   |
+  |                                   |                       Private RAM |
+  |                                   |                                   |
+  +-----------------------------------+-- &8000 --------------------------+
+  |                                   |                                   |
+  |                                   |                                   |
+  |                                   |                                   |
+  |                                   |                                   |
+  |                                   |                                   |
+  |                                   |        Shadow RAM (screen memory) |
+  |                                   |                                   |
+  | User RAM                          |                                   |
+  |                                   |                                   |
+  |                                   |                                   |
+  |                                   |                                   |
+  |                                   +-- &3000 --------------------------+
+  |                                   |
+  |                                   |
+  |                                   |
+  +-----------------------------------+   &1100
+  |                                   |
+  :                                   :
+  :                                   :
 
 For the purposes of Elite, this is great; enabling shadow RAM gives us a huge block of user RAM from &1100 to &7FFF that we can fill with the BBC Master game code, and if we also page in private RAM, that extends user RAM into a continuous block of memory from &1100 to &AFFF. That's just under 40K, which is almost big enough to contain BBC Master Elite.
 
@@ -77,7 +136,8 @@ On top of this, the Master also adds a lot more fine-grained control over its ex
 
 													 -------------------
 
-						We can enable shadow RAM on the B+ by simply changing to a screen mode with bit 7 set (so screen mode 128+n is the same as screen mode n, but with shadow RAM enabled). So in the memory maps above, the top map is in screen mode 1, while the bottom map is in screen mode 129. When shadow RAM is enabled, the computer stores screen memory in shadow RAM, leaving normal RAM for the user.
+						
+We can enable shadow RAM on the B+ by simply changing to a screen mode with bit 7 set (so screen mode 128+n is the same as screen mode n, but with shadow RAM enabled). So in the memory maps above, the top map is in screen mode 1, while the bottom map is in screen mode 129. When shadow RAM is enabled, the computer stores screen memory in shadow RAM, leaving normal RAM for the user.
 
 This switching to shadow RAM is typically handled by the MOS operating system. Specifically, when shadow RAM is enabled, any VDU code in the operating system ROM will now write into shadow RAM instead of normal memory, and the hardware displays the contents of shadow RAM on-screen. If your program uses operating system calls or BASIC to draw to the screen, then shadow RAM will "just work"; the fact that screen memory is now in shadow RAM rather than normal RAM is hidden from the user.
 
@@ -97,11 +157,13 @@ The solution to this problem lies with the private RAM, so let's look at that ne
 
 													 --------------------
 
-						Private RAM in the B+ maps into sideways ROM space from &8000 to &AFFF, so it works a bit like a 12K block of sideways RAM. We can enable private RAM using bit 7 of the ROM Select latch at SHEILA &30 (i.e. &FE30).
+						
+Private RAM in the B+ maps into sideways ROM space from &8000 to &AFFF, so it works a bit like a 12K block of sideways RAM. We can enable private RAM using bit 7 of the ROM Select latch at SHEILA &30 (i.e. &FE30).
 
 In the standard BBC Micro, the ROM Select latch is used to page one of the 16K sideways ROMs into address &8000 to &BFFF. We do this by storing the ROM number into bits 0-3 of &FE30 (bit 7 is ignored). There's also a RAM copy of SHEILA &30 in address &00F4 that must be updated as well, just before we write to &FE30, so switching ROMs is actually a two-instruction process, as follows (where A contains the ROM number):
 
-STA &00F4 STA &FE30
+  STA &00F4
+  STA &FE30
 
 In the BBC Micro B+, this ROM-switching process works in exactly the same way, but bit 7 of SHEILA &30 can also be set to page private RAM into &8000 to &AFFF. If bit 7 is set, the ROM number in bits 0-3 determines which ROM is paged into &AFFF to &BFFF, just after the end of private RAM, though only the upper 4K of that ROM is paged in, with private RAM mapping to the first 12K.
 
@@ -121,20 +183,22 @@ Let's take a look at that process now.
 
 													 ---------------------------------
 
-						Luckily Elite is reasonably amenable to conversion into VDU driver code. The screen-drawing code is limited to a handful of routines that poke graphics directly into screen memory:
+						
+Luckily Elite is reasonably amenable to conversion into VDU driver code. The screen-drawing code is limited to a handful of routines that poke graphics directly into screen memory:
 
-- Pixel-drawing routines: [PIXEL](https://elite.bbcelite.com/master/main/subroutine/pixel.html),[CPIXK](https://elite.bbcelite.com/master/main/subroutine/cpixk.html)
-- Line-drawing routines: [LOINQ](https://elite.bbcelite.com/master/main/subroutine/loinq_part_1_of_7.html),[HLOIN](https://elite.bbcelite.com/master/main/subroutine/hloin.html)
-- Dashboard routines: [SCAN](https://elite.bbcelite.com/master/main/subroutine/scan.html),[ECBLB](https://elite.bbcelite.com/master/main/subroutine/ecblb.html),[SPBLB](https://elite.bbcelite.com/master/main/subroutine/spblb.html),[MSBAR](https://elite.bbcelite.com/master/main/subroutine/msbar.html),[DILX](https://elite.bbcelite.com/master/main/subroutine/dilx.html),[DIL2](https://elite.bbcelite.com/master/main/subroutine/dil2.html)
-- Ship hangar routines: [HANGER](https://elite.bbcelite.com/master/main/subroutine/hanger.html),[HAS2](https://elite.bbcelite.com/master/main/subroutine/has2.html),[HAL3](https://elite.bbcelite.com/master/main/subroutine/hal3.html),[HAS3](https://elite.bbcelite.com/master/main/subroutine/has3.html)
+- Pixel-drawing routines: [PIXEL](https://elite.bbcelite.com/master/main/subroutine/pixel.html) ,[CPIXK](https://elite.bbcelite.com/master/main/subroutine/cpixk.html)
+- Line-drawing routines: [LOINQ](https://elite.bbcelite.com/master/main/subroutine/loinq_part_1_of_7.html) ,[HLOIN](https://elite.bbcelite.com/master/main/subroutine/hloin.html)
+- Dashboard routines: [SCAN](https://elite.bbcelite.com/master/main/subroutine/scan.html) ,[ECBLB](https://elite.bbcelite.com/master/main/subroutine/ecblb.html) ,[SPBLB](https://elite.bbcelite.com/master/main/subroutine/spblb.html) ,[MSBAR](https://elite.bbcelite.com/master/main/subroutine/msbar.html) ,[DILX](https://elite.bbcelite.com/master/main/subroutine/dilx.html) ,[DIL2](https://elite.bbcelite.com/master/main/subroutine/dil2.html)
+- Ship hangar routines: [HANGER](https://elite.bbcelite.com/master/main/subroutine/hanger.html) ,[HAS2](https://elite.bbcelite.com/master/main/subroutine/has2.html) ,[HAL3](https://elite.bbcelite.com/master/main/subroutine/hal3.html) ,[HAS3](https://elite.bbcelite.com/master/main/subroutine/has3.html)
 - Text-drawing routines: [CHPR](https://elite.bbcelite.com/master/main/subroutine/chpr.html)
-- Screen-clearing routines: [TTX66](https://elite.bbcelite.com/master/main/subroutine/ttx66.html),[ZES2](https://elite.bbcelite.com/master/main/subroutine/zes2.html),[CLYNS](https://elite.bbcelite.com/master/main/subroutine/clyns.html)
+- Screen-clearing routines: [TTX66](https://elite.bbcelite.com/master/main/subroutine/ttx66.html) ,[ZES2](https://elite.bbcelite.com/master/main/subroutine/zes2.html) ,[CLYNS](https://elite.bbcelite.com/master/main/subroutine/clyns.html)
 
 One approach would be to move all of these routines into the address range &A000-&AFFF, as they would then update screen memory in shadow RAM. I suspect this would be possible, but it would mean restructuring the game code to a fairly high degree. BBC Master Elite stores all of the game data in the top part of memory above &8000, and as some of these data tables are pretty huge, we'd need to shuffle a lot of code and data if we wanted to squeeze the above routines into the top 4K of private RAM.
 
 A much easier approach is to replace just the screen-poking parts. Examining the above routines, it turns out there are only eight different variations of code that poke into screen memory. The most popular is this snippet:
 
-EOR (SC),Y \ Draw a pixel using EOR logic STA (SC),Y
+   EOR (SC),Y             \ Draw a pixel using EOR logic
+   STA (SC),Y
 
 This draws a byte into screen memory using EOR logic, so it merges the pixels we are drawing with whatever is already on-screen. Other variations include drawing using OR logic, poking directly into screen memory without checking what's already there, drawing to an address in a different zero-page variable to SC(1 0), and so on.
 
@@ -144,9 +208,13 @@ So the easiest solution is to write eight subroutines to implement all eight var
    JSR DrawPixelEOR       \ Perform the EOR/STA instructions from &A000-&AFFF
                           \ so they affect screen memory in shadow RAM
 ```
-						The DrawPixelEOR then looks a bit like this:
+						
+The DrawPixelEOR then looks a bit like this:
 
-.DrawPixelEOR EOR (SC),Y \ Draw a pixel using EOR logic STA (SC),Y RTS \ Return from the subroutine
+  .DrawPixelEOR
+   EOR (SC),Y             \ Draw a pixel using EOR logic
+   STA (SC),Y
+   RTS                    \ Return from the subroutine
 
 As long as DrawPixelEOR is in the top 4K of private RAM, this will enable Elite to draw directly into screen memory in shadow RAM.
 
@@ -222,7 +290,8 @@ In the end I had to shrink the size of the VDU driver routines to fit them into 
   
    RTS                    \ Return from the subroutine
 ```
-						It took quite a while to track down the last bit of screen-poking code and move it into the DrawBoxCorners routine, as this bit of code is in a different format to the rest of the screen routines. Until I replaced them with VDU driver code, these instructions would corrupt the main game code at addresses &4000 and &41F8, which meant the game randomly did some very strange things as I worked on the squeezing the code into the B+.
+						
+It took quite a while to track down the last bit of screen-poking code and move it into the DrawBoxCorners routine, as this bit of code is in a different format to the rest of the screen routines. Until I replaced them with VDU driver code, these instructions would corrupt the main game code at addresses &4000 and &41F8, which meant the game randomly did some very strange things as I worked on the squeezing the code into the B+.
 
 Talking of which, let's look at that squeezing process in more detail.
 
@@ -230,7 +299,8 @@ Talking of which, let's look at that squeezing process in more detail.
 
 													 --------------------------------
 
-						If you look at the [memory map for BBC Master Elite](https://elite.bbcelite.com/deep_dives/the_elite_memory_map_master.html), it almost feels like the shape of the extra memory on the B+. Unfortunately, "almost" isn't good enough, so we need to break out the shoehorn.
+						
+If you look at the [memory map for BBC Master Elite](https://elite.bbcelite.com/deep_dives/the_elite_memory_map_master.html), it almost feels like the shape of the extra memory on the B+. Unfortunately, "almost" isn't good enough, so we need to break out the shoehorn.
 
 There are three main challenges if we're to fit BBC Master Elite into an unexpanded B+:
 
@@ -254,12 +324,12 @@ In the end, this is how I restructured the memory layout of BBC Master Elite to 
 Moving memory around is always a complicated process, even with a fully documented and buildable source code, so here are some notes on the above:
 
 - On the BBC Master, Elite uses the whole of zero page, up to and including &00E3. This means Elite uses the filing system and NMI workspaces, amongst others. When the game needs to use the filing system, for example when loading commander files from disc, it uses an approach first developed for the Commodore 64 version of Elite. When it starts up, the game copies the top half of zero page into a buffer in shadow RAM, and when it needs to access the disc, it swaps zero page with this copy, accesses the disc, and swaps it back. This ensures that Elite's variables don't get corrupted by disc activity, and that zero page is in the correct format that the disc filing system expects.
- I started out by reimplementing the Master's[getzp](https://elite.bbcelite.com/master/main/subroutine/getzp.html)and[setzp](https://elite.bbcelite.com/master/main/subroutine/setzp.html)routines, using VDU driver code to copy between zero page and an unused portion at the bottom of shadow RAM, just like the Master. But this proved to be unreliable, so instead I copied the zero page structure from the BBC Micro disc version, which deals with the same challenge by avoiding those parts of zero page that the disc filing system and NMIs use (it frees up enough space by moving the key logger into main memory). This removed the need for a zero page swap process in the B+ version, and as the BBC Micro and BBC Micro B+ are so similar, it works nicely. (Note that the swap system proved unreliable at a point in the development where I still had some rogue screen-poking routines corrupting the main game binary, so this might have been the problem; it's hard to tell!)
+ I started out by reimplementing the Master's[getzp](https://elite.bbcelite.com/master/main/subroutine/getzp.html) and[setzp](https://elite.bbcelite.com/master/main/subroutine/setzp.html) routines, using VDU driver code to copy between zero page and an unused portion at the bottom of shadow RAM, just like the Master. But this proved to be unreliable, so instead I copied the zero page structure from the BBC Micro disc version, which deals with the same challenge by avoiding those parts of zero page that the disc filing system and NMIs use (it frees up enough space by moving the key logger into main memory). This removed the need for a zero page swap process in the B+ version, and as the BBC Micro and BBC Micro B+ are so similar, it works nicely. (Note that the swap system proved unreliable at a point in the development where I still had some rogue screen-poking routines corrupting the main game binary, so this might have been the problem; it's hard to tell!)
 - As noted in the previous section, the VDU driver code lives in the top part of private RAM, specifically from &AFDD to &AFFF.
-- In moving the UP workspace out of the main game binary and into page 9, I left the last variable ([VOL](https://elite.bbcelite.com/master/main/workspace/up.html#vol)) in-place in the main game code, so it still gets initialised with a value of 7.
-- To maintain a tidy split between the game code (below &8000) and the game data (&8000 and above), I moved the [SNE](https://elite.bbcelite.com/master/game_data/variable/sne.html),[ACT](https://elite.bbcelite.com/master/game_data/variable/act.html),[RUGAL](https://elite.bbcelite.com/master/game_data/variable/rugal.html)and[RUPLA](https://elite.bbcelite.com/master/game_data/variable/rupla.html)tables into main memory.
+- In moving the UP workspace out of the main game binary and into page 9, I left the last variable ([VOL](https://elite.bbcelite.com/master/main/workspace/up.html#vol) ) in-place in the main game code, so it still gets initialised with a value of 7.
+- To maintain a tidy split between the game code (below &8000) and the game data (&8000 and above), I moved the [SNE](https://elite.bbcelite.com/master/game_data/variable/sne.html) ,[ACT](https://elite.bbcelite.com/master/game_data/variable/act.html) ,[RUGAL](https://elite.bbcelite.com/master/game_data/variable/rugal.html) and[RUPLA](https://elite.bbcelite.com/master/game_data/variable/rupla.html) tables into main memory.
 - Moving variables out of zero page is a more complicated process than you might imagine, as the authors of Elite were big fans of offset branching using P%. Offset branching uses the program counter in P% to build the destination for a branch, so BEQ P%+4, for example, will skip over the two bytes following the branch instruction when the Z flag is set (we use P%+4 because the BEQ instruction is two bytes and we want to skip another two). This works fine, unless the next two bytes happen to be an instruction that loads a value from a zero page variable that we have just moved; this is because LDA addr is a two-byte instruction if addr is in zero page, but it's a three-byte instruction if addr is in main memory. So if we just moved addr from zero page to main memory, we have to hunt for any P%+n references that might break as a result. Moving the key logger out of zero page required a lot of changes.
-- There's a similar challenge when replacing screen-poking code with JSRs to VDU driver code. In the above section we looked at replacing EOR (SC),Y and STA (SC),Y with a JSR DrawPixelEOR instruction, which is a change from four bytes of code to three bytes of code. It turns out that the unrolled line-drawing routines at [LOINQ](https://elite.bbcelite.com/master/main/subroutine/loinq_part_1_of_7.html)and[HLOIN](https://elite.bbcelite.com/master/main/subroutine/hloin.html)use offset branching to skip the drawing code, but this time using offsets from labels, so there are lots of instructions of the form BEQ LI100+6, which in this case skips the first three two-byte instructions after the label LI100. Unfortunately the second and third instructions are the EOR and STA that we want to replace with a JSR, so BEQ LI100+6 needs to become BEQ LI100+5 to avoid branching one byte too far. Even more insidiously, the fourth instruction after LI100 is a DEX, so leaving the BEQ instruction alone won't crash the game, but it will make line-drawing go noticeably wrong. Tracking down this kind of issue is a whole process in itself!
+- There's a similar challenge when replacing screen-poking code with JSRs to VDU driver code. In the above section we looked at replacing EOR (SC),Y and STA (SC),Y with a JSR DrawPixelEOR instruction, which is a change from four bytes of code to three bytes of code. It turns out that the unrolled line-drawing routines at [LOINQ](https://elite.bbcelite.com/master/main/subroutine/loinq_part_1_of_7.html) and[HLOIN](https://elite.bbcelite.com/master/main/subroutine/hloin.html) use offset branching to skip the drawing code, but this time using offsets from labels, so there are lots of instructions of the form BEQ LI100+6, which in this case skips the first three two-byte instructions after the label LI100. Unfortunately the second and third instructions are the EOR and STA that we want to replace with a JSR, so BEQ LI100+6 needs to become BEQ LI100+5 to avoid branching one byte too far. Even more insidiously, the fourth instruction after LI100 is a DEX, so leaving the BEQ instruction alone won't crash the game, but it will make line-drawing go noticeably wrong. Tracking down this kind of issue is a whole process in itself!
 
 The only other point to note about converting Elite from the Master to the B+ are the slightly different instruction sets used by the two machines. The B+ has a 6512 CPU, which is almost identical to the original BBC Micro's 6502 CPU (the difference is that the clock is internal in the 6502 but external in the 6512). The Master has a 65SC12 CPU, which supports some very handy extra instructions such as PLX, PLY, STZ and BRA. Elite doesn't go all-in on these new instructions, as the source is very much derived from the original BBC Micro, Commodore 64 and Apple II versions, but there are some examples that need converting into 6502 code that will run on the B+.
 

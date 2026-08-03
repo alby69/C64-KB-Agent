@@ -3,30 +3,30 @@ title: base:formatting_a_disk [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Aformatting_a_disk
 category: tool
 topics:
-- basic
-- raster interrupts
 - memory management
+- raster interrupts
+- basic
 - assembly
 difficulty: advanced
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # base:formatting_a_disk [Codebase64 wiki]
 
-** Formatting a disk **
+**Formatting a disk** 
 
 As pointed out elsewhere, the CBMDOS formats disks well. To activate it we send a command via the command channel as follows:
 

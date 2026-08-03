@@ -9,15 +9,15 @@ difficulty: intermediate
 language: assembly
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Ship blueprints
@@ -30,13 +30,14 @@ This is such an important aspect of Elite that the original game came with a pos
 
 ![The ship identification poster](https://elite.bbcelite.com/images/elite_universe_editor/ship_id.jpg) 
 
-						In this article we take a look at how ship blueprints are implemented in Elite. If you want to see how the different ship specifications compare to each other, then see the deep dive on [comparing ship specifications](https://elite.bbcelite.com/comparing_ship_specifications.html), and to see exactly how large these ships are, see the deep dive on [a sense of scale](https://elite.bbcelite.com/a_sense_of_scale.html).
+In this article we take a look at how ship blueprints are implemented in Elite. If you want to see how the different ship specifications compare to each other, then see the deep dive on [comparing ship specifications](https://elite.bbcelite.com/comparing_ship_specifications.html), and to see exactly how large these ships are, see the deep dive on [a sense of scale](https://elite.bbcelite.com/a_sense_of_scale.html).
 
 ## Ship blueprints
 
 													 ---------------
 
-						There is a lookup table at [XX21](https://elite.bbcelite.com/cassette/main/variable/xx21.html) that contains the addresses of all the ship blueprints used in the game. Ship type 1 (the Sidewinder at [SHIP_SIDEWINDER](https://elite.bbcelite.com/cassette/main/variable/ship_sidewinder.html)) is first in the table, then ship type 2 (the Viper at [SHIP_VIPER](https://elite.bbcelite.com/cassette/main/variable/ship_viper.html)) is next, and so on up to ship type 13 (the escape pod at [SHIP_ESCAPE_POD](https://elite.bbcelite.com/cassette/main/variable/ship_escape_pod.html)). For all ships except the Python, the blueprints themselves are stored in sequence just after the table; the Python is stored at [SHIP_PYTHON](https://elite.bbcelite.com/cassette/main/variable/ship_python.html), just above screen memory at &7F00.
+						
+There is a lookup table at [XX21](https://elite.bbcelite.com/cassette/main/variable/xx21.html) that contains the addresses of all the ship blueprints used in the game. Ship type 1 (the Sidewinder at [SHIP_SIDEWINDER](https://elite.bbcelite.com/cassette/main/variable/ship_sidewinder.html)) is first in the table, then ship type 2 (the Viper at [SHIP_VIPER](https://elite.bbcelite.com/cassette/main/variable/ship_viper.html)) is next, and so on up to ship type 13 (the escape pod at [SHIP_ESCAPE_POD](https://elite.bbcelite.com/cassette/main/variable/ship_escape_pod.html)). For all ships except the Python, the blueprints themselves are stored in sequence just after the table; the Python is stored at [SHIP_PYTHON](https://elite.bbcelite.com/cassette/main/variable/ship_python.html), just above screen memory at &7F00.
 
 There are 13 ship types in the BBC Micro cassette version, though the two Cobra Mk III entries share the same ship blueprint, so there are only 12 distinct ship designs. Here they are, along with the corresponding configuration variables where they exist:
 
@@ -119,7 +120,8 @@ The blueprint also contains all the data we need to draw the ship on-screen. Thi
 
 													 --------------------
 
-						For each ship blueprint, the first 20 bytes define the main characteristics of this ship type. They are as follows:
+						
+For each ship blueprint, the first 20 bytes define the main characteristics of this ship type. They are as follows:
 
 | Byte # | Description | 
 |---|---|
@@ -140,38 +142,35 @@ The blueprint also contains all the data we need to draw the ship on-screen. Thi
 | #16 | Edges data offset high byte (can be negative and point to another ship's edge net) | 
 | #17 | Faces data offset high byte | 
 | #18 | Face normals are scaled down by 2 ^ this value to enable us to store more accurate fractional data in the table | 
-| #19 | %00 lll mmm, where: Bits 0-2 = number of missilesBits 3-5 = laser power
- | 
+| #19 | %00 lll mmm, where: Bits 0-2 = number of missiles Bits 3-5 = laser power | 
 
 ## Vertex definitions
 
 													 ------------------
 
-						Next come the vertex definitions. Each vertex is made up of eight values stored in six bytes, as follows:
+						
+Next come the vertex definitions. Each vertex is made up of eight values stored in six bytes, as follows:
 
 | Byte # | Description | 
 |---|---|
 | #0 | Magnitude of the vertex's x-coordinate, with the origin in the middle of the ship | 
 | #1 | Magnitude of the vertex's y-coordinate | 
 | #2 | Magnitude of the vertex's z-coordinate | 
-| #3 | %xyz vvvvv, where: Bits 0-4 = visibility distance, beyond which the vertex is not shownBits 7-5 = the sign bits of x, y and z
- | 
-| #4 | %ffff ffff, where: Bits 0-3 = the number of face 1Bits 4-7 = the number of face 2
- | 
-| #5 | %ffff ffff, where: Bits 0-3 = the number of face 3Bits 4-7 = the number of face 4
- | 
+| #3 | %xyz vvvvv, where: Bits 0-4 = visibility distance, beyond which the vertex is not shown Bits 7-5 = the sign bits of x, y and z | 
+| #4 | %ffff ffff, where: Bits 0-3 = the number of face 1 Bits 4-7 = the number of face 2 | 
+| #5 | %ffff ffff, where: Bits 0-3 = the number of face 3 Bits 4-7 = the number of face 4 | 
 
 ## Edge definitions
 
 													 ----------------
 
-						Then we have the edge definitions. Each edge is made up of five values stored in four bytes, as follows:
+						
+Then we have the edge definitions. Each edge is made up of five values stored in four bytes, as follows:
 
 | Byte # | Description | 
 |---|---|
 | #0 | Visibility distance, beyond which the edge is not shown | 
-| #1 | %ffff ffff, where: Bits 0-3 = the number of face 1Bits 4-7 = the number of face 2
- | 
+| #1 | %ffff ffff, where: Bits 0-3 = the number of face 1 Bits 4-7 = the number of face 2 | 
 | #2 | The number of the vertex at the start of the edge | 
 | #3 | The number of the vertex at the end of the edge | 
 
@@ -179,12 +178,12 @@ The blueprint also contains all the data we need to draw the ship on-screen. Thi
 
 													 ----------------
 
-						Finally we have the face definitions. Each face is made up of four values stored in four bytes, as follows. Note that the visibility distance works in the opposite way for faces than for the ship, vertices and edges, in that the face is always shown when it's further away than the visibility distance.
+						
+Finally we have the face definitions. Each face is made up of four values stored in four bytes, as follows. Note that the visibility distance works in the opposite way for faces than for the ship, vertices and edges, in that the face is always shown when it's further away than the visibility distance.
 
 | Byte # | Description | 
 |---|---|
-| #0 | %xyz vvvvv, where: Bits 0-4 = visibility distance, beyond which the face is always shownBits 7-5 = the sign bits of normal_x, normal_y and normal_z
- | 
+| #0 | %xyz vvvvv, where: Bits 0-4 = visibility distance, beyond which the face is always shown Bits 7-5 = the sign bits of normal_x, normal_y and normal_z | 
 | #1 | Magnitude of the face normal's x-coordinate, normal_x | 
 | #2 | Magnitude of the face normal's y-coordinate, normal_y | 
 | #3 | Magnitude of the face normal's z-coordinate, normal_z | 

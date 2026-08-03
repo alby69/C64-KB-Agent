@@ -10,9 +10,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 
@@ -24,7 +24,13 @@ base:writing_a_file_byte-by-byte
 
 BASIC code:
 
-10 FS=8192:FE=16384 20 OPEN 2,8,2,"JUST A FILENAME,P,W" 30 IF ST<>0 THEN GOTO 70 40 A=PEEK(FS):FS=FS+1 50 PRINT#2,CHR$(A); 60 IF FE>FS THEN GOTO 30 70 CLOSE 2
+10 FS=8192:FE=16384
+20 OPEN 2,8,2,"JUST A FILENAME,P,W"
+30 IF ST<>0 THEN GOTO 70
+40 A=PEEK(FS):FS=FS+1
+50 PRINT#2,CHR$(A);
+60 IF FE>FS THEN GOTO 30
+70 CLOSE 2
 
 Assembler code:
 

@@ -3,17 +3,17 @@ title: Playing Elite 3D
 source_url: https://elite.bbcelite.com/hacks/elite_3d_downloads.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Playing Elite 3D
@@ -22,10 +22,10 @@ scraped_at: '2026-07-27'
 
 ![The iconic Elite box screenshot in anaglyph 3D](https://elite.bbcelite.com/images/elite_3d/boxart2.png) 
 
-						You can play Elite 3D in a web browser, or on a BBC Master or BBC Micro that's got a 6502 Second Processor fitted. You will also need a pair of anaglyph 3D glasses (see below). Here are your options:
+You can play Elite 3D in a web browser, or on a BBC Master or BBC Micro that's got a 6502 Second Processor fitted. You will also need a pair of anaglyph 3D glasses (see below). Here are your options:
 
-- Play Elite 3D [in your browser](https://bbc.xania.org/?model=Master&coProcessor=true&autoboot&disc=https://elite.bbcelite.com/versions/elite_3d/elite-6502sp-3d-sng45.ssd).
-- Download Elite 3D [as a disc image](https://elite.bbcelite.com/versions/elite_3d/elite-6502sp-3d-sng45.ssd). This will run in an emulator, or on a real BBC Master or BBC Micro using a device like a Gotek.
+- Play Elite 3D [in your browser](https://bbc.xania.org/?model=Master&coProcessor=true&autoboot&disc=https://elite.bbcelite.com/versions/elite_3d/elite-3d.ssd) .
+- Download Elite 3D [as a disc image](https://elite.bbcelite.com/versions/elite_3d/elite-3d.ssd) . This will run in an emulator, or on a real BBC Master or BBC Micro using a device like a Gotek.
 
 To load Elite 3D, insert the disc image and press SHIFT-D-BREAK (for DFS), SHIFT-M-BREAK (for MMFS), SHIFT-S-BREAK (for Micro SPI) or use the *DBOOT command (for all SD card solutions); emulators tend to map BREAK to F12, so press SHIFT-D-F12. The disc will automatically load if you're playing it in a browser.
 
@@ -37,13 +37,14 @@ If you want to start with a fully kitted-out ship and lots of cash, then you can
 
 													 -------------------
 
-						If you want to have the best experience in anaglyph 3D, then you need a decent pair of 3D glasses. It's pretty difficult to find really good glasses that will work with retro hardware, but here's what you need to know.
+						
+If you want to have the best experience in anaglyph 3D, then you need a decent pair of 3D glasses. It's pretty difficult to find really good glasses that will work with retro hardware, but here's what you need to know.
 
 Anaglyph 3D glasses consist of coloured lenses, typically red for the left eye and cyan for the right eye (although Elite 3D supports five different colour schemes - see the page on [configuring Elite 3D](https://elite.bbcelite.com/elite_3d_configuration.html) for details). They can be cheap cardboard specs, fancy plastic wraparounds, or even clip-on lenses for those of us who already need glasses to read our computer screens:
 
 ![Various pairs of 3D anaglyph glasses](https://elite.bbcelite.com/images/elite_3d/3d_specs.jpg) 
 
-						The idea is that the lens colours match the on-screen colours as closely as possible, so the red lens only lets red and white light through and blocks cyan light, while the cyan lens only lets cyan and white light through and blocks red light. In this way each eye only sees one on-screen colour, and this produces a stereoscopic effect.
+The idea is that the lens colours match the on-screen colours as closely as possible, so the red lens only lets red and white light through and blocks cyan light, while the cyan lens only lets cyan and white light through and blocks red light. In this way each eye only sees one on-screen colour, and this produces a stereoscopic effect.
 
 The problem is that lens colours are hard to control, and so are on-screen colours, so getting them to match is a bit of a hit-and-miss affair. I have a number of different pairs of 3D specs, and in some of them the cyan filter is really light and you can easily see the red lines through it, while in others it's a lot darker and blocks the opposite colour more effectively. Sometimes the cyan is actually blue, as in the clip-on pair in the above photo; it's a bit of a minefield, really.
 
@@ -55,7 +56,8 @@ To help you optimise your system to work with your individual glasses and screen
 
 													 -------------------
 
-						In Elite 3D, the whole game has been converted to work while wearing anaglyph 3D glasses. In practice you may want to doff your specs when you don't need them, as the effect can be a bit wearing, but if you're happy in your 1980s 3D paradise, then you can stay there for the duration.
+						
+In Elite 3D, the whole game has been converted to work while wearing anaglyph 3D glasses. In practice you may want to doff your specs when you don't need them, as the effect can be a bit wearing, but if you're happy in your 1980s 3D paradise, then you can stay there for the duration.
 
 The in-station screens have been designed to work with or without 3D glasses. The text and system charts appear in both eyes, so although they glimmer a bit, they should work. The dashboard is similar, and should appear reasonably clear, even through anaglyph glasses.
 
@@ -63,7 +65,7 @@ The space view shows all the ships, stations, suns, planets and stardust in anag
 
 ![The first screenshot from the manual in Elite 3D](https://elite.bbcelite.com/images/elite_3d/manual.png) 
 
-						Here's what you need to know about playing Elite in anaglyph 3D:
+Here's what you need to know about playing Elite in anaglyph 3D:
 
 - The dashboard and laser sights are shown in both eyes (i.e. white in the default red/cyan scheme), so they sit on what's known as the "projection plane", which is where your eyes naturally focus. 3D objects like ships and planets tend to be either in front of or behind this plane. I find that staring at the laser sights and relaxing my eyes can help the 3D effect kick in; also, narrowing your eyes can help the third dimension "pop" into view.
 - The view name ("Front view", "Back view" etc.) only appears briefly on-screen when you change to a new view, as otherwise it is pretty distracting. I have also removed the white box surrounding the space view to make it easier to see the 3D effect.
@@ -76,20 +78,25 @@ Apart from the above, this is the standard and full version of 6502 Second Proce
 
 If you want to configure the anaglyph 3D effect to get the best from your particular setup, see the section on [configuring Elite 3D](https://elite.bbcelite.com/elite_3d_configuration.html). For more details of how the anaglyph effect is implemented in Elite 3D, see the [technical information](https://elite.bbcelite.com/elite_3d_technical_information.html).
 
+## 
 
 													 ---------------
 
-						Elite 3D has had the following releases:
+						
+Elite 3D has had the following releases:
 
 - 2024-09-24 - Initial release
 - 2024-09-25 - Fixed an issue where the size of the sun could randomly change and reduced the size of the sun's separation to make it easier on the eyes
+- 2024-09-26 - Rebalanced parallax effect by reducing sun separation by 1 in all three settings
 
 You can check the release for a given disc image by loading the disc and typing *TYPE README to display the credits. The build date is at the end.
 
+## 
 
 													 ------------
 
-						When the planet is clipped by the top-right corner of the screen, it can sometimes make the top line of the screen flicker. This is actually a bug that affects all released versions of BBC Micro Elite, but you don't normally notice the problem because it is hidden by the box around the space view; it just makes the top line of the box flicker every now and then, and only when the planet is clipped by the top-right corner. However, because Elite 3D no longer has a box surrounding the space view, the flickering top line is much more obvious. It is part of the original code, though, and not a bug with Elite 3D.
+						
+When the planet is clipped by the top-right corner of the screen, it can sometimes make the top line of the screen flicker. This is actually a bug that affects all released versions of BBC Micro Elite, but you don't normally notice the problem because it is hidden by the box around the space view; it just makes the top line of the box flicker every now and then, and only when the planet is clipped by the top-right corner. However, because Elite 3D no longer has a box surrounding the space view, the flickering top line is much more obvious. It is part of the original code, though, and not a bug with Elite 3D.
 
 If you load a universe file that contains a sun, then changing the parallax level with "D" will corrupt the fringes slightly. You can fix this by reloading the file.
 

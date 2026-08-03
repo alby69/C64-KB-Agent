@@ -9,12 +9,10 @@ language: mixed
 hardware:
 - CPU
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Some words about the ANC opcode
-
-### Table of Contents
 
 # Some words about the ANC opcode
 
@@ -22,8 +20,8 @@ Written by FTC/HT.
 
 Like many other illegal opcodes the ANC instruction performs “two operations in one”, and as is also often the case, one of these two operations is an AND operation. The ANC opcode only exist in the “immediate” version (ANC #$ff) and it works like this:
 
-- AND immediate value (#$xx) with A, and store result in A.
-- Put highest bit of the result in the carry.
+1. AND immediate value (#$xx) with A, and store result in A.
+2. Put highest bit of the result in the carry.
 
 ## When is ANC useful?
 
@@ -33,11 +31,14 @@ Here are some cases where I found this opcode to be useful. If you've encountere
 
 When using an AND instruction before an addition (or any other operation where you might want to know the state of the carry flag), you might save two cycles (not having to do CLC or SEC) by using ANC instead of AND. Since a cleared hibit in the value used with the ANC instruction always leads to a unset carry flag after this operation, you can take advantage of that. An example:
 
-lda value anc #$0f ;Carry flag is always set to 0 after this op. adc value2 ;Add a value. CLC not needed! sta result
+	lda value
+	anc #$0f	;Carry flag is always set to 0 after this op.
+	adc value2	;Add a value. CLC not needed!
+	sta result
 
 Another case like this is when you want to set the A register to #$00 specifically, and also happen to want to have the carry cleared:
 
-anc #0 :Carry always cleared after this op, and A register always set to zero.
+	anc #0		:Carry always cleared after this op, and A register always set to zero.
 
 ### Case 2 - remembering a bit
 
@@ -49,7 +50,7 @@ Another command that can be used to achieve the same thing is CMP #$80 (as well 
 
 In case your assembler does not support illegal opcodes, remember that you can always use them anyway using a byte directive, like this:
 
-.byte $0b,$ff ;produces ANC #$FF. Note that $2b instead of $0b produces equivalent results.
+	.byte $0b,$ff ;produces ANC #$FF. Note that $2b instead of $0b produces equivalent results.
 
 ## Codice Estratto
 

@@ -3,37 +3,35 @@ title: The Secret of Fast LZW Crunching
 source_url: https://codebase.c64.org/doku.php?id=base%3Athe_secret_of_fast_lzw_crunching
 category: source-code
 topics:
+- memory management
 - basic
 - sprite programming
-- memory management
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
 # The Secret of Fast LZW Crunching
-
-### Table of Contents
 
 # The Secret of Fast LZW Crunching
 
@@ -52,17 +50,20 @@ In order to improve anything, we better got to get a deep understanding what's g
 
 An input file consists of the following bytes (all values in hexadecimal):
 
-ADDRESS BYTES $1000:::: $00 $01 $03 $03 $0a $0d $01 $03 $03 $0a $03 $03 $0a
+ADDRESS      BYTES   
+$1000::::    $00 $01 $03 $03 $0a $0d $01 $03 $03 $0a $03 $03 $0a
 
 Yes, this string is packable very well. A LZW cruncher will detect all similar strings, and will only store the largest of the similar string in the output file. Any time the string should appear in the decompressed memory, the LZW cruncher will store a some special codes instead of the string there. These special codes will tell the uncompressor where to look for the bytes , and how many of them. In the example above, the result might look like this :
 
-$00 $01 $03 $03 $0a $0d (<code for get "earlier mem"> <code for "4 bytes"> <code for offset>) (<again code for "get earlier mem"> <code for "3 bytes"> <code for "offset">) (<again code for "get earlier mem"> <code for "3 bytes"> <code for "offset">)
+$00 $01 $03 $03 $0a $0d (<code for get "earlier mem"> <code for "4 bytes"> <code for offset>) 
+(<again code for "get earlier mem"> <code for "3 bytes"> <code for "offset">) 
+(<again code for "get earlier mem"> <code for "3 bytes"> <code for "offset">) 
 
 The decruncher needs to know atleast 3 things:
 
-- shall I simply put these bytes into memory or shall i get a string from the memory earlier?
-- If I get a string, how many bytes do I have to copy, and
-- from what memory adress?
+1. shall I simply put these bytes into memory or shall i get a string from the memory earlier?
+2. If I get a string, how many bytes do I have to copy, and
+3. from what memory adress?
 
 There are really a hell lot of methods to encode your information so that the decruncher will know -in an orderly manner- when to simply put data into memory, when to get a string from memory, and when to stop. For example, some compressors ALWAYS think they have to copy data from memory unless explicitly told otherwise! These compressors have “chunks” of data everywhere, which are superceded by a header information in front of each chunk of data, much like every disk sector on the disk has a header telling the disk drive where it is.
 
@@ -70,13 +71,18 @@ However, we are not interested in the format of the headers and bytes that are e
 
 To understand this, let us return to the example above:
 
-ADDRESS BYTES $1000:::: $00 $01 $03 $03 $0a $0d $01 $03 $03 $0a $03 $03 $0a
+ADDRESS      BYTES   
+$1000::::    $00 $01 $03 $03 $0a $0d $01 $03 $03 $0a $03 $03 $0a
 
 What is the cruncher supposed to do? The cruncher has a pointer, say, $0002/$0003 (2 zeropage adresses) to our program at $1000. it looks in the whole memory from $1000 to $100c for a sequence. Here, it is reasonable to assume any sequence consists of at least 2 bytes, so the cruncher will look in $1000 to $100c for the bytes “$00 $01”. He will not find them, so he will simply output $00 $01 without any special notice. Next the cruncher will try to find the next 2 bytes , $01 $03 in the memory, and he will find them (at $1001, $1006) and proceed to crunch them. Crunchers operation will continue at $1005 (at the $0d byte) , then at $1006 ($01 $03 again), then at $100b (another sequence).
 
 So basically, on the c-64 , the cruncher is stuck up in a double loop. For each 2 byte sequence there is in the memory, the program will scan the whole other memory! This looks (and behaves) much like a basic loop in the following style:
 
-For i=1 to 50000 do for j=1 to 50000 do .....(crunching algorithm) next j next i
+For i=1 to 50000 do 
+for j=1 to 50000 do
+.....(crunching algorithm)
+next j
+next i
 
 A double loop is, unfortunately, not a real fast or favourable way to handle stuff like this. What do we need to speed up all this? The answer is, after due consideration, we have, somehow to avoid the double loop. The first idea a programmer might have, is: “Hmmm. It would be something wonderful if we had some big, big arrays that contained all the memory adresses of all sequences!” Any time the computer looks for a sequence, he would scan the array instead of the whole memory.
 
@@ -96,7 +102,14 @@ We have: all adresses of all $0000 values in an array going from $0000-0000 to $
 ```
 Ui, a rather big bunch of 65536 arrays, you will say. Yep. And how would our search routine look like? Answer: The search routine would look very simple, we imagine we have a super-c64 that can adress 32 bit adresses:
 
-ldy #$0000 (16 bit y register, rite) loop lda $ea2d0000,y (we are looking for the sequence $ea2d) (akku is a 16 bit accu, miraculously) beq end_of_crunch (if no more sequences, end) jsr encode (crunch slave to the work!) iny bne loop end_of_crunch rts
+		ldy #$0000   		(16 bit y register, rite)
+loop 		lda $ea2d0000,y         (we are looking for the sequence $ea2d)
+					(akku is a 16 bit accu, miraculously)
+		beq end_of_crunch       (if no more sequences, end)
+		jsr encode              (crunch slave to the work!)
+		iny
+		bne loop
+end_of_crunch	rts
 
 Wow, this would be great! Just some self-modifying code at the “loop” label, and we are set. However, life is not that simple. We *can* code the example above with 8 bit registers (akku and y register, typically by using zeropage) but what's not so easy to get is a commodore-c64 with none less than 2^32 bits ram = 4194 megabytes of ram!
 
@@ -106,7 +119,9 @@ Obviously, we have to think of something less memory-eating. Here is how.
 
 The basic idea is to use a chained list. A “chained list” is a rather clever data structure that is composed of, basically, three things:
 
-a) An easy-to-find start pointer to the chained list b) the middle of the chained list, consisting of link and data (in whatever order you decide) c) the end of the list
+a) An easy-to-find start pointer to the chained list
+b) the middle of the chained list, consisting of link and data (in whatever order you decide)
+c) the end of the list
 
 Case b) is unique : The middle of the chained list consists of two things. The “link” is a pointer to where I can find the next chain of the list. “DATA” is any data we want, and what we want, is, ofcourse, still, the 16-bit adress of where our 2-byte-sequence resides in c64's normal memory. We might reserve special values for “link” and “data” for special reasons! For example, it is reasonable to assume that our input file will never be larger than $0801-$ffff , so we might assign special meanings to the values $0000-$07ff as “DATA”. However, all for now, we only need one special value to help us detect case © (which is, the end of the list), so we will use a combination of data=$0000 and link=$0000 for this very case.
 
@@ -329,7 +344,37 @@ But first let us disassemble what DSQ does 99% all of the time. Suck and see: If
 
 ## More sources
 
-; akku contains the 8 bit low byte of the sequence ; we actively search for the sequence by finding the first 8 bits, first .... 0030 D9 00 EE CMP EE00,Y ; searching for lower 8 byte of 2-byte sequence.... 0033 F0 0C BEQ 0041 ; similar? good....lets do work 0035 C8 INY ; no, scan the rest of this page 0036 D0 F8 BNE 0030 0038 E6 32 INC 32 ; still not, scan rest of, uhhhhh , whole memory 003A F0 04 BEQ 0040 003C C6 2F DEC 2F ; or scan at least as many pages as in $2f .... 003E D0 F0 BNE 0030 0040 60 RTS ---------------------------------- 0041 AA TAX ; store accu in x for later use 0042 84 31 STY 31 ; self modifying, clever code 0044 A0 01 LDY #01 ; try to determine sequence length 0046 B9 2E EC LDA EC2E,Y ; self modifying code 0049 D1 31 CMP (31 ),Y 004B D0 05 BNE 0052 004D C8 INY 004E C0 FF CPY #FF 0050 D0 F4 BNE 0046 0052 88 DEY 0053 C4 02 CPY 02 ; compare with minimum profitable sequence length in $02 0055 B0 09 BCS 0060 ; bigger? Yes: do real crunching 0057 8A TXA 0058 A4 31 LDY 31 005A A2 00 LDX #00 005C 86 31 STX 31 005E F0 D5 BEQ 0035 ; shit its smaller than profitable, keep scanning 0060 4C F8 11 JMP 11F8 ; do real crunching ----------------------------------
+; akku contains the 8 bit low byte of the sequence
+; we actively search for the sequence by finding the first 8 bits, first ....
+0030  D9 00 EE  	CMP EE00,Y  ; searching for lower 8 byte of 2-byte sequence.... 
+0033  F0 0C     	BEQ 0041    ; similar? good....lets do work
+0035  C8        	INY	    ; no, scan the rest of this page
+0036  D0 F8     	BNE 0030    
+0038  E6 32     	INC   32    ; still not, scan rest of, uhhhhh , whole memory
+003A  F0 04     	BEQ 0040      
+003C  C6 2F     	DEC   2F    ; or scan at least as many pages as in $2f ....
+003E  D0 F0     	BNE 0030
+0040  60        	RTS
+----------------------------------
+0041  AA        	TAX         ; store accu in x for later use        
+0042  84 31     	STY 31      ; self modifying, clever code
+0044  A0 01     	LDY #01     ; try to determine sequence length
+0046  B9 2E EC  LDA EC2E,Y          ; self modifying code
+0049  D1 31     	CMP  (31 ),Y   
+004B  D0 05     	BNE 0052         
+004D  C8        	INY
+004E  C0 FF     	CPY #FF
+0050  D0 F4     	BNE 0046
+0052  88        	DEY
+0053  C4 02     	CPY   02     ; compare with minimum profitable sequence length in $02
+0055  B0 09     	BCS 0060     ; bigger? Yes: do real crunching
+0057  8A        	TXA               
+0058  A4 31     	LDY   31
+005A  A2 00     	LDX #00
+005C  86 31     	STX   31
+005E  F0 D5     	BEQ 0035   ; shit its smaller than profitable, keep scanning
+0060  4C F8 11  	JMP 11F8   ; do real crunching
+----------------------------------
 
 Ok, so here is the summary: This heavy self-modifying beast searches for the next sequence by scanning the whole memory for suitable (equal) strings. $02 seems to hold the current “at least wanted” string length. $0030 and $0031 hold the start of memory, $0047 and $0048 hold a pointer to the sequence in the middle of the data. This is rather important since we will have to use the same pointers in our source.
 
@@ -337,7 +382,7 @@ What can we do about it?
 
 Well…. $0030 and $31 hold some important pointer, so it would be unwise to modify anything here. The BEQ command at $0033 actually could serve us to do something useful. That is to say, if a sequence seems to be immidately ahead, this very BEQ will be executed. So we will leave it alone aswell. But, at $0035 the INY is part of the dreaded slooow loop that scans the memory. We will mercilessly place a JMP at $0035 to our own code:
 
-$0035 JMP $0338
+$0035 JMP $0338  
 
 As you will soon see, we will have enuff memory in the …. TAPE BUFFER … to do all the scanning that will replace the loop at $0035 up to $003e. Yes, our routine will be longer, but not that considerably longer!
 

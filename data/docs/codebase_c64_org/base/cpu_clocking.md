@@ -12,15 +12,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # Clock Frequency
@@ -35,7 +35,10 @@ NTSC C64 master clock: 14.31818 MHz
 
 The CPU frequency is then calculated from that by simply dividing the frequency by 18 (PAL) or 14 (NTSC). The VIC-II runs at a frequency which is exactly 8 times that of the CPU. This is the so called “dot clock” which has to be very precise in order to keep the right timing needed to generate a video signal compatible with all TVs. The CPU of the time could not go that fast, max. 1MHz, but the CPU still needs to be phase synchronous to the VIC-II because they share control of the address/data bus of the machine. That's why the VIC-II internally provides a clock divider which feeds the CPU.
 
-CLOCK_PAL = 985248 Hz CLOCK_NTSC = 1022727 Hz CLOCK_VICII_PAL = 7881984 Hz CLOCK_VICII_NTSC = 8181816 Hz
+CLOCK_PAL  =  985248 Hz
+CLOCK_NTSC = 1022727 Hz
+CLOCK_VICII_PAL = 7881984 Hz
+CLOCK_VICII_NTSC = 8181816 Hz
 
 The service manual (march 1992 original from Commodore, part number 314001-03) explains the clock circuitry the following way, using an NTSC machine as a reference. This is valid also for the PAL version when the appropriate differences in the figures are considered.
 

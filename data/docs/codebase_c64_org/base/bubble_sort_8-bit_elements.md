@@ -3,22 +3,22 @@ title: Bubble Sort (for 8-Bit Elements)
 source_url: https://codebase.c64.org/doku.php?id=base%3Abubble_sort_8-bit_elements
 category: reference
 topics:
-- basic
 - memory management
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Bubble Sort (for 8-Bit Elements)
@@ -37,19 +37,19 @@ Just as bubble rise upward into the sky, list elements rise upward in memory dur
 
 If the bubble-sort algorithm is used, the microcomputer usually requires several passes to sort a list, as can be seen by the following example. Consider a 5-element list that is initially arranged in the following order.
 
-05 03 04 01 02
+05  03  04  01  02
 
 After one pass through the list, the elements will be in the following order:
 
-03 04 01 02 05
+03  04  01  02  05
 
 Element 05, the largest element of the list, has “bubbled up” to the top of the list. The next pass will produce the order:
 
-03 01 02 04 05
+03  01  02  04  05
 
 Element 04 is bubbled up the list to a position that is just before Element 05. The result of the final pass is:
 
-01 02 03 04 05
+01  02  03  04  05
 
 The example not only demonstrates how the bubble sort algorithm operates, but it also gives an indication of what type of performance you can expect from it. Note that three passes were required to sort a partialy ordered, 5-element list. If the list were totally ordered at the outset, it would still take one pass through the algorithm to deduce this fact. Conversely, if the list were initially arranged in descending order (the worst case), the bubble-sort algorithm woul require 5 passes to order the list, 4 passes to sort, and 1 additional pass to detect that no additional elements need to be exchanged. From this observation, we can state that the 6502 microprocessor will have to make from 1 to N number of passes through an N-element list, in order to sort it. On the average, N/2 passes are required to sort an N-element list.
 

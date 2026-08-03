@@ -9,10 +9,10 @@ language: none
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # base:flexible_48_sprite_multiplexer [Codebase64 wiki]

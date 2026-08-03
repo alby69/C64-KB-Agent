@@ -4,25 +4,25 @@ source_url: https://elite.bbcelite.com/deep_dives/drawing_pixels_in_the_nes_vers
 category: deep-dive
 topics:
 - graphics
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Drawing pixels in the NES version
@@ -35,7 +35,7 @@ Not surprisingly, this has profound effects on the way the NES version draws its
 
 ![The Long-range Chart in NES Elite](https://elite.bbcelite.com/images/nes/general/long_range_chart.png) 
 
-						We'll then pass the baton to the deep dives on [drawing lines in the NES version](https://elite.bbcelite.com/drawing_lines_in_the_nes_version.html) and [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html). For now, though, let's just look at single pixels.
+We'll then pass the baton to the deep dives on [drawing lines in the NES version](https://elite.bbcelite.com/drawing_lines_in_the_nes_version.html) and [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html). For now, though, let's just look at single pixels.
 
 (Note that you might want to take a look at the deep dive on [understanding the NES for Elite](https://elite.bbcelite.com/understanding_the_nes_for_elite.html) before diving too far into the drawing-related deep dives, as I'm going to assume you know what I mean by the PPU, nametables, pattern tables and so on.)
 
@@ -43,7 +43,8 @@ Not surprisingly, this has profound effects on the way the NES version draws its
 
 													 ---------------------------------
 
-						Drawing individual pixels onto the NES screen is a bit of an effort. Luckily we can completely ignore that part at this stage, as the pixel-drawing routines in the NES version of Elite don't actually draw into screen memory; instead, they draw into the pattern and nametable buffers. For this article, we're going to concentrate on the [PIXEL](https://elite.bbcelite.com/nes/bank_7/subroutine/pixel.html) routine, which draws a single pixel into the pattern and nametable buffers, ready for it to be sent to the screen at a later date.
+						
+Drawing individual pixels onto the NES screen is a bit of an effort. Luckily we can completely ignore that part at this stage, as the pixel-drawing routines in the NES version of Elite don't actually draw into screen memory; instead, they draw into the pattern and nametable buffers. For this article, we're going to concentrate on the [PIXEL](https://elite.bbcelite.com/nes/bank_7/subroutine/pixel.html) routine, which draws a single pixel into the pattern and nametable buffers, ready for it to be sent to the screen at a later date.
 
 The buffers are described in detail in the deep dive on [the pattern and nametable buffers](https://elite.bbcelite.com/pattern_and_nametable_buffers.html). There are two of each buffer, and we draw into the currently selected buffer; see the deep dive on [drawing vector graphics using NES tiles](https://elite.bbcelite.com/drawing_vector_graphics_using_nes_tiles.html) for more about how the two sets of buffers are actually used.
 
@@ -59,16 +60,17 @@ Given this, let's look at exactly how we draw a single pixel into the buffers.
 
 													 ---------------------------
 
-						The [PIXEL](https://elite.bbcelite.com/nes/bank_7/subroutine/pixel.html) routine in NES Elite is fairly simple. It takes the screen coordinates of the pixel as arguments, and draws a pixel at those coordinates by poking a dot into the correct place in the current set of buffers. Let's see how the routine works.
+						
+The [PIXEL](https://elite.bbcelite.com/nes/bank_7/subroutine/pixel.html) routine in NES Elite is fairly simple. It takes the screen coordinates of the pixel as arguments, and draws a pixel at those coordinates by poking a dot into the correct place in the current set of buffers. Let's see how the routine works.
 
 The first step is to identify which tile contains the pixel we want to draw. This calculation appears an awful lot in the NES drawing routines, and it looks like this, where X and Y are the pixel coordinates:
 
-SC(1 0) = (nameBufferHi 0) + yLookup(Y) + X / 8
+  SC(1 0) = (nameBufferHi 0) + yLookup(Y) + X / 8
 
 Let's break this down:
 
-- The address in (nameBufferHi 0) is the address of the relevant nametable buffer; all the buffers live in the [cartridge WRAM workspace](https://elite.bbcelite.com/nes/common/workspace/cartridge_wram.html), and the two nametable buffers are at address $7000 and $7400, so we know the low byte is always zero. Specifically, (nameBufferHi 0) will be the address of either nameBuffer0 or nameBuffer1, so that's the address of the first tile in the buffer, in the top-left corner of the screen.
-- The table at yLookup converts a pixel y-coordinate in Y into the number of the first tile on the row containing the pixel, returning it as a 16-bit number from the ([yLookupHi](https://elite.bbcelite.com/nes/bank_7/variable/ylookuphi.html)[yLookupLo](https://elite.bbcelite.com/nes/bank_7/variable/ylookuplo.html)) tables (as there are 960 tiles). Note that pixel coordinate (0, 0) is mapped to the top-left pixel of the third row of tiles in the nametable (so that's just below the view title in the space view, for example) and the first column of tiles is at column 1 rather than 0 (as the screen is scrolled horizontally by 8 pixels via PPU_SCROLL). This means that pixel y-coordinates 0 to 7 are mapped to tile 65 (i.e. 2 * 32 + 1), pixel y-coordinates 8 to 15 are mapped to tile 97 (i.e. 3 * 32 + 1), and so on. Adding this to the value in (nameBufferHi 0) gives us the address in the nametable buffer of the first tile on the row where we want to draw our pixel.
+- The address in (nameBufferHi 0) is the address of the relevant nametable buffer; all the buffers live in the [cartridge WRAM workspace](https://elite.bbcelite.com/nes/common/workspace/cartridge_wram.html) , and the two nametable buffers are at address $7000 and $7400, so we know the low byte is always zero. Specifically, (nameBufferHi 0) will be the address of either nameBuffer0 or nameBuffer1, so that's the address of the first tile in the buffer, in the top-left corner of the screen.
+- The table at yLookup converts a pixel y-coordinate in Y into the number of the first tile on the row containing the pixel, returning it as a 16-bit number from the yLookup([Hi](https://elite.bbcelite.com/nes/bank_7/variable/ylookuphi.html)[Lo](https://elite.bbcelite.com/nes/bank_7/variable/ylookuplo.html) ) tables (as there are 960 tiles). Note that pixel coordinate (0, 0) is mapped to the top-left pixel of the third row of tiles in the nametable (so that's just below the view title in the space view, for example) and the first column of tiles is at column 1 rather than 0 (as the screen is scrolled horizontally by 8 pixels via PPU_SCROLL). This means that pixel y-coordinates 0 to 7 are mapped to tile 65 (i.e. 2 * 32 + 1), pixel y-coordinates 8 to 15 are mapped to tile 97 (i.e. 3 * 32 + 1), and so on. Adding this to the value in (nameBufferHi 0) gives us the address in the nametable buffer of the first tile on the row where we want to draw our pixel.
 - Finally, X / 8 gives us the column number of the tile containing the pixel we want to draw, as each tile is eight pixels wide (and being assembly language, this division is reduced to an integer, which is the tile number). The first column is column 0, the second column is column 1, and so on up to column 31, so adding this to our running total gives us the address in the nametable buffer of the tile containing the pixel we want to draw.
 - These calculations almost always store the resulting address in SC(1 0), SC2(1 0) or SC3(1 0), just as in the original versions of Elite.
 
@@ -78,7 +80,8 @@ This gives us the address of the nametable entry for our pixel, so now we need t
 
 													 ------------------------------
 
-						Now that we know the address of the relevant entry in the nametable buffer, we need to check whether we already have a pattern allocated to that tile. If we do then the non-zero pattern number will already be in the nametable buffer and the contents of SC(1 0) will be non-zero, so we can move on to the next section, where we draw the pixel into this pattern.
+						
+Now that we know the address of the relevant entry in the nametable buffer, we need to check whether we already have a pattern allocated to that tile. If we do then the non-zero pattern number will already be in the nametable buffer and the contents of SC(1 0) will be non-zero, so we can move on to the next section, where we draw the pixel into this pattern.
 
 However, if the contents of the nametable buffer at SC(1 0) are zero, that means the tile where we want to draw our pixel doesn't yet have a pattern associated with it... so we need to sort that out.
 
@@ -88,11 +91,11 @@ As this is such a key aspect of NES Elite, let's look at an example. Consider th
 
 ![A deep space view showing a planet and an asteroid in NES Elite](https://elite.bbcelite.com/images/nes/bitplanes/planet_asteroid.png) 
 
-						If we look at the contents of pattern table 1 for this screen, then it looks like this:
+If we look at the contents of pattern table 1 for this screen, then it looks like this:
 
 ![Example pattern table 1 in NES Elite](https://elite.bbcelite.com/images/nes/bitplanes/planet_asteroid_patterns_1.png) 
 
-						Patterns 0 to 36 contain duplicates of the first few icon bar patterns from table 0, to prevent flicker in the split screen (see the deep dive on [the split-screen mode in NES Elite](https://elite.bbcelite.com/the_split-screen_mode_nes.html) for details). These are the red-grey tiles at the top of the image above.
+Patterns 0 to 36 contain duplicates of the first few icon bar patterns from table 0, to prevent flicker in the split screen (see the deep dive on [the split-screen mode in NES Elite](https://elite.bbcelite.com/the_split-screen_mode_nes.html) for details). These are the red-grey tiles at the top of the image above.
 
 Then in patterns 37 to 59 there's a collection of pre-rendered line patterns, in cyan on black. These contain patterns for horizontal and vertical lines, some of them filled (see the deep dive on a [drawing lines in the NES version](https://elite.bbcelite.com/drawing_lines_in_the_nes_version.html) for more information).
 
@@ -106,15 +109,17 @@ So if the nametable buffer entry for the tile containing the pixel that we want 
 
 													 -----------------
 
-						Following the above, we know the pattern number into which we need to draw our pixel for it to appear in the correct place on-screen. Let's say it's in A (as this is what happens in the code). First, we need to calculate the address of the relevant pattern in the pattern buffer, which we do as follows:
+						
+Following the above, we know the pattern number into which we need to draw our pixel for it to appear in the correct place on-screen. Let's say it's in A (as this is what happens in the code). First, we need to calculate the address of the relevant pattern in the pattern buffer, which we do as follows:
 
-SC(1 0) = (pattBufferHi 0) + A * 8
+  SC(1 0) = (pattBufferHi 0) + A * 8
 
 This is pretty similar to the nametable calculation above, except the address in (pattBufferHi 0) is the address of the relevant pattern buffer, and as each pattern contains 8 bytes, we simply multiply A by 8 to get the offset into the pattern table for pattern number A.
 
 We then use the same system as the BBC Micro to plot a single pixel at the correct position within the 8x8-pixel pattern, using the [TWOS](https://elite.bbcelite.com/nes/bank_7/variable/twos.html) table to fetch a one-pixel byte that we can then OR into the relevant pixel row of the pattern. Specifically, we set the following:
 
-X = X AND 7 = X mod 8 Y = Y AND 7 = Y mod 8
+  X = X AND 7 = X mod 8
+  Y = Y AND 7 = Y mod 8
 
 We then fetch the pixel byte with an LDA TWOS,X instruction (which sets A to a pixel byte with a single set pixel at position X), and OR it into the Y-th pixel row in the pattern using an ORA (SC),Y instruction. Because the NES version doesn't use EOR logic to clear the screen, we can simply force our pixel into the pattern using OR logic. This plots our pixel into the pattern buffer, so when the buffer gets sent to the PPU, it finally appears on-screen.
 

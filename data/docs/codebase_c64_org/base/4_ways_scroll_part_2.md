@@ -3,33 +3,33 @@ title: 4 ways scroll part 2
 source_url: https://codebase.c64.org/doku.php?id=base%3A4_ways_scroll_part_2
 category: tool
 topics:
-- raster interrupts
+- basic
+- graphics
 - memory management
+- raster interrupts
 - input handling
 - sprite programming
-- graphics
 - assembly
-- basic
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

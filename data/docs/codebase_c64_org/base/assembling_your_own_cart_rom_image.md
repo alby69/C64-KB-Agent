@@ -3,34 +3,32 @@ title: Assembling your own cart ROM image
 source_url: https://codebase.c64.org/doku.php?id=base%3Aassembling_your_own_cart_rom_image
 category: tool
 topics:
-- raster interrupts
+- basic
 - memory management
+- raster interrupts
 - sprite programming
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - CIA
-- BASIC ROM
+- VIC-II
 - KERNAL
+- BASIC ROM
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
 # Assembling your own cart ROM image
-
-### Table of Contents
 
 # Assembling your own cart ROM image
 
@@ -104,7 +102,88 @@ This code is used to create a [.crt](https://codebase.c64.org/doku.php?id=base:c
 
 These CRTs will run in VICE and MMCR Bios 0.55 - source is in XA syntax
 
-;this is for a 8KB cart!! *=$0000 .asc "C64 CARTRIDGE " .byte $00,$00 ;header length .byte $00,$40 ;header length .word $0001 ;version .word $0000 ;crt type .byte $00 ;exrom line .byte $01 ;game line .byte $00,$00,$00,$00,$00,$00 ;unused .asc "CRT TITLE" name .dsb ($0040-name),0 ;chip packets .asc "CHIP" .byte $00,$00,$20,$10 ;chip length .byte $00,$00 ;chip type .byte $00,$00 ;bank .byte $80,$00 ;adress .byte $20,$00 ;length ;ROM part ;--------------------------------- *=$8000 .word launcher .word launcher .byte $c3 ;c .byte $c2 ;b .byte $cd ;m .byte $38 ;8 .byte $30 ;0 launcher sei stx $d016 jsr $fda3 ;prepare irq jsr $fd50 ;init memory jsr $fd15 ;init i/o jsr $ff5b ;init video cli ;jsr $e453 ;load basic vectors ;jsr $e3bf ;init basic ram ;jsr $a68e ;jmp $a7ae ;ldx #$fb ; txs ;--------------------------------- start_all lda $d011 and #%11101111 sta $d011 ldx #$00 sa1 lda movecode1,x sta $0400,x inx bne sa1 jmp $0400 ;------------------------------ movecode1 *=$0400 movecode2 basic_move ldx #$00 bm1 lda main_file_start,x bm2 sta $0801,x inx bne bm1 inc bm1+2 inc bm2+2 lda bm1+2 cmp #$c0 bne basic_move jmp $080b movecode3 ;--------------------------------- *=movecode1+(movecode3-movecode2) main_file_start .bin 2,0,"game.bin" main_file_end .dsb ($a000-main_file_end),0
+;this is for a 8KB cart!!
+*=$0000
+	.asc "C64 CARTRIDGE   "
+	.byte $00,$00 ;header length
+	.byte $00,$40 ;header length
+	.word $0001 ;version
+	.word $0000 ;crt type
+	.byte $00 ;exrom line
+	.byte $01 ;game line
+	.byte $00,$00,$00,$00,$00,$00 ;unused
+	.asc "CRT TITLE"
+name
+	.dsb ($0040-name),0
+	;chip packets
+	.asc "CHIP"
+	.byte $00,$00,$20,$10 ;chip length
+	.byte $00,$00 ;chip type
+	.byte $00,$00 ;bank
+	.byte $80,$00 ;adress
+	.byte $20,$00 ;length
+	
+;ROM part
+;---------------------------------
+*=$8000
+	.word launcher
+	.word launcher
+	.byte $c3 ;c
+	.byte $c2 ;b
+	.byte $cd ;m
+	.byte $38 ;8
+	.byte $30 ;0
+launcher
+	sei
+	stx $d016
+	jsr $fda3 ;prepare irq
+	jsr $fd50 ;init memory
+	jsr $fd15 ;init i/o
+	jsr $ff5b ;init video
+	cli
+	;jsr $e453 ;load basic vectors
+	;jsr $e3bf ;init basic ram
+	;jsr $a68e
+	;jmp $a7ae
+	;ldx #$fb
+	; txs
+;---------------------------------
+start_all
+	lda $d011
+	and #%11101111
+	sta $d011
+	ldx #$00
+	sa1
+	lda movecode1,x
+	sta $0400,x
+	inx
+	bne sa1
+	jmp $0400
+;------------------------------
+movecode1
+	*=$0400
+movecode2
+	basic_move
+	ldx #$00
+	bm1
+	lda main_file_start,x
+	bm2
+	sta $0801,x
+	inx
+	bne bm1
+	inc bm1+2
+	inc bm2+2
+	lda bm1+2
+	cmp #$c0
+	bne basic_move
+	jmp $080b
+movecode3
+;---------------------------------
+	*=movecode1+(movecode3-movecode2)
+main_file_start
+	.bin 2,0,"game.bin"
+main_file_end
+	.dsb ($a000-main_file_end),0
 
 ## CBM80 Autostart Cartridge developed with DreamAss
 

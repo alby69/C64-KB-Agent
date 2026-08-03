@@ -3,24 +3,24 @@ title: Kick Assembler tips & tricks
 source_url: https://codebase.c64.org/doku.php?id=base%3Akick_assembler_tips_tricks
 category: manual
 topics:
-- sprite programming
 - raster interrupts
+- sprite programming
 - assembly
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -80,7 +80,9 @@ The _16bit_nextArgument(arg) function is the easy way to deal with 16 bit values
 ```
 With this you can do stuff like:
 
-:mov16 #irq ; $fffe :mov16 irqTable,x ; $fffe etc.
+:mov16 #irq ; $fffe
+:mov16 irqTable,x ; $fffe
+etc.
 
 You can now define you pseudocommand like this:
 
@@ -94,7 +96,9 @@ pseudocommand irqEnd d12 ; irq {
 ```
 and use it like this:
 
-:irqEnd #$10 ; #irq1 or :irqEnd d012Table,y ; irqTable,x
+:irqEnd #$10 ; #irq1  
+or 
+:irqEnd d012Table,y ; irqTable,x  
 
 ## Time consuming code
 
@@ -114,7 +118,7 @@ So this will be more effective:
 
 If you want to fill patterns you can do it like this:
 
-.fill $100, List().add($fe,$82,$82,$82,$82,$82,$fe,$00).get(mod(i,8))
+.fill $100, List().add($fe,$82,$82,$82,$82,$82,$fe,$00).get(mod(i,8)) 
 
 ## Compile differently based on arguments
 
@@ -174,7 +178,15 @@ Now lets take the 16bit version of the adc command which is a bit harder since t
 
 Suppose you'd like to do a LoadBinary and redistribute the bytes into the memory in another way than in the original file, something like this:
 
-Byte 1 @ $x000 Byte 2 @ $x040 Byte 3 @ $x080 Byte 4 @ $x0c0 ... Byte 9 @ $x001 Byte 10@ $x041 ... Byte 17@ $x002 etc.
+Byte 1 @ $x000
+Byte 2 @ $x040
+Byte 3 @ $x080
+Byte 4 @ $x0c0
+...
+Byte 9 @ $x001
+Byte 10@ $x041
+...
+Byte 17@ $x002 etc.
 
 In other words: byte 1 + n*8 in order, byte 2 + n*8 etc.
 

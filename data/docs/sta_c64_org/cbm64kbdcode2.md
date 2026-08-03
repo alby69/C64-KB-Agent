@@ -9,16 +9,16 @@ language: none
 hardware:
 - CIA
 related:
+- keyboard-handling
 - cia-registers
 - joystick-reading
-- keyboard-handling
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 # Commodore 64 keyboard matrix codes (sorted by key)
 
-| Key | Matrix code (dec, hex, oct) | Key | Matrix code (dec, hex, oct) | ||||
+| Key | Matrix code (dec, hex, oct) |  |  | Key | Matrix code (dec, hex, oct) |  |  | 
 |---|---|---|---|---|---|---|---|
 | A | 10 | $0A | &12 | * (asterisk) | 49 | $31 | &61 | 
 | B | 28 | $1C | &34 | @ (at) | 46 | $2E | &56 | 
@@ -48,14 +48,14 @@ last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 | Z | 12 | $0C | &14 | Control | 58 | $3A | &72 | 
 | 0 | 35 | $23 | &43 | left Shift | 15 | $0F | &17 | 
 | 1 | 56 | $38 | &70 | right Shift | 52 | $34 | &64 | 
-| 2 | 59 | $3B | &73 | ||||
-| 3 | 8 | $08 | &10 | ||||
-| 4 | 11 | $0B | &13 | ||||
-| 5 | 16 | $10 | &20 | ||||
-| 6 | 19 | $13 | &23 | ||||
-| 7 | 24 | $18 | &30 | ||||
-| 8 | 27 | $1B | &33 | ||||
-| 9 | 32 | $20 | &40 | ||||
+| 2 | 59 | $3B | &73 |  |  |  |  | 
+| 3 | 8 | $08 | &10 |  |  |  |  | 
+| 4 | 11 | $0B | &13 |  |  |  |  | 
+| 5 | 16 | $10 | &20 |  |  |  |  | 
+| 6 | 19 | $13 | &23 |  |  |  |  | 
+| 7 | 24 | $18 | &30 |  |  |  |  | 
+| 8 | 27 | $1B | &33 |  |  |  |  | 
+| 9 | 32 | $20 | &40 |  |  |  |  |
 
 ---
 *Fonte originale: [https://sta.c64.org/cbm64kbdcode2.html](https://sta.c64.org/cbm64kbdcode2.html)*

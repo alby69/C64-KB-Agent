@@ -8,23 +8,23 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Speedcode a.k.a. Loop Unrolling
@@ -41,11 +41,25 @@ One of the earliest optimization tricks invented was loop unrolling, aka. speedc
 
 This loop clears 10 chars, which it uses 103 cycles for:
 
-lda #0 ldx #9 loop: sta screen,x dex bpl loop
+	lda #0
+	ldx #9
+loop:	sta screen,x
+	dex
+	bpl loop
 
 If we unroll the loop it can be done in only 42 cycles:
 
-lda #0 sta screen+0 sta screen+1 sta screen+2 sta screen+3 sta screen+4 sta screen+5 sta screen+6 sta screen+7 sta screen+8 sta screen+9
+	lda #0
+	sta screen+0
+	sta screen+1
+	sta screen+2
+	sta screen+3
+	sta screen+4
+	sta screen+5
+	sta screen+6
+	sta screen+7
+	sta screen+8
+	sta screen+9
 
 This might be counterintuitive at first, since the latter piece of code is bigger, but the fastness comes from the fact that it only has to be executed once, where the first one loops 10 times. The drawback is that it takes up a lot of memory, but fortunately there can be a lot of speedcode in 64K, so no need to worry about that for now. Another disadvantage is that it's harder to write and read afterwards.
 
@@ -92,13 +106,13 @@ The disadvantage is that it's harder to do complex logic in assembly than in a h
 
 Let's look at an algorithm for generating our simple char plasma:
 
-- For all Y positions (lines)- Init params/code sources for the current line
-- Copy init code to destination
-- For all X positions on the line- Copy plasmer chunk to destination
-- Update sine load addresses + store address in the code source
- 
-- Update sine load addresses in init chunk
- 
+- For all Y positions (lines)
+  - Init params/code sources for the current line
+  - Copy init code to destination
+  - For all X positions on the line
+    - Copy plasmer chunk to destination
+    - Update sine load addresses + store address in the code source
+  - Update sine load addresses in init chunk
 
 [8x8 Plasma w/ Generated Speedcode](https://codebase.c64.org/doku.php?id=base:8x8-plasma-codegen) - As you can see when assembling it, the code now only takes about $140 bytes, as opposed to over $3000 with the previous versions. And the init time isn't too bad either - about a 3rd of a second, which definitely wouldn't have been enough to load all the speedcode from disk.
 

@@ -9,15 +9,15 @@ language: none
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 # Commodore 64 KERNAL error messages
 
-| KERNAL message | BASIC message | Code (hex, dec) | Exec address | |
+| **KERNAL message** | **BASIC message** | Code (hex, dec) |  | Exec address | 
 |---|---|---|---|---|
 | I/O ERROR #1 | TOO MANY FILES | $01 | 1 | $F6FB | 
 | I/O ERROR #2 | FILE OPEN | $02 | 2 | $F6FE | 

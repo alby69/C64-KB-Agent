@@ -3,21 +3,21 @@ title: Advanced tactics with the NEWB flags
 source_url: https://elite.bbcelite.com/deep_dives/advanced_tactics_with_the_newb_flags.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
-- SID
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Advanced tactics with the NEWB flags
@@ -30,11 +30,11 @@ If you've ever sat outside a space station and watched as transporters fly out o
 
 ![A transporter in the BBC Master version of Elite](https://elite.bbcelite.com/images/master/transporter_station.png) 
 
-						It's the same with shuttles, which are also NEWB-powered; here's one leaving a station in the Commodore 64 version:
+It's the same with shuttles, which are also NEWB-powered; here's one leaving a station in the Commodore 64 version:
 
 ![A shuttle in the Commodore 64 version of Elite](https://elite.bbcelite.com/images/c64/busy_station.png) 
 
-						Essentially, the NEWB flags give each newly spawned ship a personality, and they determine how it behaves. For example, traders have the trading flag set (bit #0), and they tend to ply their trade between the space station and the planet; the direction of travel, meanwhile, is determined by the docking flag (bit #4). Some traders might moonlight as bounty hunters (bit #1), which means they will break off their trading runs to attack us if we are a fugitive or a serious offender, at which point they become hostile (bit #2). Other flags cover things like pirate behaviour, whether a ship is a cop or an innocent bystander, and whether a ship has an escape pod fitted.
+Essentially, the NEWB flags give each newly spawned ship a personality, and they determine how it behaves. For example, traders have the trading flag set (bit #0), and they tend to ply their trade between the space station and the planet; the direction of travel, meanwhile, is determined by the docking flag (bit #4). Some traders might moonlight as bounty hunters (bit #1), which means they will break off their trading runs to attack us if we are a fugitive or a serious offender, at which point they become hostile (bit #2). Other flags cover things like pirate behaviour, whether a ship is a cop or an innocent bystander, and whether a ship has an escape pod fitted.
 
 It's a fairly simple system, but it manages to add a convincing layer to the universe simulation; it's surprisingly immersive to park yourself outside a station and watch the traders and shuttles head off to the planet while others fly back up, and it's all down to the NEWB flags.
 
@@ -42,7 +42,8 @@ It's a fairly simple system, but it manages to add a convincing layer to the uni
 
 													 --------------
 
-						In the versions of Elite that support advanced tactics, there is a table at [E%](https://elite.bbcelite.com/6502sp/main/variable/e_per_cent.html) that contains the default NEWB byte for each ship type. When spawning a new ship, bits #0-3 and #5-6 from this byte are applied to the new ship's NEWB flags in byte #36, so a set bit in the default NEWB byte in E% will set that bit in the spawned ship's NEWB flags. This means that if a ship blueprint has one of the following personality types - trader, bounty hunter, hostile, pirate, innocent bystander or cop - then all spawned ships of that type will have that personality too (so all Geckos are pirates, for example).
+						
+In the versions of Elite that support advanced tactics, there is a table at [E%](https://elite.bbcelite.com/6502sp/main/variable/e_per_cent.html) that contains the default NEWB byte for each ship type. When spawning a new ship, bits #0-3 and #5-6 from this byte are applied to the new ship's NEWB flags in byte #36, so a set bit in the default NEWB byte in E% will set that bit in the spawned ship's NEWB flags. This means that if a ship blueprint has one of the following personality types - trader, bounty hunter, hostile, pirate, innocent bystander or cop - then all spawned ships of that type will have that personality too (so all Geckos are pirates, for example).
 
 The other bits in the spawned ship's NEWB flags are set as follows:
 

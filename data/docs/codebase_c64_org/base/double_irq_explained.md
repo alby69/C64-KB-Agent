@@ -3,32 +3,32 @@ title: Double IRQ explained
 source_url: https://codebase.c64.org/doku.php?id=base%3Adouble_irq_explained
 category: tool
 topics:
+- basic
+- graphics
 - raster interrupts
 - sprite programming
-- graphics
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -122,7 +122,8 @@ So thanks for your patience and thanks to Fungus for supplying the base of the c
 
 Some notes on the code. In Kick Assembler the “.pc” directive sets the program counter. There is a macro called “BasicUpstart()” which generates a basic program which starts the machine language program. There is an efficient technique of storing and restoring the registers at the start and end of an interrupt handler respectively. It uses loads the values of the registers with simple STA, STX and STY instructions but saves their values in memory locations at the end of the routine. These memory locations exactly coincide with LDA, LDX and LDY instructions. Basically we write the values we want to store directly into the loading instructions which saves using the stack. In order to achieve this I need Kick Assembler to generate labels for which I use the “.label” directive. This allows me to point to an address where an STA instruction lives and access the byte directly behind it by stating “.label MyLabel + 1”, where “MyLabel” points at the byte where the instruction lives. So:
 
-lab_a1: lda #$00 //Reload A,X,and Y .label reseta1 = lab_a1+1
+	lab_a1:	lda #$00	//Reload A,X,and Y
+	.label reseta1 = lab_a1+1
 
 means to define a label called “lab_a1” to point to the first of a two-byte instruction “LDA #$00”. Next, “reset_a1” is made to point to “lab_a1” plus 1 byte, which makes it point at the byte where the value “#$00” is stored. So if we enter the routine and write the current value of the Accumulator into “reseta1”, we're basically loading the stored value back into the Accumulator when we leave the routine. The wonders of self-modifying code.
 

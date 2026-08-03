@@ -3,28 +3,28 @@ title: Sprite Multiplexer
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_multiplexer
 category: tool
 topics:
-- raster interrupts
+- basic
 - memory management
+- raster interrupts
 - sprite programming
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -103,7 +103,7 @@ Quite simple isnt it?
 
 Ok, now lets setup our irq chian, so we can see this bumch of sprites weve just arranged.
 
-jsr setirq ;setup irq.
+       jsr setirq     ;setup irq.
 
 In runtime code
 

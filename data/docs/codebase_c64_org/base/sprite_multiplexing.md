@@ -3,38 +3,36 @@ title: Sprite multiplexing by Cadaver
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_multiplexing
 category: source-code
 topics:
+- basic
+- graphics
 - raster interrupts
 - sprite programming
-- graphics
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
-- CIA
-- SID
 - CPU
+- VIC-II
+- SID
+- CIA
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
 # Sprite multiplexing by Cadaver
-
-### Table of Contents
 
 # Sprite multiplexing by Cadaver
 
@@ -54,7 +52,12 @@ What I had to do was to start reverse-engineering the sprite sorting/ multiplexi
 
 Let's begin with this to introduce the hardware features involved within a simpler approach. Consider the following situation in Turrican where the player is battling against the first boss enemy, the giant “fist”: There's the player character composed of 3 sprites (2 multicolors sprites and a singlecolor white sprite Y-expanded on top of that) and the “fist”, composed of 5 sprites per row and 4 rows (20 sprites total) Here's a diagram of the sprite numbers in use on the screen, with the 3rd (the Y-expanded sprite) omitted.
 
-4 5 6 7 8 4 5 6 7 8 4 5 6 7 8 1 4 5 6 7 8 2 ______________________________
+	              4 5 6 7 8
+	              4 5 6 7 8
+	              4 5 6 7 8
+	         1    4 5 6 7 8
+	         2
+	______________________________
 
 So, the idea seems to be as follows: a raster interrupt happens before the start of each sprite row for the boss enemy, and in it the Y-coordinates, sprite frames, and colors for sprites 4-8 are rewritten, to re-use the sprites. X-coordinates do not change between rows so they can be set beforehand.
 
@@ -66,7 +69,39 @@ In fact, more trouble will come from the frames and colors. It will take at leas
 
 An example code for handling the rewriting in above situation could look something like this:
 
-lda $d007 ;Take the Y-coord of the 4th sprite, clc ;advance it 21 pixels lower and adc #21 ;write to Y-coords of sprites 4-8. sta $d007 ;This must happen before the raster sta $d009 ;line reaches the new Y-coordinate, sta $d00b ;or sprites won't be displayed. sta $d00d sta $d00f ldx spriteindex lda frametable,x ;Here, X has been loaded with an index sta $c3fb ;into the boss enemy's sprite frame & lda frametable+1,x ;color tables. Screen memory is at sta $c3fc ;$c000 lda frametable+2,x sta $c3fd lda frametable+3,x sta $c3fe lda frametable+4,x sta $c3ff lda colortable,x sta $d02a lda colortable+1,x sta $d02b lda colortable+2,x sta $d02c lda colortable+3,x sta $d02d lda colortable+4,x sta $d02e txa ;Increase the sprite index with 5 clc ;for the next sprite row. adc #5 sta spriteindex
+		lda $d007		;Take the Y-coord of the 4th sprite,
+		clc			;advance it 21 pixels lower and
+		adc #21			;write to Y-coords of sprites 4-8.
+		sta $d007		;This must happen before the raster
+		sta $d009		;line reaches the new Y-coordinate,
+		sta $d00b		;or sprites won't be displayed.
+		sta $d00d
+		sta $d00f
+		ldx spriteindex
+		lda frametable,x	;Here, X has been loaded with an index
+		sta $c3fb		;into the boss enemy's sprite frame &
+		lda frametable+1,x	;color tables. Screen memory is at
+		sta $c3fc               ;$c000
+		lda frametable+2,x
+		sta $c3fd
+		lda frametable+3,x
+		sta $c3fe
+		lda frametable+4,x
+		sta $c3ff
+		lda colortable,x
+		sta $d02a
+		lda colortable+1,x
+		sta $d02b
+		lda colortable+2,x
+		sta $d02c
+		lda colortable+3,x
+		sta $d02d
+		lda colortable+4,x
+		sta $d02e
+		txa			;Increase the sprite index with 5
+		clc			;for the next sprite row.
+		adc #5
+		sta spriteindex
 
 In fact, I've never written a this kind of multiplexer and probably never will. Of course it allows impressively big enemy sprites but the freedom to do whatever I want with the sprites is lost, and therefore I introduce next…
 
@@ -112,11 +147,18 @@ Now it's also time to explain the array names used in these examples (they're ac
 
 The “virtual” sprite arrays (unsorted):
 
-sprx - Unsorted X coordinates spry - Unsorted Y coordinates sprc - Unsorted colors sprf - Unsorted sprite frame numbers
+sprx - Unsorted X coordinates
+spry - Unsorted Y coordinates
+sprc - Unsorted colors
+sprf - Unsorted sprite frame numbers
 
 The sorted sprite arrays:
 
-sortsprx - Sorted X coordinates sortspry - Sorted Y coordinates sortsprc - Sorted colors sortsprf - Sorted sprite frame numbers sortorder - Sorted list of indexes to unsorted table (not used in every example)
+sortsprx  - Sorted X coordinates
+sortspry  - Sorted Y coordinates
+sortsprc  - Sorted colors
+sortsprf  - Sorted sprite frame numbers
+sortorder - Sorted list of indexes to unsorted table (not used in every example)
 
 ### 2.1.1 The bubblesort
 
@@ -358,7 +400,13 @@ Based on the priority you want for the sprites you can also reverse the physical
 
 This is an example of sprite mapping, something that could be happening in Green Beret (first level.) There's the 2-sprite soldiers running around, the player jumping in the air and a flamethrower left hanging in the air (1 sprite)
 
-1 4 2 3 __5_____ ________ / 6\ / 7 _____/________8_\_____/______1__ / 2 3 /____________4____________5_______
+	                      1
+	            4         2       3
+	          __5_____         ________
+	         /       6\       /     7
+	   _____/________8_\_____/______1__
+	  /           2            3
+	 /____________4____________5_______
 
 BOFH:Servers Under Siege has a priority-based sprite mapping instead. This is more complicated: if the sprite's priority class is LOW (bodies, items) the sprite mapping loop tries to find a “free” physical sprite in this order: 8,7,6,5,4,3,2,1. For MEDIUM priority (player, enemies) the order is 5,4,6,3,7,2,8,1 and for HIGH priority (fire, explosions) the order is 1,2,3,4,5,6,7,8. “Free” physical sprite means in this case one whose previous virtual sprite is sufficiently far away from the new virtual sprite, in Y- direction (practically, at least 21 pixels)
 
@@ -406,7 +454,48 @@ To keep the main program simple, the unsorted sprite arrays shouldn't be doubleb
 
 The aim is simple: to write the needed sprite register values as fast as possible. Many commercial games are quite inefficient in this, consider the following, which tries to be quite much like the typical code in Ocean games: (here, we assume Y contains the “virtual” spritenumber)
 
-tya and #$07 ;Get physical spritenum tax ;to X lda sortsprc,y sta $d027,x lda sortsprf,y sta $c3f8,x ;Write frame to both screens of the sta $c7f8,x ;doublebuffered screen (unnecessary!) txa asl tax lda sortspry,y sta $d001,x lda sortsprx,y ;Multiply sprite X-coord by 2; Ocean asl ;games are really fond of this, I sta $d000,x ;prefer 1-pixel accuracy bcc msb_low msb_high: lda $d010 ora ortbl,x sta $d010 jmp nextsprite msb_low: lda $d010 and andtbl,x sta $d010 nextsprite: iny ... ortbl: dc.b 1 andtbl: dc.b 255-1 dc.b 2 dc.b 255-2 dc.b 4 dc.b 255-4 dc.b 8 dc.b 255-8 dc.b 16 dc.b 255-16 dc.b 32 dc.b 255-32 dc.b 64 dc.b 255-64 dc.b 128 dc.b 255-128
+		tya
+		and #$07		 ;Get physical spritenum
+		tax			 ;to X
+		lda sortsprc,y
+		sta $d027,x
+		lda sortsprf,y
+		sta $c3f8,x		 ;Write frame to both screens of the
+		sta $c7f8,x		 ;doublebuffered screen (unnecessary!)
+		txa
+		asl
+		tax
+		lda sortspry,y
+		sta $d001,x
+		lda sortsprx,y		 ;Multiply sprite X-coord by 2; Ocean
+		asl			 ;games are really fond of this, I
+		sta $d000,x		 ;prefer 1-pixel accuracy
+		bcc msb_low
+msb_high:	lda $d010
+		ora ortbl,x
+		sta $d010
+		jmp nextsprite
+msb_low:	lda $d010
+		and andtbl,x
+		sta $d010
+nextsprite:	iny
+		...
+ortbl:		dc.b 1
+andtbl:		dc.b 255-1
+		dc.b 2
+		dc.b 255-2
+		dc.b 4
+		dc.b 255-4
+		dc.b 8
+		dc.b 255-8
+		dc.b 16
+		dc.b 255-16
+		dc.b 32
+		dc.b 255-32
+		dc.b 64
+		dc.b 255-64
+		dc.b 128
+		dc.b 255-128
 
 What can be done to optimize this process?
 
@@ -416,7 +505,33 @@ What can be done to optimize this process?
 
 Now consider this second example (again, virtual spritenumber is in Y)
 
-sprite0: lda sortspry,y sta $d001 lda sortsprx,y sta $d000 lda sortsprd010,y sta $d010 lda sortsprf,y frame0: sta $c3f8 lda sortsprc,y sta $d027 iny cpy endspr bcs done sprite1: lda sortspry,y sta $d003 lda sortsprx,y sta $d002 lda sortsprd00,y sta $d010 lda sortsprf,y frame1: sta $c3f9 lda sortsprc,y sta $d028 iny cpy endspr bcs done ...
+sprite0:	lda sortspry,y
+		sta $d001
+		lda sortsprx,y
+		sta $d000
+		lda sortsprd010,y
+		sta $d010
+		lda sortsprf,y
+frame0:		sta $c3f8
+		lda sortsprc,y
+		sta $d027
+		iny
+		cpy endspr
+		bcs done
+sprite1:	lda sortspry,y
+		sta $d003
+		lda sortsprx,y
+		sta $d002
+		lda sortsprd00,y
+		sta $d010
+		lda sortsprf,y
+frame1:		sta $c3f9
+		lda sortsprc,y
+		sta $d028
+		iny
+		cpy endspr
+		bcs done
+		...
 
 Looks a bit faster, doesn't it? We would modify the highbyte of the frame- write STA instructions according to what side of the doublebuffered screen is in use. Of course we also have to jump to the correct place in this code according to what sprite will be written first, so using this approach isn't that simple…
 

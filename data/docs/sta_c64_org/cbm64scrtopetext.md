@@ -7,13 +7,13 @@ difficulty: intermediate
 language: none
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 # Commodore 64 screen code to PETSCII code conversion
 
-| Screen code (dec, hex) | Change (dec, hex) | PETSCII code (dec, hex) | |||
+| Screen code (dec, hex) |  | Change (dec, hex) |  | PETSCII code (dec, hex) |  | 
 |---|---|---|---|---|---|
 | 0-31 | $00-$1F | +64 | $40 | 64-95 | $40-$5F | 
 | 32-63 | $20-$3F | 0 | $00 | 32-63 | $20-$3F | 
@@ -26,7 +26,7 @@ last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 
 Notes:
 
-- This suggested conversion table is theoritical, created for the sake of a bijective conversion. It has never been actually implemented by Commodore.
+1. This suggested conversion table is theoritical, created for the sake of a bijective conversion. It has never been actually implemented by Commodore.
 
 ---
 *Fonte originale: [https://sta.c64.org/cbm64scrtopetext.html](https://sta.c64.org/cbm64scrtopetext.html)*

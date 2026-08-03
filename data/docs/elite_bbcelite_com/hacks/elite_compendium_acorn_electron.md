@@ -3,24 +3,24 @@ title: About the Compendium version of Acorn Electron Elite
 source_url: https://elite.bbcelite.com/hacks/elite_compendium_acorn_electron.html
 category: reference
 topics:
-- input handling
 - assembly
+- input handling
 difficulty: intermediate
 language: assembly
 hardware:
+- CIA
 - KERNAL
 - SID
-- CIA
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # About the Compendium version of Acorn Electron Elite
@@ -37,19 +37,19 @@ For example, planets now have planetary details, so when you launch from Lave at
 
 ![Lave with planetary details in the Compendium version of Acorn Electron Elite](https://elite.bbcelite.com/images/elite_compendium/electron_lave.png) 
 
-						And it includes are all the ship and station designs from the BBC Micro disc version, including Dodo stations:
+And it includes are all the ship and station designs from the BBC Micro disc version, including Dodo stations:
 
 ![A Dodo station in the Compendium version of Acorn Electron Elite](https://elite.bbcelite.com/images/elite_compendium/electron_station.png) 
 
-						There are Thargoids too:
+There are Thargoids too:
 
 ![A Thargoid in the Compendium version of Acorn Electron Elite](https://elite.bbcelite.com/images/elite_compendium/electron_thargoids.png) 
 
-						And not only are both missions backported from the BBC Micro, including the Constrictor mission shown below, but it also includes the Trumbles mission from the Commodore 64 and NES versions:
+And not only are both missions backported from the BBC Micro, including the Constrictor mission shown below, but it also includes the Trumbles mission from the Commodore 64 and NES versions:
 
 ![The Constrictor mission briefing in the Compendium version of Acorn Electron Elite](https://elite.bbcelite.com/images/elite_compendium/electron_mission1.png) 
 
-						Finally, for those with E00 DFS, MMFS or ADFS, there's a version of Compendium Elite that contains the music from the Commodore 64 version, so Electon players can finally enjoy the Blue Danube when engaging their docking computers. And this version also supports all the buttons on the Delta 14B joystick, so if you have a user port expansion as well, you can enjoy the ultimate Elite experience right here on your Electron.
+Finally, for those with E00 DFS, MMFS or ADFS, there's a version of Compendium Elite that contains the music from the Commodore 64 version, so Electon players can finally enjoy the Blue Danube when engaging their docking computers. And this version also supports all the buttons on the Delta 14B joystick, so if you have a user port expansion as well, you can enjoy the ultimate Elite experience right here on your Electron.
 
 Find out how to [play or download](https://elite.bbcelite.com/elite_compendium_acorn_electron_downloads.html) the Compendium version of Acorn Electron Elite and what you need to run it, or dive into the [technical information](https://elite.bbcelite.com/elite_compendium_acorn_electron_technical_information.html) to discover the huge number of enhancements in this version of Elite.
 

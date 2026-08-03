@@ -8,15 +8,15 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Prologue
@@ -41,7 +41,13 @@ Our small number range of 8 bits may be sufficient for the beginning but soon it
 
 At first one should store the number like our computer proposes, in the order lobyte, hibyte. That means the first byte contains the less significant bits 0 through 7, the following byte the more significant bits 8 through 15. The simplest type of calculation, to add numbers, works just like this:
 
-CLC ; clear carry bit LDA number1lo ADC number2lo ; add lobytes STA number3lo ; result's lobyte LDA number1hi ADC number2hi ; add hibytes STA number3hi ; result's hibyte.
+	CLC           ; clear carry bit
+	LDA number1lo
+	ADC number2lo ; add lobytes
+	STA number3lo ; result's lobyte
+	LDA number1hi
+	ADC number2hi ; add hibytes
+	STA number3hi ; result's hibyte.
 
 The carry bit is cleared, the lobytes are added and the result is stored. But the carry bit is not cleared before adding the hibytes because of this: if there is an overflow while adding the lobytes, the result of the hibyte addition is automatically increased by one because of the previously set carry bit. Just an example - $0340 and $05C1 are to be added. So at first $40 and $C1 are added, afterwards the accu contains $09 because the carry bit has been set beforehand - ADC means add with carry bit. The correct result of $0901 is calculated. The subtraction is done in an analogous way; the only difference is to first set the carry bit instead of clearing it. If the numbers are signed it is just as easy, the results stay correct. The example routine may be extended for more than 16 bits, just add more ADCs without CLCs. Halving and doubling is again a little more complicated.
 
@@ -49,11 +55,22 @@ The carry bit is cleared, the lobytes are added and the result is stored. But th
 
 If the number $17C4, as an example, is to be doubled that would look like this:
 
-LDA number1lo ; $C4 ASL STA number2lo ; $88 LDA number1hi ; $17 ROL STA number2hi ; $2F
+	LDA number1lo ; $C4
+	ASL
+	STA number2lo ; $88
+	LDA number1hi ; $17
+	ROL
+	STA number2hi ; $2F
 
 The result of $2F88 is stored in number2. After shifting the lobyte left, the accu contains $88 and the carry bit is set. When rotating the hibyte left, the carry bit is rotated into the result which will then be correct afterwards. Again it's possible to extend the routine for more than 16 bits, just add some more rotations. When halving, the sign has to be taken care of again (see last chapter, published in Attitude #4). It is located in the MSB, like usual, which is bit 15 in this case. The hibyte has to be halved first because the bit falling out must be rotated into the lobyte. It should look like this:
 
-LDA number1hi CMP #$80 ROR STA number2hi LDA number1lo ROR STA number2lo
+	LDA number1hi
+	CMP #$80
+	ROR
+	STA number2hi
+	LDA number1lo
+	ROR
+	STA number2lo
 
 With the gained knowledge we are able to perform simple calculations with 16 bits - but what exactly is it what we have gained with those 8 more bits?
 

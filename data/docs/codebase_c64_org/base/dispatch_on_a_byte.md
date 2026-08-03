@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Dispatching on a Byte
@@ -33,30 +33,46 @@ All but the Stack Dispatch routine use self-modification, which will run 1 cycle
 
 ### 128 entries or less
 
-sta :+ +1 : jmp (table) table: .word handler0, handler2, handler4, ...
+  sta :+ +1
+: jmp (table)
+ 
+table:
+  .word handler0, handler2, handler4, ...
 
 - 9 cycles, 8 if from zeropage
-- Align opcodes and table low-word, or use`SBC`/`ASL`to adjust
+- Align opcodes and table low-word, or use`SBC` /`ASL` to adjust
 - Maximum of 128 entries
 
 ### More than 128 entries
 
-asl bcs :++ ; Dispatch 0-127 sta :+ +1 : jmp (table) ; Dispatch 128-255 : sta :+ +1 : jmp (table + $0100) table: .word handler0, handler1, ..., handler127, handler128, ...
+  asl
+  bcs :++
+  ; Dispatch 0-127
+  sta :+ +1
+: jmp (table)
+  ; Dispatch 128-255
+: sta :+ +1
+: jmp (table + $0100)
+ 
+table: .word handler0, handler1, ..., handler127, handler128, ...
 
 - 13 cycles for 0-127, 14 cycles for 128-255. Subtract 1 cycle if from zeropage.
 
 ## Stack Dispatch
 
-tax txs rts
+  tax
+  txs
+  rts
 
-- 8 or 10 cycles, depending on if`TAX`is necessary
+- 8 or 10 cycles, depending on if`TAX` is necessary
 - Table of vectors at $0100
 - Maximum of 128 entries
 - Handlers cannot use stack, or must reposition it to not trample the table
 
 ## Low-Address Dispatch
 
-sta :+ +1 : jmp routine ; Low byte is overwritten, high byte remains
+  sta :+ +1
+: jmp routine  ; Low byte is overwritten, high byte remains
 
 - 7 cycles, 6 if in zeropage
 - All handlers start in the same memory page
@@ -64,7 +80,8 @@ sta :+ +1 : jmp routine ; Low byte is overwritten, high byte remains
 
 ## High-Address Dispatch
 
-sta :+ +2 : jmp $0000 ; High byte is overwritten, low byte remains
+  sta :+ +2
+: jmp $0000  ; High byte is overwritten, low byte remains
 
 - 7 cycles, 6 if in zeropage
 - All handlers start on their own page, at the same low byte
@@ -72,7 +89,8 @@ sta :+ +2 : jmp $0000 ; High byte is overwritten, low byte remains
 
 ## Relative Branch Dispatch
 
-sta :+ +1 : bne * ; If Z corresponds to A, otherwise use appropriate BRA
+  sta :+ +1
+: bne *  ; If Z corresponds to A, otherwise use appropriate BRA
 
 - 7 cycles, 6 if in zeropage
 - Similar to low-address dispatch but allows page-crosses at the cost of one cycle

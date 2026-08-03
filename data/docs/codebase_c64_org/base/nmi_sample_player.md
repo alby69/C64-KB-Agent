@@ -3,30 +3,30 @@ title: NMI Sample player
 source_url: https://codebase.c64.org/doku.php?id=base%3Anmi_sample_player
 category: tool
 topics:
+- memory management
 - sound generation
 - sprite programming
-- memory management
 - assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 - SID
 - KERNAL
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -233,11 +233,21 @@ NMIDIGIOFF:
 
 the digiboost should be something along the lines of..
 
-lda #$ff sta $d406 sta $d406+7 sta $d496+14 lda #$49 sta $d404 sta $d404+7 sta $d404+14
+lda #$ff
+sta $d406
+sta $d406+7
+sta $d496+14
+lda #$49
+sta $d404
+sta $d404+7
+sta $d404+14
 
 and the nmi frequency needs to be set. eg
 
-lda #$3c sta $dd04 lda #$00 sta $dd05
+lda #$3c
+sta $dd04
+lda #$00
+sta $dd05 
 
 (Edit enthusi)
 

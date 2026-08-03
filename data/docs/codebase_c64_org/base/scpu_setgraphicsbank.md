@@ -3,15 +3,15 @@ title: SetGraphicsBank
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_setgraphicsbank
 category: reference
 topics:
-- basic
 - graphics
 - memory management
+- basic
 - assembly
 difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -23,8 +23,8 @@ base:scpu_setgraphicsbank
 
 Sets the VIC Grahoics Bank, The Screen Memory and the Bitmap Memory (both for Bitmap Graphics and Charset Graphics).
 
-| SYNTAX: | SetGraphicsBank SCRMem : BMPMem | ||
-| EXAMPLE: | SetGraphicsBank $0400 : $2000 | ||
+| SYNTAX: | SetGraphicsBank SCRMem : BMPMem |  |  | 
+| EXAMPLE: | SetGraphicsBank $0400 : $2000 |  |  | 
 | PARAMETERS: | Type | Minimum | Maximum | 
 | SCRMem | U16 | $0000 | $ffff | 
 | BMPMem | U16 | $0000 | $ffff | 

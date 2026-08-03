@@ -9,15 +9,15 @@ difficulty: intermediate
 language: assembly
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # ADSR Discussion Notes
@@ -48,7 +48,7 @@ The ADSR value for the 2 frame period is important based on what we now know abo
 
 Example 1: HR ADSR value 00 00 has high chance of triggering the bug, but afterwards one can write any value safely in the beginning of the next note without causing bug.
 
-| fr | ad | sr | gate | |
+| fr | ad | sr | gate |  | 
 |---|---|---|---|---|
 | -2 | 00 | 00 | gate off | likely bug condition | 
 | -1 | – | – | – | – | 
@@ -56,7 +56,7 @@ Example 1: HR ADSR value 00 00 has high chance of triggering the bug, but afterw
 
 Example 2: HR ADSR values where A,D,R have equal or smaller value than the next note Attack value may trigger the bug, but after the bug the LFSR should be in safe period for the next Attack.
 
-| fr | ad | sr | gate | |
+| fr | ad | sr | gate |  | 
 |---|---|---|---|---|
 | -2 | 77 | 07 | gate off | likely bug condition | 
 | -1 | – | – | – | – | 
@@ -64,7 +64,7 @@ Example 2: HR ADSR values where A,D,R have equal or smaller value than the next 
 
 Example 3: HR ADSR values where A,D,R have larger value than the next note Attack value have chance of triggering the bug again at next note start.
 
-| fr | ad | sr | gate | |
+| fr | ad | sr | gate |  | 
 |---|---|---|---|---|
 | -2 | ff | 0f | gate off | no bug | 
 | -1 | – | – | – | – | 

@@ -3,27 +3,27 @@ title: 'The Codebase: Sourcecode, Articles & Tutorials'
 source_url: https://codebase.c64.org/doku.php?id=base%3Astart
 category: tutorial
 topics:
-- basic
 - input handling
+- basic
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
 - KERNAL
-- CIA
-- SID
 - CPU
+- SID
+- CIA
+- BASIC ROM
 related:
 - music-player
-- keyboard-handling
 - joystick-reading
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - sound-programming
+- sid-registers
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # The Codebase: Sourcecode, Articles & Tutorials
@@ -36,31 +36,31 @@ This section is the core of the wiki, where you will find the most of the conten
 
 The sections below correspond to the main sections which are also provided in the menu on the left:
 
-- [6502/6510 Coding](https://codebase.c64.org/doku.php?id=base:6502_6510_coding)- Assembler programming in general, not specific to coding graphics, sound, etc.
+- [6502/6510 Coding](https://codebase.c64.org/doku.php?id=base:6502_6510_coding) - Assembler programming in general, not specific to coding graphics, sound, etc.
 
-- [VIC programming](https://codebase.c64.org/doku.php?id=vic)- Programming graphics in general. Specific demo effects are in the Demo Coding section.
+- [VIC programming](https://codebase.c64.org/doku.php?id=vic) - Programming graphics in general. Specific demo effects are in the Demo Coding section.
 
-- [SID programming](https://codebase.c64.org/doku.php?id=base:sid_programming)- Music and sound programming.
+- [SID programming](https://codebase.c64.org/doku.php?id=base:sid_programming) - Music and sound programming.
 
-- [CIA programming](https://codebase.c64.org/doku.php?id=base:cia)- Using the CIA (6526) chips, used for many things.
+- [CIA programming](https://codebase.c64.org/doku.php?id=base:cia) - Using the CIA (6526) chips, used for many things.
 
-- [io_programming](https://codebase.c64.org/doku.php?id=cia:io_programming)- Serial communication, including disk and tape access, keyboard and joystick reading, etc.
+- [io_programming](https://codebase.c64.org/doku.php?id=cia:io_programming) - Serial communication, including disk and tape access, keyboard and joystick reading, etc.
 
-- [Maths & Algorithms](https://codebase.c64.org/doku.php?id=base:6502_6510_maths)- Maths and algorithm related stuff (sorting, compression, etc).
+- [Maths & Algorithms](https://codebase.c64.org/doku.php?id=base:6502_6510_maths) - Maths and algorithm related stuff (sorting, compression, etc).
 
-- [Game Programming](https://codebase.c64.org/doku.php?id=base:game_programming)- Issues specific to programming games.
+- [Game Programming](https://codebase.c64.org/doku.php?id=base:game_programming) - Issues specific to programming games.
 
-- [demo_programming](https://codebase.c64.org/doku.php?id=vic:demo_programming)- How to create various demo effects. General graphics programming is in the VIC section.
+- [demo_programming](https://codebase.c64.org/doku.php?id=vic:demo_programming) - How to create various demo effects. General graphics programming is in the VIC section.
 
-- [Cracking, Phreaking and Viruses](https://codebase.c64.org/doku.php?id=base:cpv)- Information on…
+- [Cracking, Phreaking and Viruses](https://codebase.c64.org/doku.php?id=base:cpv) - Information on…
 
-- [Cross Development](https://codebase.c64.org/doku.php?id=base:crossdev)- Use that PC for something good!
+- [Cross Development](https://codebase.c64.org/doku.php?id=base:crossdev) - Use that PC for something good!
 
-- [Programming Languages](https://codebase.c64.org/doku.php?id=base:programming_languages)- Programming BASIC, COMAL, FORTH and so on. (Not assembler.)
+- [Programming Languages](https://codebase.c64.org/doku.php?id=base:programming_languages) - Programming BASIC, COMAL, FORTH and so on. (Not assembler.)
 
-- [Using the KERNAL/BASIC ROMs](https://codebase.c64.org/doku.php?id=base:using_the_kernal_basic_roms)- Using the built in “system”, or “OS”, of the C64.
+- [Using the KERNAL/BASIC ROMs](https://codebase.c64.org/doku.php?id=base:using_the_kernal_basic_roms) - Using the built in “system”, or “OS”, of the C64.
 
-- [Third party hardware](https://codebase.c64.org/doku.php?id=base:thirdparty)- How to program that cartridge, REU, network interface or hard drive.
+- [Third party hardware](https://codebase.c64.org/doku.php?id=base:thirdparty) - How to program that cartridge, REU, network interface or hard drive.
 
 base/start.txt · Last modified:  by cz
 

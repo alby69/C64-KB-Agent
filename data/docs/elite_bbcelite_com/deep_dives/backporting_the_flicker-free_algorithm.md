@@ -3,26 +3,26 @@ title: Backporting the flicker-free algorithm
 source_url: https://elite.bbcelite.com/deep_dives/backporting_the_flicker-free_algorithm.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Backporting the flicker-free algorithm
@@ -37,9 +37,9 @@ You can play the flicker-free versions via the [releases](https://elite.bbcelite
 
 There are three steps to the backporting process:
 
-- Free up enough memory for the flicker-free code and the LSNUM and LSNUM2 variables
-- Copy the LSPUT line-drawing routine from the Master
-- Update the SHPPT and LL9 routines to support the flicker-free algorithm
+1. Free up enough memory for the flicker-free code and the LSNUM and LSNUM2 variables
+2. Copy the LSPUT line-drawing routine from the Master
+3. Update the SHPPT and LL9 routines to support the flicker-free algorithm
 
 Interestingly, this backporting process is identical for all the original versions of Elite (i.e. cassette, disc, Electron, 6502 Second Processor and Elite-A). The only difference is that in some cases, we have to move routines around to prevent the extra code from breaking branch instructions that would otherwise have to reach too far. The code changes themselves are the same, as they all share the same SHPPT and LL9 routines.
 
@@ -51,7 +51,8 @@ Let's look at these three steps in turn. To be specific, let's look at backporti
 
 													 ------------------------
 
-						Altogether, the flicker-free changes only require a small number of extra bytes compared to the original versions - in the BBC Micro cassette version, for example, we only need to find eight more bytes. That said, memory usage is famously tight in Elite, so this is easier said than done.
+						
+Altogether, the flicker-free changes only require a small number of extra bytes compared to the original versions - in the BBC Micro cassette version, for example, we only need to find eight more bytes. That said, memory usage is famously tight in Elite, so this is easier said than done.
 
 Luckily, all the versions of Elite that have serious memory constraints also contain an unused routine that the authors forgot to remove - it's a [duplicate of MULTU that is never called](https://elite.bbcelite.com/cassette/main/subroutine/unused_duplicate_of_multu.html). Removing this routine (or just commenting out the required number of instructions) easily gives us the space we need, even in Elite-A, where only [half of the duplicate routine](https://elite.bbcelite.com/elite-a/flight/subroutine/unused_duplicate_of_multu.html) is left in the flight code for us to remove.
 
@@ -63,7 +64,8 @@ So, step 1 is to comment out a chunk of the duplicate MULTU routine, replace XX1
 
 													 ---------------------
 
-						As part of the new algorithm in the Master, there's an extra routine called [LSPUT](https://elite.bbcelite.com/master/main/subroutine/lsput.html), which draws a line, adding the line to the ship line heap (potentially replacing one of the lines already there), and then erasing the line that we just replaced. We need to port this over for the flicker-free code to call, which we can do by simply copying [LSPUT](https://elite.bbcelite.com/master/main/subroutine/lsput.html) directly from the Master, and inserting it after the last stage of the LL9 routine.
+						
+As part of the new algorithm in the Master, there's an extra routine called [LSPUT](https://elite.bbcelite.com/master/main/subroutine/lsput.html), which draws a line, adding the line to the ship line heap (potentially replacing one of the lines already there), and then erasing the line that we just replaced. We need to port this over for the flicker-free code to call, which we can do by simply copying [LSPUT](https://elite.bbcelite.com/master/main/subroutine/lsput.html) directly from the Master, and inserting it after the last stage of the LL9 routine.
 
 So, step 2 is to copy LSPUT from the Master and into the version we are updating. Easy.
 
@@ -71,7 +73,8 @@ So, step 2 is to copy LSPUT from the Master and into the version we are updating
 
 													 -------------------------
 
-						The SHPPT routine draws ships as points for when they are far away, and the LL9 routine draws them as wireframes when they are closer. As the final step of backporting the new algorithm, we need to update both of these routines so that instead of erasing the whole ship before redrawing the whole ship again, they instead use the new LSPUT routine to draw and erase ships one line at a time.
+						
+The SHPPT routine draws ships as points for when they are far away, and the LL9 routine draws them as wireframes when they are closer. As the final step of backporting the new algorithm, we need to update both of these routines so that instead of erasing the whole ship before redrawing the whole ship again, they instead use the new LSPUT routine to draw and erase ships one line at a time.
 
 Below you can see every single code change that we need to make to convert the BBC Micro cassette version to the flicker-free algorithm (specifically, the changes are in SHPPT and parts 1, 9, 10, 11 and 12 of LL9).
 
@@ -81,7 +84,8 @@ So, step 3 is to make the changes below... and then we're done.
 
 													 ------------------------
 
-						To explore the code changes below, simply click a routine header to expand it, and click it again to shrink it back. Within the code that appears, the original and flicker-free code are shown side-by-side. You can tap one side to expand it, and tap it again to go back to showing both sides. Each side is sideways scrollable, so you can read the comments on small screens.
+						
+To explore the code changes below, simply click a routine header to expand it, and click it again to shrink it back. Within the code that appears, the original and flicker-free code are shown side-by-side. You can tap one side to expand it, and tap it again to go back to showing both sides. Each side is sideways scrollable, so you can read the comments on small screens.
 
 It might look like a lot of code, but that's because I've included all the routines in full, so you can see the differences *in situ*. There are surprisingly few differences between the two versions (especially when you realise that parts 2 to 8 of LL9 are completely unchanged). This is a delightfully simple change that makes a very noticeable improvement to the graphics, and without perceivable loss. That's well worth the effort of backporting, I'd say.
 

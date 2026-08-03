@@ -3,25 +3,25 @@ title: Summary of keys for the Elite Universe Editor
 source_url: https://elite.bbcelite.com/hacks/elite_universe_editor_summary_of_keys.html
 category: tool
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Summary of keys for the Elite Universe Editor
@@ -36,10 +36,12 @@ For example, in JSBeeb, BeebEm and b2, you should press f10 instead of f0 to lau
 
 It's a similar story on the Commodore. For example, the VICE emulator maps RUN/STOP to Escape, C= to TAB, left arrow to End, CLR/HOME to Home and INST/DEL to backspace. For details, consult your emulator's documentation.
 
+## 
 
 													 -----------------------------
 
-						Let's start with the keys you can use for opening and closing the editor, and bringing up the menu and various space views:
+						
+Let's start with the keys you can use for opening and closing the editor, and bringing up the menu and various space views:
 
 | BBC key | Function | 
 |---|---|
@@ -146,10 +148,12 @@ And finally, these are the keys for [editing the galaxy seeds](https://elite.bbc
 | H | Set the system under the crosshairs as the current system | 
 | CTRL-H | Jump to the next galaxy | 
 
+## 
 
 													 -----------------
 
-						Note that on the Commodore 64, there are only two cursor keys (down and right). To move up or left, hold down SHIFT to move in the opposite direction; most emulators will automatically support the four cursor keys on modern keyboards. As a result of this, we can't use SHIFT for things like faster movement or decreasing a value instead of increasing it, so instead we use the Commodore C= key to modify our actions instead.
+						
+Note that on the Commodore 64, there are only two cursor keys (down and right). To move up or left, hold down SHIFT to move in the opposite direction; most emulators will automatically support the four cursor keys on modern keyboards. As a result of this, we can't use SHIFT for things like faster movement or decreasing a value instead of increasing it, so instead we use the Commodore C= key to modify our actions instead.
 
 Let's start with the keys you can use for opening and closing the editor, and bringing up the menu and various space views:
 

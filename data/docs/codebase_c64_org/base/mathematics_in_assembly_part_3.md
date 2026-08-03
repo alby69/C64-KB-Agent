@@ -9,7 +9,7 @@ difficulty: beginner
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Prologue
@@ -28,7 +28,8 @@ After increasing the precision of our numbers we're going to have a look at a sl
 
 A kind of multiplication relatively often needed is to multiply by constants, as it just takes quite a small and fast algoritm. As an example constant we just take 11 ($0B, %00001011). Using our knowledge about binary arithmetic, we can easily reduce this number to powers of two:
 
-11 = 8 + 2 + 1 = 2^3 + 2^1 + 2^0
+11 =  8  +  2  +  1
+   = 2^3 + 2^1 + 2^0
 
 If we wanted to multiply this number with let's say 25 ($19, %00011001), it would look like this if written on paper:
 

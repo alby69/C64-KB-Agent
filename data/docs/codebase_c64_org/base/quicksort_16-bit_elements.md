@@ -3,9 +3,9 @@ title: Quicksort (for 16-bit Elements)
 source_url: https://codebase.c64.org/doku.php?id=base%3Aquicksort_16-bit_elements
 category: tool
 topics:
+- memory management
 - sound generation
 - basic
-- memory management
 - assembly
 difficulty: beginner
 language: mixed
@@ -15,14 +15,14 @@ hardware:
 - KERNAL
 related:
 - music-player
-- keyboard-handling
 - joystick-reading
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - sound-programming
+- sid-registers
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Quicksort (for 16-bit Elements)
@@ -232,21 +232,21 @@ Several time measurements  (in seconds) were made for the Quicksort and the [Fre
 
 | 1024 Integers | Sort Type | Random | Ordered | Reversed | Zeros | 
 |---|---|---|---|---|---|
-| Insertion | 21.4 | 0.14 | 39.75 | 0.16 | |
-| Shell | 1.75 | 0.8 | 1.12 | 0.82 | |
-| Quick | 0.75 | 0.4 | 0.47 | 0.94 | 
+|  | Insertion | 21.4 | 0.14 | 39.75 | 0.16 | 
+|  | Shell | 1.75 | 0.8 | 1.12 | 0.82 | 
+|  | Quick | 0.75 | 0.4 | 0.47 | 0.94 | 
 
 | 4096 Integers | Sort Type | Random | Ordered | Reversed | Zeros | 
 |---|---|---|---|---|---|
-| Insertion | 317.98 | 0.6 | 635.13 | 0.58 | |
-| Shell | 8.12 | 4.02 | 5.25 | 4 | |
-| Quick | 3.67 | 1.88 | 2.04 | 4.21 | 
+|  | Insertion | 317.98 | 0.6 | 635.13 | 0.58 | 
+|  | Shell | 8.12 | 4.02 | 5.25 | 4 | 
+|  | Quick | 3.67 | 1.88 | 2.04 | 4.21 | 
 
 | 12288 Integers | Sort Type | Random | Ordered | Reversed | Zeros | 
 |---|---|---|---|---|---|
-| Insertion | 2877.48 | 1.78 | 5714.08 | 1.75 | |
-| Shell | 30.18 | 13.82 | 18.05 | 13.81 | |
-| Quick | 11.74 | 6.83 | 7.33 | 13.07 | 
+|  | Insertion | 2877.48 | 1.78 | 5714.08 | 1.75 | 
+|  | Shell | 30.18 | 13.82 | 18.05 | 13.81 | 
+|  | Quick | 11.74 | 6.83 | 7.33 | 13.07 | 
 
 *Random*, *Ordered*, *Reversed*, *Zeros* mean the type of array filling.  Random filling just copies ROM content into array.  Ordered filling uses numbers from 0 with step 1.  Reversed filling uses numbers from $ffff with step -1.  Zeros filling is just an array filled with the zeros only.
 

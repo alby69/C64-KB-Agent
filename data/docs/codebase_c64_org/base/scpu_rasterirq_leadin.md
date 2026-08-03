@@ -3,8 +3,8 @@ title: RasterIRQLeadIn
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_rasterirq_leadin
 category: reference
 topics:
-- basic
 - raster interrupts
+- basic
 - assembly
 difficulty: advanced
 language: assembly
@@ -12,10 +12,10 @@ hardware:
 - CPU
 - VIC-II
 related:
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # RasterIRQLeadIn

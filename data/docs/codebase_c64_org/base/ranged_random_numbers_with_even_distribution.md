@@ -10,15 +10,15 @@ difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Ranged Random Numbers with Even Distribution
@@ -30,7 +30,7 @@ scraped_at: '2026-07-27'
 (Well, “amortized” even distribution, but keep reading…)
 
 Normally with a random number generator you get an 8-bit value
- 1).
+<sup>[1)](https://codebase.c64.org#fn__1)</sup>.
 This gives you a random number with a range of 256 possible values,
 from 0 to 255.  But what if you want a smaller range?
 
@@ -50,7 +50,18 @@ I'm calling this an “amortized” even distribution.
 
 Here's a code example with a range of 25 (generates a value from 0 to 24); just 18 bytes plus the base RNG. (See the commented macro code below for a detailed explanation.)
 
-jsr random and #%00011111 cmp #25 bcc return sbc #25 mod_offset = *+1 sbc #00 bcs + adc #25 + sta mod_offset return: rts
+        jsr random
+        and #%00011111
+        cmp #25
+        bcc return
+        sbc #25
+    mod_offset = *+1
+        sbc #00
+        bcs +
+        adc #25
+    +   sta mod_offset
+    return:
+        rts
 
 ## Demonstration
 
@@ -58,7 +69,9 @@ Here's a demo of it in action to show how evenly distributed the numbers are. It
 
 It uses a 64tass macro to build the RNGs and calls the macro like this:
 
-rand25 #randrange 25, 2021 rand40 #randrange 40, $d00d rand64 #randrange 64, $c64
+rand25 #randrange 25, 2021
+rand40 #randrange 40, $d00d
+rand64 #randrange 64, $c64
 
 The first argument is the range and the second is an optional 16-bit seed.
 
@@ -66,7 +79,76 @@ The first argument is the range and the second is an optional 16-bit seed.
 
 And finally here's the 64tass macro that can setup an RNG for any 8-bit range:
 
-; Ranged Random Number Generator with (amortized) even distribution ; by Kruthers ; ; get random number from XABC, remove bits to get next highest power-of-2, ; then distribute random values throughout range ; does not touch X or Y registers randrange .macro range, seed=$1100 .cerror (\range < 2 || \range > 256), "Range must be from 2 to 256" .cerror (\seed < 0 || \seed > 65535), "Seed must be 16-bit value" ; XABC random number generator ; credit to Wil, who gives credit to EternityForest ; https://codebase64.net/doku.php?id=base:x_abc_random_number_generator_8_16_bit inc x1 clc x1 = *+1 lda #<\seed ; x1 c1 = *+1 eor #$c2 ; c1 a1 = *+1 eor #>\seed ; a1 (orig $11) sta a1 b1 = *+1 ; b1 adc #$37 sta b1 lsr eor a1 adc c1 sta c1 ; determine nearest power-of-2 equal or greater than range .for pow2 in 2, 4, 8, 16, 32, 64, 128, 256 .if pow2 >= \range .break .endif .endfor ; truncate random value to our power-of-2-range .if pow2 < 256 and #(pow2-1) .endif ; if the given range already is a power of 2, we're done .if pow2 == \range rts ; otherwise we need to do more... .else ; if the random value is already within the desired range, we're done cmp #\range bcc return ; otherwise, we need to move the value to within in our range sbc #\range ; carry already set ; then offset it (negatively) so as to distribute excess throughout the range mod_offset = *+1 sbc #00 ; carry set b/c previous sbc will not go negative bcs update_offset ; add range if we went below zero adc #\range ; carry already clear update_offset: sta mod_offset return: rts .endif .endm
+; Ranged Random Number Generator with (amortized) even distribution
+; by Kruthers
+;
+; get random number from XABC, remove bits to get next highest power-of-2,
+; then distribute random values throughout range
+; does not touch X or Y registers
+randrange .macro range, seed=$1100
+    .cerror (\range < 2 || \range > 256), "Range must be from 2 to 256"
+    .cerror (\seed < 0 || \seed > 65535), "Seed must be 16-bit value"
+ 
+        ; XABC random number generator
+        ; credit to Wil, who gives credit to EternityForest
+        ; https://codebase64.net/doku.php?id=base:x_abc_random_number_generator_8_16_bit
+        inc x1
+        clc
+    x1 = *+1
+        lda #<\seed     ; x1
+    c1 = *+1
+        eor #$c2        ; c1
+    a1 = *+1
+        eor #>\seed     ; a1 (orig $11)
+        sta a1
+    b1 = *+1            ; b1
+        adc #$37
+        sta b1
+        lsr
+        eor a1
+        adc c1
+        sta c1
+ 
+        ; determine nearest power-of-2 equal or greater than range
+        .for pow2 in 2, 4, 8, 16, 32, 64, 128, 256
+            .if pow2 >= \range
+                .break
+            .endif
+        .endfor
+ 
+        ; truncate random value to our power-of-2-range
+        .if pow2 < 256
+            and #(pow2-1)
+        .endif
+ 
+        ; if the given range already is a power of 2, we're done
+        .if pow2 == \range
+            rts
+ 
+        ; otherwise we need to do more...
+        .else
+            ; if the random value is already within the desired range, we're done
+            cmp #\range
+            bcc return
+ 
+            ; otherwise, we need to move the value to within in our range
+            sbc #\range     ; carry already set
+ 
+            ; then offset it (negatively) so as to distribute excess throughout the range
+        mod_offset = *+1
+            sbc #00         ; carry set b/c previous sbc will not go negative
+            bcs update_offset
+ 
+            ; add range if we went below zero
+            adc #\range     ; carry already clear
+ 
+        update_offset:
+            sta mod_offset
+        return:
+            rts
+ 
+        .endif
+.endm
 
 ## Note About The Underlying RNG
 

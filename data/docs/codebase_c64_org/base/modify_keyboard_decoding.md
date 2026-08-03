@@ -12,14 +12,14 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Modify Keyboard Decoding
@@ -36,19 +36,28 @@ For example, to switch Y and Z to emulate the common layout on German keyboards,
 
 2. Copy the decoding table from the Kernal into that area:
 
-t eb81 ebc1 2a7 in VICE monitor
+ t eb81 ebc1 2a7 in VICE monitor
 
 3. Switch the decoding of Y and Z:
 
->2c0 5a >2b3 59
+ >2c0 5a
+ >2b3 59
 
 4. write a new routine selecting the new decoding and put it right after your table:
 
-a 2e8 .02e8 lda $28d .02eb beq 2f0 .02ed jmp $eb4b .02f0 lda #$a7 .02f2 sta $f5 .02f4 lda #$02 .02f6 sta $f6 .02f8 jmp $eae0
+ a 2e8
+ .02e8  lda $28d
+ .02eb  beq 2f0
+ .02ed  jmp $eb4b
+ .02f0  lda #$a7
+ .02f2  sta $f5
+ .02f4  lda #$02
+ .02f6  sta $f6
+ .02f8  jmp $eae0
 
 5. Change the pointer in $28f to your new routine:
 
-> 28f e8 02
+ > 28f e8 02
 
 That's it, Y and Z are now switched. If you also want to switch the shifted values, you need to copy and modify another table (see $EBC2 in Kernal)
 

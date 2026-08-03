@@ -3,33 +3,33 @@ title: Technical information on the Compendium version of Acorn Electron Elite
 source_url: https://elite.bbcelite.com/hacks/elite_compendium_acorn_electron_technical_information.html
 category: source-code
 topics:
+- memory management
+- basic
 - graphics
 - assembly
 - input handling
-- memory management
 - sprite programming
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
 - KERNAL
-- CIA
 - BASIC ROM
 - SID
+- CPU
+- CIA
 related:
-- raster-interrupts
 - sound-programming
 - sprite-programming
-- sid-registers
-- kernal-routines
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- raster-interrupts
+- sid-registers
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # Technical information on the Compendium version of Acorn Electron Elite
@@ -42,8 +42,8 @@ In this article I'll take a deeper look at all the extra features, especially th
 
 If you want to see exactly how the code for the Compendium version of Electron Elite differs from the code in the original Acornsoft version, you can check out the relevant branches in the project repository:
 
-- See the [elite-compendium branch](https://github.com/markmoxon/elite-source-code-acorn-electron/tree/elite-compendium/1-source-files/main-sources)for modifications related to Acorn Electron Compendium Elite.
-- See the [elite-compendium-music branch](https://github.com/markmoxon/elite-source-code-acorn-electron/tree/elite-compendium-music/1-source-files/main-sources)for modifications related to musical Acorn Electron Compendium Elite.
+- See the [elite-compendium branch](https://github.com/markmoxon/elite-source-code-acorn-electron/tree/elite-compendium/1-source-files/main-sources) for modifications related to Acorn Electron Compendium Elite.
+- See the [elite-compendium-music branch](https://github.com/markmoxon/elite-source-code-acorn-electron/tree/elite-compendium-music/1-source-files/main-sources) for modifications related to musical Acorn Electron Compendium Elite.
 
 You can search the source code files in these branches for "Mod:" to see every single modification that I've made to the original code to produce the Compendium version.
 
@@ -51,7 +51,8 @@ You can search the source code files in these branches for "Mod:" to see every s
 
 													 --------------------------------------
 
-						On the Acorn Electron, the Compendium version of Elite is a lot faster than the original. Here's a side-by-side comparison, with the original version on the left and the Compendium on the right:
+						
+On the Acorn Electron, the Compendium version of Elite is a lot faster than the original. Here's a side-by-side comparison, with the original version on the left and the Compendium on the right:
 
 The bulk of this improvement is down to the use of sideways RAM. All versions of the Elite Compendium use sideways RAM, but on the Electron the impact is far more profound than simply having more memory to play with.
 
@@ -71,67 +72,68 @@ In all, this extra speed and memory means the Electron can finally run all the f
 
 													 ------------------------------------------
 
-						To bring Acorn Electron Elite up to the level of the other 6502 versions, I not only wanted to backport all the extra features from the BBC Micro disc version of Elite, but I also wanted to add as many extra Compendium features as possible.
+						
+To bring Acorn Electron Elite up to the level of the other 6502 versions, I not only wanted to backport all the extra features from the BBC Micro disc version of Elite, but I also wanted to add as many extra Compendium features as possible.
 
 With the exception of the four-colour dashboard, Electron players can now enjoy everything that the BBC Micro had back in 1984. Here's a complete list of features I've added to the Compendium version of Electron Elite, and below that is a blow-by-blow comparison between the various versions.
 
 Unless otherwise stated, features have been backported from the BBC Micro disc version of Elite.
 
 - Speed improvements
-								- Significant speed increase over the standard version due to fast sideways RAM
-- Logarithm-based maths routines for a further speed boost (6502 Second Processor)
-- Optimised routines (such as HLOIN) backported from various other 6502 versions
- 
+								
+  - Significant speed increase over the standard version due to fast sideways RAM
+  - Logarithm-based maths routines for a further speed boost (6502 Second Processor)
+  - Optimised routines (such as HLOIN) backported from various other 6502 versions
 - Graphical improvements
-								- Flicker-free ships (BBC Master)
-- Flicker-free planets (using the same algorithm as ships)
-- Circular planets with meridians, equators and craters (no more 50p planets!)
-- Energy bomb lightning effect (BBC Master)
-- Escape capsule animation
-- Three sizes of stardust rather than two (one-pixel stardust added)
-- Variable star sizes in the Short-range Chart
- 
+								
+  - Flicker-free ships (BBC Master)
+  - Flicker-free planets (using the same algorithm as ships)
+  - Circular planets with meridians, equators and craters (no more 50p planets!)
+  - Energy bomb lightning effect (BBC Master)
+  - Escape capsule animation
+  - Three sizes of stardust rather than two (one-pixel stardust added)
+  - Variable star sizes in the Short-range Chart
 - In-station features
-								- Extra lasers (military, mining)
-- Improved selling mechanism (sell all or part of your cargo)
-- Extended system descriptions (edible poets!)
-- System search in the Long-range Chart
-- Hold SHIFT to move the chart pointer more quickly
- 
+								
+  - Extra lasers (military, mining)
+  - Improved selling mechanism (sell all or part of your cargo)
+  - Extended system descriptions (edible poets!)
+  - System search in the Long-range Chart
+  - Hold SHIFT to move the chart pointer more quickly
 - In-flight features
-								- All 31 ship and station designs from the BBC Micro disc version
-- Advanced enemy tactics (NEWB) and spawning logic
-- Suns, cabin temperatures and fuel scooping
-- Fuel scoops only work when moving (NES)
-- Asteroid mining
-- Thargoids and witchspace
- 
+								
+  - All 31 ship and station designs from the BBC Micro disc version
+  - Advanced enemy tactics (NEWB) and spawning logic
+  - Suns, cabin temperatures and fuel scooping
+  - Fuel scoops only work when moving (NES)
+  - Asteroid mining
+  - Thargoids and witchspace
 - Docking
-								- Proper docking computer sequence
-- Pressing "J" will dock instantly when docking computer is activated (NES)
-- Transporters no longer spawn in the station slot when we're auto-docking (NES)
-- The ship hangar is shown on docking
- 
+								
+  - Proper docking computer sequence
+  - Pressing "J" will dock instantly when docking computer is activated (NES)
+  - Transporters no longer spawn in the station slot when we're auto-docking (NES)
+  - The ship hangar is shown on docking
 - Missions
-								- Both BBC Micro missions (Constrictor and Thargoid plans)
-- Trumbles mission (Commodore 64 and NES)
- 
+								
+  - Both BBC Micro missions (Constrictor and Thargoid plans)
+  - Trumbles mission (Commodore 64 and NES)
 - Loading and saving
-								- Disc access menu for saving, loading, cataloguing and deleting commander files
-- Full support for ADFS, DFS and MMFS on all media, including the Plus 3
-- The Acornsoft loading screen no longer has the panel for showing tape progress
- 
+								
+  - Disc access menu for saving, loading, cataloguing and deleting commander files
+  - Full support for ADFS, DFS and MMFS on all media, including the Plus 3
+  - The Acornsoft loading screen no longer has the panel for showing tape progress
 - Joysticks
-								- Joystick support added for Plus 1 analogue joysticks (BBC Micro)
-- Joystick support added for Slogger and First Byte digital joysticks (BBC Master Compact)
-- Full button support added for the Delta 14B joystick with Delta 14B/1 adaptor box (Elite-A)
-- Keyboard fire button still works when joysticks are enabled (BBC Master)
- 
+								
+  - Joystick support added for Plus 1 analogue joysticks (BBC Micro)
+  - Joystick support added for Slogger and First Byte digital joysticks (BBC Master Compact)
+  - Full button support added for the Delta 14B joystick with Delta 14B/1 adaptor box (Elite-A)
+  - Keyboard fire button still works when joysticks are enabled (BBC Master)
 - Bug fixes and tweaks
-								- Includes bug fixes from the Elite Compendium (Data on System, Moray spawning)
-- Broken sound priorities and durations have been fixed in the sound generation routine
-- The second title screen now has a rotating Constrictor instead of a Mamba (so the Compendium has its own unique ship, rather than reusing the BBC Micro cassette's Mamba)
- 
+								
+  - Includes bug fixes from the Elite Compendium (Data on System, Moray spawning)
+  - Broken sound priorities and durations have been fixed in the sound generation routine
+  - The second title screen now has a rotating Constrictor instead of a Mamba (so the Compendium has its own unique ship, rather than reusing the BBC Micro cassette's Mamba)
 
 Notes:
 

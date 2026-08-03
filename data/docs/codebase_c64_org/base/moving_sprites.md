@@ -3,8 +3,8 @@ title: Moving sprites / Sorting movement from VIC update
 source_url: https://codebase.c64.org/doku.php?id=base%3Amoving_sprites
 category: reference
 topics:
-- sprite programming
 - raster interrupts
+- sprite programming
 - assembly
 difficulty: beginner
 language: assembly
@@ -14,15 +14,15 @@ hardware:
 - SID
 - KERNAL
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- kernal-routines
+- music-player
+- vic-ii-registers
 - memory-map
-- sprite-programming
+- kernal-routines
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 # Moving sprites / Sorting movement from VIC update
@@ -39,19 +39,44 @@ by Achim
 
 Moving sprites can be annoying in terms of msb handling. To avoid the msb issue you usually use tables for moving the sprites and let a small routine update the VIC registers every frame.
 
-spritey: .byte $00, $00, $00, $00, $00, $00, $00, $00 spritex: .byte $00, $00, $00, $00, $00, $00, $00, $00 spritemsb: .byte $00, $00, $00, $00, $00, $00, $00, $00 spritecolor: ... spritepointer: ...
+spritey:	.byte $00, $00, $00, $00, $00, $00, $00, $00
+spritex:	.byte $00, $00, $00, $00, $00, $00, $00, $00
+spritemsb:	.byte $00, $00, $00, $00, $00, $00, $00, $00
+spritecolor: 	...
+spritepointer: 	...
 
 Now simple 16bit additions/subtractions apply to moving sprites. The main program can ignore the msb handling.
 
 Here's a small routine to update VIC registers. Should be called by an irq. Preferably before VIC starts to draw the next frame.
 
-ldx #$07 ldy #$0e loop: lda spritey,x sta $d001,y //write y lda spritex,x sta $d000,y //write x lda spritemsb,x cmp #$01 //no msb=carry clear / msb=carry set rol $d010 //carry -> $d010, repeat 8 times and all bits are set lda spritecolor,x sta $d027,x lda spritepointer,x sta $07f8,x //screen at $0400 dey dey dex bpl loop
+		ldx #$07
+		ldy #$0e
+			
+loop:		lda spritey,x
+		sta $d001,y		//write y
+		lda spritex,x
+		sta $d000,y		//write x
+		lda spritemsb,x
+		cmp #$01		//no msb=carry clear  / msb=carry set
+		rol $d010		//carry -> $d010, repeat 8 times and all bits are set
+			
+		lda spritecolor,x
+		sta $d027,x
+		lda spritepointer,x
+		sta $07f8,x		//screen at $0400
+		dey
+		dey
+		dex
+		bpl loop
 
 ## Oldschool: x*2
 
 This allows to use 8bit calculations for moving the sprite on x axis. No need for a msb table anymore. On the downside sprites can only be moved with 2px/frame.
 
-spritey: .byte $00, $00, $00, $00, $00, $00, $00, $00 spritex: .byte $00, $00, $00, $00, $00, $00, $00, $00 spritecolor: ... spritepointer: ...
+spritey:	.byte $00, $00, $00, $00, $00, $00, $00, $00
+spritex:	.byte $00, $00, $00, $00, $00, $00, $00, $00
+spritecolor: 	...
+spritepointer: 	...
 
 Update VIC registers:
 

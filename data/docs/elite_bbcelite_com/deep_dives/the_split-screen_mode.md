@@ -3,25 +3,25 @@ title: The split-screen mode in BBC Micro Elite
 source_url: https://elite.bbcelite.com/deep_dives/the_split-screen_mode.html
 category: deep-dive
 topics:
-- assembly
 - raster interrupts
 - basic
+- assembly
 difficulty: advanced
 language: mixed
 hardware:
 - KERNAL
-- CIA
 - CPU
+- CIA
 related:
-- raster-interrupts
 - sprite-programming
-- kernal-routines
 - keyboard-handling
-- memory-map
-- joystick-reading
-- vic-ii-registers
+- kernal-routines
 - cia-registers
-scraped_at: '2026-07-27'
+- joystick-reading
+- memory-map
+- raster-interrupts
+- vic-ii-registers
+scraped_at: '2026-08-03'
 ---
 
 # The split-screen mode in BBC Micro Elite
@@ -32,13 +32,14 @@ The BBC versions of Elite have a unique split-screen mode that enables a high-re
 
 ![BBC Micro Elite screenshot](https://elite.bbcelite.com/images/general/Elite-BBCMicro.png) 
 
-						Alas, the Electron doesn't support the split-screen mode (see below for an explanation of why), but the advanced versions of Elite on the 6502 Second Processor and BBC Master take it to a higher level, supporting a four-colour space view (in mode 1) with an eight-colour dashboard (in mode 2). The split-screen mode in the colour versions works in exactly the same way as in the standard BBC versions, so let's take a look at how it's done.
+Alas, the Electron doesn't support the split-screen mode (see below for an explanation of why), but the advanced versions of Elite on the 6502 Second Processor and BBC Master take it to a higher level, supporting a four-colour space view (in mode 1) with an eight-colour dashboard (in mode 2). The split-screen mode in the colour versions works in exactly the same way as in the standard BBC versions, so let's take a look at how it's done.
 
 ## The BBC's split-screen mode
 
 													 ---------------------------
 
-						There are two main parts to the implementation of the split-screen mode: the custom mode, and the split-screen aspect.
+						
+There are two main parts to the implementation of the split-screen mode: the custom mode, and the split-screen aspect.
 
 Elite's screen mode is a custom mode, based on mode 4 but with fewer pixels. This mode is set up in the loader by reprogramming the registers of the 6845 CRTC - see the section on VDU command data at [variable B%](https://elite.bbcelite.com/cassette/loader/variable/b_per_cent.html) for more details, but the salient part is the screen size, which is 32 columns by 31 rows rather than the 40 x 32 of standard mode 4. Screen sizes are given in terms of characters, which are 8 x 8 pixels, so this means Elite's custom screen mode is 256 x 248 pixels, in monochrome.
 
@@ -64,27 +65,27 @@ It's probably easiest to visualise the screen layout in terms of rows, with row 
 | Row | Description | 
 |---|---|
 | 1 | First row of space view | 
-| : | |
+| : |  | 
 | : | ... 24 rows of space view = 192 pixel rows ... | 
-| : | |
+| : |  | 
 | 24 | Last row of space view | 
 | 25 | First row of dashboard | 
-| : | |
+| : |  | 
 | : | ... 7 rows of dashboard = 56 pixel rows ... | 
-| : | |
+| : |  | 
 | 31 | Last row of dashboard | 
-| : | |
+| : |  | 
 | : | ... vertical retrace period ... | 
-| : | |
+| : |  | 
 | 34.5 | Vertical sync fires | 
-| : | |
+| : |  | 
 | : | ... 4.5 rows between vertical sync and end of screen ... | 
-| : | |
+| : |  | 
 | 39 | Last row of screen | 
 
 So starting at the vertical sync, we have 4.5 rows before the end of the screen, and then 24 rows from the top of the screen down to the start of the dashboard, so that's a total of 28.5 rows. So given that we have 512 ticks per row, we get:
 
-28.5 * 512 = 14592
+  28.5 * 512 = 14592
 
 So if we started our timer from 14592 at the vertical sync and let it tick down to zero, then it should get there just as we reach the dashboard.
 
@@ -96,7 +97,8 @@ However, because of the way the interrupt system works, this needs a little twea
 
 													 ------------------------------------
 
-						The Electron doesn't have the same split-screen mode as the BBC versions, but instead uses a standard mode 4 display for the whole screen. As a result, the dashboard is monochrome, though with twice the horizontal resolution of the BBC version.
+						
+The Electron doesn't have the same split-screen mode as the BBC versions, but instead uses a standard mode 4 display for the whole screen. As a result, the dashboard is monochrome, though with twice the horizontal resolution of the BBC version.
 
 The main reason for this is that the Electron is missing a vital feature of the above process: it doesn't have a hardware timer like the 6522 System VIA T1 timer we use above. This makes it a lot harder to work out when the cathode ray reaches the top of the dashboard, which is when we need to change the screen mode.
 

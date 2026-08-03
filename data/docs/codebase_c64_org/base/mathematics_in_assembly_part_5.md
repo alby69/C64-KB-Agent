@@ -11,9 +11,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Mathematics in Assembly - Part 5
@@ -51,7 +51,18 @@ To square a number only needs one argument, an addition is one of the simplest e
 
 So we just derived a formula for fast multiplication, as the squares divided by four can be held in one (1) short table, and the addition is a basic operation that the processor can execute in almost no time. A routine to calculate a product using the described algorithm would look like this:
 
-STA factor1 ; factors in accu and x-register TXA SEC SBC factor1 TAY ; factor 2 - factor 1 TXA CLC ADC factor1 TAX ; factor 2 + factor 1 SEC LDA table,x SBC table,y ; subtract the squares
+STA factor1 ; factors in accu and x-register
+TXA
+SEC
+SBC factor1
+TAY ; factor 2 - factor 1
+TXA
+CLC
+ADC factor1
+TAX ; factor 2 + factor 1
+SEC
+LDA table,x
+SBC table,y ; subtract the squares
 
 As a result we get the product of the two factors. By the way, in this routine the factors of the derivation are swapped, but that does not matter at all because of the commutative law. Furthermore, 4 bit factors are supposed, an extension to bigger numbers then leads to a bigger square table and a longer routine that can handle results of at least two bytes size. Also important is that factor 2 must be bigger than factor 1, as otherwise, the table indices would be negative numbers; alternatively, the table could respect that one can save a lot of execution time.
 

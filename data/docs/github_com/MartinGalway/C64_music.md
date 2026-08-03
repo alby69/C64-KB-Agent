@@ -7,15 +7,15 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 related:
-- music-player
 - sid-registers
-- kernal-routines
 - memory-map
+- music-player
 - sound-programming
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 last_modified: '2026-05-12T18:59:43Z'
 ---
 

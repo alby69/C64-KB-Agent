@@ -3,9 +3,9 @@ title: base:tiny_screenselection [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Atiny_screenselection
 category: reference
 topics:
-- basic
-- input handling
 - raster interrupts
+- input handling
+- basic
 - assembly
 difficulty: intermediate
 language: mixed
@@ -14,14 +14,14 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

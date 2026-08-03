@@ -3,29 +3,29 @@ title: Introduction
 source_url: https://codebase.c64.org/doku.php?id=base%3Amc_al
 category: tutorial
 topics:
-- basic
 - raster interrupts
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
 - CIA
-- SID
 - KERNAL
+- SID
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- kernal-routines
-- memory-map
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Introduction
@@ -36,7 +36,7 @@ scraped_at: '2026-07-27'
 
 *This is part 1 of a machine-code and assembly language tutorial series for the 6510 by Rudi B. Stranden.*
 
-`The Commodore 64 uses a microprocessor chip called the `.
+`The Commodore 64 uses a microprocessor chip called the` .
 **6510**
 
 The 6510 is connected to a bus called the address-bus which has 16 wires. (The address-bus selects the memory chip).
@@ -68,7 +68,7 @@ Diagram of standard TTL-circuit voltage levels:
 ```
 On some 8-bit computers a binary number is often preceded by a percent sign. The Commodore 64 assembly language uses this representation of binary numbers.
 
-**Example:  %11001101**
+**Example: `%11001101`**
 
 8 consecutive bits represents a byte. The byte can represent numbers from 0 to 255, hence 256 different possibilities.
 
@@ -90,7 +90,10 @@ The Accumulator is a special register which can perform arithmetic operations wh
 
 # Machine-code and Assembly
 
-operation code: Assembly code: AD 00 08 LDA $0800 (AD is the op-code) (00 08 is the operand)
+operation code:        Assembly code:
+AD  00  08             LDA $0800
+(AD is the op-code)
+(00 08 is the operand)
 
 Operand is zero, one or two bytes long. In 2-byte operands (16-bits) the last byte comes first. Operands performs faster speed when they are only in zero-page (an 8-bit page) that ranges from $00 to $FF. Zero-page use much faster fetching and storing from and to these addresses. Low byte first is standard in the 6510.
 
@@ -100,15 +103,24 @@ We'll mostly work with the hexadecimal number-system. The dollar-sign ($) is a p
 
 Example to swap bytes from two memory locations:
 
-LDA $0800 - Load byte from memory location ($0800) into accumulator-register LDX $0801 - Load byte from memory location ($0801) into X-register STA $0801 - Store byte from accumulator into memory location $0801 STX $0800 - Store byte from x-register into memory location $0800
+LDA $0800      - Load byte from memory location ($0800) into accumulator-register
+LDX $0801      - Load byte from memory location ($0801) into X-register
+STA $0801      - Store byte from accumulator into memory location $0801
+STX $0800      - Store byte from x-register into memory location $0800
 
 The values in the two memory locations are now swapped.
 
 ## Opcodes and instructions for Load and Store
 
-Opcode: Instruction: 8C STY 8D STA 8E STX AC LDY AD LDA AE LDX
+Opcode:      Instruction:
+  8C           STY
+  8D           STA
+  8E           STX
+  AC           LDY
+  AD           LDA
+  AE           LDX
 
-When you make a program it must be placed somewhere in **RAM**. To do that we can poke the values from Basic or use a Machine-code monitor. The later is more convenient since Basic language is slower and takes up more memory-space. However since Basic lies in **ROM** it cannot be removed, but individual basic routines takes up more space when you use them. `If you do poke values into memory from basic and want to run from an address you type `. However basic does not work with hexadecimal numbers so you need to convert them to decimal before you poke or sys them. Machine-code monitors and assemblers do most of the time handle hexadecimal numbers. After performing the SYS-command the machine code is running as fast as it should go with the instructions and operands that are fetched and stored from the address and data-busses. If you mix basic-language with machine-language it can some of the time run more slower because basic-routines have alot more instructions and does much more things that you usually dont need. If you want to make fast routines on the C64 i suggest you learn how to program machine-code or assembly because Basic is just too slow. However if you think assembly-language is hard to learn and you havent programmed before Basic may be a good excercise to learn elementary program logic.
+When you make a program it must be placed somewhere in **RAM**. To do that we can poke the values from Basic or use a Machine-code monitor. The later is more convenient since Basic language is slower and takes up more memory-space. However since Basic lies in **ROM** it cannot be removed, but individual basic routines takes up more space when you use them. `If you do poke values into memory from basic and want to run from an address you type` . However basic does not work with hexadecimal numbers so you need to convert them to decimal before you poke or sys them. Machine-code monitors and assemblers do most of the time handle hexadecimal numbers. After performing the SYS-command the machine code is running as fast as it should go with the instructions and operands that are fetched and stored from the address and data-busses. If you mix basic-language with machine-language it can some of the time run more slower because basic-routines have alot more instructions and does much more things that you usually dont need. If you want to make fast routines on the C64 i suggest you learn how to program machine-code or assembly because Basic is just too slow. However if you think assembly-language is hard to learn and you havent programmed before Basic may be a good excercise to learn elementary program logic.
 **SYS** <*location*> to run from the specific address
 
 ## Status register
@@ -132,7 +144,9 @@ The Zero-flag (z-flag) is a flag that is mostly used in comparsion with numbers.
 
 **Compare example:**
 
-CPX #$06 (If the x-register contains a value of $06, then the z-flag will be set to 1). CPY #$08 (If the y-register contains a value of something else than $08, then the z-flag will be set to 0). CMP #$02 (If the accumulator contains a value of $02 then the z-flag will be set to 1).
+CPX #$06    (If the x-register contains a value of $06, then the z-flag will be set to 1).
+CPY #$08    (If the y-register contains a value of something else than $08, then the z-flag will be set to 0).
+CMP #$02    (If the accumulator contains a value of $02 then the z-flag will be set to 1).
 
 ## Branching
 
@@ -154,7 +168,10 @@ As you can see from above the LDX affect the z-flag. The same goes for LDY and L
 
 ## The Branch instructions
 
-BNE - Will branch if z-flag is zero. BEQ - Will branch if z-flag is one. BCS - Will branch if the value in the register is greater than or equal to the other value. BCC - Will branch if the value in the register is less than the other value.
+BNE      - Will branch if z-flag is zero.
+BEQ      - Will branch if z-flag is one.
+BCS      - Will branch if the value in the register is greater than or equal to the other value.
+BCC      - Will branch if the value in the register is less than the other value.
 
 The two latter branch-instructions does branch if the Carry flag is set or not set. (See below).
 
@@ -162,10 +179,12 @@ The two latter branch-instructions does branch if the Carry flag is set or not s
 
 After a comparsion (CPX, CPY or CMP) the carry flag (c-flag) is set to one if the register is greater than or equal to the compared value, otherwise it is not set.
 
-BCS (branch carry set) - will branch if the carry is set. BCC (branch carry clear) - will branch if the carry is not set. SEC (set carry) CLC (clear carry)
+BCS      (branch carry set)    - will branch if the carry is set.
+BCC      (branch carry clear)  - will branch if the carry is not set.
+SEC      (set carry)
+CLC      (clear carry) 
 
-*
-This was the end of part 1 in these tutorial series. Hoped you liked it!
+*This was the end of part 1 in these tutorial series. Hoped you liked it!
 Feedback, corrections, misspelling are appreciated, if you let me know.
 Part 2 will hopefully follow soon.*
 

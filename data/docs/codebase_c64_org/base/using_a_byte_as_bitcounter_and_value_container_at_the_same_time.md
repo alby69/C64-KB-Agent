@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-07-27'
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # Using a byte as bitcounter and value container simultaneously
@@ -25,7 +25,15 @@ This code was posted by Enthusi on the CSDb forum. Inventor uknown. The idea is 
 
 The getbit routine is not included here since this article is intended to demonstrate a general concept, regardless of how the actual getbit routine is designed in each actual case. For a more elaborate example, see [Decoding bitstreams](https://codebase.c64.org/doku.php?id=base:decoding_bitstreams).
 
-getbyte: lda #$01 ;This bit will be rotated to carry when a complete byte is read. sta $bd loop: jsr getbit ;This subroutine reads one bit from the datastream and stores it in the carry flag. rol $bd bcc loop ;As long as the bit doesn't roll off the byte (after 8 loops), do the loop lda $bd rts
+getbyte:
+	lda #$01   ;This bit will be rotated to carry when a complete byte is read.
+	sta $bd
+loop:
+	jsr getbit ;This subroutine reads one bit from the datastream and stores it in the carry flag.
+	rol $bd
+	bcc loop   ;As long as the bit doesn't roll off the byte (after 8 loops), do the loop
+	lda $bd
+	rts
 
 From IRC: Krillye: franticHT: that “trick” is pretty common with serial transfer routines as well [in addition to tape loading routines], and some maths routines
 

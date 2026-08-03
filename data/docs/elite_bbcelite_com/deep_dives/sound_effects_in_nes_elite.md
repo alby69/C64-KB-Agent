@@ -3,26 +3,26 @@ title: Sound effects in NES Elite
 source_url: https://elite.bbcelite.com/deep_dives/sound_effects_in_nes_elite.html
 category: deep-dive
 topics:
-- assembly
 - sound generation
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Sound effects in NES Elite
@@ -41,7 +41,8 @@ Let's see how these sound effects work.
 
 													 -----------------
 
-						The [NOISE](https://elite.bbcelite.com/nes/bank_7/subroutine/noise.html) routine generates all the sound effects in the game. It takes the sound number as an argument, and the full list of sound effects is as follows, along with the names of the routines that initiate them:
+						
+The [NOISE](https://elite.bbcelite.com/nes/bank_7/subroutine/noise.html) routine generates all the sound effects in the game. It takes the sound number as an argument, and the full list of sound effects is as follows, along with the names of the routines that initiate them:
 
 | # | Description | Initiated by | 
 |---|---|---|
@@ -54,12 +55,12 @@ Let's see how these sound effects work.
 | 6 | Trumbles in the hold sound 2, 25% chance | [Main game loop (Part 5)](https://elite.bbcelite.com/nes/bank_0/subroutine/main_game_loop_part_5_of_6.html) | 
 | 7 | Low energy beep | [Main flight loop (Part 15)](https://elite.bbcelite.com/nes/bank_0/subroutine/main_flight_loop_part_15_of_16.html) | 
 | 8 | Energy bomb | [Main flight loop (Part 3)](https://elite.bbcelite.com/nes/bank_0/subroutine/main_flight_loop_part_3_of_16.html) | 
-| 9 | Missile launch | [FRMIS](https://elite.bbcelite.com/nes/bank_0/subroutine/frmis.html),[SFRMIS](https://elite.bbcelite.com/nes/bank_0/subroutine/sfrmis.html) | 
+| 9 | Missile launch | [FRMIS](https://elite.bbcelite.com/nes/bank_0/subroutine/frmis.html) ,[SFRMIS](https://elite.bbcelite.com/nes/bank_0/subroutine/sfrmis.html) | 
 | 10 | Us making a hit or kill | [EXNO](https://elite.bbcelite.com/nes/bank_0/subroutine/exno.html) | 
 | 11 | Us being hit by lasers | [TACTICS (Part 6)](https://elite.bbcelite.com/nes/bank_0/subroutine/tactics_part_6_of_7.html) | 
 | 12 | First launch sound | [LAUN](https://elite.bbcelite.com/nes/bank_0/subroutine/laun.html) | 
 | 13 | Explosion/collision sound | [EXNO3](https://elite.bbcelite.com/nes/bank_7/subroutine/exno3.html) | 
-| Ship explosion at distance z_hi < 6 | [EXNO2](https://elite.bbcelite.com/nes/bank_0/subroutine/exno2.html) | |
+|  | Ship explosion at distance z_hi < 6 | [EXNO2](https://elite.bbcelite.com/nes/bank_0/subroutine/exno2.html) | 
 | 14 | Ship explosion at distance z_hi >= 6 | [EXNO2](https://elite.bbcelite.com/nes/bank_0/subroutine/exno2.html) | 
 | 15 | Military laser firing | [Main flight loop (Part 3)](https://elite.bbcelite.com/nes/bank_0/subroutine/main_flight_loop_part_3_of_16.html) | 
 | 16 | Mining laser firing | [Main flight loop (Part 3)](https://elite.bbcelite.com/nes/bank_0/subroutine/main_flight_loop_part_3_of_16.html) | 
@@ -70,7 +71,7 @@ Let's see how these sound effects work.
 | 21 | Hyperspace | [MakeHyperSound](https://elite.bbcelite.com/nes/bank_7/subroutine/makehypersound.html) | 
 | 22 | Galactic hyperspace | [Ghy](https://elite.bbcelite.com/nes/bank_0/subroutine/ghy.html) | 
 | 23 | Ship explosion at distance z_hi >= 8 | [LAUN](https://elite.bbcelite.com/nes/bank_0/subroutine/laun.html) | 
-| Ship explosion at distance z_hi >= 8 | [EXNO2](https://elite.bbcelite.com/nes/bank_0/subroutine/exno2.html) | |
+|  | Ship explosion at distance z_hi >= 8 | [EXNO2](https://elite.bbcelite.com/nes/bank_0/subroutine/exno2.html) | 
 | 24 | Second launch sound | [LAUN](https://elite.bbcelite.com/nes/bank_0/subroutine/laun.html) | 
 | 25 | Unused | - | 
 | 26 | No noise | [FlushSoundChannel](https://elite.bbcelite.com/nes/bank_7/subroutine/flushsoundchannel.html) | 
@@ -92,51 +93,39 @@ The data that is sent to the APU for each sound effect is defined in that sound'
 
 													 -----------------
 
-						Each of the above sound effects has an associated data block in the [soundData](https://elite.bbcelite.com/nes/bank_6/variable/sounddata.html) table. Each sound data block is made up of 14 bytes, which are copied to the [soundByteSQ1](https://elite.bbcelite.com/nes/common/workspace/wp.html#soundbytesq1), [soundByteSQ2](https://elite.bbcelite.com/nes/common/workspace/wp.html#soundbytesq2) or [soundByteNOISE](https://elite.bbcelite.com/nes/common/workspace/wp.html#soundbytenoise) blocks (one for each channel) where they can be manipulated. This is so counters within the data block can be updated *in situ*, as the original soundData table is in ROM and can't be changed.
+						
+Each of the above sound effects has an associated data block in the [soundData](https://elite.bbcelite.com/nes/bank_6/variable/sounddata.html) table. Each sound data block is made up of 14 bytes, which are copied to the [soundByteSQ1](https://elite.bbcelite.com/nes/common/workspace/wp.html#soundbytesq1), [soundByteSQ2](https://elite.bbcelite.com/nes/common/workspace/wp.html#soundbytesq2) or [soundByteNOISE](https://elite.bbcelite.com/nes/common/workspace/wp.html#soundbytenoise) blocks (one for each channel) where they can be manipulated. This is so counters within the data block can be updated *in situ*, as the original soundData table is in ROM and can't be changed.
 
 The sound data block controls the sending of data to the APU during each iteration of the sound effect routine (which is typically every VBlank). The following documentation talks about channel SQ1, but the same logic applies to the SQ2 and NOISE channels.
 
 The list of bytes in the sound effect data block is as follows:
 
 | Byte #0 Length of sound (in iterations) | 
-| Ignored if the sound is an infinite loop (i.e. if byte #12 is non-zero)Gets decremented on each iteration
- | 
+| Ignored if the sound is an infinite loop (i.e. if byte #12 is non-zero) Gets decremented on each iteration | 
 | Byte #1 How often we send pitch data to the APU | 
-| So we send pitch data to the APU every byte #1 iterations
- | 
+| So we send pitch data to the APU every byte #1 iterations | 
 | Bytes #2 and #3 The first 16-bit pitch data to send to (SQ1_HI SQ1_LO) | 
-| Used as 16-bit storage for (soundHiSQ1 soundLoSQ1), which contains the pitch data to send to the APU for this iterationThis gets sent to the APU via (SQ1_HI SQ1_LO) to set the sound effect's pitch as the effect progresses
- | 
+| Used as 16-bit storage for (soundHiSQ1 soundLoSQ1), which contains the pitch data to send to the APU for this iteration This gets sent to the APU via (SQ1_HI SQ1_LO) to set the sound effect's pitch as the effect progresses | 
 | Bytes #4 and #5 A 16-bit value to apply to the pitch every iteration | 
-| The pitch is only varied if enabled by byte #8 being non-zero
- | 
+| The pitch is only varied if enabled by byte #8 being non-zero | 
 | Byte #6 High nibble of the SQ1_VOL byte | 
-| This value gets OR'd with the soundVolumeSQ1 variable to send to the APU via SQ1_VOLIt sets the duty, loop and NES envelope settings to send to the APU
- | 
+| This value gets OR'd with the soundVolumeSQ1 variable to send to the APU via SQ1_VOL It sets the duty, loop and NES envelope settings to send to the APU | 
 | Byte #7 Add vibrato | 
-| Non-zero means add vibrato to the pitch on each iteration using the randomised vibrato value in soundVibrato
- | 
+| Non-zero means add vibrato to the pitch on each iteration using the randomised vibrato value in soundVibrato | 
 | Byte #8 Enable/disable the pitch variation in byte #4/#5 | 
-| Non-zero means:
-											Bit 7 clear = subtract byte #4/#5 from the APU pitch on each iteration (so the note frequency goes up)Bit 7 set = add byte #4/#5 to the APU pitch on each iteration (so the note frequency goes down)
-Zero disables the pitch variation in byte #4/#5
- | 
+| Non-zero means: 											
+Bit 7 clear = subtract byte #4/#5 from the APU pitch on each iteration (so the note frequency goes up) Bit 7 set = add byte #4/#5 to the APU pitch on each iteration (so the note frequency goes down) Zero disables the pitch variation in byte #4/#5 | 
 | Byte #9 Number of iterations for which we send pitch data to the APU | 
-| Ignored if the sound is an infinite loop (i.e. if byte #12 is non-zero)
- | 
+| Ignored if the sound is an infinite loop (i.e. if byte #12 is non-zero) | 
 | Byte #10 Number of the volume envelope to apply | 
-| This is the number of the envelope to apply from the [soundVolume](https://elite.bbcelite.com/nes/bank_6/variable/soundvolume.html)table
- | 
+| This is the number of the envelope to apply from the [soundVolume](https://elite.bbcelite.com/nes/bank_6/variable/soundvolume.html) table | 
 | Byte #11 How often we apply the volume envelope to the sound | 
-| We apply the next entry from the volume envelope every byte #11 iterations
- | 
+| We apply the next entry from the volume envelope every byte #11 iterations | 
 | Byte #12 Enable/disable infinite loop | 
-| Non-zero means the sound effect loops and keeps being made, even after the counter in byte #0 runs downZero means the sound only runs for the number of iterations in byte #0
- | 
+| Non-zero means the sound effect loops and keeps being made, even after the counter in byte #0 runs down Zero means the sound only runs for the number of iterations in byte #0 | 
 | Byte #13 How often to apply the pitch variation in byte #4/#5 | 
-| If pitch variation is enabled by byte #8 being non-zero, then:
-											Non-zero means only apply the pitch variation in byte #4/#5 every byte #13 iterationsZero means apply the pitch variation every iteration
- | 
+| If pitch variation is enabled by byte #8 being non-zero, then: 											
+Non-zero means only apply the pitch variation in byte #4/#5 every byte #13 iterations Zero means apply the pitch variation every iteration | 
 
 The above table defines everything about the sound that we need to send to the APU. Vibrato is applied using the randomised byte from the soundVibrato variable, but the only other bit of data that's needed to make each sound is the volume envelope that's configured by bytes #10 and #11, so let's have a look at that.
 

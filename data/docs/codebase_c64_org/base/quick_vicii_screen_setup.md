@@ -3,8 +3,8 @@ title: Quick VIC-II Screen Setup
 source_url: https://codebase.c64.org/doku.php?id=base%3Aquick_vicii_screen_setup
 category: reference
 topics:
-- sprite programming
 - graphics
+- sprite programming
 - assembly
 difficulty: beginner
 language: assembly
@@ -14,11 +14,11 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -30,7 +30,14 @@ base:quick_vicii_screen_setup
 
 This code snippet will set the both the bank and the screen address registers, given simple pointers to screenChars and screenPixels.
 
-screenChars = $0400 ; the 40x25 buffer screenPixels = $1000 ; the pixel data for font or bitmap ($1000 or $9000 are always charrom) ; Select VIC bank lda # ((screenChars ^ $ffff) >> 14) sta $dd00 ; Set VIC screen and font pointers lda # (((screenChars & $3fff) / $0400) << 4) + (((screenPixels & $3fff) / $0800) << 1) sta $d018
+ screenChars  = $0400 ; the 40x25 buffer
+ screenPixels = $1000 ; the pixel data for font or bitmap ($1000 or $9000 are always charrom)
+; Select VIC bank
+ lda # ((screenChars ^ $ffff) >> 14)
+ sta $dd00
+; Set VIC screen and font pointers
+ lda # (((screenChars & $3fff) / $0400) << 4) + (((screenPixels & $3fff) / $0800) << 1)
+ sta $d018
 
 by White Flame
 

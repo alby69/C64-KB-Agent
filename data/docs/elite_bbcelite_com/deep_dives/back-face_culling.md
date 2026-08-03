@@ -3,8 +3,8 @@ title: Back-face culling
 source_url: https://elite.bbcelite.com/deep_dives/back-face_culling.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
@@ -13,10 +13,10 @@ hardware:
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - music-player
 - memory-map
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Back-face culling
@@ -27,7 +27,7 @@ One of the reasons that Elite's 3D wireframe ships look so good is because you c
 
 ![A space station in BBC Micro cassette Elite](https://elite.bbcelite.com/images/cassette/station.png) 
 
-						Back-face culling is implemented in [part 5 of LL9](https://elite.bbcelite.com/cassette/main/subroutine/ll9_part_5_of_12.html) as part of the ship-drawing routine.
+Back-face culling is implemented in [part 5 of LL9](https://elite.bbcelite.com/cassette/main/subroutine/ll9_part_5_of_12.html) as part of the ship-drawing routine.
 
 The main principle behind back-face culling is the dot product. This simple mathematical operation takes two vectors and produces a scalar value that is in essence a kind of mathematical application of one vector to the other, of taking the "essence" of one vector and applying it to another. For the purposes of back-face culling in Elite, we use the dot product in two distinct ways.
 
@@ -35,7 +35,8 @@ The main principle behind back-face culling is the dot product. This simple math
 
 													 ----------------------------
 
-						The first use is to calculate whether a face is pointing towards us or away from us, so we can decide whether to draw it. For this we use a property of the dot product that's almost tailor-made for solving this problem: if the dot product of two vectors is negative, then the angle between them is greater than 90 degrees (and by extension, if it is positive then the angle is less than 90 degrees, while a dot product of 0 means they are at exactly 90 degrees to each other).
+						
+The first use is to calculate whether a face is pointing towards us or away from us, so we can decide whether to draw it. For this we use a property of the dot product that's almost tailor-made for solving this problem: if the dot product of two vectors is negative, then the angle between them is greater than 90 degrees (and by extension, if it is positive then the angle is less than 90 degrees, while a dot product of 0 means they are at exactly 90 degrees to each other).
 
 Now, consider a face of one of our ships, and take the surface normal vector of that face. This is the vector that sticks out of the surface of the face at 90 degrees to the surface (so a ship with its face normals attached would look like a strange, space-faring hedgehog). Now think about rotating that face in space, and you can see that if that face normal is pointing towards us - in other words if the spike is pointing in our general direction, more towards us than away from us - then we can see the front of the face, while if the face normal (the spike) is pointing away from us, then the face is also pointing away from us and we can't see it.
 
@@ -49,13 +50,14 @@ It looks like this (though you'll have to imagine that the normals are at 90 deg
   line of sight ----->       /`.     away, face            /     face visible
                             /   `.   not visible          /
 ```
-						The solid lines represent the faces, while the dotted lines represent the normals. On the left the normal is pointing away from us and the face is turned away from us, so it's not visible, while on the right the normal is pointing towards us and so is the face, so it's visible.
+						
+The solid lines represent the faces, while the dotted lines represent the normals. On the left the normal is pointing away from us and the face is turned away from us, so it's not visible, while on the right the normal is pointing towards us and so is the face, so it's visible.
 
 So, when the face normal is pointing away from us, the face is hidden from us. To put this another way, when the angle between the face normal and our line of sight is greater than 90 degrees, then the face normal is pointing away from us and the face is not visible. Similarly, when the angle is less than 90 degrees, the normal is pointing towards us, so the face is visible.
 
 This means that we can calculate the visibility of a face by calculating the following dot product:
 
-line of sight vector . face normal vector
+  line of sight vector . face normal vector
 
 If the result of this dot product is negative, then the face is visible; if it's positive, it isn't visible; and if it's zero it's edge on to us.
 
@@ -63,7 +65,8 @@ If the result of this dot product is negative, then the face is visible; if it's
 
 													 --------------------
 
-						We already have the face normal vector, as that's how faces are stored in the memory (see the ship blueprints documentation at XX21 for more information on this). So how can we calculate the line of sight vector?
+						
+We already have the face normal vector, as that's how faces are stored in the memory (see the ship blueprints documentation at XX21 for more information on this). So how can we calculate the line of sight vector?
 
 The first solution that springs to mind is to use the vector from our position to the ship we are trying to draw. Our ship is always at the origin (0, 0, 0), so this would mean the line of sight vector would be the vector from the origin to the ship at (x, y, z), or [x y z]. This is close, but it isn't quite right as the line of sight we are interested in is towards the face, not the centre of the ship.
 
@@ -73,7 +76,7 @@ Given this, perhaps we can get hold of a vector that goes from the ship's centre
 
 Luckily - well, it isn't luck, it's by design, but it feels lucky - this is exactly how faces are stored in Elite. Each face is stored as a face normal vector, but that normal is specifically designed to be the vector from the centre of the ship to the nearest point on the extended face plane. The direction of the vector stored in the ship's blueprint is parallel to the face normal (the hedgehog spike), but its magnitude (i.e. the vector's length) is set to the distance from the ship's centre to the extended face plane. So, by design, we can add this vector to the ship's position in space to get the line of sight vector from our ship to a point on the face plane, like so:
 
-line of sight vector = [x y z] + face normal vector
+  line of sight vector = [x y z] + face normal vector
 
 and we can then calculate the dot product of this vector with the face normal vector to get our positive or negative result, which determines whether this face is hidden or visible.
 
@@ -83,7 +86,8 @@ and we can then calculate the dot product of this vector with the face normal ve
 
 													 --------------------------------------------
 
-						So are we done? Not quite. The maths is all good, but the way the coordinates and vectors are stored means we have to do a bit more geometry before we can plug the values into our dot product equation.
+						
+So are we done? Not quite. The maths is all good, but the way the coordinates and vectors are stored means we have to do a bit more geometry before we can plug the values into our dot product equation.
 
 The problem is that the vector from our position to the ship we're displaying uses a different set of axes to the ship's blueprint. As we cavort through space, pitching and rolling away, the x-axis is always pointing to the right on screen, the y-axis always points up, and the z-axis always points into the screen. This is always the case, even if we switch views (this is where the PLUT routine comes in, as it switches the axes around to maintain this relationship between the screen and the axes). When we roll, pitch and travel through space, we don't actually roll or pitch, but instead we rotate the universe around us (this is done in the MVEIT routine). On top of this, each ship has its own set of orientation vectors - nosev, roofv and sidev - that determine the direction that the ship is pointing.
 
@@ -95,15 +99,17 @@ The feature of the dot product that we use to merge the coordinate systems is ca
 
 In our case, we have the following equation to calculate:
 
-line of sight vector . face normal vector
+  line of sight vector . face normal vector
 
 where:
 
-line of sight vector = [x y z] + face normal vector
+  line of sight vector = [x y z] + face normal vector
 
 so if we can convert [x y z] to use the same axes as the face normal vector, then we can do our calculation. As discussed above, the face normal vector uses the ship's orientation vectors as its axes, and we know that the orientation vectors are unit vectors because they are orthonormal (and we keep calling the TIDY routine to ensure that they stay this way). So we can project the [x y z] vector onto each of the orientation vectors in turn, like this:
 
-[x y z] projected onto sidev = [x y z] . sidev [x y z] projected onto roofv = [x y z] . roofv [x y z] projected onto nosev = [x y z] . nosev
+  [x y z] projected onto sidev = [x y z] . sidev
+  [x y z] projected onto roofv = [x y z] . roofv
+  [x y z] projected onto nosev = [x y z] . nosev
 
 and because the orientation vectors are effectively the x, y and z axes for the ship's space, we can combine them into our projected line of sight vector like this:
 
@@ -112,13 +118,14 @@ and because the orientation vectors are effectively the x, y and z axes for the 
   projected [x y z] vector = [ [x y z] . roofv ]
                              [ [x y z] . nosev ]
 ```
-						The final step is to combine all of the above into our final equation. This is the value we want to calculate:
+						
+The final step is to combine all of the above into our final equation. This is the value we want to calculate:
 
-line of sight vector . face normal vector
+  line of sight vector . face normal vector
 
 and we know that:
 
-line of sight vector = [x y z] + face normal vector
+  line of sight vector = [x y z] + face normal vector
 
 so if we now project the [x y z] vector into the same space as the face normals so we can combine them properly, we get:
 
@@ -131,14 +138,16 @@ so if we now project the [x y z] vector into the same space as the face normals 
                        = [ [x y z] . roofv + normal_y ]
                          [ [x y z] . nosev + normal_z ]
 ```
-						and if we substitute this into our final calculation, we can calculate the dot product as follows:
+						
+and if we substitute this into our final calculation, we can calculate the dot product as follows:
 
 ```
                [ [x y z] . sidev + normal_x ]   [ normal_x ]
   visibility = [ [x y z] . roofv + normal_y ] . [ normal_y ]
                [ [x y z] . nosev + normal_z ]   [ normal_z ]
 ```
-						If the result is negative the face is visible, otherwise it is not visible.
+						
+If the result is negative the face is visible, otherwise it is not visible.
 
 This is exactly what happens in [part 5 of the LL9 routine](https://elite.bbcelite.com/cassette/main/subroutine/ll9_part_5_of_12.html). We set the block of memory at XX15 to the left-hand side of the final calculation and the block at XX12 block to the right-hand side, and calculate the dot product XX12 . XX15 to tell us whether or not this face is visible, which we store in the table at XX2. This gets repeated for all the faces until XX2 contains the visibilities of all the faces for this ship.
 

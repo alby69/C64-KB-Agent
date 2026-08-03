@@ -8,7 +8,7 @@ difficulty: intermediate
 language: basic
 hardware: []
 related: []
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Shift-and-subtract division
@@ -31,7 +31,8 @@ In pseudo-code, the algorithm to calculate T = P / Q (with remainder A) looks li
       A = A - Q
       T(bit x) = 1
 ```
-						This is the algorithm implemented in TIS2, except we save space (and make things much more confusing) by using A for both the number being divided and the remainder, building the answer in T instead of P, and using set bits in T to implement the loop counter. The basic idea of shifting and subtracting is the same, though.
+						
+This is the algorithm implemented in TIS2, except we save space (and make things much more confusing) by using A for both the number being divided and the remainder, building the answer in T instead of P, and using set bits in T to implement the loop counter. The basic idea of shifting and subtracting is the same, though.
 
 ## Codice Estratto
 

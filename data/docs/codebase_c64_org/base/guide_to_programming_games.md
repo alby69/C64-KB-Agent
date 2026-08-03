@@ -3,28 +3,28 @@ title: base:guide_to_programming_games [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Aguide_to_programming_games
 category: tutorial
 topics:
-- sprite programming
-- raster interrupts
 - graphics
+- raster interrupts
+- sprite programming
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- VIC-II
 - CIA
+- VIC-II
 - SID
 related:
-- vic-ii-registers
+- sid-registers
 - music-player
+- vic-ii-registers
+- joystick-reading
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- sid-registers
-- sprite-programming
 - sound-programming
+- sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 

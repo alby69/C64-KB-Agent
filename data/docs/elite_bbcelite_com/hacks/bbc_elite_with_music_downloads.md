@@ -3,25 +3,25 @@ title: Playing the musical version of Acornsoft Elite
 source_url: https://elite.bbcelite.com/hacks/bbc_elite_with_music_downloads.html
 category: tool
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Playing the musical version of Acornsoft Elite
@@ -36,9 +36,9 @@ The [Elite Compendium](https://elite.bbcelite.com/elite_compendium.html) is a gr
 - BBC Master Compact Elite with music
 - BBC Master Elite with music on the BBC Micro B+128
 - Acorn Electron Elite with music
-								- [Play online](https://0xc0de6502.github.io/electroniq/?dfs&autoboot&ram6&disk0=https://elite.bbcelite.com/versions/elite_compendium/elite-compendium-acorn-electron.dsd)as part of the Elite Compendium
-- [Download DSD](https://elite.bbcelite.com/versions/elite_compendium/elite-compendium-acorn-electron.dsd)of the Elite Compendium
- 
+								
+  - [Play online](https://0xc0de6502.github.io/electroniq/?dfs&autoboot&ram6&disk0=https://elite.bbcelite.com/versions/elite_compendium/elite-compendium-acorn-electron.dsd) as part of the Elite Compendium
+  - [Download DSD](https://elite.bbcelite.com/versions/elite_compendium/elite-compendium-acorn-electron.dsd) of the Elite Compendium
 
 To load the musical version of Elite, simply insert the disc image and press SHIFT-D-BREAK (for DFS), SHIFT-M-BREAK (for MMFS), SHIFT-S-BREAK (for Micro SPI) or use the *DBOOT command (for all SD card solutions); emulators tend to map BREAK to F12, so press SHIFT-D-F12. The disc will automatically load if you're playing it in a browser. For the BBC Micro and Acorn Electron versions, you will need at least 16K of sideways RAM, though note that not all sideways RAM solutions are supported (see below). The BBC Micro B+128 and BBC Master come with sideways RAM as standard.
 
@@ -50,7 +50,8 @@ If you just want to hear the docking music, you can also swap the tunes around t
 
 													 -------------------------------------
 
-						To go along with the music, there are two new game configuration options, also ported from the Commodore 64 version. As with the existing game options, you can toggle these settings by first pausing the game (press COPY on a real machine, or End in most emulators), and then pressing the relevant option key. You will hear a beep confirming your choice, and you can then return to the game by pressing DELETE on a real machine, or backspace in most emulators.
+						
+To go along with the music, there are two new game configuration options, also ported from the Commodore 64 version. As with the existing game options, you can toggle these settings by first pausing the game (press COPY on a real machine, or End in most emulators), and then pressing the relevant option key. You will hear a beep confirming your choice, and you can then return to the game by pressing DELETE on a real machine, or backspace in most emulators.
 
 The new music-related configuration options are:
 
@@ -63,7 +64,8 @@ The music will also be disabled if you turn off the game's sound using the game'
 
 													 -------------------
 
-						The BBC Master version of Elite already lets you change the volume of the game's sound effects, and this has been extended so it changes the music volume as well. The volume control system has also been backported to the BBC Micro and 6502 Second Processor versions of musical Elite, so us lowly Beeb owners can finally enjoy a quieter game without having to stuff a sock into the loudspeaker grille. Note that you can't change the volume in the Electron version as the underlying hardware doesn't support this.
+						
+The BBC Master version of Elite already lets you change the volume of the game's sound effects, and this has been extended so it changes the music volume as well. The volume control system has also been backported to the BBC Micro and 6502 Second Processor versions of musical Elite, so us lowly Beeb owners can finally enjoy a quieter game without having to stuff a sock into the loudspeaker grille. Note that you can't change the volume in the Electron version as the underlying hardware doesn't support this.
 
 You can change the volume by pausing the game (press COPY on a real machine, or End in most emulators), and then doing the following:
 
@@ -80,16 +82,19 @@ You can return to the game by pressing DELETE on a real machine, or backspace in
 
 													 ---------------------
 
-						When loading, the game will check for the presence of sideways RAM, and if successful it will load the music and ask you to press a key to play the game. If the game can't find any sideways RAM, then it will tell you and give up. Note that your sideways RAM must be writeable, so if you are on a BBC Micro and have a read/write switch fitted, make sure it's in the write-enable position.
+						
+When loading, the game will check for the presence of sideways RAM, and if successful it will load the music and ask you to press a key to play the game. If the game can't find any sideways RAM, then it will tell you and give up. Note that your sideways RAM must be writeable, so if you are on a BBC Micro and have a read/write switch fitted, make sure it's in the write-enable position.
 
 Note that the game will only work with sideways RAM that uses the ROMSEL latch at SHEILA &FE30 to switch banks. The BBC Master's sideways RAM is fine, but some types of BBC Micro sideways RAM use the RAMSEL latch at SHEILA &FE32, while others use the user port at SHEILA &FE60 and &FE62, and I'm afraid there just isn't enough free memory in Elite to support all these different styles of sideways RAM. In particular, owners of Solidisk or Watford Electronics sideways RAM may be out of luck here.
 
 The Acorn Electron should be fine, as all the sideways RAM systems work in the same way.  See [playing the Compendium version of Acorn Electron Elite](https://elite.bbcelite.com/elite_compendium_acorn_electron_downloads.html) for details of the various sideways RAM options for the Electron.
 
+## 
 
 													 ---------------
 
-						Acornsoft Elite with music has had the following releases:
+						
+Acornsoft Elite with music has had the following releases:
 
 - 2023-02-10 - Initial release of the BBC Micro version
 - 2023-03-09 - Added options for toggling music on/off and swapping tunes, and stop music when sound is disabled

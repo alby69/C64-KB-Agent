@@ -9,16 +9,16 @@ language: none
 hardware:
 - CIA
 related:
+- keyboard-handling
 - cia-registers
 - joystick-reading
-- keyboard-handling
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 
 # Commodore 64 keyboard matrix codes (sorted by code)
 
-| Matrix code (dec, hex, oct) | Key | Matrix code (dec, hex, oct) | Key | ||||
+| Matrix code (dec, hex, oct) |  |  | Key | Matrix code (dec, hex, oct) |  |  | Key | 
 |---|---|---|---|---|---|---|---|
 | 0 | $00 | &00 | Insert/Delete | 32 | $20 | &40 | 9 | 
 | 1 | $01 | &01 | Return | 33 | $21 | &41 | I | 

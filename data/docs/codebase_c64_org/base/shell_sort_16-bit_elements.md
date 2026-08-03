@@ -11,12 +11,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- keyboard-handling
 - joystick-reading
-- kernal-routines
 - memory-map
+- kernal-routines
+- keyboard-handling
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Shell Sort (for 16-bit Elements)
@@ -53,11 +53,15 @@ Here are some examples of sort times @ 1MHz (10,000 values):
 
 To call the routine, create a word-array at address nnnn in memory. The first word should contain the number of bytes to be sorted (= 2 * the number of elements), then come all those elements. Next, sort the elements using Shell Short like this:
 
-lda #<nnnn ldx #>nnnn jsr shell_sort
+lda #<nnnn
+ldx #>nnnn
+jsr shell_sort 
 
 or to perform an Insertion Sort:
 
-lda #<nnnn ldx #>nnnn jsr insertion_sort
+lda #<nnnn
+ldx #>nnnn
+jsr insertion_sort 
 
 In the code snippits above, < means the low-byte and > means the high-byte. Some assemblers use x & $FF for the low-byte and nnnn » 8 for the high-byte.
 
@@ -219,17 +223,22 @@ v_plus_1        !word 0
 ```
 To increase speed and reduce code size, you can optionally place one or more of these 2-byte fields on zero-page (the suggested values work on a Commodore 64):
 
-v_plus_1 = $5 h = $7 arr_start = $A
+v_plus_1 = $5 
+h = $7
+arr_start = $A
 
 Some simple tests using an array of 10,000 completely unsorted values showed a 5.6% shorter execution time if all three fields were placed on ZP, with v_plus_1 being a little more important than the others.
 
 To go even further, placing these 2-byte fields on zero-page will provide a small improvement:
 
-v i arr_end
+v
+i
+arr_end
 
 (This paragraph is added by litwr.)  It is possible to speed up this sort by 15-25%.  This requires only to change *h_high* and *h_low* tables.  For example,
 
-h_low .byte <2, <8, <20, <46, <114, <264, <602, <1402, <3500, <9518, <25846 h_high .byte >2, >8, >20, >46, >114, >264, >602, >1402, >3500, >9518, >25846
+h_low           .byte <2, <8, <20, <46, <114, <264, <602, <1402, <3500, <9518, <25846
+h_high          .byte >2, >8, >20, >46, >114, >264, >602, >1402, >3500, >9518, >25846
 
 will make the trick.
 

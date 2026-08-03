@@ -9,15 +9,15 @@ difficulty: intermediate
 language: mixed
 hardware:
 - CPU
-- SID
 - KERNAL
+- SID
 related:
 - music-player
-- sid-registers
-- kernal-routines
 - memory-map
+- kernal-routines
 - sound-programming
-scraped_at: '2026-07-27'
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # MemCopy
@@ -26,9 +26,9 @@ scraped_at: '2026-07-27'
 
 Uses the SuperCPU Memory transfer OPC. Automatically chooses the correct Copy Up or Copy Down OPC based on parameters.
 
-| SYNTAX: | MemCopy src : dst : qty | ||
-| EXAMPLE1: | :MemCopy CopyFrom : CopyTo : Quantity-1 | ||
-| EXAMPLE2: | :MemCopy $200000 : $2000 : 8000-1 | ||
+| SYNTAX: | MemCopy src : dst : qty |  |  | 
+| EXAMPLE1: | :MemCopy CopyFrom : CopyTo : Quantity-1 |  |  | 
+| EXAMPLE2: | :MemCopy $200000 : $2000 : 8000-1 |  |  | 
 | PARAMETERS: | Type | Minimum | Maximum | 
 | src | U16 | $000000 | $ffffff | 
 | dst | U16 | $000000 | $ffffff | 

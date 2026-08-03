@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Program flow of the ship-moving routine
@@ -31,7 +31,8 @@ The MVEIT also calls the TACTICS routine to apply tactics to ships with AI enabl
 
 													 ------------
 
-						Here's a breakdown of how the game implements a universe that literally revolves around us.
+						
+Here's a breakdown of how the game implements a universe that literally revolves around us.
 
 - The main entry point for the moving routine
 - Tidy the orientation vectors for one of the ship slots (by calling TIDY)

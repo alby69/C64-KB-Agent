@@ -3,22 +3,22 @@ title: CIA (6526) Programming
 source_url: https://codebase.c64.org/doku.php?id=base%3Acia
 category: reference
 topics:
-- input handling
-- raster interrupts
 - memory management
+- raster interrupts
+- input handling
 difficulty: advanced
 language: none
 hardware:
-- VIC-II
 - CIA
+- VIC-II
 related:
 - vic-ii-registers
+- joystick-reading
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # CIA (6526) Programming
@@ -41,9 +41,9 @@ See the IO page for this.
 
 ## Time-of-Day Clock aka TOD
 
-- [Initialize TOD Clock on all platforms](https://codebase.c64.org/doku.php?id=cia:initialize_tod_clock_on_all_platforms)- by Devia
-- [Efficient TOD initialisation](https://codebase.c64.org/doku.php?id=cia:efficient_tod_initialisation)- by Silver Dream !/W.F.M.H.
-- [TOD calibration](https://codebase.c64.org/doku.php?id=cia:tod_calibration)- by Soci / Singular
+- [Initialize TOD Clock on all platforms](https://codebase.c64.org/doku.php?id=cia:initialize_tod_clock_on_all_platforms) - by Devia
+- [Efficient TOD initialisation](https://codebase.c64.org/doku.php?id=cia:efficient_tod_initialisation) - by Silver Dream !/W.F.M.H.
+- [TOD calibration](https://codebase.c64.org/doku.php?id=cia:tod_calibration) - by Soci / Singular
 
 base/cia.txt · Last modified:  by 127.0.0.1
 

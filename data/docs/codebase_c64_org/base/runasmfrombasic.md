@@ -11,15 +11,15 @@ language: mixed
 hardware:
 - CPU
 - VIC-II
-- BASIC ROM
 - KERNAL
+- BASIC ROM
 related:
 - vic-ii-registers
-- raster-interrupts
-- kernal-routines
 - memory-map
+- kernal-routines
+- raster-interrupts
 - sprite-programming
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 
@@ -37,7 +37,7 @@ This typically leads to games using a Basic stub to call the game assembler code
 
 The hexdump shows:
 
->C:0800 00 0c 08 c0 07 9e 20 32 30 38 34 00 00 00 00 00 ...... 2084.....
+>C:0800  00 0c 08 c0  07 9e 20 32  30 38 34 00  00 00 00 00   ...... 2084.....
 
 At $0801 is the pointer to the next Basic line the following two byte are the little endian number $07c0 which is the line number 1984 the follows $9e which is the Basic token for SYS. After that we have a space and the number 2084 in PETSCII.
 
@@ -45,11 +45,33 @@ At $0801 is the pointer to the next Basic line the following two byte are the li
 
 A simple stub program looks like this (this uses xa65 syntax, see [the xa65 homepage](http://www.floodgap.com/retrotech/xa/)). The code:
 
-.word $0801 * = $0801 basic: .( .word end_of_basic .word 2017 .byte $9e,$20 .asc "(2064)" end_of_basic: .byte 0,0,0 .) main: sta $0400 stx $0401 sty $0402 php pla sta $0403 lda #$ff tax tay rts
+	.word $0801
+	* = $0801
+	
+basic:	.(
+	.word end_of_basic
+	.word 2017
+	.byte $9e,$20
+	.asc "(2064)"
+end_of_basic:
+	.byte 0,0,0
+	.)
+main:	sta $0400
+	stx $0401
+	sty $0402
+	php
+	pla
+	sta $0403
+	lda #$ff
+	tax
+	tay
+  	rts
 
 compiles to:
 
->C:0800 00 0e 08 e1 07 9e 20 28 32 30 36 34 29 00 00 00 ...... (2064)... >C:0810 8d 00 04 8e 01 04 8c 02 04 08 68 8d 03 04 a9 ff ..........h..... >C:0820 aa a8 60 00 00 00 00 00 00 00 00 00 00 00 00 00 ..`.............
+>C:0800  00 0e 08 e1  07 9e 20 28  32 30 36 34  29 00 00 00   ...... (2064)...
+>C:0810  8d 00 04 8e  01 04 8c 02  04 08 68 8d  03 04 a9 ff   ..........h.....
+>C:0820  aa a8 60 00  00 00 00 00  00 00 00 00  00 00 00 00   ..`.............
 
 As can be easily seen the SYS to address 2064 starts the code at $0810.
 

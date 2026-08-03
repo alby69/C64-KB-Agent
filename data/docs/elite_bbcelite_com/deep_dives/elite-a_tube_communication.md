@@ -3,26 +3,26 @@ title: Tube communication in Elite-A
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_tube_communication.html
 category: deep-dive
 topics:
-- input handling
-- assembly
 - basic
+- assembly
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- SID
 - CIA
+- KERNAL
 - CPU
+- SID
 related:
 - sound-programming
 - kernal-routines
-- sid-registers
 - keyboard-handling
-- music-player
-- memory-map
-- joystick-reading
 - cia-registers
-scraped_at: '2026-07-27'
+- music-player
+- joystick-reading
+- memory-map
+- sid-registers
+scraped_at: '2026-08-03'
 ---
 
 # Tube communication in Elite-A
@@ -33,7 +33,7 @@ Perhaps it was because Angus Duggan developed Elite-A on a BBC Micro with a 6502
 
 ![The 6502 Second Processor](https://elite.bbcelite.com/images/6502sp/second_processor.jpg) 
 
-						The Second Processor has lots of memory, so this version doesn't have to access the disc when jumping between the docked, flight and encyclopedia codebases, and instead can load all three in memory at the same time. It also has a [more sophisticated ship blueprints system](https://elite.bbcelite.com/elite-a_ship_blueprints.html) that doesn't have to rely on loading files from disc, and because the 6502 Second Processor has a faster processor than the BBC Micro, it runs more smoothly, too.
+The Second Processor has lots of memory, so this version doesn't have to access the disc when jumping between the docked, flight and encyclopedia codebases, and instead can load all three in memory at the same time. It also has a [more sophisticated ship blueprints system](https://elite.bbcelite.com/elite-a_ship_blueprints.html) that doesn't have to rely on loading files from disc, and because the 6502 Second Processor has a faster processor than the BBC Micro, it runs more smoothly, too.
 
 Just like the [official 6502 Second Processor version of Elite](https://elite.bbcelite.com/6502sp/), the Second Processor version of Elite-A splits the codebase into two, with one part running on the parasite (the Second Processor) and the other part on the I/O processor (the BBC Micro). The former contains all the game logic, while the latter deals with input and output, such as drawing, scanning the keyboard and making sound effects. The two parts communicate with each over via the Tube - the data bus that connects the I/O processor to the parasite - and in this way the sophisticated game algorithms benefit from the faster processor and larger memory of the parasite, while the BBC Micro can concentrate on interfacing with the world and managing the screen.
 
@@ -41,7 +41,8 @@ Just like the [official 6502 Second Processor version of Elite](https://elite.bb
 
 													 ---------------------
 
-						Not surprisingly, the official Acornsoft version of 6502 Second Processor Elite uses the Acorn-recommended approach to communication across the Tube, hooking into the WRCHV and WORDV vectors to allow single-byte and block-based commands to be transmitted between the two using custom calls to the standard OSWRCH and OSWORD routines (see the deep dive on ["6502 Second Processor Tube communication"](https://elite.bbcelite.com/6502sp_tube_communication.html) for details). The details of how the Tube works are hidden from the game code; everything just works.
+						
+Not surprisingly, the official Acornsoft version of 6502 Second Processor Elite uses the Acorn-recommended approach to communication across the Tube, hooking into the WRCHV and WORDV vectors to allow single-byte and block-based commands to be transmitted between the two using custom calls to the standard OSWRCH and OSWORD routines (see the deep dive on ["6502 Second Processor Tube communication"](https://elite.bbcelite.com/6502sp_tube_communication.html) for details). The details of how the Tube works are hidden from the game code; everything just works.
 
 Elite-A, on the other hand, communicates over the Tube in a much more bare-bones manner, without relying on the operating system's own routines. The result is a simple and very effective system that, surprisingly, is quite a bit easier to understand than the official version.
 
@@ -57,7 +58,8 @@ Now let's take a look at how Elite-A uses the FIFOs to connect the parasite and 
 
 													 -----------------------
 
-						To see how Elite-A uses the FIFO registers to transmit data over the Tube, let's consider the specific example of sending a byte from the parasite to the I/O processor using FIFO 1. Here's how the process breaks down:
+						
+To see how Elite-A uses the FIFO registers to transmit data over the Tube, let's consider the specific example of sending a byte from the parasite to the I/O processor using FIFO 1. Here's how the process breaks down:
 
 - On the parasite side, we check the FIFO 1 status register to make sure it's empty. If it isn't empty, then we simply wait until it is, using a polling loop.
 - Still on the parasite side, we now set the FIFO 1 data register to the value we want to transmit.
@@ -72,11 +74,11 @@ The process for sending data back to the parasite is pretty similar, but the sen
 
 The following table summarises this protocol:
 
-| Parasite -> I/O processor | I/O processor -> Parasite | |
+|  | Parasite -> I/O processor | I/O processor -> Parasite | 
 |---|---|---|
 | Channel | FIFO 1 | FIFO 2 | 
-| Send routine | [tube_write](https://elite.bbcelite.com/elite-a/parasite/subroutine/tube_write.html)(Parasite) | [tube_put](https://elite.bbcelite.com/elite-a/i_o_processor/subroutine/tube_put.html)(I/O processor) | 
-| Receive routine | [tube_get](https://elite.bbcelite.com/elite-a/i_o_processor/subroutine/tube_get.html)(I/O processor) | [tube_read](https://elite.bbcelite.com/elite-a/parasite/subroutine/tube_read.html)(Parasite) | 
+| Send routine | [tube_write](https://elite.bbcelite.com/elite-a/parasite/subroutine/tube_write.html) (Parasite) | [tube_put](https://elite.bbcelite.com/elite-a/i_o_processor/subroutine/tube_put.html) (I/O processor) | 
+| Receive routine | [tube_get](https://elite.bbcelite.com/elite-a/i_o_processor/subroutine/tube_get.html) (I/O processor) | [tube_read](https://elite.bbcelite.com/elite-a/parasite/subroutine/tube_read.html) (Parasite) | 
 
 So, to keep things simple and to avoid traffic collisions, Elite-A only transmits in one direction on each of FIFOs 1 and 2, and it doesn't use FIFOs 3 or 4 at all. This restricts communication to a minimal set of one-byte transmissions, which is a lot simpler than in the official 6502 Second Processor version.
 
@@ -84,7 +86,8 @@ So, to keep things simple and to avoid traffic collisions, Elite-A only transmit
 
 													 ---------------------
 
-						There is one more important aspect to this process. Most of the time, the main game is running independently on the parasite, while the I/O processor sits there relatively idle, waiting for commands from the parasite. This behaviour is set up by the Tube's own host code, which sets up a default listener on FIFO 1 to process any bytes that are received. This means that as soon as the computer is turned on and has started up, the I/O processor starts listening to the parasite.
+						
+There is one more important aspect to this process. Most of the time, the main game is running independently on the parasite, while the I/O processor sits there relatively idle, waiting for commands from the parasite. This behaviour is set up by the Tube's own host code, which sets up a default listener on FIFO 1 to process any bytes that are received. This means that as soon as the computer is turned on and has started up, the I/O processor starts listening to the parasite.
 
 The default listener is pointed to by the WRCHV vector, which is the handler for OSWRCH, and this is no coincidence - by default, OSWRCH calls on the parasite just send their arguments to the I/O processor on FIFO 1, which runs the handler in WRCHV to write that character. So all we need to do in Elite-A to set up our custom Tube communication protocol is to hook into WRCHV on the I/O processor, and then our handler will be called whenever a byte is sent from the parasite to the I/O processor.
 
@@ -99,7 +102,8 @@ As discussed in the previous section, the same communication protocol is used in
 
 													 -----------------------
 
-						Now that we know how Elite-A communicates over the Tube, let's take a look at what it actually does with that communication. Like the official version, Elite-A supports a set of commands that the parasite can send to the I/O processor, and some of these commands return values back to the parasite. Unlike the official version, all the Elite-A commands are sent as simple sequences of single bytes, one after the other, which makes things a lot simpler to follow.
+						
+Now that we know how Elite-A communicates over the Tube, let's take a look at what it actually does with that communication. Like the official version, Elite-A supports a set of commands that the parasite can send to the I/O processor, and some of these commands return values back to the parasite. Unlike the official version, all the Elite-A commands are sent as simple sequences of single bytes, one after the other, which makes things a lot simpler to follow.
 
 The following table lists all the commands that can be sent. Each command has a unique number, shown in the first column, that is sent as the first byte, and this is followed up by the command parameters, in the order shown in brackets. So, to send a draw_line(x1, y1, x2, y2) command to the I/O processor to tell it to draw a line on-screen, the parasite would first send the command number, &80, followed by x1, y1, x2 and y2 (the line's start and end coordinates). When the parasite receives the first byte, this triggers a call to [tube_wrch](https://elite.bbcelite.com/elite-a/i_o_processor/subroutine/tube_wrch.html), as described in the previous section. This calls [LL30](https://elite.bbcelite.com/elite-a/i_o_processor/subroutine/loin_part_1_of_7.html) - the corresponding I/O processor routine for this command as shown in the table - which then fetches the parameters from the parasite using [tube_get](https://elite.bbcelite.com/elite-a/i_o_processor/subroutine/tube_get.html), and draws the line. See the parasite's [LL30](https://elite.bbcelite.com/elite-a/parasite/subroutine/ll30.html) routine for an example of this in action.
 

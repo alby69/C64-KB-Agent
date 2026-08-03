@@ -3,19 +3,19 @@ title: Galaxy and system seeds
 source_url: https://elite.bbcelite.com/deep_dives/galaxy_and_system_seeds.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - assembly
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - BASIC ROM
 - CPU
+- KERNAL
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # Galaxy and system seeds
@@ -26,7 +26,7 @@ Famously, Elite's galaxy and system data is generated procedurally, using a set 
 
 ![The Long-range Chart in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/cassette/long-range_chart.png) 
 
-						Each of these systems has its own set of seeds, which can be calculated using a simple process called "twisting". For details of this process and how it can be used to generate 2048 different sets of seeds for the 256 systems in each of the game's eight galaxies, see the deep dive on [twisting the system seeds](https://elite.bbcelite.com/twisting_the_system_seeds.html).
+Each of these systems has its own set of seeds, which can be calculated using a simple process called "twisting". For details of this process and how it can be used to generate 2048 different sets of seeds for the 256 systems in each of the game's eight galaxies, see the deep dive on [twisting the system seeds](https://elite.bbcelite.com/twisting_the_system_seeds.html).
 
 Each set of seeds contains all the data for one specific system. In this article we'll take an overview of everything that's captured in the seeds, and for more detailed analysis you can read the deep dives on [generating system data](https://elite.bbcelite.com/generating_system_data.html), [generating system names](https://elite.bbcelite.com/generating_system_names.html) and [market item prices and availability](https://elite.bbcelite.com/market_item_prices_and_availability.html).
 
@@ -34,7 +34,8 @@ Each set of seeds contains all the data for one specific system. In this article
 
 													 -----------------------------
 
-						The seeds are stored in two places: [QQ15](https://elite.bbcelite.com/cassette/main/workspace/zp.html#qq15) contains the seeds for the currently selected system in the system chart, and [QQ21](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#qq21) contains the seeds for system 0 in the current galaxy.
+						
+The seeds are stored in two places: [QQ15](https://elite.bbcelite.com/cassette/main/workspace/zp.html#qq15) contains the seeds for the currently selected system in the system chart, and [QQ21](https://elite.bbcelite.com/cassette/main/workspace/t_per_cent.html#qq21) contains the seeds for system 0 in the current galaxy.
 
 Seeds for each system in the galaxy can be generated from the seeds for system 0 in QQ21 by repeatedly twisting the seeds for system 0 - see the deep dive on [twisting the system seeds](https://elite.bbcelite.com/twisting_the_system_seeds.html) for details.
 
@@ -76,23 +77,25 @@ Given a set of seeds for a specific system, we can extract all the system data f
                                           ^^--------- Sun x-y offset     [SOLAR](https://elite.bbcelite.com/cassette/main/subroutine/solar.html)
 76543210 76543210 76543210 76543210 76543210 76543210
    s0_hi    s0_lo    s1_hi    s1_lo    s2_hi    s2_lo
-						## An example
+						
+## An example
 
 													 ----------
 
-						Let's take a look at how this works with the starting system of Lave, which has a Data on System screen like this:
+						
+Let's take a look at how this works with the starting system of Lave, which has a Data on System screen like this:
 
 ![The Data on System screen for Lave in the BBC Micro disc version of Elite](https://elite.bbcelite.com/images/disc/data_on_lave.png) 
 
-						at this location on the Long-range Chart (where it's shown as a two-pixel dash):
+at this location on the Long-range Chart (where it's shown as a two-pixel dash):
 
 ![The Long-range Chart in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/cassette/long-range_chart.png) 
 
-						and this appearance on the Short-range Chart (where it's shown as a medium star):
+and this appearance on the Short-range Chart (where it's shown as a medium star):
 
 ![The Short-range Chart in the BBC Micro cassette version of Elite](https://elite.bbcelite.com/images/cassette/short-range_chart.png) 
 
-						Lave's seeds are as follows:
+Lave's seeds are as follows:
 
 ```
    s0_hi    s0_lo    s1_hi    s1_lo    s2_hi    s2_lo
@@ -120,7 +123,8 @@ Given a set of seeds for a specific system, we can extract all the system data f
                                           ^^--------- Sun x-y offset     [SOLAR](https://elite.bbcelite.com/cassette/main/subroutine/solar.html)
 10101101 00111000 00010100 10011100 00010101 00011101
    s0_hi    s0_lo    s1_hi    s1_lo    s2_hi    s2_lo
-						We interpret these seeds as follows:
+						
+We interpret these seeds as follows:
 
 | Data | Seed bits | Result | 
 |---|---|---|

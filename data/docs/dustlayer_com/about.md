@@ -11,12 +11,12 @@ hardware:
 - SID
 - CPU
 related:
-- kernal-routines
 - music-player
-- sound-programming
 - memory-map
 - sid-registers
-scraped_at: '2026-07-27'
+- sound-programming
+- kernal-routines
+scraped_at: '2026-08-03'
 ---
 
 # 
@@ -31,15 +31,15 @@ Last but not least I will publish [blog posts](https://dustlayer.com/blog) with 
 
 ### C64 Coding Tutorials
 
-I am a beginner so I write for beginners. If you are a passioned C64 coder and think what I write does not make sense, please let me know. I am at the very beginning of my journey to become a good C64 coder.  The [tutorials](https://dustlayer.com/tutorials) on this site follow an integrated concept. I write a blog post, maybe publish a video. There is the full code which can be cloned from a repository or downloaded via *dust. *Everything is supposed to just work as long as you either stick with the *dust* setup or use ACME for cross compiling C64 sources. 
+I am a beginner so I write for beginners. If you are a passioned C64 coder and think what I write does not make sense, please let me know. I am at the very beginning of my journey to become a good C64 coder.  The [tutorials](https://dustlayer.com/tutorials) on this site follow an integrated concept. I write a blog post, maybe publish a video. There is the full code which can be cloned from a repository or downloaded via *dust.* Everything is supposed to just work as long as you either stick with the *dust* setup or use ACME for cross compiling C64 sources. 
 
 Whenever there is something sort of foundational which repeats again and again will write up an additional article and stick it into a knowledge base section under the appropriate category and cross-link to this one. The idea is to not clutter the tutorials with too much basis information.
 
-### This is the home of the *DUST utility *
+### This is the home of the *DUST utility* 
 
 *DUST* is a command line tool for Mac OSX to give you a working cross-development environment within three minutes. It downloads, installs and configures everything you need to start development and provides  commands to build and run new projects.
 
-[Read all about how  DUST can help you to get into coding the C64 on Mac OSX.](http://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool)
+[Read all about how *DUST can* help you to get into coding the C64 on Mac OSX.](http://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool)
 
 ### About Me
 

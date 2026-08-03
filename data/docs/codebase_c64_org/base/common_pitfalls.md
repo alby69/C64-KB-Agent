@@ -3,9 +3,9 @@ title: Common Coding Pitfalls
 source_url: https://codebase.c64.org/doku.php?id=base%3Acommon_pitfalls
 category: tool
 topics:
+- raster interrupts
 - basic
 - sprite programming
-- raster interrupts
 - assembly
 difficulty: intermediate
 language: assembly
@@ -15,13 +15,13 @@ hardware:
 - SID
 - BASIC ROM
 related:
-- vic-ii-registers
-- music-player
-- raster-interrupts
 - sid-registers
-- sprite-programming
+- music-player
+- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-07-27'
+- sprite-programming
+scraped_at: '2026-08-03'
 ---
 
 
@@ -41,17 +41,28 @@ To put an “immediate” 16bit value into two adjacent Memory-Addresses is a co
 
 but instead of
 
-ldx#<value ldy#>value stx address sty address+1
+ldx#<value
+ldy#>value
+stx address
+sty address+1
 
 i prefer
 
-lda#<value sta address lda#>value sta address+1
+lda#<value
+sta address
+lda#>value
+sta address+1
 
 The main reason is that the xy-method can be easily typed in wrongly, by confusing xy at the store commands, or even sta instead of stx because sta is used more often then stx or sty.
 
 And even if you use a macro, you might be safer by not thrashing x and y as a side effect.
 
-#BEGINDEF doke(_address,_value) lda#<_value sta _address lda#>_value sta _address+1 #ENDDEF
+#BEGINDEF doke(_address,_value)
+lda#<_value
+sta _address
+lda#>_value
+sta _address+1
+#ENDDEF
 
 The above Code is inside util.mac for the k2asm.
 
@@ -63,7 +74,13 @@ The 6502 has always been a popular target for self-modifying code. It doesn't ha
 
 Most of the time, the address of an absolute opcode gets modified.
 
-lda#255 loop: smod=*+1 sta $0400 inc smod bne loop rts
+lda#255
+loop:
+smod=*+1
+ sta $0400
+ inc smod
+ bne loop
+ rts
 
 There are some things to take care of: You should use a coherent Style. In the above Example, you could use loop+1 instead of smod, but if you forget the +1, you modify the opcode, which would crash your program very soon.
 

@@ -3,26 +3,26 @@ title: RasterIRQ
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_rasterirq_init
 category: reference
 topics:
-- basic
 - raster interrupts
+- basic
 - assembly
 difficulty: advanced
 language: assembly
 hardware:
 - CPU
-- VIC-II
 - CIA
+- VIC-II
 - KERNAL
 related:
 - vic-ii-registers
+- joystick-reading
+- memory-map
+- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- joystick-reading
-- kernal-routines
-- memory-map
 - sprite-programming
 - cia-registers
-scraped_at: '2026-07-27'
+scraped_at: '2026-08-03'
 ---
 
 # RasterIRQ
@@ -37,11 +37,11 @@ After all initialisation is completed, the routine clears the interrupt flag and
 
 Standard Memoryconfiguration set to RAM+IO
 
-| SYNTAX: | :RasterIRQ RasterCompareValue : VectorIRQ | ||
-| EXAMPLE: | :RasterIRQ 52 : #IRQ | ||
-| cli | |||
-| jmp * | |||
-| IRQ: rti | |||
+| SYNTAX: | :RasterIRQ RasterCompareValue : VectorIRQ |  |  | 
+| EXAMPLE: | :RasterIRQ 52 : #IRQ |  |  | 
+|  | cli |  |  | 
+|  | jmp * |  |  | 
+|  | IRQ: rti |  |  | 
 | PARAMETERS: | Type | Minimum | Maximum | 
 | RasterCompareValue | U9 | 0 | 312 | 
 | VectorIRQ | Label | N/A | N/A | 
