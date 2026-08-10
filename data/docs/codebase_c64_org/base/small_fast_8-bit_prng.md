@@ -12,12 +12,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- joystick-reading
-- memory-map
-- kernal-routines
 - keyboard-handling
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # An tiny, fast, 8-bit pseudo-random number generator in 6502 assembly

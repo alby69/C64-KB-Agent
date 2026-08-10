@@ -3,29 +3,29 @@ title: How Real Programmers Acknowledge Interrupts
 source_url: https://codebase.c64.org/doku.php?id=base%3Ahow_real_programmers_acknowledge_interrupts
 category: reference
 topics:
-- raster interrupts
 - sound generation
+- raster interrupts
 - assembly
 difficulty: advanced
 language: mixed
 hardware:
 - CPU
 - CIA
-- VIC-II
 - KERNAL
+- VIC-II
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- sound-programming
-- sprite-programming
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

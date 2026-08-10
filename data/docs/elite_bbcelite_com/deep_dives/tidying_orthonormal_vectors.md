@@ -9,10 +9,10 @@ language: assembly
 hardware:
 - SID
 related:
+- sid-registers
 - music-player
 - sound-programming
-- sid-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Tidying orthonormal vectors

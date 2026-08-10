@@ -10,9 +10,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # base:making_a_counter [Codebase64 wiki]

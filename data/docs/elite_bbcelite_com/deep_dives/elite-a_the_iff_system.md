@@ -3,9 +3,9 @@ title: The I.F.F. system
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_the_iff_system.html
 category: deep-dive
 topics:
-- basic
 - memory management
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,7 +13,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # The I.F.F. system

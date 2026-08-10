@@ -3,18 +3,18 @@ title: Generating system names
 source_url: https://elite.bbcelite.com/deep_dives/generating_system_names.html
 category: deep-dive
 topics:
-- basic
 - memory management
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
 - KERNAL
+- BASIC ROM
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Generating system names

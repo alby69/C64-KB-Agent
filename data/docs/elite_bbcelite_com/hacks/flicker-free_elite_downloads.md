@@ -3,21 +3,21 @@ title: Playing flicker-free Elite
 source_url: https://elite.bbcelite.com/hacks/flicker-free_elite_downloads.html
 category: tool
 topics:
-- graphics
 - assembly
+- graphics
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - SID
+- KERNAL
 related:
-- sound-programming
 - kernal-routines
+- sid-registers
+- sound-programming
 - music-player
 - memory-map
-- sid-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Playing flicker-free Elite

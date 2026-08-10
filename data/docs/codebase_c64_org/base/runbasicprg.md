@@ -9,15 +9,15 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- KERNAL
 - BASIC ROM
+- KERNAL
 related:
+- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
 - memory-map
-- kernal-routines
-- raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Running a Basic program from Assembler

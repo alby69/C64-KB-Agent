@@ -3,8 +3,8 @@ title: The TINA hook
 source_url: https://elite.bbcelite.com/deep_dives/the_tina_hook.html
 category: source-code
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
@@ -13,7 +13,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # The TINA hook

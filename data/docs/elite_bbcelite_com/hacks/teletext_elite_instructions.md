@@ -3,20 +3,20 @@ title: Instructions for Teletext Elite
 source_url: https://elite.bbcelite.com/hacks/teletext_elite_instructions.html
 category: manual
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
 - CIA
+- KERNAL
 related:
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- joystick-reading
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-03'
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # Instructions for Teletext Elite

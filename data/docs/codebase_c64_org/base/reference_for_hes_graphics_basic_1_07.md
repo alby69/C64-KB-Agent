@@ -3,32 +3,32 @@ title: base:reference_for_hes_graphics_basic_1.07 [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Areference_for_hes_graphics_basic_1.07
 category: reference
 topics:
-- basic
-- graphics
 - sound generation
+- basic
 - input handling
-- sprite programming
 - assembly
+- sprite programming
+- graphics
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
-- VIC-II
 - SID
+- CIA
 - KERNAL
+- VIC-II
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- sound-programming
-- sprite-programming
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # base:reference_for_hes_graphics_basic_1.07 [Codebase64 wiki]

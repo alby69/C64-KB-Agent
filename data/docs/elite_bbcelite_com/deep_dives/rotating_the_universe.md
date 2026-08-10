@@ -8,16 +8,16 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- KERNAL
 - CPU
 - CIA
+- KERNAL
 related:
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- joystick-reading
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-03'
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # Rotating the universe

@@ -10,18 +10,18 @@ topics:
 difficulty: advanced
 language: assembly
 hardware:
-- KERNAL
 - SID
+- KERNAL
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- memory-map
-- kernal-routines
 - raster-interrupts
-- sound-programming
+- music-player
+- kernal-routines
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # base:formatting_a_disk [Codebase64 wiki]

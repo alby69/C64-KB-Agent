@@ -8,7 +8,7 @@ difficulty: intermediate
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: '2023-09-04T23:30:04Z'
 ---
 

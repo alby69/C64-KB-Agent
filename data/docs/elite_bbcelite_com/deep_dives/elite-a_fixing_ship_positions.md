@@ -3,22 +3,22 @@ title: Fixing ship positions
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_fixing_ship_positions.html
 category: deep-dive
 topics:
-- basic
 - memory management
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - SID
+- KERNAL
 related:
-- sound-programming
 - kernal-routines
+- sid-registers
+- sound-programming
 - music-player
 - memory-map
-- sid-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Fixing ship positions

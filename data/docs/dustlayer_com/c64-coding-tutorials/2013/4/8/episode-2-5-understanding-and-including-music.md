@@ -8,20 +8,20 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
+- CIA
+- SID
 - KERNAL
 - CPU
-- SID
-- CIA
 related:
-- cia-registers
-- music-player
-- joystick-reading
-- memory-map
-- sid-registers
 - sound-programming
-- kernal-routines
+- cia-registers
 - keyboard-handling
-scraped_at: '2026-08-03'
+- sid-registers
+- joystick-reading
+- kernal-routines
+- music-player
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # 

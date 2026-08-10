@@ -3,25 +3,25 @@ title: The split-screen mode in BBC Micro Elite
 source_url: https://elite.bbcelite.com/deep_dives/the_split-screen_mode.html
 category: deep-dive
 topics:
-- raster interrupts
 - basic
 - assembly
+- raster interrupts
 difficulty: advanced
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - CIA
+- KERNAL
 related:
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- joystick-reading
-- memory-map
-- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # The split-screen mode in BBC Micro Elite

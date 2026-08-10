@@ -9,16 +9,16 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
-- KERNAL
 - CIA
+- KERNAL
+- BASIC ROM
 related:
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- joystick-reading
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-03'
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # Code changes in the Demonstration Disc

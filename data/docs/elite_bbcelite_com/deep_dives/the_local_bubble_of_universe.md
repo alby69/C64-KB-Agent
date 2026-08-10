@@ -3,26 +3,26 @@ title: The local bubble of universe
 source_url: https://elite.bbcelite.com/deep_dives/the_local_bubble_of_universe.html
 category: source-code
 topics:
-- basic
-- assembly
 - memory management
+- assembly
 - sprite programming
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - CIA
+- KERNAL
 related:
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- joystick-reading
-- memory-map
-- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # The local bubble of universe

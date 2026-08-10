@@ -3,33 +3,31 @@ title: General introduction to sprites
 source_url: https://codebase.c64.org/doku.php?id=base%3Aspriteintro
 category: reference
 topics:
-- graphics
 - raster interrupts
 - sprite programming
+- graphics
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- VIC-II
 - SID
+- CPU
 - KERNAL
+- VIC-II
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- memory-map
-- kernal-routines
 - raster-interrupts
-- sound-programming
+- music-player
+- kernal-routines
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 
 # General introduction to sprites
-
-### Table of Contents
 
 # General introduction to sprites
 

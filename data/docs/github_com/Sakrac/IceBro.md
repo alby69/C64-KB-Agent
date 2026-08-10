@@ -11,9 +11,9 @@ hardware:
 - CPU
 related:
 - raster-interrupts
-- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+scraped_at: '2026-08-10'
 last_modified: '2021-01-03T15:36:46Z'
 ---
 

@@ -8,19 +8,19 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - CIA
+- KERNAL
 related:
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- joystick-reading
-- memory-map
-- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # The ball line heap

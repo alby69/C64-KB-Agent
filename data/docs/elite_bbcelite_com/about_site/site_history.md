@@ -7,17 +7,17 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- CIA
 - CPU
+- CIA
 - SID
 related:
-- sound-programming
 - keyboard-handling
 - cia-registers
+- sid-registers
+- sound-programming
 - music-player
 - joystick-reading
-- sid-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Site history

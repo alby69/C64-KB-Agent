@@ -7,7 +7,7 @@ difficulty: advanced
 language: none
 hardware: []
 related: []
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # base:compression_benchmarks [Codebase64 wiki]

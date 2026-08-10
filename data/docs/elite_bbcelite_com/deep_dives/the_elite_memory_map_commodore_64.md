@@ -3,35 +3,35 @@ title: Commodore 64 Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_commodore_64.html
 category: deep-dive
 topics:
-- memory management
-- basic
-- graphics
 - assembly
+- sprite programming
+- memory management
+- graphics
 - input handling
 - raster interrupts
-- sprite programming
+- basic
 difficulty: advanced
 language: mixed
 hardware:
-- KERNAL
-- BASIC ROM
-- SID
-- VIC-II
 - CPU
+- SID
+- BASIC ROM
+- VIC-II
+- KERNAL
 - CIA
 related:
-- sound-programming
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
-- raster-interrupts
-- sid-registers
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- sid-registers
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 

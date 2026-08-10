@@ -8,16 +8,16 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
 - SID
+- CIA
 related:
-- music-player
-- joystick-reading
-- keyboard-handling
-- sound-programming
 - sid-registers
+- keyboard-handling
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- joystick-reading
+- sound-programming
+scraped_at: '2026-08-10'
 ---
 
 # 16-Bit Comparison

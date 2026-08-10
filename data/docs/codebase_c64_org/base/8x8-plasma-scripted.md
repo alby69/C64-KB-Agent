@@ -3,19 +3,19 @@ title: base:8x8-plasma-scripted [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-scripted
 category: reference
 topics:
-- graphics
 - raster interrupts
 - basic
+- graphics
 - assembly
 difficulty: intermediate
 language: assembly
 hardware:
 - VIC-II
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-08-10'
 ---
 
 

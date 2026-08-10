@@ -3,22 +3,22 @@ title: Sizecoding
 source_url: https://codebase.c64.org/doku.php?id=base%3Asizecoding
 category: tool
 topics:
-- graphics
 - sprite programming
+- graphics
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- VIC-II
 - KERNAL
+- VIC-II
 related:
+- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
 - memory-map
-- kernal-routines
-- raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 

@@ -11,7 +11,7 @@ hardware:
 related:
 - kernal-routines
 - memory-map
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: '2026-04-05T22:33:00Z'
 ---
 
@@ -22,7 +22,7 @@ last_modified: '2026-04-05T22:33:00Z'
 **Description:** Ultimate Commodore 64 Reference: ROM Disassembly, Memory Map, ...
 
 **GitHub URL:** https://github.com/mist64/c64ref
-**Stars:** 558
+**Stars:** 561
 **Last Updated:** 2026-04-05T22:33:00Z
 
 

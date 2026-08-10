@@ -3,26 +3,26 @@ title: Sprite usage in NES Elite
 source_url: https://elite.bbcelite.com/deep_dives/sprite_usage_in_nes_elite.html
 category: deep-dive
 topics:
-- basic
 - assembly
 - sprite programming
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - SID
+- KERNAL
 - VIC-II
 related:
-- sound-programming
-- sprite-programming
 - kernal-routines
+- sprite-programming
+- vic-ii-registers
+- sid-registers
+- sound-programming
 - music-player
 - memory-map
 - raster-interrupts
-- sid-registers
-- vic-ii-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Sprite usage in NES Elite

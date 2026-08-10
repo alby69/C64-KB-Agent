@@ -3,25 +3,25 @@ title: Common Coding Pitfalls
 source_url: https://codebase.c64.org/doku.php?id=base%3Acommon_pitfalls
 category: tool
 topics:
-- raster interrupts
 - basic
+- raster interrupts
 - sprite programming
 - assembly
 difficulty: intermediate
 language: assembly
 hardware:
+- BASIC ROM
+- SID
 - CPU
 - VIC-II
-- SID
-- BASIC ROM
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
 - raster-interrupts
-- sound-programming
+- music-player
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+- sound-programming
+scraped_at: '2026-08-10'
 ---
 
 

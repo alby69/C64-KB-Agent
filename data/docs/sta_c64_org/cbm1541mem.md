@@ -3,31 +3,31 @@ title: Commodore 1541 drive memory map
 source_url: https://sta.c64.org/cbm1541mem.html
 category: reference
 topics:
-- basic
 - memory management
+- basic
 - assembly
 - sprite programming
 difficulty: advanced
 language: mixed
 hardware:
-- CIA
-- KERNAL
-- CPU
-- VIC-II
 - SID
+- VIC-II
+- KERNAL
+- CIA
+- CPU
 related:
-- vic-ii-registers
-- sid-registers
 - kernal-routines
+- music-player
+- memory-map
+- sid-registers
+- sound-programming
+- keyboard-handling
+- cia-registers
+- vic-ii-registers
+- joystick-reading
 - raster-interrupts
 - sprite-programming
-- cia-registers
-- keyboard-handling
-- memory-map
-- music-player
-- joystick-reading
-- sound-programming
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: Mon, 15 May 2023 22:00:00 GMT
 ---
 

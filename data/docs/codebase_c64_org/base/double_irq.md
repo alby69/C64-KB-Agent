@@ -3,8 +3,8 @@ title: Double IRQ stable interrupt
 source_url: https://codebase.c64.org/doku.php?id=base%3Adouble_irq
 category: reference
 topics:
-- raster interrupts
 - basic
+- raster interrupts
 - sprite programming
 - assembly
 difficulty: advanced
@@ -12,18 +12,18 @@ language: mixed
 hardware:
 - CPU
 - CIA
-- VIC-II
 - KERNAL
+- VIC-II
 related:
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
-- raster-interrupts
 - keyboard-handling
-- sprite-programming
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

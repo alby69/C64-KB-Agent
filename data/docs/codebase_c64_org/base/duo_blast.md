@@ -4,30 +4,30 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Aduo_blast
 category: tutorial
 topics:
 - basic
-- raster interrupts
 - input handling
-- sprite programming
+- raster interrupts
 - assembly
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- VIC-II
 - SID
+- CIA
 - KERNAL
+- VIC-II
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- sound-programming
-- sprite-programming
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

@@ -3,28 +3,28 @@ title: NES Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_nes.html
 category: deep-dive
 topics:
-- basic
-- memory management
-- graphics
 - assembly
 - sprite programming
+- memory management
+- graphics
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
 - CPU
 - SID
+- KERNAL
 - VIC-II
 related:
-- sound-programming
-- sprite-programming
 - kernal-routines
+- sprite-programming
+- vic-ii-registers
+- sid-registers
+- sound-programming
 - music-player
 - memory-map
 - raster-interrupts
-- sid-registers
-- vic-ii-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # NES Elite memory map

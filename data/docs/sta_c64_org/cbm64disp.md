@@ -3,20 +3,20 @@ title: Commodore 64 display modes
 source_url: https://sta.c64.org/cbm64disp.html
 category: reference
 topics:
-- assembly
 - graphics
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- KERNAL
 - VIC-II
+- KERNAL
 related:
-- vic-ii-registers
 - kernal-routines
+- memory-map
+- vic-ii-registers
 - raster-interrupts
 - sprite-programming
-- memory-map
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

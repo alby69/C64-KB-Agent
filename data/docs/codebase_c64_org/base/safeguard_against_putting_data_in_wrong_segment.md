@@ -12,7 +12,7 @@ related:
 - keyboard-handling
 - cia-registers
 - joystick-reading
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # base:safeguard_against_putting_data_in_wrong_segment [Codebase64 wiki]

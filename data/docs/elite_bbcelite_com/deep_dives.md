@@ -3,34 +3,34 @@ title: Index of all deep dive articles
 source_url: https://elite.bbcelite.com/deep_dives/
 category: source-code
 topics:
-- basic
+- assembly
+- sprite programming
 - sound generation
 - graphics
-- assembly
 - input handling
-- sprite programming
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- BASIC ROM
-- SID
-- VIC-II
 - CPU
+- SID
+- BASIC ROM
+- VIC-II
+- KERNAL
 - CIA
 related:
-- sound-programming
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
-- raster-interrupts
-- sid-registers
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- sid-registers
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # Index of all deep dive articles

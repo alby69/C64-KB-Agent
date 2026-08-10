@@ -9,10 +9,10 @@ language: none
 hardware:
 - CPU
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-08-10'
 ---
 
 # base:makefile_to_use_with_ca65_vice [Codebase64 wiki]

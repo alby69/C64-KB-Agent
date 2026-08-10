@@ -9,9 +9,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # AX+ Tinyrand8 - a fast 8-bit random generator with internal 16bit state

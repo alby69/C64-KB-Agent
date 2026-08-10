@@ -3,29 +3,29 @@ title: The Elite source code family tree
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_source_code_family_tree.html
 category: source-code
 topics:
-- basic
+- assembly
 - memory management
 - graphics
-- assembly
 - input handling
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
-- BASIC ROM
-- SID
 - CPU
+- SID
+- BASIC ROM
+- KERNAL
 - CIA
 related:
-- sound-programming
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
+- kernal-routines
 - sid-registers
-scraped_at: '2026-08-03'
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # The Elite source code family tree

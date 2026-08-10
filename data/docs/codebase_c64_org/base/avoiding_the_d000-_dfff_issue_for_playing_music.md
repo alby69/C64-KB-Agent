@@ -7,20 +7,20 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
+- SID
 - CPU
 - CIA
 - KERNAL
-- SID
 related:
-- music-player
-- joystick-reading
-- memory-map
-- kernal-routines
-- keyboard-handling
-- sound-programming
 - sid-registers
+- keyboard-handling
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # The $D000-$DFFF issues of music code/data

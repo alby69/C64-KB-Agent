@@ -9,19 +9,21 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
+- VIC-II
 related:
+- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
 - memory-map
-- kernal-routines
-- raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 
 # Machine Language Tutorial Part 3 - Program Flow
+
+### Table of Contents
 
 # Machine Language Tutorial Part 3 - Program Flow
 

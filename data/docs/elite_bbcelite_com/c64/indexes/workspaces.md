@@ -3,21 +3,21 @@ title: List of all workspaces in the Commodore 64 version of Elite
 source_url: https://elite.bbcelite.com/c64/indexes/workspaces.html
 category: source-code
 topics:
-- sound generation
 - memory management
+- sound generation
 difficulty: intermediate
 language: none
 hardware:
 - CIA
 - SID
 related:
-- sound-programming
 - keyboard-handling
 - cia-registers
+- sid-registers
+- sound-programming
 - music-player
 - joystick-reading
-- sid-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # List of all workspaces in the Commodore 64 version of Elite

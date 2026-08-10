@@ -3,25 +3,25 @@ title: Developing Apple II Elite on a BBC Micro
 source_url: https://elite.bbcelite.com/deep_dives/developing_apple_ii_elite_on_a_bbc_micro.html
 category: source-code
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- KERNAL
 - CPU
+- CIA
 - SID
+- KERNAL
 related:
-- sound-programming
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
+- kernal-routines
 - sid-registers
-scraped_at: '2026-08-03'
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # Developing Apple II Elite on a BBC Micro

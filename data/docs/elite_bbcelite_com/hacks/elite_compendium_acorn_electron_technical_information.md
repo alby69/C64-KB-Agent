@@ -3,33 +3,33 @@ title: Technical information on the Compendium version of Acorn Electron Elite
 source_url: https://elite.bbcelite.com/hacks/elite_compendium_acorn_electron_technical_information.html
 category: source-code
 topics:
-- memory management
-- basic
-- graphics
 - assembly
-- input handling
 - sprite programming
+- memory management
+- graphics
+- input handling
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- BASIC ROM
-- SID
 - CPU
+- SID
+- BASIC ROM
+- KERNAL
 - CIA
 related:
-- sound-programming
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
-- raster-interrupts
-- sid-registers
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- sid-registers
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # Technical information on the Compendium version of Acorn Electron Elite

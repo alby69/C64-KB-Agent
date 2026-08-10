@@ -3,26 +3,26 @@ title: Stardust in the front view
 source_url: https://elite.bbcelite.com/deep_dives/stardust_in_the_front_view.html
 category: deep-dive
 topics:
-- input handling
 - assembly
 - sprite programming
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
+- CPU
 - CIA
 - KERNAL
-- CPU
 - VIC-II
 related:
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- joystick-reading
-- memory-map
-- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # Stardust in the front view

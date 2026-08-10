@@ -4,27 +4,27 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Asimple_sprite-multiplexi
 category: reference
 topics:
 - basic
-- graphics
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
+- graphics
 difficulty: beginner
 language: assembly
 hardware:
 - CPU
 - CIA
-- VIC-II
 - KERNAL
+- VIC-II
 related:
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
-- raster-interrupts
 - keyboard-handling
-- sprite-programming
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

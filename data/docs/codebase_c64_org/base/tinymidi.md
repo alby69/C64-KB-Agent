@@ -3,31 +3,31 @@ title: base:tinymidi [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Atinymidi
 category: source-code
 topics:
+- sound generation
 - memory management
 - raster interrupts
-- sound generation
 - assembly
 difficulty: advanced
 language: assembly
 hardware:
+- SID
+- CIA
 - KERNAL
 - CPU
 - VIC-II
-- SID
-- CIA
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- sound-programming
-- sprite-programming
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

@@ -9,10 +9,10 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-08-10'
 ---
 
 

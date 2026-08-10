@@ -8,19 +8,19 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
+- CIA
 - CPU
 - KERNAL
-- CIA
 related:
-- vic-ii-registers
 - kernal-routines
+- memory-map
+- keyboard-handling
+- cia-registers
+- vic-ii-registers
+- joystick-reading
 - raster-interrupts
 - sprite-programming
-- cia-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

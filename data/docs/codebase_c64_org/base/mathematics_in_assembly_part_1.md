@@ -12,14 +12,12 @@ hardware:
 - CPU
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # Prologue
-
-### Table of Contents
 
 # Prologue
 

@@ -13,13 +13,13 @@ hardware:
 - CIA
 - VIC-II
 related:
-- vic-ii-registers
-- joystick-reading
-- raster-interrupts
 - keyboard-handling
-- sprite-programming
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-08-03'
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+scraped_at: '2026-08-10'
 ---
 
 

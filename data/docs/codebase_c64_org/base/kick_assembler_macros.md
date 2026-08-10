@@ -3,30 +3,30 @@ title: Kick Assembler Macros
 source_url: https://codebase.c64.org/doku.php?id=base%3Akick_assembler_macros
 category: tool
 topics:
-- graphics
 - memory management
 - sprite programming
+- graphics
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- VIC-II
 - SID
+- CIA
 - KERNAL
+- VIC-II
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- sound-programming
-- sprite-programming
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

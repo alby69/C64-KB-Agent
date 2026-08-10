@@ -3,26 +3,26 @@ title: Sprite FPP
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_fpp
 category: reference
 topics:
-- raster interrupts
 - basic
+- raster interrupts
 - sprite programming
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - SID
 - KERNAL
+- VIC-II
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- memory-map
-- kernal-routines
 - raster-interrupts
-- sound-programming
+- music-player
+- kernal-routines
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

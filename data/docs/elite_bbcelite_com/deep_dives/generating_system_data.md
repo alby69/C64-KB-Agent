@@ -3,9 +3,9 @@ title: Generating system data
 source_url: https://elite.bbcelite.com/deep_dives/generating_system_data.html
 category: deep-dive
 topics:
-- basic
 - memory management
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
@@ -13,7 +13,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Generating system data

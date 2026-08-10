@@ -3,24 +3,24 @@ title: 6502 Second Processor Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_6502sp.html
 category: deep-dive
 topics:
-- basic
-- graphics
 - memory management
 - assembly
+- graphics
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
-- KERNAL
 - CPU
+- BASIC ROM
 - SID
+- KERNAL
 related:
-- sound-programming
 - kernal-routines
+- sid-registers
+- sound-programming
 - music-player
 - memory-map
-- sid-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # 6502 Second Processor Elite memory map
@@ -145,11 +145,11 @@ That's a total of just 2,834 bytes for the OS and stack, leaving 62,702 bytes fr
 						
 Compared to the luxurious 61.2K of user memory available in the parasite, the BBC Micro's memory is a lot more cramped when it acts as the I/O processor. The main reason is that the 6502 Second Processor version of Elite devotes a large chunk of memory to the mode 1/mode 2 split-screen mode - 15.5K, to be precise - and all of that memory is in the BBC Micro.
 
-On top of that, the Disc Filing System (DFS) takes up a considerable amount of room, pushing PAGE (the start of user memory) to &1900, and then there's the Tube host code that looks after communication with the Second Processor, which gets copied into pages 4 to 7 on start-up, taking over the language ROM workspace that is normally available to machine code programs. We even lose access to a large chunk of zero page, as the Tube host code also uses locations below &80.
+On top of that, the Disc Filing System (DFS) takes up a considerable amount of room, pushing PAGE (the start of user memory) to &1900, and then there's the Tube host code that looks after communication with the Second Processor, which gets copied into pages 4 to 7 on start-up, taking over the language ROM workspace that is normally available to machine code programs. We even lose access to a large chunk of zero page, as the Tube host code also uses locations from &00 to &56 inclusive.
 
 Incidentally, the Tube also grabs another 6 pages of memory by default, this time to support a user-definable (or "exploded") character set. This would push PAGE up to &1F00, but this feature can be disabled to "implode" the character set and reclaim this memory. Elite does this as it doesn't use the OS printing routines, but you can see that demands on the BBC Micro's memory are many and varied, even though the parasite is supposed to be the one doing all the work.
 
-Let's see how Elite uses up most of the available memory in the I/O processor, leaving just 3,787 bytes, or 3.7K unused.
+Let's see how Elite uses up most of the available memory in the I/O processor, leaving just 3,890 bytes, or 3.8K unused.
 
   +-----------------------------------+   &FFFF
   |                                   |
@@ -197,15 +197,35 @@ Let's see how Elite uses up most of the available memory in the I/O processor, l
   |                                   |
   +-----------------------------------+   &0100
   |                                   |
-  | Zero page workspace               |
+  | MOS workspace                     |
   |                                   |
-  +-----------------------------------+   &0080 = [ZP](https://elite.bbcelite.com/6502sp/main/workspace/zp.html)
+  +-----------------------------------+   &00D0
+  |                                   |
+  | &0099-&00CF Unused                |
+  |                                   |
+  +-----------------------------------+   &0098
+  |                                   |
+  | Zero page workspace (block 2)     |
+  |                                   |
+  +-----------------------------------+   &0090 = [ZP](https://elite.bbcelite.com/6502sp/i_o_processor/workspace/zp.html#xx15)
+  |                                   |
+  | &008B-&008F Unused                |
+  |                                   |
+  +-----------------------------------+   &008A
+  |                                   |
+  | Zero page workspace (block 1)     |
+  |                                   |
+  +-----------------------------------+   &0080 = [ZP](https://elite.bbcelite.com/6502sp/i_o_processor/workspace/zp.html)
+  |                                   |
+  | &0057-&007F Unused                |
+  |                                   |
+  +-----------------------------------+   &0057
   |                                   |
   | Tube host code                    |
   |                                   |
   +-----------------------------------+   &0000
 
-Overall, the 6502 Second Processor version of Elite leaves a paltry 7,039 bytes unused, or just 6.9K out of the 96K of RAM in the two-system host-parasite setup. It's a far cry from the cut-down cassette version, that's for sure.
+Overall, the 6502 Second Processor version of Elite leaves a paltry 7,142 bytes unused, which is just under 7K out of the 96K of RAM in the two-system host-parasite setup. It's a far cry from the cut-down cassette version, that's for sure.
 
 ## Elite code as an image
 
@@ -371,9 +391,29 @@ This image contains the entire main game, including all the game data.
   |                                   |
   +-----------------------------------+   &0100
   |                                   |
-  | Zero page workspace               |
+  | MOS workspace                     |
+  |                                   |
+  +-----------------------------------+   &00D0
+  |                                   |
+  | &0099-&00CF Unused                |
+  |                                   |
+  +-----------------------------------+   &0098
+  |                                   |
+  | Zero page workspace (block 2)     |
+  |                                   |
+  +-----------------------------------+   &0090 = ZP
+  |                                   |
+  | &008B-&008F Unused                |
+  |                                   |
+  +-----------------------------------+   &008A
+  |                                   |
+  | Zero page workspace (block 1)     |
   |                                   |
   +-----------------------------------+   &0080 = ZP
+  |                                   |
+  | &0057-&007F Unused                |
+  |                                   |
+  +-----------------------------------+   &0057
   |                                   |
   | Tube host code                    |
   |                                   |

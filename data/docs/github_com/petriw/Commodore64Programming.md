@@ -11,7 +11,7 @@ hardware:
 related:
 - kernal-routines
 - memory-map
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: '2019-01-31T11:41:55Z'
 ---
 

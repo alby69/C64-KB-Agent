@@ -7,12 +7,12 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
 - kernal-routines
 - memory-map
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: '2026-07-31T18:59:23Z'
 ---
 

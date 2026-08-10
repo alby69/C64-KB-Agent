@@ -12,7 +12,7 @@ related:
 - sid-registers
 - sound-programming
 - music-player
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # FB-SSID (Stereophonic-SID)

@@ -3,8 +3,8 @@ title: Combination Sort
 source_url: https://codebase.c64.org/doku.php?id=base%3Acombination_sort_8-bit_elements
 category: reference
 topics:
-- memory management
 - basic
+- memory management
 - sprite programming
 - assembly
 difficulty: intermediate
@@ -14,15 +14,15 @@ hardware:
 - CIA
 - KERNAL
 related:
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
-- raster-interrupts
 - keyboard-handling
-- sprite-programming
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # Combination Sort

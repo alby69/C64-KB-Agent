@@ -8,20 +8,20 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
+- BASIC ROM
+- SID
 - CPU
 - KERNAL
-- SID
-- BASIC ROM
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- memory-map
-- kernal-routines
 - raster-interrupts
-- sound-programming
+- music-player
+- kernal-routines
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # Machine Language Tutorial Part 1 - Preparations

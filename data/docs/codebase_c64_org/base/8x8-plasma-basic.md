@@ -3,22 +3,22 @@ title: 8x8 Plasma / Basic Speedcode Generator
 source_url: https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-basic
 category: reference
 topics:
-- graphics
 - raster interrupts
 - basic
+- graphics
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- VIC-II
 - KERNAL
+- VIC-II
 related:
+- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
 - memory-map
-- kernal-routines
-- raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 

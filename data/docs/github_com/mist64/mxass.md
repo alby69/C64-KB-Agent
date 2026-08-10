@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: '2014-12-06T23:33:24Z'
 ---
 

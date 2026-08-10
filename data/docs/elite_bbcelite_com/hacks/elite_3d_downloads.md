@@ -3,8 +3,8 @@ title: Playing Elite 3D
 source_url: https://elite.bbcelite.com/hacks/elite_3d_downloads.html
 category: manual
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,7 +13,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Playing Elite 3D

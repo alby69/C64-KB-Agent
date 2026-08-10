@@ -3,25 +3,25 @@ title: A new kind of hard-restart
 source_url: https://codebase.c64.org/doku.php?id=base%3Aa_new_kind_of_hard-restart
 category: reference
 topics:
-- raster interrupts
 - sound generation
+- raster interrupts
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- VIC-II
 - SID
 - KERNAL
+- VIC-II
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- memory-map
-- kernal-routines
 - raster-interrupts
-- sound-programming
+- music-player
+- kernal-routines
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # A new kind of hard-restart

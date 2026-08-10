@@ -3,25 +3,25 @@ title: Commodore 64 screen functions
 source_url: https://sta.c64.org/cbm64scrfunc.html
 category: reference
 topics:
-- assembly
 - graphics
+- assembly
 - sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
+- CIA
 - CPU
 - KERNAL
-- CIA
 related:
-- vic-ii-registers
 - kernal-routines
+- memory-map
+- keyboard-handling
+- cia-registers
+- vic-ii-registers
+- joystick-reading
 - raster-interrupts
 - sprite-programming
-- cia-registers
-- keyboard-handling
-- memory-map
-- joystick-reading
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: Thu, 16 Jun 2016 22:00:00 GMT
 ---
 

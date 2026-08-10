@@ -8,7 +8,7 @@ difficulty: intermediate
 language: none
 hardware: []
 related: []
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # base:syntax_highligthing_acme_vim [Codebase64 wiki]

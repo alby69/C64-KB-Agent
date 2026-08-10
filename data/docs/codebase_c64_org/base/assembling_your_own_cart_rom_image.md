@@ -4,27 +4,27 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Aassembling_your_own_cart
 category: tool
 topics:
 - basic
-- memory management
 - raster interrupts
-- sprite programming
 - assembly
+- memory management
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- VIC-II
-- KERNAL
 - BASIC ROM
+- CIA
+- KERNAL
+- VIC-II
 related:
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
-- raster-interrupts
 - keyboard-handling
-- sprite-programming
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

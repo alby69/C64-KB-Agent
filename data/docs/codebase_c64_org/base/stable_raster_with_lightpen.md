@@ -4,29 +4,29 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Astable_raster_with_light
 category: tutorial
 topics:
 - basic
-- memory management
-- raster interrupts
 - input handling
-- sprite programming
+- raster interrupts
 - assembly
+- memory management
+- sprite programming
 difficulty: advanced
 language: mixed
 hardware:
+- CIA
 - KERNAL
 - CPU
 - VIC-II
-- CIA
 - BASIC ROM
 related:
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
-- raster-interrupts
 - keyboard-handling
-- sprite-programming
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

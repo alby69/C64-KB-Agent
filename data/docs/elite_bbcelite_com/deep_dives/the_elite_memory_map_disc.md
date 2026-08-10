@@ -3,27 +3,27 @@ title: BBC Micro disc Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_disc.html
 category: deep-dive
 topics:
-- raster interrupts
-- basic
 - memory management
+- basic
 - assembly
+- raster interrupts
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
-- KERNAL
 - CPU
 - CIA
+- KERNAL
+- BASIC ROM
 related:
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- joystick-reading
-- memory-map
-- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # BBC Micro disc Elite memory map

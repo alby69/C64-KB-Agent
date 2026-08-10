@@ -1,6 +1,6 @@
 # Indice — Manuale di programmazione per Commodore 64
 
-> Documentazione aggiornata il 1785750177.3413515
+> Documentazione aggiornata il 1786347571.252976
 
 ## deep-dive
 

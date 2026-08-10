@@ -3,29 +3,29 @@ title: To-do list
 source_url: https://elite.bbcelite.com/about_site/to-do_list.html
 category: reference
 topics:
-- raster interrupts
 - basic
 - assembly
+- raster interrupts
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
-- KERNAL
 - CPU
+- CIA
 - SID
+- KERNAL
 related:
-- sound-programming
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
-- raster-interrupts
-- sid-registers
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- sid-registers
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # To-do list

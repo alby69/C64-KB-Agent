@@ -3,22 +3,22 @@ title: CIA (6526) Programming
 source_url: https://codebase.c64.org/doku.php?id=base%3Acia
 category: reference
 topics:
+- input handling
 - memory management
 - raster interrupts
-- input handling
 difficulty: advanced
 language: none
 hardware:
 - CIA
 - VIC-II
 related:
-- vic-ii-registers
-- joystick-reading
-- raster-interrupts
 - keyboard-handling
-- sprite-programming
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-08-03'
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+scraped_at: '2026-08-10'
 ---
 
 # CIA (6526) Programming

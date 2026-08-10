@@ -3,25 +3,25 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-9-greetings-acknowledgments-and-links
 category: tutorial
 topics:
-- sprite programming
 - input handling
+- sprite programming
 difficulty: intermediate
 language: basic
 hardware:
 - VIC-II
-- SID
 - CIA
+- SID
 related:
-- cia-registers
 - vic-ii-registers
-- music-player
-- joystick-reading
-- sid-registers
-- sprite-programming
 - sound-programming
+- cia-registers
 - raster-interrupts
+- sid-registers
 - keyboard-handling
-scraped_at: '2026-08-03'
+- sprite-programming
+- joystick-reading
+- music-player
+scraped_at: '2026-08-10'
 ---
 
 # 

@@ -11,10 +11,10 @@ hardware:
 - CPU
 - VIC-II
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-08-10'
 ---
 
 # A Faster Radix Sort

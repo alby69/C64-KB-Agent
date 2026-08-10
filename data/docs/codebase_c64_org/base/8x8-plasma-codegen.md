@@ -4,19 +4,19 @@ source_url: https://codebase.c64.org/doku.php?id=base%3A8x8-plasma-codegen
 category: reference
 topics:
 - basic
-- graphics
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
+- graphics
 difficulty: intermediate
 language: mixed
 hardware:
 - VIC-II
 related:
-- sprite-programming
-- raster-interrupts
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- raster-interrupts
+- sprite-programming
+scraped_at: '2026-08-10'
 ---
 
 

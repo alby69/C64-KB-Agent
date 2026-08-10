@@ -3,8 +3,8 @@ title: BBC Micro disc Elite on the BBC Master
 source_url: https://elite.bbcelite.com/hacks/bbc_master_disc_elite.html
 category: reference
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # BBC Micro disc Elite on the BBC Master

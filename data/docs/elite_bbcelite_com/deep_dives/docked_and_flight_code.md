@@ -3,26 +3,26 @@ title: Swapping between the docked and flight code
 source_url: https://elite.bbcelite.com/deep_dives/docked_and_flight_code.html
 category: manual
 topics:
-- raster interrupts
-- graphics
-- basic
 - assembly
+- basic
+- graphics
+- raster interrupts
 difficulty: beginner
 language: mixed
 hardware:
 - BASIC ROM
-- KERNAL
 - SID
+- KERNAL
 related:
-- sound-programming
-- sprite-programming
 - kernal-routines
+- sprite-programming
+- vic-ii-registers
+- sid-registers
+- sound-programming
 - music-player
 - memory-map
 - raster-interrupts
-- sid-registers
-- vic-ii-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Swapping between the docked and flight code

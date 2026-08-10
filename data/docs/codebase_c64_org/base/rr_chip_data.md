@@ -10,12 +10,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- joystick-reading
-- memory-map
-- kernal-routines
 - keyboard-handling
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # base:rr_chip_data [Codebase64 wiki]

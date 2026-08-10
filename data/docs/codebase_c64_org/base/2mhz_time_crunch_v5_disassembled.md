@@ -4,27 +4,27 @@ source_url: https://codebase.c64.org/doku.php?id=base%3A2mhz_time_crunch_v5_disa
 category: reference
 topics:
 - basic
-- memory management
 - input handling
-- sprite programming
 - assembly
+- memory management
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
-- VIC-II
-- KERNAL
 - BASIC ROM
+- CIA
+- KERNAL
+- VIC-II
 related:
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
-- raster-interrupts
 - keyboard-handling
-- sprite-programming
+- raster-interrupts
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

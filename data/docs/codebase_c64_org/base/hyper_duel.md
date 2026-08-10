@@ -4,33 +4,33 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Ahyper_duel
 category: source-code
 topics:
 - basic
-- graphics
-- memory management
-- raster interrupts
 - input handling
-- sprite programming
+- raster interrupts
 - assembly
+- memory management
+- sprite programming
+- graphics
 difficulty: beginner
 language: mixed
 hardware:
+- SID
+- CIA
 - KERNAL
 - CPU
 - VIC-II
-- SID
-- CIA
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- sound-programming
-- sprite-programming
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

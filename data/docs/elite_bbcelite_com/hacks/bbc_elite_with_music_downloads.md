@@ -3,25 +3,25 @@ title: Playing the musical version of Acornsoft Elite
 source_url: https://elite.bbcelite.com/hacks/bbc_elite_with_music_downloads.html
 category: tool
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
-- KERNAL
 - CPU
+- CIA
 - SID
+- KERNAL
 related:
-- sound-programming
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
+- kernal-routines
 - sid-registers
-scraped_at: '2026-08-03'
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # Playing the musical version of Acornsoft Elite

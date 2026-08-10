@@ -7,20 +7,20 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- KERNAL
 - CPU
+- CIA
 - SID
+- KERNAL
 related:
-- sound-programming
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
+- kernal-routines
 - sid-registers
-scraped_at: '2026-08-03'
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # The NES combat demo
@@ -103,7 +103,7 @@ followed by an introduction to the rest of the game:
 						
 The combat demo is timed, and as you can see above, the total time taken is shown as a scroll text once the third ship has been destroyed. The time taken is measured by the nmiTimer([Hi](https://elite.bbcelite.com/nes/common/workspace/zp.html#nmitimerhi) [Lo](https://elite.bbcelite.com/nes/common/workspace/zp.html#nmitimerlo)) counter, which gets incremented by the NMI handler once every 50 VBlanks. On the PAL version this means the counter ticks up exactly once a second, while on the NTSC version it ticks up every 0.8333 seconds (so the timings on the NTSC version are inaccurate).
 
-The scroll text showing the results is again language-dependent, with the text coming from [scrollText2_EN](https://elite.bbcelite.com/nes/bank_6/variable/scrolltext2_en.html), [scrollText2_DE](https://elite.bbcelite.com/nes/bank_6/variable/scrolltext2_de.html) or [scrollText2_FR](https://elite.bbcelite.com/nes/bank_6/variable/scrolltext2_fr.html) as appropriate. This scroll text contains four special characters, which show the time in (nmiTimerHi nmiTimerLo), broken down into minutes and seconds like this:
+The scroll text showing the results is again language-dependent, with the text coming from [scrollText2_EN](https://elite.bbcelite.com/nes/bank_6/variable/scrolltext2_en.html), [scrollText2_DE](https://elite.bbcelite.com/nes/bank_6/variable/scrolltext2_de.html) or [scrollText2_FR](https://elite.bbcelite.com/nes/bank_6/variable/scrolltext2_fr.html) as appropriate. This scroll text contains four special characters, which show the time in nmiTimer(Hi Lo), broken down into minutes and seconds like this:
 
 - $83 is the first digit of the minutes
 - $82 is the second digit of the minutes
@@ -121,7 +121,7 @@ The [latter part of the ShowScrollText routine](https://elite.bbcelite.com/nes/b
 
 ![The scroll text in NES Elite](https://elite.bbcelite.com/images/nes/demo/results_1.png) 
 
-On the subject of time, there's a 60 second penalty that's added for each missile that you use during combat practice. This is added by the [FRMIS](https://elite.bbcelite.com/nes/bank_0/subroutine/frmis.html) routine when a missile is launched, which displays the following warning before adding 60 seconds to (nmiTimerHi nmiTimerLo):
+On the subject of time, there's a 60 second penalty that's added for each missile that you use during combat practice. This is added by the [FRMIS](https://elite.bbcelite.com/nes/bank_0/subroutine/frmis.html) routine when a missile is launched, which displays the following warning before adding 60 seconds to nmiTimer(Hi Lo):
 
 ![A time penalty being applied in NES Elite](https://elite.bbcelite.com/images/nes/demo/penalty.png) 
 

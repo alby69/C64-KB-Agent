@@ -8,15 +8,15 @@ topics:
 difficulty: advanced
 language: assembly
 hardware:
-- CPU
 - KERNAL
+- CPU
 related:
-- vic-ii-registers
 - kernal-routines
+- memory-map
+- vic-ii-registers
 - raster-interrupts
 - sprite-programming
-- memory-map
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

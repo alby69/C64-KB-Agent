@@ -4,28 +4,28 @@ source_url: https://codebase.c64.org/doku.php?id=base%3Aspeeding_up_and_optimisi
 category: source-code
 topics:
 - basic
-- graphics
-- memory management
 - raster interrupts
-- sprite programming
 - assembly
+- memory management
+- sprite programming
+- graphics
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- VIC-II
 - SID
+- CPU
 - KERNAL
+- VIC-II
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- memory-map
-- kernal-routines
 - raster-interrupts
-- sound-programming
+- music-player
+- kernal-routines
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

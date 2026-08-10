@@ -3,22 +3,22 @@ title: Image and data compression
 source_url: https://elite.bbcelite.com/deep_dives/image_and_data_compression.html
 category: source-code
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
-- KERNAL
 - CPU
 - CIA
+- KERNAL
+- BASIC ROM
 related:
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- joystick-reading
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-03'
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # Image and data compression

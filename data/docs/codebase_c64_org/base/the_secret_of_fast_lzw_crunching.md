@@ -3,35 +3,37 @@ title: The Secret of Fast LZW Crunching
 source_url: https://codebase.c64.org/doku.php?id=base%3Athe_secret_of_fast_lzw_crunching
 category: source-code
 topics:
-- memory management
 - basic
+- memory management
 - sprite programming
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
+- SID
+- CIA
 - KERNAL
 - CPU
 - VIC-II
-- SID
-- CIA
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
-- joystick-reading
-- memory-map
-- kernal-routines
 - raster-interrupts
 - keyboard-handling
-- sound-programming
-- sprite-programming
+- music-player
 - cia-registers
-scraped_at: '2026-08-03'
+- kernal-routines
+- joystick-reading
+- sprite-programming
+- vic-ii-registers
+- sound-programming
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 
 # The Secret of Fast LZW Crunching
+
+### Table of Contents
 
 # The Secret of Fast LZW Crunching
 

@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # base:dictionary_compression [Codebase64 wiki]

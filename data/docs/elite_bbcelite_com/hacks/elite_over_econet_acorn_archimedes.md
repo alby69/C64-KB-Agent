@@ -3,20 +3,20 @@ title: Elite over Econet on the Acorn Archimedes
 source_url: https://elite.bbcelite.com/hacks/elite_over_econet_acorn_archimedes.html
 category: source-code
 topics:
-- basic
 - assembly
+- basic
 difficulty: beginner
 language: mixed
 hardware:
-- KERNAL
 - SID
+- KERNAL
 related:
-- sound-programming
 - kernal-routines
+- sid-registers
+- sound-programming
 - music-player
 - memory-map
-- sid-registers
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Elite over Econet on the Acorn Archimedes

@@ -10,12 +10,12 @@ language: mixed
 hardware:
 - KERNAL
 related:
+- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
 - memory-map
-- kernal-routines
-- raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # RLE Toolkit for CC65 v 1.0

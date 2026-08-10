@@ -3,8 +3,8 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro
 category: tutorial
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
@@ -13,14 +13,14 @@ hardware:
 - KERNAL
 related:
 - vic-ii-registers
-- music-player
-- memory-map
+- sound-programming
+- raster-interrupts
 - sid-registers
 - sprite-programming
-- sound-programming
 - kernal-routines
-- raster-interrupts
-scraped_at: '2026-08-03'
+- music-player
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 

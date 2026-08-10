@@ -7,17 +7,17 @@ topics:
 difficulty: advanced
 language: mixed
 hardware:
+- SID
 - CPU
 - VIC-II
-- SID
 related:
 - sid-registers
-- music-player
-- vic-ii-registers
 - raster-interrupts
-- sound-programming
+- music-player
 - sprite-programming
-scraped_at: '2026-08-03'
+- vic-ii-registers
+- sound-programming
+scraped_at: '2026-08-10'
 ---
 
 # Improved Clock Slide

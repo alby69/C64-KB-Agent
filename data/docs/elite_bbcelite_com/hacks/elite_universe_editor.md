@@ -3,8 +3,8 @@ title: About the Elite Universe Editor
 source_url: https://elite.bbcelite.com/hacks/elite_universe_editor.html
 category: tool
 topics:
-- basic
 - assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
@@ -13,7 +13,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # About the Elite Universe Editor

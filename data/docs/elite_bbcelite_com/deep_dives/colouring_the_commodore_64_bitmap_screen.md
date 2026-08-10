@@ -3,32 +3,32 @@ title: Colouring the Commodore 64 bitmap screen
 source_url: https://elite.bbcelite.com/deep_dives/colouring_the_commodore_64_bitmap_screen.html
 category: deep-dive
 topics:
-- memory management
-- basic
-- graphics
 - assembly
-- raster interrupts
 - sprite programming
+- memory management
+- graphics
+- raster interrupts
+- basic
 difficulty: beginner
 language: mixed
 hardware:
 - CIA
-- KERNAL
 - SID
+- KERNAL
 - VIC-II
 related:
-- sound-programming
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
-- raster-interrupts
-- sid-registers
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- sid-registers
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # Colouring the Commodore 64 bitmap screen

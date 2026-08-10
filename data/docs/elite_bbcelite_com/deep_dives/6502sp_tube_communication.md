@@ -3,28 +3,28 @@ title: 6502 Second Processor Tube communication
 source_url: https://elite.bbcelite.com/deep_dives/6502sp_tube_communication.html
 category: deep-dive
 topics:
-- basic
-- memory management
-- graphics
 - assembly
 - sprite programming
+- memory management
+- graphics
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
+- CPU
 - CIA
 - KERNAL
-- CPU
 - VIC-II
 related:
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- joystick-reading
-- memory-map
-- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # 6502 Second Processor Tube communication
@@ -124,12 +124,16 @@ Apart from the payload size, there's another important difference between OSWRCH
 													 -----------------------
 
 						
-So the parasite and I/O processor communicate, and code runs on both processors at various times, but how does Elite set up this meeting of digital minds? It's all in the loader, which, once it has configured things like the screen mode and sound effects and drawn the loading screen, then *RUNs not one but two different binaries:
+So the parasite and the I/O processor communicate, and code runs on both processors at various times, but how does Elite set up this meeting of digital minds? The answer is in the second loader, at the end of the [ENTRY](https://elite.bbcelite.com/6502sp/loader_2/subroutine/elite_loader_part_1_of_2.html) routine. Once it has configured things like the screen mode and sound effects and drawn the loading screen, this code *RUNs not one but two different binaries, one after the other:
 
-- I.CODE is the I/O processor's game code, which loads at &2400 in the BBC Micro (the file has a load address of &FFFF2400, and the &FFFF part specifies it should load into the I/O processor)
-- P.CODE is the parasite's game code, which loads at &1000 in the Second Processor (the file has a load address of &00001000, and the &0000 part specifies it should load into the parasite)
+- I.CODE is the I/O processor's game code, which loads at &2400 in the BBC Micro (the file has a load address of &FFFF2400 and an execution address of &FFFF2C89, and the &FFFF part specifies it should load into the I/O processor).
+- P.CODE is the parasite's game code, which loads at &1000 in the Second Processor (the file has a load address of &00001000 and an execution address of &0000106A, and the &0000 part specifies it should load into the parasite).
 
-When I.CODE is run in the I/O processor, it sets up the vector handlers mentioned above and terminates, leaving the BBC Micro just sitting there, twiddling its thumbs. Meanwhile P.CODE starts up on the parasite, and starts issuing OSWRCH and OSWORD commands across the Tube, asking the I/O processor to update the screen, scan the keyboard and so on, at which point the BBC Micro perks up and does what it's told.
+The loader itself runs in the I/O processor, where the last part of the [ENTRY](https://elite.bbcelite.com/6502sp/loader_2/subroutine/elite_loader_part_1_of_2.html) routine starts by executing the *RUN I.CODE command, and then the *RUN P.CODE command. The ENTRY routine that runs these commands ends at address &2061, and the first *RUN command loads the I.CODE file at address &2400, so there is no risk of the two clashing. Once I.CODE has finished loading, it automatically jumps to its execution address &FFFF2C89, which is the  [STARTUP](https://elite.bbcelite.com/6502sp/i_o_processor/subroutine/startup.html) routine.
+
+This routine sets up all the vector handlers mentioned above and configures the I/O processor so that it's ready to service any calls to the API from the parasite. Once that's done, execution returns back to the ENTRY routine, where the *RUN P.CODE command loads the parasite code into the parasite and tells the parasite to jump to address &0000106A, which is the [S%](https://elite.bbcelite.com/6502sp/main/subroutine/s_per_cent.html) routine that starts the game.
+
+By this stage the I/O processor is just sitting there, twiddling its thumbs, because the *RUN P.CODE command is the last bit of the loader code. It waits until P.CODE starts up on the parasite and starts issuing OSWRCH and OSWORD commands across the Tube, asking the I/O processor to update the screen, scan the keyboard and so on, at which point the BBC Micro perks up and does what it's told.
 
 It's almost as if the 6502 Second Processor is the quick-thinking pilot, while the BBC Micro is the ship, with its sensors and screens and chattering disc drives...
 

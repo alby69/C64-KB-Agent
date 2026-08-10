@@ -3,23 +3,23 @@ title: String manipulation routines
 source_url: https://codebase.c64.org/doku.php?id=base%3Astring_manipulation_routines
 category: reference
 topics:
-- memory management
 - basic
+- memory management
 - sprite programming
 - assembly
 difficulty: intermediate
 language: assembly
 hardware:
+- BASIC ROM
 - CPU
 - KERNAL
-- BASIC ROM
 related:
+- raster-interrupts
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
 - memory-map
-- kernal-routines
-- raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 

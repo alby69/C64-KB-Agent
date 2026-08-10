@@ -3,22 +3,22 @@ title: Ranged Random Numbers with Even Distribution
 source_url: https://codebase.c64.org/doku.php?id=base%3Aranged_random_numbers_with_even_distribution
 category: reference
 topics:
-- graphics
 - memory management
+- graphics
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
+- SID
 - CPU
 - KERNAL
-- SID
 related:
+- sid-registers
 - music-player
-- memory-map
 - kernal-routines
 - sound-programming
-- sid-registers
-scraped_at: '2026-08-03'
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # Ranged Random Numbers with Even Distribution

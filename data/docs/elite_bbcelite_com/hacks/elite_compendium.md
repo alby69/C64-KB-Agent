@@ -4,30 +4,30 @@ source_url: https://elite.bbcelite.com/hacks/elite_compendium.html
 category: reference
 topics:
 - basic
-- input handling
 - assembly
 - sprite programming
+- input handling
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
+- CPU
 - SID
 - VIC-II
-- CPU
+- KERNAL
 - CIA
 related:
-- sound-programming
-- sprite-programming
 - keyboard-handling
-- kernal-routines
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
-- raster-interrupts
-- sid-registers
+- kernal-routines
+- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-03'
+- sid-registers
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+- raster-interrupts
+scraped_at: '2026-08-10'
 ---
 
 # Elite Compendium

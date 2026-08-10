@@ -3,20 +3,20 @@ title: Acorn Electron Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_electron.html
 category: deep-dive
 topics:
-- basic
-- graphics
 - memory management
 - assembly
+- graphics
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
 - CPU
 - KERNAL
+- BASIC ROM
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+scraped_at: '2026-08-10'
 ---
 
 # Acorn Electron Elite memory map

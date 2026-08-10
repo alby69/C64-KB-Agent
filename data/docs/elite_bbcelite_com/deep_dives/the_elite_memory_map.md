@@ -3,29 +3,29 @@ title: BBC Micro cassette Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map.html
 category: deep-dive
 topics:
-- basic
+- assembly
 - memory management
 - sound generation
 - graphics
-- assembly
+- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- KERNAL
-- BASIC ROM
-- SID
 - CPU
+- SID
+- BASIC ROM
+- KERNAL
 - CIA
 related:
-- sound-programming
-- kernal-routines
 - keyboard-handling
 - cia-registers
-- music-player
-- joystick-reading
-- memory-map
+- kernal-routines
 - sid-registers
-scraped_at: '2026-08-03'
+- sound-programming
+- music-player
+- memory-map
+- joystick-reading
+scraped_at: '2026-08-10'
 ---
 
 # BBC Micro cassette Elite memory map

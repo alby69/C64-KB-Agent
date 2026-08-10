@@ -10,9 +10,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-08-03'
+- memory-map
+scraped_at: '2026-08-10'
 ---
 
 # base:fast_8bit_multiplication_16bit_product [Codebase64 wiki]
