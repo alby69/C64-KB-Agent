@@ -3,31 +3,31 @@ title: Significant tricks & techniques in MW4 by Cadaver
 source_url: https://codebase.c64.org/doku.php?id=base%3Arant11
 category: source-code
 topics:
-- basic
-- raster interrupts
-- assembly
 - sprite programming
+- basic
 - graphics
+- assembly
+- raster interrupts
 difficulty: beginner
 language: mixed
 hardware:
-- SID
-- CIA
 - KERNAL
+- SID
 - VIC-II
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

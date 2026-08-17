@@ -9,12 +9,10 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Store X Indexed by Y and Vice-Versa With SHX/SHY
-
-### Table of Contents
 
 # Store X Indexed by Y and Vice-Versa With SHX/SHY
 

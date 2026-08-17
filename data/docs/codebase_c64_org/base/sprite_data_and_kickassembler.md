@@ -14,19 +14,17 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Using KickAss to include .gif sprite data
 
 base:sprite_data_and_kickassembler
 
-                ### Table of Contents
-
-# Using KickAss to include .gif sprite data
+                # Using KickAss to include .gif sprite data
 
 [KickAssembler](http://www.theweb.dk/KickAssembler/Main.php) aka KickAss is a multi platform crossassembler written in Java with some nice features when it comes to handling graphics data. The author of KickAss (Slammer) provided the following example on how to easily make sprite data out of .gif images just by using a rather simple macro:
 

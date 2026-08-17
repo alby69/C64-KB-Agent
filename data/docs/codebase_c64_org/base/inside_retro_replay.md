@@ -3,32 +3,32 @@ title: Documentation for the Retro Replay freezer cartridge for the C-64
 source_url: https://codebase.c64.org/doku.php?id=base%3Ainside_retro_replay
 category: tool
 topics:
-- sound generation
-- basic
-- raster interrupts
-- assembly
 - sprite programming
+- basic
+- assembly
+- raster interrupts
+- sound generation
 difficulty: beginner
 language: mixed
 hardware:
 - SID
-- CIA
-- KERNAL
-- CPU
 - VIC-II
+- CPU
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Documentation for the Retro Replay freezer cartridge for the C-64
@@ -82,15 +82,7 @@ last update: December 6th, 2001
 
 Someone (not at the Ma Baker conference) suggested that the freeze button can be pressed through a serial port that is connected to the accessory connector. This would have caused too many changes that would make other A1200 hardware incompatible on this port. Sure, this port will be used for a Silversurfer serial port by most users, but you could also think of any other piece of hardware that uses the Amiga 1200 clockport. This would not be possible with that change. Hardware-turn-off switch/jumper: This is absolutely unnecessary. After setting bit 2 in $de00, the cartridge is completely switched off, and it is impossible to tell by software if there is a Retro Replay installed or not (and I mean “impossible”, because the hardware is completely tri-stated!).
 
-Compatibility to the IDE64 controller: This is not necessary. That thing is
-overpriced and crappy. Nobody can really use it. Demos and games have their
-own loaders that do not work with a harddrive, and there are simply not
-enough customers with such a harddrive to justify such a major change in
-hard- and software. Period.
-–
- **No further changes to the hardware will be made. This is nealry a**
- non-profit project, I will not spend more time with it.
-(unless you have a really good suggestion that increases the value by far!)
+Compatibility to the IDE64 controller: This is not necessary. That thing is overpriced and crappy. Nobody can really use it. Demos and games have their own loaders that do not work with a harddrive, and there are simply not enough customers with such a harddrive to justify such a major change in hard- and software. Period. – ** No further changes to the hardware will be made. This is nealry a ** non-profit project, I will not spend more time with it. (unless you have a really good suggestion that increases the value by far!)
 
 # General
 

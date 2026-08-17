@@ -1,6 +1,6 @@
 ---
 title: About BBC Master Elite on the BBC Micro B+
-source_url: https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite.html
+source_url: https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite/
 category: manual
 topics:
 - basic
@@ -9,20 +9,20 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- CIA
 - SID
 - KERNAL
+- CPU
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # About BBC Master Elite on the BBC Micro B+
@@ -35,7 +35,7 @@ The BBC Micro B+ is perhaps the most overlooked Acorn machine of all. Launched i
 
 This is a shame, as the B+ is a sweet little machine. Outwardly it looks exactly like the BBC Micro; the only clue that it's different is a diminutive "64K" next to the BBC owl logo on the clear function key strip holder. But inside, the motherboard has been completely redesigned, with the sideways ROMs easily accessible and not tucked away under the keyboard, and not only can it handle 32K ROMs as well as the original 16K of the Model B, but it comes with an extra 32K of RAM, with 20K allocated to shadow RAM (for storing the screen) and the spare 12K allocated to so-called "private RAM".
 
-Applications like word processors and languages like BASIC can instantly make use of the shadow RAM, but it comes with limitations that prevent it being useful for games. And the extra 12K is even more bizarre and has limited practical use; see the [technical information](https://elite.bbcelite.com/bbc_micro_b_plus_master_elite_technical_information.html) page for more details. The upshot is that there's no software for the B+ that makes use of all of this extra RAM; all those enhanced BBC Master games that exploit that computer's more flexible shadow RAM system simply won't work on the B+.
+Applications like word processors and languages like BASIC can instantly make use of the shadow RAM, but it comes with limitations that prevent it being useful for games. And the extra 12K is even more bizarre and has limited practical use; see the [technical information](https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite/technical_information.html) page for more details. The upshot is that there's no software for the B+ that makes use of all of this extra RAM; all those enhanced BBC Master games that exploit that computer's more flexible shadow RAM system simply won't work on the B+.
 
 In terms of Elite, the B+ can run all of the BBC Micro versions of Elite (cassette, disc and 6502 Second Processor), but they are exactly the same as the originals: there are no extra features for the B+. Even the unofficial sideways RAM version of Elite won't run on the unexpanded B+, as the B+ does not come with sideways RAM built-in (though you can add it).
 
@@ -63,7 +63,7 @@ And here's the icing on the cake, carefully revealed from under all that accumul
 
 In return for a bit of affection, my new B+ inspired me. I realised that the best tribute to both the signature and the signature-bearer would be to create a souped-up version of Elite that would take advantage of the whole extra 32K - both the 20K of shadow RAM and the 12K of private RAM. A quick calculation shows that the size of the BBC Master Elite binary is pretty similar to the size of the B+ memory map, so I decided to go the whole hog and try porting BBC Master Elite to the B+.
 
-This hack is the result. It works perfectly, and despite the extra colours and features, it still runs at the same speed as BBC Master Elite. I even found room for all the extra features from the [Elite Compendium](https://elite.bbcelite.com/elite_compendium.html):
+This hack is the result. It works perfectly, and despite the extra colours and features, it still runs at the same speed as BBC Master Elite. I even found room for all the extra features from the [Elite Compendium](https://elite.bbcelite.com/hacks/elite_compendium):
 
 - Flicker-free ships and planets
 - Trumbles mission
@@ -79,7 +79,7 @@ The title and docking music require sideways RAM, which doesn't come as standard
 
 So, finally, B+ owners have their own unique version of Elite that uses every single bit of the memory map. Nobody puts B+ in the corner...
 
-Find out how to [download the BBC Micro B+ version of Master Elite](https://elite.bbcelite.com/bbc_micro_b_plus_master_elite_downloads.html), or dive into the [technical information](https://elite.bbcelite.com/bbc_micro_b_plus_master_elite_technical_information.html) to discover exactly how the extra memory in the B+ works, and how we can squeeze a fully featured, full-colour version of Elite into this unique addition to the BBC family.
+Find out how to [download the BBC Micro B+ version of Master Elite](https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite/downloads.html), or dive into the [technical information](https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite/technical_information.html) to discover exactly how the extra memory in the B+ works, and how we can squeeze a fully featured, full-colour version of Elite into this unique addition to the BBC family.
 
 ---
-*Fonte originale: [https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite.html](https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite.html)*
+*Fonte originale: [https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite/](https://elite.bbcelite.com/hacks/bbc_micro_b_plus_master_elite/)*

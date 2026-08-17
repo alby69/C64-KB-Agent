@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 last_modified: '2026-06-25T03:20:25Z'
 ---
 
@@ -19,7 +19,7 @@ last_modified: '2026-06-25T03:20:25Z'
 **Description:** Modern C64 Forth
 
 **GitHub URL:** https://github.com/jkotlinski/durexforth
-**Stars:** 267
+**Stars:** 268
 **Last Updated:** 2026-06-25T03:20:25Z
 
 

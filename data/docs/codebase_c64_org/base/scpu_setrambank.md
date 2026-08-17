@@ -9,7 +9,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # SetRAMBank
@@ -35,7 +35,7 @@ Requires the function: “SwitchEndian16”
         plb
     }
 ```
-base/scpu_setrambank.txt · Last modified:  by 127.0.0.1
+base/scpu_setrambank.txt · Last modified:  by tww
 
 ## Codice Estratto
 

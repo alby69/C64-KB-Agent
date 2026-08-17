@@ -3,26 +3,26 @@ title: base:jeffy [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Ajeffy
 category: reference
 topics:
-- input handling
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
+- input handling
 difficulty: intermediate
 language: assembly
 hardware:
-- CIA
 - KERNAL
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

@@ -9,20 +9,20 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
+- KERNAL
 - SID
 - CPU
-- KERNAL
 - VIC-II
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Moving sprites / Sorting movement from VIC update
@@ -101,7 +101,7 @@ loop:	lda spritey,x
 	dex
 	bpl loop
 ```
-base/moving_sprites.txt · Last modified:  by 127.0.0.1
+base/moving_sprites.txt · Last modified:  by icepic
 
 ## Codice Estratto
 

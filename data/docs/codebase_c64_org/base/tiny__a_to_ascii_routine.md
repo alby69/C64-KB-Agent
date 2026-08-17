@@ -10,9 +10,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # Tiny .A to ASCII routine
@@ -48,7 +48,7 @@ Converts .A to 2 ASCII/PETSCII digits: .X = tens, .A = ones
   adc #$2f
   rts
 
-base/tiny_.a_to_ascii_routine.txt · Last modified:  by 127.0.0.1
+base/tiny_.a_to_ascii_routine.txt · Last modified:  by erhan
 
 ## Codice Estratto
 

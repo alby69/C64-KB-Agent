@@ -10,9 +10,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 
@@ -114,7 +114,7 @@ OUTHEX:
 tab:
     .text "0123456789abcdef"
 ```
-base/8_bit_to_hexadecimal_conversion.txt · Last modified:  by 127.0.0.1
+base/8_bit_to_hexadecimal_conversion.txt · Last modified:  by tww_ctr
 
 ## Codice Estratto
 

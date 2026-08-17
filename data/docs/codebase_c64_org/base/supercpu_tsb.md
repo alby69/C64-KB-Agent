@@ -8,7 +8,7 @@ language: none
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # TSB
@@ -60,7 +60,7 @@ base:supercpu_tsb
         }
     }
 ```
-base/supercpu_tsb.txt · Last modified:  by 127.0.0.1
+base/supercpu_tsb.txt · Last modified:  by tww
 
 ## Codice Estratto
 

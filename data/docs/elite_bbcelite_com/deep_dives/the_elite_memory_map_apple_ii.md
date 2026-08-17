@@ -3,33 +3,33 @@ title: Apple II Elite memory map
 source_url: https://elite.bbcelite.com/deep_dives/the_elite_memory_map_apple_ii.html
 category: deep-dive
 topics:
-- assembly
-- sprite programming
 - memory management
+- assembly
 - graphics
 - basic
+- sprite programming
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- SID
-- BASIC ROM
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Apple II Elite memory map

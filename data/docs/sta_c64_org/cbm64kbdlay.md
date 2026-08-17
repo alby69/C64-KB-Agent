@@ -9,10 +9,10 @@ language: none
 hardware:
 - CIA
 related:
-- cia-registers
 - joystick-reading
 - keyboard-handling
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

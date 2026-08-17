@@ -4,31 +4,31 @@ source_url: https://sta.c64.org/cbm64krnfunc.html
 category: reference
 topics:
 - memory management
-- assembly
-- basic
 - graphics
-- sprite programming
+- basic
 - input handling
+- sprite programming
+- assembly
 difficulty: advanced
 language: mixed
 hardware:
-- CIA
 - CPU
 - SID
 - KERNAL
+- CIA
 related:
-- kernal-routines
-- music-player
-- memory-map
 - sid-registers
-- sound-programming
+- memory-map
+- sprite-programming
 - keyboard-handling
-- cia-registers
-- vic-ii-registers
 - joystick-reading
 - raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-10'
+- sound-programming
+- kernal-routines
+- vic-ii-registers
+- cia-registers
+- music-player
+scraped_at: '2026-08-17'
 last_modified: Wed, 13 Nov 2024 00:00:00 GMT
 ---
 

@@ -8,15 +8,15 @@ difficulty: intermediate
 language: mixed
 hardware:
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
 - cia-registers
-- kernal-routines
 - joystick-reading
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # SuperCPU KickAssembler Library

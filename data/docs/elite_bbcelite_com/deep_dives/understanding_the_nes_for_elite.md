@@ -3,32 +3,32 @@ title: Understanding the NES for Elite
 source_url: https://elite.bbcelite.com/deep_dives/understanding_the_nes_for_elite.html
 category: tutorial
 topics:
-- assembly
-- sprite programming
 - memory management
+- assembly
 - graphics
 - basic
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Understanding the NES for Elite

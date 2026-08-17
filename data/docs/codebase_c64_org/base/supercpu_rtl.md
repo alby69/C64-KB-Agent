@@ -12,10 +12,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # RTL
@@ -64,7 +64,7 @@ base:supercpu_rtl
         .byte $6b
     }
 ```
-base/supercpu_rtl.txt · Last modified:  by 127.0.0.1
+base/supercpu_rtl.txt · Last modified:  by tww
 
 ## Codice Estratto
 

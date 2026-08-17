@@ -3,17 +3,17 @@ title: Two's complement system
 source_url: https://codebase.c64.org/doku.php?id=base%3Atwo_s_complement_system
 category: reference
 topics:
-- memory management
-- basic
 - assembly
+- basic
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # Two's complement system

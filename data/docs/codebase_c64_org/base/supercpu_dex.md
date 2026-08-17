@@ -9,10 +9,10 @@ language: none
 hardware:
 - CIA
 related:
-- keyboard-handling
 - cia-registers
+- keyboard-handling
 - joystick-reading
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # DEX
@@ -74,7 +74,7 @@ Dex does not need a special pseudocommand, this is only for conveniance.
         }
     }
 ```
-base/supercpu_dex.txt · Last modified:  by 127.0.0.1
+base/supercpu_dex.txt · Last modified:  by tww
 
 ## Codice Estratto
 

@@ -8,24 +8,24 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- SID
 - KERNAL
-- VIC-II
 - CPU
+- SID
+- CIA
+- VIC-II
 related:
-- vic-ii-registers
-- sound-programming
-- cia-registers
+- kernal-routines
 - raster-interrupts
-- sid-registers
-- keyboard-handling
+- sound-programming
+- memory-map
+- vic-ii-registers
+- cia-registers
 - sprite-programming
 - joystick-reading
-- kernal-routines
+- keyboard-handling
 - music-player
-- memory-map
-scraped_at: '2026-08-10'
+- sid-registers
+scraped_at: '2026-08-17'
 ---
 
 

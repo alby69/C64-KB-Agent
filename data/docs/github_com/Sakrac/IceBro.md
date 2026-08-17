@@ -10,10 +10,10 @@ hardware:
 - VIC-II
 - CPU
 related:
+- vic-ii-registers
 - raster-interrupts
 - sprite-programming
-- vic-ii-registers
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 last_modified: '2021-01-03T15:36:46Z'
 ---
 

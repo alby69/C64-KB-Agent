@@ -9,9 +9,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # base:16bit_and_24bit_sqrt [Codebase64 wiki]
@@ -106,7 +106,7 @@ sqnxt   LDA storage     ; calculate next odd number
 nomore
         RTS
 
-base/16bit_and_24bit_sqrt.txt · Last modified:  by 127.0.0.1
+base/16bit_and_24bit_sqrt.txt · Last modified:  by verz
 
 ## Codice Estratto
 

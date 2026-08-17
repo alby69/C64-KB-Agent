@@ -3,21 +3,21 @@ title: Drawing colour pixels on the BBC Micro
 source_url: https://elite.bbcelite.com/deep_dives/drawing_colour_pixels_in_mode_5.html
 category: deep-dive
 topics:
+- basic
 - memory management
 - graphics
-- basic
 difficulty: beginner
 language: basic
 hardware:
 - SID
 - KERNAL
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Drawing colour pixels on the BBC Micro

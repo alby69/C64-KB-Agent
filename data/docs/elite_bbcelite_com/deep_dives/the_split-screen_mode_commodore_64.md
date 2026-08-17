@@ -4,31 +4,31 @@ source_url: https://elite.bbcelite.com/deep_dives/the_split-screen_mode_commodor
 category: source-code
 topics:
 - assembly
-- sprite programming
-- graphics
 - raster interrupts
+- graphics
 - basic
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # The split-screen mode in Commodore 64 Elite

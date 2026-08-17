@@ -3,31 +3,31 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-3-loading-shapes-and-grasping-symbols
 category: tutorial
 topics:
+- sprite programming
 - basic
 - assembly
 - graphics
-- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- SID
 - KERNAL
-- VIC-II
 - CPU
+- SID
+- CIA
+- VIC-II
 related:
-- vic-ii-registers
-- sound-programming
-- cia-registers
+- kernal-routines
 - raster-interrupts
-- sid-registers
-- keyboard-handling
+- sound-programming
+- memory-map
+- vic-ii-registers
+- cia-registers
 - sprite-programming
 - joystick-reading
-- kernal-routines
+- keyboard-handling
 - music-player
-- memory-map
-scraped_at: '2026-08-10'
+- sid-registers
+scraped_at: '2026-08-17'
 ---
 
 # 

@@ -3,8 +3,8 @@ title: Market item prices and availability
 source_url: https://elite.bbcelite.com/deep_dives/market_item_prices_and_availability.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Market item prices and availability

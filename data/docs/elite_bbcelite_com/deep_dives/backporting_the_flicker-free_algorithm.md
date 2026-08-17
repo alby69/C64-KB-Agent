@@ -3,26 +3,26 @@ title: Backporting the flicker-free algorithm
 source_url: https://elite.bbcelite.com/deep_dives/backporting_the_flicker-free_algorithm.html
 category: deep-dive
 topics:
-- memory management
-- assembly
 - basic
+- assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- CIA
 - SID
 - KERNAL
+- CPU
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Backporting the flicker-free algorithm
@@ -1509,22 +1509,6 @@ Name: LL9 (Part 1 of 12)
 									Technical information Details of how the Elite Universe Editor works under the bonnet
 								
 							
-							Flicker-free Elite Improved ship drawing on the BBC Micro, Commodore 64 and Commodore Plus/4
-								
-									Flicker-free Elite
-									About flicker-free Elite Improved ship drawing on the BBC Micro, Electron, Commodore and Apple
-									Playing flicker-free Elite How to download and play flicker-free Elite, on the BBC, Commodore and Apple
-									Technical information Details of how flicker-free Elite weaves its magic
-								
-							
-							Compendium version of Electron Elite Super-fast Electron Elite with all the bells and whistles of the BBC versions
-								
-									Compendium version of Electron Elite
-									About the Compendium version of Acorn Electron Elite Updating Acorn Electron Elite with all the bells and whistles of the BBC version
-									Playing the Compendium version of Acorn Electron Elite How to download and play the improved version of Acorn Electron Elite
-									Technical information How I backported BBC Micro disc Elite to the Acorn Electron with sideways RAM
-								
-							
 							Teletext Elite The disc version of BBC Micro Elite, converted to run in teletext
 								
 									Teletext Elite
@@ -1555,6 +1539,31 @@ Name: LL9 (Part 1 of 12)
 									Technical information Details of how Elite 3D works
 								
 							
+							Elite hacks included in the above
+							Flicker-free Elite Improved ship drawing on the BBC Micro, Commodore 64 and Commodore Plus/4
+								
+									Flicker-free Elite
+									About flicker-free Elite Improved ship drawing on the BBC Micro, Electron, Commodore and Apple
+									Playing flicker-free Elite How to download and play flicker-free Elite, on the BBC, Commodore and Apple
+									Technical information Details of how flicker-free Elite weaves its magic
+								
+							
+							BBC Micro disc Elite on the Electron Super-fast Electron Elite with all the bells and whistles of the BBC versions
+								
+									BBC Micro disc Elite on the Electron
+									About BBC Micro disc Elite on the Acorn Electron Updating Acorn Electron Elite with all the bells and whistles of the BBC version
+									Playing BBC Micro disc Elite on the Acorn Electron How to download and play the improved version of Acorn Electron Elite
+									Technical information How I backported BBC Micro disc Elite to the Acorn Electron with sideways RAM
+								
+							
+							BBC Micro disc Elite on the BBC Master The disc version of BBC Micro Elite, converted to run on the BBC Master
+								
+									BBC Micro disc Elite on the BBC Master
+									About BBC Micro disc Elite on the BBC Master The disc version of BBC Micro Elite, converted to run on the BBC Master
+									Playing BBC Micro disc Elite on the BBC Master How to download and play the original disc version of Elite on the BBC Master
+									Technical information Details of how disc Elite was converted from the BBC Micro to the BBC Master
+								
+							
 							BBC Master Elite on the BBC Micro B+ BBC Master Elite, converted to run on the BBC Micro B+
 								
 									BBC Master Elite on the BBC Micro B+
@@ -1569,14 +1578,6 @@ Name: LL9 (Part 1 of 12)
 									About the musical version of Acornsoft Elite BBC Micro and Acorn Electron Elite, with added title and docking music
 									Playing musical Acornsoft Elite How to download and play the musical version of Acornsoft Elite
 									Technical information How the Commodore 64's music was ported to Elite on the BBC Micro and Electron
-								
-							
-							BBC Micro disc Elite on the BBC Master The disc version of BBC Micro Elite, converted to run on the BBC Master
-								
-									BBC Micro disc Elite on the BBC Master
-									About BBC Micro disc Elite on the BBC Master The disc version of BBC Micro Elite, converted to run on the BBC Master
-									Playing BBC Micro disc Elite on the BBC Master How to download and play the original disc version of Elite on the BBC Master
-									Technical information Details of how disc Elite was converted from the BBC Micro to the BBC Master
 								
 							
 						

@@ -9,20 +9,20 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- CPU
-- CIA
 - KERNAL
+- CPU
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Interrupts and timing
@@ -75,7 +75,7 @@ About complex execution flow such as multiple interrupt handlers at the same tim
 - [Launching long tasks from IRQ handler](https://codebase.c64.org/doku.php?id=base:launching_long_tasks_from_irq_handler) - by Bitbreaker/Oxyron^Nuance
 - [Threads on the 6502](https://codebase.c64.org/doku.php?id=base:threads_on_the_6502) - an example on how threads can be used efficiently on the 6502 processor.
 
-base/interrupts.txt · Last modified:  by 127.0.0.1
+base/interrupts.txt · Last modified:  by cz
 
 ---
 *Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Ainterrupts](https://codebase.c64.org/doku.php?id=base%3Ainterrupts)*

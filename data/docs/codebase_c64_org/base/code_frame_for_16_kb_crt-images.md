@@ -3,29 +3,29 @@ title: Raw Frame for Generic 16 KB cart images
 source_url: https://codebase.c64.org/doku.php?id=base%3Acode_frame_for_16_kb_crt-images
 category: reference
 topics:
-- memory management
 - raster interrupts
-- basic
 - assembly
+- basic
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
 - SID
-- CIA
 - KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

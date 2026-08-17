@@ -9,19 +9,19 @@ topics:
 difficulty: advanced
 language: mixed
 hardware:
-- CPU
 - SID
 - KERNAL
+- CPU
 related:
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- raster-interrupts
-scraped_at: '2026-08-10'
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Acknowledgements
@@ -59,19 +59,19 @@ The code on this site is based on the following sources:
 Huge thanks are due to the following, without whom this project would simply not exist:
 
 - Ian Bell and David Braben, the original authors of Elite, for not only creating such an important piece of my childhood, but also for releasing [the source code](http://www.elitehomepage.org/) for us to play with.
-- Kieran Connell for his [BeebAsm version of the source code](https://github.com/kieranhj/elite-beebasm) , which I forked as the original basis for this project. Also, I owe a huge thank you to Kieran for being the inspiration for[musical Elite](https://elite.bbcelite.com/hacks/bbc_elite_with_music.html) ,[Teletext Elite](https://elite.bbcelite.com/hacks/teletext_elite.html) and[Elite 3D](https://elite.bbcelite.com/hacks/elite_3d.html) - without his algorithms, code suggestions and thoughtful testing, these wonderful hacks would never have happened.
+- Kieran Connell for his [BeebAsm version of the source code](https://github.com/kieranhj/elite-beebasm) , which I forked as the original basis for this project. Also, I owe a huge thank you to Kieran for being the inspiration for[musical Elite](https://elite.bbcelite.com/hacks/bbc_elite_with_music/) ,[Teletext Elite](https://elite.bbcelite.com/hacks/teletext_elite/) and[Elite 3D](https://elite.bbcelite.com/hacks/elite_3d/) - without his algorithms, code suggestions and thoughtful testing, these wonderful hacks would never have happened.
 - Paul Brink for his annotated disassembly of the BBC Micro disc version's [docked code](http://www.elitehomepage.org/archive/a/d4090010.txt) and[flight code](http://www.elitehomepage.org/archive/a/d4090012.txt) .
 - Martin Ling for his [commentary script](https://github.com/martinling/elite-beebasm/commits/apply-brink-commentary) , which gave me a massive head start by merging Paul's comments into Kieran's repository.
 - Angus Duggan for sending me his Elite-A source discs and giving me permission to analyse his code.
 - Christian Pinder for lots of expertise from the coalface of Elite disassembly, and for [Elite: The New Kind](http://www.new-kind.com/) , whose[source](https://github.com/fesh0r/newkind) helped me out on more than one occasion.
 - Chris Jordan for help and feedback on all sorts of Elite-related matters.
 - Kroc Camen for his excellent [Elite Harmless](https://github.com/Kroc/elite-harmless) project, which is an invaluable resource when working with the Commodore 64 version of Elite.
-- Mark Usher for loads of Econet-related help and support, without which the [multiplayer scoreboard](https://elite.bbcelite.com/hacks/elite_over_econet_scoreboard.html) in Elite over Econet probably wouldn't work.
+- Mark Usher for loads of Econet-related help and support, without which the [multiplayer scoreboard](https://elite.bbcelite.com/hacks/elite_over_econet/scoreboard.html) in Elite over Econet probably wouldn't work.
 - Matt Godbolt for the wonderful online BBC Micro emulator [JSBeeb](https://bbc.xania.org/) .
 - 0xC0DE for the equally wonderful online Acorn Electron emulator [Electroniq](https://0xc0de6502.github.io/electroniq/) and his hugely impressive[Electron development environment](https://stardot.org.uk/forums/viewtopic.php?t=30087&start=60) .
 - Tom Seddon for the amazing [b2 emulator](https://github.com/tom-seddon/b2) , which is the best emulator I have used on any platform, period. It is a work of art!
 - Diminished for the UEF scripts that I use in the BBC Micro cassette and Acorn Electron builds, which are part of the excellent [Quadbike 2](https://stardot.org.uk/forums/viewtopic.php?t=26669) tape transcriber.
-- Jarod Nash for helping improve Elite over Econet's [FixPAGE utility](https://elite.bbcelite.com/hacks/elite_over_econet_downloads.html) , and for setting up the amazing TNMoC Econet Cloud service that enables Elite competitions to span the whole planet.
+- Jarod Nash for helping improve Elite over Econet's [FixPAGE utility](https://elite.bbcelite.com/hacks/elite_over_econet/downloads.html) , and for setting up the amazing TNMoC Econet Cloud service that enables Elite competitions to span the whole planet.
 - Wouter Hobers for creating [sideways RAM Electron Elite](https://www.stardot.org.uk/forums/viewtopic.php?p=406189#p406189) , which opened the door for my own version.
 - Mark Keates for many things, including inspiring me to look at the Elite Demonstration Disc, doing amazing things with the Atari conversions (as [Wrathchild on AtariAge](https://forums.atariage.com/profile/1822-wrathchild/) ), and being so supportive of my efforts over the years.
 
@@ -83,8 +83,8 @@ Also, thank you to everyone who has written in with comments, and particularly t
 - Mike Standing for pointing out the hidden message in the [disc version's loader](https://elite.bbcelite.com/disc/loader_3/subroutine/load.html) , where the authors ask "Does your mother know you do this?" - I can't believe I missed that one! Thanks Mike.
 - TobyLobster for discovering a bug in the [LOIN](https://elite.bbcelite.com/cassette/main/subroutine/loin_part_3_of_7.html) routine in the original versions of Elite, where some lines omit the pixel from the wrong end of the line; and for help in working out the[FAROF2](https://elite.bbcelite.com/nes/bank_7/subroutine/farof2.html) algorithm in the NES version. Thanks Toby! (Incidentally, if you enjoy high-quality BBC Micro disassemblies, I highly recommend Toby's[Manic Miner 2021](https://github.com/TobyLobster/ManicMiner2021) and[Jet Set Willy 2021](https://github.com/TobyLobster/jsw2021) projects; they are simply brilliant.)
 - SteveF for pointing out a mistake in the [BBC Master memory map](https://elite.bbcelite.com/deep_dives/the_elite_memory_map_master.html) , where I'd got my MOS ROM addresses mixed up. Thank you, Steve.
-- Michael Fairbank for spotting a really neat way to speed up circle drawing in [Teletext Elite](https://elite.bbcelite.com/hacks/teletext_elite.html) , and for his analysis into[ellipses](https://elite.bbcelite.com/deep_dives/drawing_ellipses.html) ,[craters](https://elite.bbcelite.com/deep_dives/drawing_craters.html) ,[meridians and equators](https://elite.bbcelite.com/deep_dives/drawing_meridians_and_equators.html) and[the loading screen's Saturn](https://elite.bbcelite.com/deep_dives/drawing_saturn_on_the_loading_screen.html) . Thanks Michael.
-- Chris Evans for help tracking down a really gnarly bug in [Teletext Elite](https://elite.bbcelite.com/hacks/teletext_elite.html) (and also for the awesome[beebjit](https://github.com/scarybeasts/beebjit) emulator, which I've found particularly useful when analysing the original releases of all the games I've disassembled). Thank you, Chris.
+- Michael Fairbank for spotting a really neat way to speed up circle drawing in [Teletext Elite](https://elite.bbcelite.com/hacks/teletext_elite/) , and for his analysis into[ellipses](https://elite.bbcelite.com/deep_dives/drawing_ellipses.html) ,[craters](https://elite.bbcelite.com/deep_dives/drawing_craters.html) ,[meridians and equators](https://elite.bbcelite.com/deep_dives/drawing_meridians_and_equators.html) and[the loading screen's Saturn](https://elite.bbcelite.com/deep_dives/drawing_saturn_on_the_loading_screen.html) . Thanks Michael.
+- Chris Evans for help tracking down a really gnarly bug in [Teletext Elite](https://elite.bbcelite.com/hacks/teletext_elite/) (and also for the awesome[beebjit](https://github.com/scarybeasts/beebjit) emulator, which I've found particularly useful when analysing the original releases of all the games I've disassembled). Thank you, Chris.
 - Wouter Hobers for explaining the Electron's [IRQ1](https://elite.bbcelite.com/electron/main/subroutine/irq1.html) routine properly (which I hadn't!) and for spotting that it clears all interrupts and not just the RTC. Thanks Wouter.
 - Timothy Muller for spotting a number of incorrect cargo capacity figures in the original Elite-A encyclopedia, and for sending me the correct values to add to the [bug-fix release of Elite-A](https://elite.bbcelite.com/elite-a/releases.html#bug-fix) . Thank you, Timothy.
 - Peter Mackay for suggesting a much cleaner build process for NES Elite that removes the need to declare cross-bank label addresses in the [common variables](https://elite.bbcelite.com/nes/all/common.html) source. Thanks Peter.

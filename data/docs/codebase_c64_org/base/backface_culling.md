@@ -8,12 +8,10 @@ difficulty: beginner
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # base:backface_culling [Codebase64 wiki]
-
-### Table of Contents
 
 ### Backface Culling
 

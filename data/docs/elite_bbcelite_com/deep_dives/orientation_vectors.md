@@ -3,20 +3,20 @@ title: Orientation vectors
 source_url: https://elite.bbcelite.com/deep_dives/orientation_vectors.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
 - SID
 - KERNAL
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Orientation vectors

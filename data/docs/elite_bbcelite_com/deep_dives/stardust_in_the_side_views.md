@@ -4,29 +4,29 @@ source_url: https://elite.bbcelite.com/deep_dives/stardust_in_the_side_views.htm
 category: deep-dive
 topics:
 - assembly
-- sprite programming
 - input handling
+- sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
-- CPU
-- SID
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Stardust in the side views

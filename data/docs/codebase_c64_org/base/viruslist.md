@@ -3,33 +3,33 @@ title: Making a Virus Scanner - info needed
 source_url: https://codebase.c64.org/doku.php?id=base%3Aviruslist
 category: tool
 topics:
-- basic
-- raster interrupts
-- assembly
-- memory management
 - sprite programming
+- basic
 - graphics
+- assembly
+- raster interrupts
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
 - SID
-- CIA
-- KERNAL
 - VIC-II
 - BASIC ROM
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -37,7 +37,7 @@ scraped_at: '2026-08-10'
 
 # Making a Virus Scanner - info needed
 
-as some of you might know i made a little util to scan the disks i transfered 
+as some of you might know i made a little util to scan the disks i transfered
 for errors (D64scan v0.2, [http://noname.c64.org/csdb/release/?id=43862](http://noname.c64.org/csdb/release/?id=43862)). 
 
 i thought it would be a useful feature to add virus detection (and possibly elimination) to that tool aswell…
@@ -79,7 +79,7 @@ first virus for the C64 ever, often said to be _the_ first virus in computer his
 
 9      "bhp virus.prg"     prg
 
-The following description is a cleaned up and shortened summary of the symantec 
+The following description is a cleaned up and shortened summary of the symantec
 virus bulletin january 2005 ([http://pferrie.tripod.com/papers/bhp.pdf](http://pferrie.tripod.com/papers/bhp.pdf))
 
 (note: this is still messy and may contain errors)

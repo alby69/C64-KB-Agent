@@ -3,29 +3,29 @@ title: base:all_american_bbs_-_finding_the_serial_number [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Aall_american_bbs_-_finding_the_serial_number
 category: source-code
 topics:
-- basic
-- memory management
 - sprite programming
 - assembly
+- basic
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
 - SID
-- CIA
 - KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

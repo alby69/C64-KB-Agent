@@ -4,33 +4,33 @@ source_url: https://elite.bbcelite.com/deep_dives/
 category: source-code
 topics:
 - assembly
-- sprite programming
 - sound generation
 - graphics
-- input handling
 - basic
+- sprite programming
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
-- BASIC ROM
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Index of all deep dive articles

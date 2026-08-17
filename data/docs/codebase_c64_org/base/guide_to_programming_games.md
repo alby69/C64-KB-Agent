@@ -12,19 +12,19 @@ language: mixed
 hardware:
 - SID
 - CPU
-- CIA
 - VIC-II
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
 - sound-programming
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

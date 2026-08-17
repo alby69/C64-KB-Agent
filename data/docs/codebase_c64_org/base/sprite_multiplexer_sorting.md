@@ -3,29 +3,29 @@ title: On sprite sorting methods, by Falco Paul
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_multiplexer_sorting
 category: source-code
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- SID
-- CIA
 - KERNAL
+- SID
 - VIC-II
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # On sprite sorting methods, by Falco Paul
@@ -67,7 +67,7 @@ Finally, here are some tips for sprite multiplexing…
 
 Use your favorite java tool to work with the source code, or just
 compile to byte code using “javac” and then run with “java”. I've used
-the 1.4 java release, but it will run without problems on earlier/later versions of java. 
+the 1.4 java release, but it will run without problems on earlier/later versions of java.
 You can get java at [http://www.sun.com](http://www.sun.com)
 
 # Source code

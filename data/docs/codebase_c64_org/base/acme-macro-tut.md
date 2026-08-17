@@ -14,14 +14,14 @@ hardware:
 - KERNAL
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # ACME macro tutorial
@@ -198,7 +198,7 @@ When putting code into a macro that shall be manipulated from code outside (e.g.
           inx
           ...
 ```
-I hope this small tutorial explains a few interesting aspects of macro-usage in ACME. If you have any questions, contact me somehow.
+—- I hope this small tutorial explains a few interesting aspects of macro-usage in ACME. If you have any questions, contact me somehow.
 
 ## Codice Estratto
 

@@ -3,17 +3,17 @@ title: Part 5 - Addressing Modes
 source_url: https://codebase.c64.org/doku.php?id=base%3Amachine_language_tutorial_part_5
 category: tutorial
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: beginner
 language: assembly
 hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # Part 5 - Addressing Modes

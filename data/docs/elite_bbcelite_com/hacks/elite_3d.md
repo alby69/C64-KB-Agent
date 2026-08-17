@@ -1,22 +1,22 @@
 ---
 title: Elite 3D
-source_url: https://elite.bbcelite.com/hacks/elite_3d.html
+source_url: https://elite.bbcelite.com/hacks/elite_3d/
 category: reference
 topics:
 - assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- CPU
 - SID
 - KERNAL
+- CPU
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Elite 3D
@@ -29,7 +29,7 @@ If I could travel back in time to 1984 and meet 14-year-old me, the thing we'd b
 
 Of course, back in 1984 when I was falling in love with Elite on the BBC Micro, "virtual reality" meant something quite different. The previous year had seen the release of Jaws 3D, where moviegoers put on polarised 3D glasses to experience shark shenanigans in a full three dimensions, but the movie turned out to be dreadful and the 3D effects questionable, despite a hugely enthusiastic - and hopeful - audience. It would be more than a decade before Nintendo brought out the Virtual Boy and enjoyed the same lukewarm response to its own take on stereoscopic gaming; and even into the 2010s, TVs came with 3D glasses that inevitably ended up gathering dust at the back of the cupboard. Despite all the effort, old-school 3D never really took off, but it's still a fond memory of what might have been, for those of us who were there.
 
-So when the idea of a 3D version of Acornsoft Elite was [jokingly mentioned on Stardot](https://www.stardot.org.uk/forums/viewtopic.php?p=412811#p412811), who should spot it but Kieran Connell, who not only [got me involved in Elite analysis](https://elite.bbcelite.com/about_site/about_this_project.html) in the first place, but also provided me with the impetus and inspiration to hack both [music](https://elite.bbcelite.com/bbc_elite_with_music.html) and [teletext](https://elite.bbcelite.com/teletext_elite.html) into the original Elite. He kindly sent me some notes on the prize-winning [anaglyph 3D demo](https://bitshifters.github.io/posts/prods/bs-mikroreise.html) that he wrote for the Archimedes in 2023, and we both filed the idea under "crazy ideas (part 11)" and moved on to other projects.
+So when the idea of a 3D version of Acornsoft Elite was [jokingly mentioned on Stardot](https://www.stardot.org.uk/forums/viewtopic.php?p=412811#p412811), who should spot it but Kieran Connell, who not only [got me involved in Elite analysis](https://elite.bbcelite.com/about_site/about_this_project.html) in the first place, but also provided me with the impetus and inspiration to hack both [music](https://elite.bbcelite.com/hacks/bbc_elite_with_music/) and [teletext](https://elite.bbcelite.com/hacks/teletext_elite/) into the original Elite. He kindly sent me some notes on the prize-winning [anaglyph 3D demo](https://bitshifters.github.io/posts/prods/bs-mikroreise.html) that he wrote for the Archimedes in 2023, and we both filed the idea under "crazy ideas (part 11)" and moved on to other projects.
 
 ![Asteroids in Elite 3D](https://elite.bbcelite.com/images/elite_3d/plane.png) 
 
@@ -42,4 +42,4 @@ So if I could travel back in time to meet 14-year-old me, this is the gift I'd t
 And I hope you do too.
 
 ---
-*Fonte originale: [https://elite.bbcelite.com/hacks/elite_3d.html](https://elite.bbcelite.com/hacks/elite_3d.html)*
+*Fonte originale: [https://elite.bbcelite.com/hacks/elite_3d/](https://elite.bbcelite.com/hacks/elite_3d/)*

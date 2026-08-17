@@ -3,17 +3,17 @@ title: Drawing ellipses
 source_url: https://elite.bbcelite.com/deep_dives/drawing_ellipses.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
 - KERNAL
+- CPU
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Drawing ellipses

@@ -3,10 +3,10 @@ title: Bitplanes in NES Elite
 source_url: https://elite.bbcelite.com/deep_dives/bitplanes_in_nes_elite.html
 category: deep-dive
 topics:
-- memory management
-- assembly
-- sprite programming
 - basic
+- assembly
+- memory management
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
@@ -14,15 +14,15 @@ hardware:
 - KERNAL
 - VIC-II
 related:
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- raster-interrupts
-scraped_at: '2026-08-10'
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Bitplanes in NES Elite

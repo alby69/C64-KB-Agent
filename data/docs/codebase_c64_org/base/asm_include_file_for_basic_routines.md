@@ -11,9 +11,9 @@ hardware:
 - BASIC ROM
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # base:asm_include_file_for_basic_routines [Codebase64 wiki]
@@ -244,7 +244,7 @@ sincon          = $e2ef
 ; atan
 atncon          = $e33e
 
-base/asm_include_file_for_basic_routines.txt · Last modified:  by 127.0.0.1
+base/asm_include_file_for_basic_routines.txt · Last modified:  by white_flame
 
 ## Codice Estratto
 

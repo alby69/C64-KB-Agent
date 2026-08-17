@@ -3,24 +3,24 @@ title: Flicker-free ship drawing
 source_url: https://elite.bbcelite.com/deep_dives/flicker-free_ship_drawing.html
 category: deep-dive
 topics:
+- basic
 - assembly
 - sprite programming
-- basic
 difficulty: beginner
 language: mixed
 hardware:
 - SID
 - KERNAL
 related:
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- raster-interrupts
-scraped_at: '2026-08-10'
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Flicker-free ship drawing

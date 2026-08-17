@@ -10,9 +10,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # Programming Languages
@@ -45,9 +45,9 @@ Find disk images, manuals, newsletters and many various resources for the PROMAL
 
 ## FORTH Programming
 
- * [durexForth](https://github.com/jkotlinski/durexforth) follows Forth 2012 standard and is the fastest C64 Forth available
+* [durexForth](https://github.com/jkotlinski/durexforth) follows Forth 2012 standard and is the fastest C64 Forth available
 
-base/programming_languages.txt · Last modified:  by 127.0.0.1
+base/programming_languages.txt · Last modified:  by ftc
 
 ---
 *Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Aprogramming_languages](https://codebase.c64.org/doku.php?id=base%3Aprogramming_languages)*

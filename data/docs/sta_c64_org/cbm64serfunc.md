@@ -7,12 +7,12 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
-- memory-map
 - kernal-routines
-scraped_at: '2026-08-10'
+- memory-map
+scraped_at: '2026-08-17'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

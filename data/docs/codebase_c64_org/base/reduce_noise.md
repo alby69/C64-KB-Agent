@@ -3,29 +3,29 @@ title: Reduce noise in SID
 source_url: https://codebase.c64.org/doku.php?id=base%3Areduce_noise
 category: reference
 topics:
-- sound generation
 - basic
+- sound generation
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- SID
-- CIA
 - KERNAL
+- SID
 - VIC-II
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

@@ -3,26 +3,26 @@ title: 6502 Registers
 source_url: https://codebase.c64.org/doku.php?id=base%3A6502_registers
 category: reference
 topics:
-- memory management
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
+- memory management
 difficulty: advanced
 language: mixed
 hardware:
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # 6502 Registers

@@ -10,10 +10,10 @@ language: assembly
 hardware:
 - CPU
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # TCS
@@ -53,7 +53,7 @@ base:supercpu_tcs
         .byte $1b
     }
 ```
-base/supercpu_tcs.txt · Last modified:  by 127.0.0.1
+base/supercpu_tcs.txt · Last modified:  by tww
 
 ## Codice Estratto
 

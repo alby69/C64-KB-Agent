@@ -10,16 +10,14 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Loading a file to memory at address stored in file
 
 base:loading_a_file
 
-                ### Table of Contents
-
-# Loading a file to memory at address stored in file
+                # Loading a file to memory at address stored in file
 
 BASIC code:
 

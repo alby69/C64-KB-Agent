@@ -10,9 +10,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 
@@ -265,7 +265,7 @@ _PrnNum
         rts
 ```
                     
-                                    base/int16_and_uint16_conversion_to_string.txt · Last modified:  by 127.0.0.1
+                                    base/int16_and_uint16_conversion_to_string.txt · Last modified:  by verz
 
 ## Codice Estratto
 

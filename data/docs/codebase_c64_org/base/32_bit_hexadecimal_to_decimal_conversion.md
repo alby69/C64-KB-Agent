@@ -9,9 +9,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 
@@ -117,7 +117,7 @@ value:  .word 65535       // Adjust to quantity of bits needed
 result: .byte 0,0,0,0,0   // Adjust to quantity of digits needed
 Finally adjust the quantity of "rol value+n" to: roundup(bits/8)
 ```
-base/32_bit_hexadecimal_to_decimal_conversion.txt · Last modified:  by 127.0.0.1
+base/32_bit_hexadecimal_to_decimal_conversion.txt · Last modified:  by tww
 
 ## Codice Estratto
 

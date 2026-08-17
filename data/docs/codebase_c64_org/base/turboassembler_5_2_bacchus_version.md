@@ -3,27 +3,27 @@ title: Turbo Assembler 5.2 reference
 source_url: https://codebase.c64.org/doku.php?id=base%3Aturboassembler_5.2_bacchus_version
 category: manual
 topics:
-- memory management
 - raster interrupts
-- basic
 - assembly
+- basic
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- CIA
 - KERNAL
+- CPU
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -112,11 +112,11 @@ Note that the keys F1, F2, F7 and F8 are static, whereas F3-F6 are redefinable f
 ### Pseudo Op-codes
 
 | .BYTE | **.BYTE “p”, $ab,%100011001,49,&19**Enter data. Either within quotes (one character), as hex ($E0) binary (%10001110), decimal (45) or octal (&34). Separate numbers with commas. | 
-| .WORD |  **.WORD label, $1000, label+$f8/2, *-9** Enter 16 bit/2 byte address in the normal 6502/6510 way, i.e. lowbyte, highbyte. Any label and expression is valid! | 
-| * |  *** = $XXXX** XXXX is here the start for your code. Can be used any number of time, but beware while assembling to disk (“”+“5”). | 
-| .TEXT |  **.TEXT “Some text”** Enter some text in ASCII-format. Beware that there is no obvious way of entering pokecodes, but for this purpose I recommend my own method. Either AND #$3F or: Enter your monitor. Type the text to the screen and transfer it into a safe place in the memory. Enter TurboAss and insert the data with “”+“6” | 
-| ; |  **; <Comment>** A comment for information purposes. Enter any comment after the semicolon. Truly good for you when you want to understand the crappy, ununderstandable code you produced when you were lame (last week! label LDA #$00 ;Load accumulator with zero! | 
-| .OFFS |  **.OFFS XXXX** This is a toughie, that relocates the code. The value after the offs is a value added to the *= value. F.ex. *=$1000 followed by .OFFS $0800 makes the code land on $1800 and .OFFS $F800 makes it land on $0800. Inserting things like drivecode, is a joy thanks to this feature, even if it could have been done a bit easier to understand. The trick to make it work is this piece of code, so this will also work *=$1000 label1 *=$0400 ;Start for f.ex. drive code .OFFS 0-(*-label1) label2 LDA label2 Labels will be initialized to the following: Label1 =$1000 Label2 =$0400 The code LDA $0400 will be placed at $1000 in memory. | 
+| .WORD | ** .WORD label, $1000, label+$f8/2, *-9 ** Enter 16 bit/2 byte address in the normal 6502/6510 way, i.e. lowbyte, highbyte. Any label and expression is valid! | 
+| * | ** * = $XXXX ** XXXX is here the start for your code. Can be used any number of time, but beware while assembling to disk (“”+“5”). | 
+| .TEXT | ** .TEXT “Some text” ** Enter some text in ASCII-format. Beware that there is no obvious way of entering pokecodes, but for this purpose I recommend my own method. Either AND #$3F or: Enter your monitor. Type the text to the screen and transfer it into a safe place in the memory. Enter TurboAss and insert the data with “”+“6” | 
+| ; | ** ; <Comment> ** A comment for information purposes. Enter any comment after the semicolon. Truly good for you when you want to understand the crappy, ununderstandable code you produced when you were lame (last week! label LDA #$00 ;Load accumulator with zero! | 
+| .OFFS | ** .OFFS XXXX ** This is a toughie, that relocates the code. The value after the offs is a value added to the *= value. F.ex. *=$1000 followed by .OFFS $0800 makes the code land on $1800 and .OFFS $F800 makes it land on $0800. Inserting things like drivecode, is a joy thanks to this feature, even if it could have been done a bit easier to understand. The trick to make it work is this piece of code, so this will also work *=$1000 label1 *=$0400 ;Start for f.ex. drive code .OFFS 0-(*-label1) label2 LDA label2 Labels will be initialized to the following: Label1 =$1000 Label2 =$0400 The code LDA $0400 will be placed at $1000 in memory. | 
 
 ### Working with labels
 

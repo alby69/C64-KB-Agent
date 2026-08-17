@@ -8,16 +8,16 @@ topics:
 difficulty: intermediate
 language: none
 hardware:
-- CIA
 - SID
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
 - sid-registers
 - sound-programming
 - music-player
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # List of all workspaces in the Commodore 64 version of Elite

@@ -11,12 +11,12 @@ hardware:
 - CIA
 - KERNAL
 related:
-- cia-registers
-- keyboard-handling
-- joystick-reading
 - kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- cia-registers
+- joystick-reading
+- keyboard-handling
+scraped_at: '2026-08-17'
 ---
 
 # 

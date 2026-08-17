@@ -12,10 +12,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -29,9 +29,9 @@ Decrunch effects were used in order to show that something is happening and the 
 
 *exomizer sfx $jump_address loadname.prg -x “effect code” -o savename.prg* where jump_address = the address you run your program code after decrunching has finished.
 
-Exomizer has a custom de-crunch effect routine, when using SFX mode. Its default effect is a flashing character at the bottom right of the screen. There are possibilities of customizing exomizer to do really cool de-crunch effects based on the old packers/crunchers you may have used. For example, here is an example of the  **Speed Packer V1.1**  decrunch sound:
+Exomizer has a custom de-crunch effect routine, when using SFX mode. Its default effect is a flashing character at the bottom right of the screen. There are possibilities of customizing exomizer to do really cool de-crunch effects based on the old packers/crunchers you may have used. For example, here is an example of the ** Speed Packer V1.1 ** decrunch sound:
 
- **exomizer sfx $4245 rayfish.prg  -s “lda #$00 sta $fb” -x “lda $fb eor #$01 sta $fb beq skip inc $d418 skip:”  -o rayfish.prg** 
+** exomizer sfx $4245 rayfish.prg -s “lda #$00 sta $fb” -x “lda $fb eor #$01 sta $fb beq skip inc $d418 skip:” -o rayfish.prg **
 
 (replace $d418 with $d020 if you want thick multicolour bars instead of strange noises);
 
@@ -41,15 +41,13 @@ A post on Lemon 64 Forum has a list of example programmable decrunch effects whi
 -x “lda $fb eor #$01 sta $fb beq skip inc $fc lda $fc and #$05 sta $d020 skip:” -s “lda #$00 sta $d011” -f “lda #$1b sta $d011”
 
 **Coloured stripe columns**
--x “inc $fb lda $fb sta $d020 lda #$00 sta $d020”
+-x “inc $fb lda $fb sta $d020 lda #$00 sta $d020” 
 
- **Black and white stripe columns**
--x “lda $fb eor #$01 sta $fb beq skip lda #$01 sta $d020 lda #$00 sta $d020 skip:”
+** Black and white stripe columns** -x “lda $fb eor #$01 sta $fb beq skip lda #$01 sta $d020 lda #$00 sta $d020 skip:”
 
- **Hi-Tec loader style stripe columns** 
--x “lda $fb eor #$01 sta $fb beq skip dec $d020 inc $d020 skip:”
+** Hi-Tec loader style stripe columns ** -x “lda $fb eor #$01 sta $fb beq skip dec $d020 inc $d020 skip:”
 
- **Black and single colour stripes** 
+** Black and single colour stripes **
 
 Change the eor #$XX instruction depending on which colour you want:
 
@@ -57,24 +55,17 @@ eor #$01 = White eor #$02 = Red eor #$03 = Cyan eor #$04 = Purple eor #$05 = Gre
 
 -x “lda $fb eor #$01 sta $fb beq skip lda $fc eor #$XX sta $d020 sta $fb sta $fc skip:”
 
- **Thicker inc $d020 stripes**
--x “lda $fb eor #$01 sta $fb beq skip inc $d020 skip:”
+** Thicker inc $d020 stripes** -x “lda $fb eor #$01 sta $fb beq skip inc $d020 skip:”
 
- **File Press Expert effect** 
-Set start of decruncher to red border the run depacker
--x “lda $fb eor #$01 sta $fb beq skip lda $d020 eor #$01 sta $d020 skip:” -s “lda #$02 sta $d020”
+** File Press Expert effect ** Set start of decruncher to red border the run depacker -x “lda $fb eor #$01 sta $fb beq skip lda $d020 eor #$01 sta $d020 skip:” -s “lda #$02 sta $d020”
 
- **The Sharks Darksqueezer 0.1**  (flickers the chars at the top left)
--x “dec $0400 inc $0401 stx $0402”
+** The Sharks Darksqueezer 0.1 ** (flickers the chars at the top left) -x “dec $0400 inc $0401 stx $0402”
 
- **Beastlinker**  (but slightly thicker)
--x “ora #$05 sta $d020”
+** Beastlinker ** (but slightly thicker) -x “ora #$05 sta $d020”
 
- **Amazing ByteRaper**  (without any text)
--x “ora #$05 sta $d021 sta $d418”
+** Amazing ByteRaper ** (without any text) -x “ora #$05 sta $d021 sta $d418”
 
- **FX Equal Sequence V2**  (aka as the Mega Cruncher)
--x “inc $fb lda $fb sta $d020 lda #0 sta $d020”
+** FX Equal Sequence V2 ** (aka as the Mega Cruncher) -x “inc $fb lda $fb sta $d020 lda #0 sta $d020”
 
 ### Adding Decrunch text to Exomizer SFX
 
@@ -82,7 +73,7 @@ Adding a custom effect may be fun, what about adding a de-crunch text? Can that 
 
 Well, you could program a few characters using the -s “lda #$01 sta $0400 lda #$02 sta $0401 lda #$03 sta $040”, but that is not really efficient. There is a function in Exomizer, which allows you to link custom code before de-crunching the code. In fact you will need to code a small routine yourself. First you need to use:
 
- **exomizer sfx $4245 rayfish.prg -o rayfish.prg -s “jsr highest_addr_out” -n** 
+** exomizer sfx $4245 rayfish.prg -o rayfish.prg -s “jsr highest_addr_out” -n **
 
 That will crunch the program, and give no decrunch effect. If you run this program, it will crash straight away because there is no code at the address it jumps to. Therefore we would need to code the decrunch text routine ourselves.
 

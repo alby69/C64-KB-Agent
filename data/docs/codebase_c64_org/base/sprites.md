@@ -3,26 +3,26 @@ title: Sprites
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprites
 category: tutorial
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: beginner
 language: assembly
 hardware:
+- KERNAL
 - SID
 - CPU
-- KERNAL
 - VIC-II
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Sprites
@@ -89,7 +89,7 @@ These are also available on the Demo Coding page.
 - [Sprite Mirror](https://codebase.c64.org/doku.php?id=base:sprite_mirror) - by Antonio Savona
 - [GIF to Sprites](https://codebase.c64.org/doku.php?id=base:gif_to_sprites) - Kick Assembler script to convert a formatted GIF to a sprite font
 
-base/sprites.txt · Last modified:  by 127.0.0.1
+base/sprites.txt · Last modified:  by mace
 
 ---
 *Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Asprites](https://codebase.c64.org/doku.php?id=base%3Asprites)*

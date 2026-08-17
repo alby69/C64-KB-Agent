@@ -11,9 +11,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # geoRAM Register Description
@@ -54,7 +54,7 @@ sta $dfff
 ldx addressLo
 lda $de00,x
 
-base/georam_registers.txt · Last modified:  by 127.0.0.1
+base/georam_registers.txt · Last modified:  by white_flame
 
 ## Codice Estratto
 

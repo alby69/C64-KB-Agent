@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Fast 8bit * 8bit = 16bit multiply
@@ -102,7 +102,7 @@ sqrhi ;>x*x
     .byte $c4,$c5,$c7,$c9,$cb,$cc,$ce,$d0,$d2,$d4,$d5,$d7,$d9,$db,$dd,$df
     .byte $e1,$e2,$e4,$e6,$e8,$ea,$ec,$ee,$f0,$f2,$f4,$f6,$f8,$fa,$fc,$fe
 ```
-base/another_fast_8bit_multiplication.txt · Last modified:  by 127.0.0.1
+base/another_fast_8bit_multiplication.txt · Last modified:  by litwr2
 
 ## Codice Estratto
 

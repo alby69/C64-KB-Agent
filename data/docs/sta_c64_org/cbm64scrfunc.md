@@ -4,24 +4,24 @@ source_url: https://sta.c64.org/cbm64scrfunc.html
 category: reference
 topics:
 - graphics
-- assembly
 - sprite programming
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- CIA
 - CPU
+- CIA
 - KERNAL
 related:
-- kernal-routines
 - memory-map
 - keyboard-handling
-- cia-registers
-- vic-ii-registers
+- sprite-programming
 - joystick-reading
 - raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-10'
+- kernal-routines
+- vic-ii-registers
+- cia-registers
+scraped_at: '2026-08-17'
 last_modified: Thu, 16 Jun 2016 22:00:00 GMT
 ---
 

@@ -3,21 +3,21 @@ title: Music in NES Elite
 source_url: https://elite.bbcelite.com/deep_dives/music_in_nes_elite.html
 category: deep-dive
 topics:
-- sound generation
-- assembly
 - basic
+- assembly
+- sound generation
 difficulty: intermediate
 language: mixed
 hardware:
 - SID
 - KERNAL
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Music in NES Elite

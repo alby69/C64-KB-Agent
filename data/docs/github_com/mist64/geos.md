@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 last_modified: '2026-04-05T08:26:20Z'
 ---
 

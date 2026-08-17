@@ -3,8 +3,8 @@ title: Bitmap to sprite converter written in Python
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_converter
 category: reference
 topics:
-- basic
 - sprite programming
+- basic
 - graphics
 - assembly
 difficulty: beginner
@@ -15,10 +15,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Bitmap to sprite converter written in Python

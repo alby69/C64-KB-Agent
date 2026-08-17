@@ -9,14 +9,12 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # Inverse Subtraction
-
-### Table of Contents
 
 # Inverse Subtraction
 

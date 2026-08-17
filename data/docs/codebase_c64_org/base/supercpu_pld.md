@@ -12,10 +12,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # PLD
@@ -50,7 +50,7 @@ base:supercpu_pld
         .byte $2b
     }
 ```
-base/supercpu_pld.txt · Last modified:  by 127.0.0.1
+base/supercpu_pld.txt · Last modified:  by tww
 
 ## Codice Estratto
 

@@ -8,10 +8,10 @@ difficulty: intermediate
 language: none
 hardware: []
 related:
+- music-player
 - sid-registers
 - sound-programming
-- music-player
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # NTSC A440 frequency table
@@ -43,7 +43,7 @@ FreqTableNtscHi:
 	        .byte $43,$47,$4b,$4f,$54,$59,$5e,$64,$6a,$70,$77,$7e  ; 6
 	        .byte $86,$8e,$96,$9f,$a8,$b3,$bd,$c8,$d4,$e1,$ee,$fd  ; 7
 
-base/ntsc_frequency_table.txt · Last modified:  by 127.0.0.1
+base/ntsc_frequency_table.txt · Last modified:  by acrouzet
 
 ## Codice Estratto
 

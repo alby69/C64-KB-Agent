@@ -3,8 +3,8 @@ title: Mathematics in Assembly - Part 4
 source_url: https://codebase.c64.org/doku.php?id=base%3Amathematics_in_assembly_part_4
 category: tutorial
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: beginner
 language: assembly
 hardware:
@@ -16,7 +16,7 @@ related:
 - kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Mathematics in Assembly - Part 4

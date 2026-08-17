@@ -4,32 +4,32 @@ source_url: https://elite.bbcelite.com/deep_dives/drawing_vector_graphics_using_
 category: deep-dive
 topics:
 - assembly
-- sprite programming
-- graphics
-- input handling
 - raster interrupts
+- graphics
 - basic
+- sprite programming
+- input handling
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Drawing vector graphics using NES tiles

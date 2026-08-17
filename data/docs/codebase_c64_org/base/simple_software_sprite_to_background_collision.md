@@ -13,10 +13,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Simple Software to Background collision
@@ -77,7 +77,7 @@ There are two options to check the other eight possible screen positions underne
 1. Use different x- and y-offset values for subtraction. (Check this program:[spritebackgr.zip](https://codebase.c64.org/lib/exe/fetch.php?media=base:spritebackgr.zip) , hit “x” and “y” to change offset values, Sprite located at $2000)
 2. Manipulate “column” to reach next two screen rows and next two screen columns: column+40=next screen row, column+80=lowest screen row, column+1=top middle of sprite, column+2=top right of sprite etc.
 
-base/simple_software_sprite_to_background_collision.txt · Last modified:  by 127.0.0.1
+base/simple_software_sprite_to_background_collision.txt · Last modified:  by ftc
 
 ## Codice Estratto
 

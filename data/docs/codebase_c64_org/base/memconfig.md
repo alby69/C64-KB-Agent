@@ -3,10 +3,10 @@ title: Memory configuration
 source_url: https://codebase.c64.org/doku.php?id=base%3Amemconfig
 category: reference
 topics:
-- basic
-- memory management
 - sprite programming
+- basic
 - graphics
+- memory management
 difficulty: intermediate
 language: none
 hardware:
@@ -15,10 +15,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Memory configuration

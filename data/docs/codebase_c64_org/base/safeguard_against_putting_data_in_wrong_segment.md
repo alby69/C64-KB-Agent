@@ -9,10 +9,10 @@ language: assembly
 hardware:
 - CIA
 related:
-- keyboard-handling
 - cia-registers
+- keyboard-handling
 - joystick-reading
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # base:safeguard_against_putting_data_in_wrong_segment [Codebase64 wiki]
@@ -47,7 +47,7 @@ ld65: Warning: config.cfg(4): Memory area overflow in `EMPTY', segment `EMPTY' (
 ld65: Error: Cannot generate output due to memory area overflow
 Makefile:62: recipe for target 'example' failed
 
-base/safeguard_against_putting_data_in_wrong_segment.txt · Last modified:  by 127.0.0.1
+base/safeguard_against_putting_data_in_wrong_segment.txt · Last modified:  by jupp3
 
 ## Codice Estratto
 

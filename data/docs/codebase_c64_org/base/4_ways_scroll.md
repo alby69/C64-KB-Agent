@@ -12,14 +12,14 @@ hardware:
 - KERNAL
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -35,7 +35,7 @@ How I scrolled a 2 by 2 tiled map I hope it is a help to some one trying to scro
 
 This first part here will show you what the irq is doing when called
 
-*SCROLL UP*
+*SCROLL UP* 
 
 IF YSCROLL=3
 
@@ -97,7 +97,7 @@ IF YSCROLL=6
 
  SET YSCROLL TO 4 FOR NEXT TIME IRQ IS CALLED	
 
-*SCROLL LEFT*
+*SCROLL LEFT* 
 
 IF xscroll=3
 
@@ -125,7 +125,7 @@ IF xscroll=1
 
   SET XSCROLL TO 3 FOR NEXT TIME IRQ IS CALLED
 
-*SCROLL RIGHT*
+*SCROLL RIGHT* 
 
 IF xscroll=4
 

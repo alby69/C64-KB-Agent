@@ -3,24 +3,24 @@ title: base:flexible_32_sprite_multiplexer [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Aflexible_32_sprite_multiplexer
 category: reference
 topics:
-- input handling
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
+- input handling
 difficulty: advanced
 language: assembly
 hardware:
 - CPU
-- CIA
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
+- raster-interrupts
 - joystick-reading
-- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-10'
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

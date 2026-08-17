@@ -7,12 +7,12 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
 - KERNAL
+- CPU
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Calculating square roots

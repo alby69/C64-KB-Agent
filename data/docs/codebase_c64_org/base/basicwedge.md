@@ -3,8 +3,8 @@ title: Sample wedge - Adding four new BASIC commands
 source_url: https://codebase.c64.org/doku.php?id=base%3Abasicwedge
 category: source-code
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: beginner
 language: assembly
@@ -14,10 +14,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

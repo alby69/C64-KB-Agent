@@ -3,31 +3,31 @@ title: Extra Instructions Of The 65XX Series CPU
 source_url: https://codebase.c64.org/doku.php?id=base%3Aextra_instructions_of_the_65xx_series_cpu
 category: manual
 topics:
-- basic
-- memory management
 - sprite programming
 - assembly
+- basic
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
 - SID
-- CIA
-- KERNAL
-- CPU
 - VIC-II
+- CPU
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Extra Instructions Of The 65XX Series CPU

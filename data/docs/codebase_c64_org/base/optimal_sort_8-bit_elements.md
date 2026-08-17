@@ -3,25 +3,25 @@ title: Optimal Sort (for 8-Bit Elements)
 source_url: https://codebase.c64.org/doku.php?id=base%3Aoptimal_sort_8-bit_elements
 category: tutorial
 topics:
-- memory management
 - sprite programming
 - assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Optimal Sort (for 8-Bit Elements)

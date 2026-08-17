@@ -3,26 +3,26 @@ title: The Ninja-Method
 source_url: https://codebase.c64.org/doku.php?id=base%3Anmis_and_distributed_jitter-correction_routines
 category: reference
 topics:
-- memory management
 - raster interrupts
-- basic
 - assembly
+- basic
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
 - KERNAL
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -281,10 +281,12 @@ We could actually care less about the CIA-differences by adding another Jitter-R
 
 Any Interrupt can jitter 0 to 7 cycles. This makes up the need to compensate with 8 different routines, which indeed means: we lose 8 pages, where our NMI-Routines are saved. But don't be a prick: a simple FLI does not need that much of RAM. One could f.e. mix the NMI-pages (let's call'em that) with data, or even locate other code around that…
 
+—-
 To make the code-part work [here](https://codebase.c64.org/lib/exe/fetch.php?media=base:nmi-jitter.zip) you'll find a complete demo-part 
 Please assemble test4x4fli.a with ACME 0.93.  If you're missing any of the library-routines I use or get errors while compiling: 
 
 [these](https://codebase.c64.org/lib/exe/fetch.php?media=base:acme_lib.zip) are my slightly changed library routines.
+—- 
 
 St0fF / Neoplasia
 

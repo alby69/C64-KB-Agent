@@ -3,16 +3,16 @@ title: 16-bit "798" Xorshift
 source_url: https://codebase.c64.org/doku.php?id=base%3A16bit_xorshift_random_generator
 category: reference
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: intermediate
 language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # 16-bit "798" Xorshift
@@ -69,7 +69,7 @@ Results:
 ![](https://codebase.c64.org/lib/exe/fetch.php?w=400&tok=8e0436&media=base:xorshift_798_results.png)
 
 
-base/16bit_xorshift_random_generator.txt · Last modified:  by 127.0.0.1
+base/16bit_xorshift_random_generator.txt · Last modified:  by ftc
 
 ## Codice Estratto
 

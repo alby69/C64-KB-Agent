@@ -3,25 +3,25 @@ title: Buying and flying ships in Elite-A
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_buying_and_flying_ships.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
-- BASIC ROM
 - SID
 - KERNAL
+- CIA
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Buying and flying ships in Elite-A

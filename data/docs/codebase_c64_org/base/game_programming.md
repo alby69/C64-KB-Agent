@@ -3,28 +3,28 @@ title: Game Programming
 source_url: https://codebase.c64.org/doku.php?id=base%3Agame_programming
 category: tutorial
 topics:
-- basic
-- input handling
-- raster interrupts
-- assembly
 - sprite programming
+- input handling
+- basic
+- assembly
+- raster interrupts
 difficulty: beginner
 language: assembly
 hardware:
-- CPU
-- CIA
 - KERNAL
+- CPU
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Game Programming
@@ -100,7 +100,7 @@ Here are sources for a few small games.
 - [Dev Tools written in Dark Basic](http://dark-well.pwp.blueyonder.co.uk/) - by Malcolm Bamber
 - [C64 Studio Source Code](https://github.com/GeorgRottensteiner/C64Studio) - by Georg Rottensteiner
 
-base/game_programming.txt · Last modified:  by 127.0.0.1
+base/game_programming.txt · Last modified:  by milasoft
 
 ---
 *Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Agame_programming](https://codebase.c64.org/doku.php?id=base%3Agame_programming)*

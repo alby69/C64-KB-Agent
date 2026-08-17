@@ -5,28 +5,28 @@ category: source-code
 topics:
 - basic
 - assembly
-- sprite programming
 - input handling
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- CIA
 - SID
 - KERNAL
+- CPU
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Terminology used in this commentary

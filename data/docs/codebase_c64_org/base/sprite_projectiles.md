@@ -10,10 +10,10 @@ language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Sprite projectiles
@@ -196,7 +196,7 @@ mirrory2        sbc #4			; =px/frame, +$04 or +$fc (selfmodifying code)
 		sta error
 skip2           rts		
 ```
-base/sprite_projectiles.txt · Last modified:  by 127.0.0.1
+base/sprite_projectiles.txt · Last modified:  by achim
 
 ## Codice Estratto
 

@@ -3,22 +3,22 @@ title: Building Elite from the source
 source_url: https://elite.bbcelite.com/about_site/building_elite.html
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- BASIC ROM
 - SID
 - KERNAL
+- CPU
+- BASIC ROM
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Building Elite from the source

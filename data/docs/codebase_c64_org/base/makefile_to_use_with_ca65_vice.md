@@ -9,10 +9,10 @@ language: none
 hardware:
 - CPU
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # base:makefile_to_use_with_ca65_vice [Codebase64 wiki]
@@ -54,7 +54,7 @@ run: d64
 clean:
 	rm -f src/*.o diskcontents/* labels.txt symbols $(DISKFILENAME)
 
-base/makefile_to_use_with_ca65_vice.txt · Last modified:  by 127.0.0.1
+base/makefile_to_use_with_ca65_vice.txt · Last modified:  by jupp3
 
 ## Codice Estratto
 

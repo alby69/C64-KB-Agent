@@ -3,15 +3,15 @@ title: SetGraphicsBank
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascpu_setgraphicsbank
 category: reference
 topics:
-- memory management
+- assembly
 - basic
 - graphics
-- assembly
+- memory management
 difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 
@@ -92,7 +92,7 @@ Imporvements: Don't like the write to $d019….
         :lda #[[[SCRMem.getValue() & %0011110000000000] >> 6] | [[BMPMem.getValue() & %0011110000000000]>> 10]]
         sta $d018
 ```
-base/scpu_setgraphicsbank.txt · Last modified:  by 127.0.0.1
+base/scpu_setgraphicsbank.txt · Last modified:  by tww
 
 ## Codice Estratto
 

@@ -3,20 +3,20 @@ title: Drawing meridians and equators
 source_url: https://elite.bbcelite.com/deep_dives/drawing_meridians_and_equators.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - SID
 - KERNAL
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Drawing meridians and equators

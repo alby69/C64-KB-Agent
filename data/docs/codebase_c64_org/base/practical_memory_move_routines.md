@@ -3,8 +3,8 @@ title: Practical Memory Move Routines
 source_url: https://codebase.c64.org/doku.php?id=base%3Apractical_memory_move_routines
 category: reference
 topics:
-- memory management
 - assembly
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
@@ -17,7 +17,7 @@ related:
 - kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Practical Memory Move Routines

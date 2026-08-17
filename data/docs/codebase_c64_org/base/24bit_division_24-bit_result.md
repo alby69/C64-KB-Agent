@@ -9,9 +9,9 @@ language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # base:24bit_division_24-bit_result [Codebase64 wiki]
@@ -58,7 +58,7 @@ divisor 	.ds 3
 remainder 	.equ $fb	; remainder is in zero-page to gain some cycle/byte ($fb-$fd)
 pztemp 	 	.equ $fe
 
-base/24bit_division_24-bit_result.txt · Last modified:  by 127.0.0.1
+base/24bit_division_24-bit_result.txt · Last modified:  by verz
 
 ## Codice Estratto
 

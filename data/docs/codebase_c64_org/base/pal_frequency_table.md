@@ -8,10 +8,10 @@ difficulty: intermediate
 language: none
 hardware: []
 related:
+- music-player
 - sid-registers
 - sound-programming
-- music-player
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # PAL A440 frequency table
@@ -44,7 +44,7 @@ FreqTablePalHi:
                 .byte $45,$49,$4e,$52,$57,$5c,$62,$68,$6e,$75,$7c,$83  ; 6
                 .byte $8b,$93,$9c,$a5,$af,$b9,$c4,$d0,$dd,$ea,$f8,$ff  ; 7
 ```
-base/pal_frequency_table.txt · Last modified:  by 127.0.0.1
+base/pal_frequency_table.txt · Last modified:  by acrouzet
 
 ## Codice Estratto
 

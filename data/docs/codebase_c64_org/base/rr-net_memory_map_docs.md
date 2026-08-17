@@ -3,9 +3,9 @@ title: RR-net memory map & docs
 source_url: https://codebase.c64.org/doku.php?id=base%3Arr-net_memory_map_docs
 category: manual
 topics:
-- basic
 - raster interrupts
 - sprite programming
+- basic
 - assembly
 difficulty: advanced
 language: mixed
@@ -15,14 +15,14 @@ hardware:
 - KERNAL
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # RR-net memory map & docs

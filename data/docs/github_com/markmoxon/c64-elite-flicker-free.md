@@ -8,8 +8,8 @@ difficulty: intermediate
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-08-10'
-last_modified: '2026-07-29T10:50:16Z'
+scraped_at: '2026-08-17'
+last_modified: '2026-08-11T12:15:17Z'
 ---
 
 # GitHub Repo: markmoxon/c64-elite-flicker-free
@@ -20,7 +20,7 @@ last_modified: '2026-07-29T10:50:16Z'
 
 **GitHub URL:** https://github.com/markmoxon/c64-elite-flicker-free
 **Stars:** 95
-**Last Updated:** 2026-07-29T10:50:16Z
+**Last Updated:** 2026-08-11T12:15:17Z
 
 
 ---

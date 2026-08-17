@@ -17,7 +17,7 @@ related:
 - kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 

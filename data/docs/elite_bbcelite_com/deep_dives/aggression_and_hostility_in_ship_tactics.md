@@ -3,20 +3,20 @@ title: Aggression and hostility in ship tactics
 source_url: https://elite.bbcelite.com/deep_dives/aggression_and_hostility_in_ship_tactics.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - SID
 - KERNAL
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Aggression and hostility in ship tactics

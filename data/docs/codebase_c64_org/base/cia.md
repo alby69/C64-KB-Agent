@@ -3,22 +3,22 @@ title: CIA (6526) Programming
 source_url: https://codebase.c64.org/doku.php?id=base%3Acia
 category: reference
 topics:
-- input handling
-- memory management
 - raster interrupts
+- memory management
+- input handling
 difficulty: advanced
 language: none
 hardware:
-- CIA
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
+- raster-interrupts
 - joystick-reading
-- sprite-programming
 - vic-ii-registers
-scraped_at: '2026-08-10'
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # CIA (6526) Programming
@@ -45,7 +45,7 @@ See the IO page for this.
 - [Efficient TOD initialisation](https://codebase.c64.org/doku.php?id=cia:efficient_tod_initialisation) - by Silver Dream !/W.F.M.H.
 - [TOD calibration](https://codebase.c64.org/doku.php?id=cia:tod_calibration) - by Soci / Singular
 
-base/cia.txt · Last modified:  by 127.0.0.1
+base/cia.txt · Last modified:  by cz
 
 ---
 *Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Acia](https://codebase.c64.org/doku.php?id=base%3Acia)*

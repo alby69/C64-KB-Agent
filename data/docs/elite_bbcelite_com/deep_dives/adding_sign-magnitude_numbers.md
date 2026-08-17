@@ -3,22 +3,22 @@ title: Adding sign-magnitude numbers
 source_url: https://elite.bbcelite.com/deep_dives/adding_sign-magnitude_numbers.html
 category: deep-dive
 topics:
-- memory management
-- assembly
 - basic
+- assembly
+- memory management
 difficulty: intermediate
 language: assembly
 hardware:
-- CPU
 - SID
 - KERNAL
+- CPU
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Adding sign-magnitude numbers

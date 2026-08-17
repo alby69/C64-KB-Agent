@@ -3,30 +3,28 @@ title: Playing music on PAL and NTSC
 source_url: https://codebase.c64.org/doku.php?id=base%3Aplaying_music_on_pal_and_ntsc
 category: reference
 topics:
-- sound generation
 - basic
+- sound generation
 difficulty: advanced
 language: basic
 hardware:
 - SID
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
-- sid-registers
 - keyboard-handling
+- sid-registers
 - music-player
 - cia-registers
-- kernal-routines
 - joystick-reading
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Playing music on PAL and NTSC
-
-### Table of Contents
 
 # Playing music on PAL and NTSC
 

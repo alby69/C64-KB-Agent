@@ -7,7 +7,7 @@ difficulty: advanced
 language: none
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # base:compression_benchmarks [Codebase64 wiki]
@@ -18,7 +18,7 @@ base:compression_benchmarks
 
 ## Compression Benchmarks
 
-Here are how various packers perform on the Pearl for Pigs corpus, as 
+Here are how various packers perform on the Pearl for Pigs corpus, as
 included in [LZWVL](http://csdb.dk/release/?id=81773), the file “bin.rar”.
 
 Note that Bitfire and ByteBoozer 2.0 have nigh identical performance, so only one is visible in this plot. Times for subsizer are preliminary (current at 2017-04-06).
@@ -128,7 +128,7 @@ Benchmarks originally posted at
 
 as measured by WVL, Christopher Jam, MagerValp, Martin Piper, and tlr.
 
-base/compression_benchmarks.txt · Last modified:  by 127.0.0.1
+base/compression_benchmarks.txt · Last modified:  by shrydar
 
 ---
 *Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Acompression_benchmarks](https://codebase.c64.org/doku.php?id=base%3Acompression_benchmarks)*

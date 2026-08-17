@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # STA
@@ -108,7 +108,7 @@ base:supercpu_sta
         }
     }
 ```
-base/supercpu_sta.txt · Last modified:  by 127.0.0.1
+base/supercpu_sta.txt · Last modified:  by tww
 
 ## Codice Estratto
 

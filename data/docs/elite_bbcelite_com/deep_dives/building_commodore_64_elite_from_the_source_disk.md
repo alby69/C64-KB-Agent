@@ -3,32 +3,32 @@ title: Building Commodore 64 Elite from the source disk
 source_url: https://elite.bbcelite.com/deep_dives/building_commodore_64_elite_from_the_source_disk.html
 category: source-code
 topics:
-- assembly
-- graphics
-- sprite programming
 - basic
+- assembly
+- sprite programming
+- graphics
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
-- BASIC ROM
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Building Commodore 64 Elite from the source disk

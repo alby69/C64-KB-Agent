@@ -7,15 +7,15 @@ topics:
 difficulty: advanced
 language: mixed
 hardware:
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
 - cia-registers
-- kernal-routines
 - joystick-reading
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # base:rr_chip_data [Codebase64 wiki]

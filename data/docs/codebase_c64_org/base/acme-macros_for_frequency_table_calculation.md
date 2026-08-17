@@ -16,7 +16,7 @@ related:
 - kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # ACME-macros for frequency table calculation
@@ -82,7 +82,7 @@ I'm not actually sorry for the comments being written in German - just have fun 
 ```
 / St0fF/Neoplasia^the0bsessedManiacs
 
-base/acme-macros_for_frequency_table_calculation.txt · Last modified:  by 127.0.0.1
+base/acme-macros_for_frequency_table_calculation.txt · Last modified:  by st0ff
 
 ## Codice Estratto
 

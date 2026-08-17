@@ -3,8 +3,8 @@ title: Detecting Sid Type - safe method
 source_url: https://codebase.c64.org/doku.php?id=base%3Adetecting_sid_type_-_safe_method
 category: reference
 topics:
-- sound generation
 - raster interrupts
+- sound generation
 - assembly
 difficulty: advanced
 language: assembly
@@ -13,14 +13,14 @@ hardware:
 - KERNAL
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -60,7 +60,7 @@ model_6581:
 model_8580:
 	[...]
 
-base/detecting_sid_type_-_safe_method.txt · Last modified:  by 127.0.0.1
+base/detecting_sid_type_-_safe_method.txt · Last modified:  by ftc
 
 ## Codice Estratto
 

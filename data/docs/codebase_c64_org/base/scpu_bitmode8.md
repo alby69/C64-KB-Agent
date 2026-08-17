@@ -9,7 +9,7 @@ language: none
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # BitMode8
@@ -29,7 +29,7 @@ Pseudocommand to set the Accumulator and X/Y Index registers to 8 bit mode on th
         sep #%00110000
     }
 ```
-base/scpu_bitmode8.txt · Last modified:  by 127.0.0.1
+base/scpu_bitmode8.txt · Last modified:  by tww
 
 ## Codice Estratto
 

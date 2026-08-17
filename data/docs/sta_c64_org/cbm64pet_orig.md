@@ -8,16 +8,16 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- BASIC ROM
-- CIA
 - KERNAL
+- CIA
+- BASIC ROM
 related:
-- kernal-routines
 - memory-map
 - keyboard-handling
-- cia-registers
 - joystick-reading
-scraped_at: '2026-08-10'
+- kernal-routines
+- cia-registers
+scraped_at: '2026-08-17'
 last_modified: Sat, 13 Mar 2021 23:00:00 GMT
 ---
 

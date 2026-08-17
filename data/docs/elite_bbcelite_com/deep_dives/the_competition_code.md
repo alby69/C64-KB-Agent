@@ -3,21 +3,21 @@ title: The competition code
 source_url: https://elite.bbcelite.com/deep_dives/the_competition_code.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: assembly
 hardware:
-- CPU
 - SID
 - KERNAL
+- CPU
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # The competition code

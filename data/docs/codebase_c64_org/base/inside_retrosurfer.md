@@ -3,30 +3,30 @@ title: '"Inside_RetroSurfer.txt"'
 source_url: https://codebase.c64.org/doku.php?id=base%3Ainside_retrosurfer
 category: reference
 topics:
-- sound generation
-- memory management
 - raster interrupts
 - assembly
+- sound generation
+- memory management
 difficulty: advanced
 language: assembly
 hardware:
 - SID
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # "Inside_RetroSurfer.txt"

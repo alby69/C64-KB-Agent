@@ -3,21 +3,21 @@ title: Generating random numbers
 source_url: https://elite.bbcelite.com/deep_dives/generating_random_numbers.html
 category: deep-dive
 topics:
-- memory management
-- assembly
 - basic
+- assembly
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
 - SID
 - KERNAL
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Generating random numbers

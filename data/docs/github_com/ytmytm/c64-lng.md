@@ -3,14 +3,14 @@ title: 'GitHub Repo: ytmytm/c64-lng'
 source_url: https://github.com/ytmytm/c64-lng
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 last_modified: '2024-06-05T07:27:37Z'
 ---
 
@@ -21,7 +21,7 @@ last_modified: '2024-06-05T07:27:37Z'
 **Description:** LUnix Next Generation - a Little Unix operating system for C64/128/Atari and any 6502-based machine
 
 **GitHub URL:** https://github.com/ytmytm/c64-lng
-**Stars:** 88
+**Stars:** 89
 **Last Updated:** 2024-06-05T07:27:37Z
 
 

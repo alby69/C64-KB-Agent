@@ -3,31 +3,31 @@ title: Comparing NES Elite with the other versions
 source_url: https://elite.bbcelite.com/deep_dives/comparing_nes_elite_with_the_other_versions.html
 category: manual
 topics:
+- basic
 - assembly
 - sprite programming
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- SID
-- BASIC ROM
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Comparing NES Elite with the other versions

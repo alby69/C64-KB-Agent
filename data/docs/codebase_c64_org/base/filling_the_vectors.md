@@ -10,23 +10,23 @@ difficulty: beginner
 language: mixed
 hardware:
 - SID
-- CIA
-- KERNAL
-- CPU
 - VIC-II
+- CPU
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Filling the vectors

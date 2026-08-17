@@ -3,26 +3,26 @@ title: Making room for the modifications in Elite-A
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_making_room_for_the_modifications.html
 category: deep-dive
 topics:
-- memory management
-- assembly
 - basic
+- assembly
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
-- BASIC ROM
 - SID
 - KERNAL
+- CIA
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Making room for the modifications in Elite-A

@@ -9,7 +9,7 @@ language: none
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # BitMode16
@@ -29,7 +29,7 @@ Pseudocommand to set the Accumulator and X/Y Index registers to 16 bit mode on t
         rep #%00110000
     }
 ```
-base/scpu_bitmode16.txt · Last modified:  by 127.0.0.1
+base/scpu_bitmode16.txt · Last modified:  by tww
 
 ## Codice Estratto
 

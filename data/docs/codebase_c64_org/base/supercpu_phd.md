@@ -9,10 +9,10 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # PHD
@@ -48,7 +48,7 @@ base:supercpu_phd
         .byte $0b
     }
 ```
-base/supercpu_phd.txt · Last modified:  by 127.0.0.1
+base/supercpu_phd.txt · Last modified:  by tww
 
 ## Codice Estratto
 

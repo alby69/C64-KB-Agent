@@ -3,21 +3,21 @@ title: The Encyclopedia Galactica
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_the_encyclopedia_galactica.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- BASIC ROM
 - SID
 - KERNAL
+- BASIC ROM
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # The Encyclopedia Galactica

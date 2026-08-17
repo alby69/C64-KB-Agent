@@ -6,16 +6,16 @@ topics: []
 difficulty: advanced
 language: none
 hardware:
-- CIA
 - CPU
+- CIA
 - KERNAL
 related:
-- kernal-routines
 - memory-map
 - keyboard-handling
-- cia-registers
 - joystick-reading
-scraped_at: '2026-08-10'
+- kernal-routines
+- cia-registers
+scraped_at: '2026-08-17'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

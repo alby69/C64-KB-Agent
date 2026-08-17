@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # General 8bit * 8bit = 8bit multiply
@@ -41,7 +41,7 @@ enterLoop: ;For an accumulating multiply (.A = .A + num1*num2), set up num1 and 
 end:
 ; 15 bytes
 
-base/8bit_multiplication_8bit_product.txt · Last modified:  by 127.0.0.1
+base/8bit_multiplication_8bit_product.txt · Last modified:  by white_flame
 
 ## Codice Estratto
 

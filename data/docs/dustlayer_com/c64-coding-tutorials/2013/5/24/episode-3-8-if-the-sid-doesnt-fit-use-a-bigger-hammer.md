@@ -3,30 +3,30 @@ title: ''
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-8-if-the-sid-doesnt-fit-use-a-bigger-hammer
 category: tutorial
 topics:
+- sprite programming
 - basic
 - assembly
 - graphics
-- sprite programming
 difficulty: advanced
 language: mixed
 hardware:
-- VIC-II
 - CIA
 - SID
+- VIC-II
 - KERNAL
 related:
-- vic-ii-registers
-- sound-programming
-- cia-registers
+- kernal-routines
 - raster-interrupts
-- sid-registers
-- keyboard-handling
+- sound-programming
+- memory-map
+- vic-ii-registers
+- cia-registers
 - sprite-programming
 - joystick-reading
-- kernal-routines
+- keyboard-handling
 - music-player
-- memory-map
-scraped_at: '2026-08-10'
+- sid-registers
+scraped_at: '2026-08-17'
 ---
 
 # 

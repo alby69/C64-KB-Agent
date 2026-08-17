@@ -3,24 +3,24 @@ title: Extended screen coordinates
 source_url: https://elite.bbcelite.com/deep_dives/extended_screen_coordinates.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
 - SID
 - KERNAL
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Extended screen coordinates

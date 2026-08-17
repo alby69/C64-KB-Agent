@@ -9,7 +9,7 @@ language: none
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # NativeMode
@@ -30,7 +30,7 @@ Sets the processor into 65C816 native mode.
         xce
     }
 ```
-base/scpu_nativemode.txt · Last modified:  by 127.0.0.1
+base/scpu_nativemode.txt · Last modified:  by tww
 
 ## Codice Estratto
 

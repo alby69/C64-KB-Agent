@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # AND
@@ -129,7 +129,7 @@ base:supercpu_and
         }
     }
 ```
-base/supercpu_and.txt · Last modified:  by 127.0.0.1
+base/supercpu_and.txt · Last modified:  by tww
 
 ## Codice Estratto
 

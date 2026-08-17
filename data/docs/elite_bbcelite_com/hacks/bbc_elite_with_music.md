@@ -1,22 +1,22 @@
 ---
 title: Acornsoft Elite... with music!
-source_url: https://elite.bbcelite.com/hacks/bbc_elite_with_music.html
+source_url: https://elite.bbcelite.com/hacks/bbc_elite_with_music/
 category: reference
 topics:
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
 - SID
 - KERNAL
+- CPU
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Acornsoft Elite... with music!
@@ -40,7 +40,7 @@ As a bonus, I've extended the volume controls in BBC Master Elite so they change
 
 Here's what it sounds like, assuming you have audio enabled:
 
-If you've always wanted to waltz your way into the space station, then check out the [downloads page](https://elite.bbcelite.com/bbc_elite_with_music_downloads.html) to get hold of a copy, or see the [technical information](https://elite.bbcelite.com/bbc_elite_with_music_technical_information.html) for details of how it works.
+If you've always wanted to waltz your way into the space station, then check out the [downloads page](https://elite.bbcelite.com/hacks/bbc_elite_with_music/downloads.html) to get hold of a copy, or see the [technical information](https://elite.bbcelite.com/hacks/bbc_elite_with_music/technical_information.html) for details of how it works.
 
 ---
-*Fonte originale: [https://elite.bbcelite.com/hacks/bbc_elite_with_music.html](https://elite.bbcelite.com/hacks/bbc_elite_with_music.html)*
+*Fonte originale: [https://elite.bbcelite.com/hacks/bbc_elite_with_music/](https://elite.bbcelite.com/hacks/bbc_elite_with_music/)*

@@ -7,20 +7,20 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
+- KERNAL
 - SID
 - CPU
-- KERNAL
 - VIC-II
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

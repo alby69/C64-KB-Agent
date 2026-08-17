@@ -3,24 +3,24 @@ title: Commodore 64 keyboard functions
 source_url: https://sta.c64.org/cbm64kbdfunc.html
 category: reference
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
-- CIA
 - CPU
+- CIA
 - KERNAL
 related:
-- kernal-routines
 - memory-map
 - keyboard-handling
-- cia-registers
-- vic-ii-registers
+- sprite-programming
 - joystick-reading
 - raster-interrupts
-- sprite-programming
-scraped_at: '2026-08-10'
+- kernal-routines
+- vic-ii-registers
+- cia-registers
+scraped_at: '2026-08-17'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

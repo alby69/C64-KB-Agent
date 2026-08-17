@@ -9,20 +9,20 @@ difficulty: advanced
 language: basic
 hardware:
 - SID
-- CIA
-- KERNAL
 - CPU
+- KERNAL
 - BASIC ROM
+- CIA
 related:
-- sid-registers
 - keyboard-handling
+- sid-registers
 - music-player
 - cia-registers
-- kernal-routines
 - joystick-reading
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # base:changing_registers [Codebase64 wiki]
@@ -37,6 +37,7 @@ Tools
 Show pagesource
 Old revisions
 Backlinks
+Export Page to HTML/PDF
 Recent Changes
 Media Manager
 Sitemap
@@ -93,6 +94,7 @@ Page Tools
 Show pagesource
 Old revisions
 Backlinks
+Export Page to HTML/PDF
 Back to top
 
 ---

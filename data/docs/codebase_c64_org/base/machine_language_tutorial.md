@@ -8,7 +8,7 @@ language: none
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Machine Language Tutorial
@@ -19,7 +19,7 @@ base:machine_language_tutorial
 
 An incomplete series about 6510 machine language written by Karmic/HVSC. If you notice any errors or problems, feel free to drop me a line.
 
-base/machine_language_tutorial.txt · Last modified:  by 127.0.0.1
+base/machine_language_tutorial.txt · Last modified:  by karmic
 
 ---
 *Fonte originale: [https://codebase.c64.org/doku.php?id=base%3Amachine_language_tutorial](https://codebase.c64.org/doku.php?id=base%3Amachine_language_tutorial)*

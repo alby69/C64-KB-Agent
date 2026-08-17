@@ -3,21 +3,21 @@ title: Auto-playing the NES combat demo
 source_url: https://elite.bbcelite.com/deep_dives/auto-playing_the_combat_demo.html
 category: deep-dive
 topics:
-- memory management
-- assembly
-- sprite programming
 - basic
+- assembly
+- memory management
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 related:
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
-- memory-map
 - raster-interrupts
-scraped_at: '2026-08-10'
+- sprite-programming
+- memory-map
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Auto-playing the NES combat demo

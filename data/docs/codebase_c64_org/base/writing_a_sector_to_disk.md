@@ -3,24 +3,24 @@ title: Writing a sector to disk
 source_url: https://codebase.c64.org/doku.php?id=base%3Awriting_a_sector_to_disk
 category: tool
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

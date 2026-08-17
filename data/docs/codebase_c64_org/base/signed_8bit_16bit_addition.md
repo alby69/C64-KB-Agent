@@ -9,7 +9,7 @@ language: mixed
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # base:signed_8bit_16bit_addition [Codebase64 wiki]
@@ -51,7 +51,7 @@ The following version uses only the accumulator, adding 2 bytes and 1 cycle:
 
 White Flame
 
-base/signed_8bit_16bit_addition.txt · Last modified:  by 127.0.0.1
+base/signed_8bit_16bit_addition.txt · Last modified:  by white_flame
 
 ## Codice Estratto
 

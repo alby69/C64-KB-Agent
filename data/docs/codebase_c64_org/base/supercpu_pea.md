@@ -3,8 +3,8 @@ title: PEA
 source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_pea
 category: tool
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: intermediate
 language: mixed
@@ -12,12 +12,12 @@ hardware:
 - SID
 related:
 - sid-registers
-- raster-interrupts
 - music-player
-- sprite-programming
-- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # PEA
@@ -60,7 +60,7 @@ base:supercpu_pea
         }
     }
 ```
-base/supercpu_pea.txt · Last modified:  by 127.0.0.1
+base/supercpu_pea.txt · Last modified:  by tww
 
 ## Codice Estratto
 

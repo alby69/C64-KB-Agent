@@ -9,9 +9,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # Table generator for square table based multiplications
@@ -65,7 +65,7 @@ ldy #$ff
    inx
 bne :-
 
-base/table_generator_routine_for_fast_8_bit_mul_table.txt · Last modified:  by 127.0.0.1
+base/table_generator_routine_for_fast_8_bit_mul_table.txt · Last modified:  by graham
 
 ## Codice Estratto
 

@@ -3,9 +3,9 @@ title: base:scrolltext_using_sprites [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Ascrolltext_using_sprites
 category: source-code
 topics:
-- memory management
 - sprite programming
 - assembly
+- memory management
 difficulty: intermediate
 language: assembly
 hardware:
@@ -14,10 +14,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

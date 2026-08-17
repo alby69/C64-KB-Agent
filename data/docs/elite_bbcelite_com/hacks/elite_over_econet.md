@@ -1,23 +1,23 @@
 ---
 title: Elite over Econet
-source_url: https://elite.bbcelite.com/hacks/elite_over_econet.html
+source_url: https://elite.bbcelite.com/hacks/elite_over_econet/
 category: reference
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
 - SID
 - KERNAL
+- CPU
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Elite over Econet
@@ -34,11 +34,11 @@ Fast-forward to the modern era, and Econet is still going strong, albeit in the 
 
 I have my own rather more modest network at home, connecting together my Archimedes A410/1, BBC Master, BBC Micro and Acorn Electron, and I just had to get Elite loading over it. The challenge is mainly one of memory; like the disc filing system, Econet steals a chunk of memory for its own use, which isn't normally too much of a problem, but when you're talking about a game that famously uses [almost every single available byte](https://elite.bbcelite.com/deep_dives/the_elite_memory_map.html), Econet is the straw that breaks the camel's back.
 
-Luckily both the BBC Master and the 6502 Second Processor have plenty of spare memory even when running Elite, and so do the BBC Micro and Acorn Electron once they've been expanded with 16K of sideways RAM, so all it takes to get Elite working over Econet is to restructure the game so it no longer uses the memory that Econet needs. I say "all" as if it's an easy thing - there's [a bit more to it](https://elite.bbcelite.com/elite_over_econet_technical_information.html), of course - but the result is a version of Elite that loads and runs over Econet, and which you can [download and install](https://elite.bbcelite.com/elite_over_econet_installing.html) on your own network so your users can [play Elite over Econet](https://elite.bbcelite.com/elite_over_econet_downloads.html). And if your BBC Micro doesn't have sideways RAM at all, then there's a cut-down version that drops a couple of minor features to make it fit, so you can still join in the fun.
+Luckily both the BBC Master and the 6502 Second Processor have plenty of spare memory even when running Elite, and so do the BBC Micro and Acorn Electron once they've been expanded with 16K of sideways RAM, so all it takes to get Elite working over Econet is to restructure the game so it no longer uses the memory that Econet needs. I say "all" as if it's an easy thing - there's [a bit more to it](https://elite.bbcelite.com/hacks/elite_over_econet/technical_information.html), of course - but the result is a version of Elite that loads and runs over Econet, and which you can [download and install](https://elite.bbcelite.com/hacks/elite_over_econet/installing.html) on your own network so your users can [play Elite over Econet](https://elite.bbcelite.com/hacks/elite_over_econet/downloads.html). And if your BBC Micro doesn't have sideways RAM at all, then there's a cut-down version that drops a couple of minor features to make it fit, so you can still join in the fun.
 
-Not only that, but I've also added support for a [multiplayer scoreboard](https://elite.bbcelite.com/elite_over_econet_scoreboard.html) that can show live scores from everyone playing Elite on the network. And I've crafted an application for RISC OS that lets Archimedes Elite players send their scores to the scoreboard too; ArcElite already loads over Econet, so all you need to do is [run the application](https://elite.bbcelite.com/elite_over_econet_acorn_archimedes.html), fill in a few details and off you go.
+Not only that, but I've also added support for a [multiplayer scoreboard](https://elite.bbcelite.com/hacks/elite_over_econet/scoreboard.html) that can show live scores from everyone playing Elite on the network. And I've crafted an application for RISC OS that lets Archimedes Elite players send their scores to the scoreboard too; ArcElite already loads over Econet, so all you need to do is [run the application](https://elite.bbcelite.com/hacks/elite_over_econet/acorn_archimedes.html), fill in a few details and off you go.
 
 So, finally, after all these years, we can all sit down at our networked Acorns and play competitive Elite. Teachers, you might like to look away now.
 
 ---
-*Fonte originale: [https://elite.bbcelite.com/hacks/elite_over_econet.html](https://elite.bbcelite.com/hacks/elite_over_econet.html)*
+*Fonte originale: [https://elite.bbcelite.com/hacks/elite_over_econet/](https://elite.bbcelite.com/hacks/elite_over_econet/)*

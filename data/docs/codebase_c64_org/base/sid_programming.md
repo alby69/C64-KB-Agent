@@ -3,32 +3,34 @@ title: SID and Music Programming
 source_url: https://codebase.c64.org/doku.php?id=base%3Asid_programming
 category: tutorial
 topics:
-- sound generation
 - raster interrupts
+- sound generation
 - assembly
 difficulty: beginner
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 - VIC-II
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # SID and Music Programming
 
 base:sid_programming
 
-                # SID and Music Programming
+                ### Table of Contents
+
+# SID and Music Programming
 
 This is where you find programming examples as well as hardware information about the SID, the soundchip inside the C64. This section also contain information related to music programming on the c64, such as music file formats and other things like that.
 

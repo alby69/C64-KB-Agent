@@ -3,20 +3,20 @@ title: Commodore 64 datasette functions
 source_url: https://sta.c64.org/cbm64dtsfunc.html
 category: reference
 topics:
-- assembly
 - sprite programming
+- assembly
 difficulty: advanced
 language: assembly
 hardware:
-- KERNAL
 - CPU
+- KERNAL
 related:
-- kernal-routines
 - memory-map
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-08-10'
+- raster-interrupts
+- kernal-routines
+- vic-ii-registers
+scraped_at: '2026-08-17'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

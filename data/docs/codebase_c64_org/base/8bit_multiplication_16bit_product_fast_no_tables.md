@@ -8,7 +8,7 @@ difficulty: intermediate
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # 8bit multiplication with 16bit product
@@ -78,7 +78,7 @@ zro: stx mul1
      txa
      rts     
 ```
-base/8bit_multiplication_16bit_product_fast_no_tables.txt · Last modified:  by 127.0.0.1
+base/8bit_multiplication_16bit_product_fast_no_tables.txt · Last modified:  by djmips
 
 ## Codice Estratto
 

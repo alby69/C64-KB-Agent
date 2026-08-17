@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # BRA / BRL
@@ -85,7 +85,7 @@ This pseudocommand merges both BRA and BRL opcommands and chooses automatically 
         }
     }
 ```
-base/supercpu_bra.txt · Last modified:  by 127.0.0.1
+base/supercpu_bra.txt · Last modified:  by tww
 
 ## Codice Estratto
 

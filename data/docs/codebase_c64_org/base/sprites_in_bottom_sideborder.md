@@ -3,10 +3,10 @@ title: Sprites in bottom sideborder
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprites_in_bottom_sideborder
 category: reference
 topics:
-- memory management
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
+- memory management
 difficulty: beginner
 language: assembly
 hardware:
@@ -14,12 +14,12 @@ hardware:
 - VIC-II
 related:
 - sid-registers
-- raster-interrupts
 - music-player
-- sprite-programming
-- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

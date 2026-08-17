@@ -8,7 +8,7 @@ language: none
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # TXY
@@ -40,7 +40,7 @@ base:supercpu_txy
         .byte $9b
     }
 ```
-base/supercpu_txy.txt · Last modified:  by 127.0.0.1
+base/supercpu_txy.txt · Last modified:  by tww
 
 ## Codice Estratto
 

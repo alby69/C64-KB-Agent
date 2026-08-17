@@ -9,18 +9,16 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # 16-Bit Absolute Value Comparison
 
 base:16-bit_absolute_comparison
 
-                ### Table of Contents
-
-# 16-Bit Absolute Value Comparison
+                # 16-Bit Absolute Value Comparison
 
 ## Skate & Eins Method
 
@@ -71,7 +69,7 @@ num1IsBigger:
  
 endOfAbsCompare:
 
-base/16-bit_absolute_comparison.txt · Last modified:  by 127.0.0.1
+base/16-bit_absolute_comparison.txt · Last modified:  by tww
 
 ## Codice Estratto
 

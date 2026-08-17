@@ -11,18 +11,16 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # C64doc
 
 base:c64doc
 
-                ### Table of Contents
-
-# C64doc
+                # C64doc
 
 Written by John West and Marko Mäkelä. It was taken from [here](http://www.viceteam.org/plain/64doc.txt). The document is huge, and for some reason dokuwiki could not cope with it in its entirety (too much info! :), so I (FTC) had to split the contents in to separate pages for each sub-section.
 

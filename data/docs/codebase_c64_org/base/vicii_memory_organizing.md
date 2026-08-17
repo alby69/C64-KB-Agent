@@ -3,32 +3,32 @@ title: The VIC banks
 source_url: https://codebase.c64.org/doku.php?id=base%3Avicii_memory_organizing
 category: reference
 topics:
+- sprite programming
 - basic
+- graphics
 - assembly
 - memory management
-- sprite programming
-- graphics
 difficulty: beginner
 language: assembly
 hardware:
 - SID
-- CIA
-- KERNAL
 - VIC-II
 - BASIC ROM
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -56,8 +56,7 @@ sta $DD00
 
 the above will only change the bits controlling the VIC bank position.
 
-*A little tip from Nitro/Black Sun:* 
-If you are using Krill's loader to change the banks, just do
+//A little tip from Nitro/Black Sun: // If you are using Krill's loader to change the banks, just do
 
 lda #%000000xx ;<- your desired VIC bank value, see above
 sta $dd00

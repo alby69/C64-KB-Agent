@@ -3,25 +3,25 @@ title: Secrets of the Executive version
 source_url: https://elite.bbcelite.com/deep_dives/secrets_of_the_executive_version.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- CIA
 - SID
 - KERNAL
+- CPU
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Secrets of the Executive version

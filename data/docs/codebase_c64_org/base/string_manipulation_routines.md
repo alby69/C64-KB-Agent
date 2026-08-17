@@ -3,10 +3,10 @@ title: String manipulation routines
 source_url: https://codebase.c64.org/doku.php?id=base%3Astring_manipulation_routines
 category: reference
 topics:
-- basic
-- memory management
 - sprite programming
 - assembly
+- basic
+- memory management
 difficulty: intermediate
 language: assembly
 hardware:
@@ -16,10 +16,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

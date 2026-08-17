@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # 24 bit multiplication (signed or unsigned)
@@ -125,7 +125,7 @@ unsigned_mul24	SUBROUTINE
 	ror factor2
 	jmp .loop			; end while	
 ```
-base/24bit_multiplication_24bit_product.txt · Last modified:  by 127.0.0.1
+base/24bit_multiplication_24bit_product.txt · Last modified:  by neils
 
 ## Codice Estratto
 

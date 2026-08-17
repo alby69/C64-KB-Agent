@@ -3,26 +3,26 @@ title: Quicksort (for 16-bit Elements)
 source_url: https://codebase.c64.org/doku.php?id=base%3Aquicksort_16-bit_elements
 category: tool
 topics:
+- assembly
+- basic
 - sound generation
 - memory management
-- basic
-- assembly
 difficulty: beginner
 language: mixed
 hardware:
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
-- sid-registers
 - keyboard-handling
+- sid-registers
 - music-player
 - cia-registers
-- kernal-routines
 - joystick-reading
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Quicksort (for 16-bit Elements)

@@ -3,26 +3,26 @@ title: Character bullets
 source_url: https://codebase.c64.org/doku.php?id=base%3Acharacter_bullets
 category: reference
 topics:
-- input handling
-- basic
 - sprite programming
 - assembly
+- basic
+- input handling
 difficulty: beginner
 language: assembly
 hardware:
-- CIA
 - KERNAL
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

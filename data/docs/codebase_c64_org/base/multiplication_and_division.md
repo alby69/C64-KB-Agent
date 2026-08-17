@@ -3,17 +3,17 @@ title: Multiplication
 source_url: https://codebase.c64.org/doku.php?id=base%3Amultiplication_and_division
 category: tool
 topics:
-- memory management
-- basic
 - assembly
+- basic
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # Multiplication

@@ -3,19 +3,19 @@ title: Multiplexer 2
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_multiplexer_2
 category: tool
 topics:
-- memory management
 - raster interrupts
-- sprite programming
 - assembly
+- sprite programming
+- memory management
 difficulty: advanced
 language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 

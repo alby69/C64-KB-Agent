@@ -3,22 +3,22 @@ title: Balloon demo from the C64 manual
 source_url: https://codebase.c64.org/doku.php?id=base%3Aballon_demo_from_manual
 category: manual
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
 - KERNAL
+- CPU
 - VIC-II
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Balloon demo from the C64 manual
@@ -94,7 +94,7 @@ spr0	byte 0,127,0,1,255,192,3,255,224,3,231,224
 	byte 1,62,64,0,156,128,0,156,128,0,73,0,0,73,0,0
 	byte 62,0,0,62,0,0,62,0,0,28,0	
 
-base/ballon_demo_from_manual.txt · Last modified:  by 127.0.0.1
+base/ballon_demo_from_manual.txt · Last modified:  by ftc
 
 ## Codice Estratto
 

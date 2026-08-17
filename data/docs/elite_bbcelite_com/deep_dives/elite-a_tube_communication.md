@@ -9,20 +9,20 @@ topics:
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
-- CIA
 - SID
 - KERNAL
+- CPU
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Tube communication in Elite-A

@@ -3,22 +3,22 @@ title: Shift-and-add multiplication
 source_url: https://elite.bbcelite.com/deep_dives/shift-and-add_multiplication.html
 category: manual
 topics:
-- memory management
-- assembly
 - basic
+- assembly
+- memory management
 difficulty: beginner
 language: assembly
 hardware:
-- CIA
 - SID
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
 - sid-registers
 - sound-programming
 - music-player
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Shift-and-add multiplication

@@ -9,7 +9,7 @@ difficulty: intermediate
 language: mixed
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Fast Floating Point Multiply
@@ -219,7 +219,7 @@ multabhi = $c200
 multab2lo = $c400
 multab2hi = $c600
 
-base/fast_floating_point_multiply.txt · Last modified:  by 127.0.0.1
+base/fast_floating_point_multiply.txt · Last modified:  by malcontent
 
 ## Codice Estratto
 

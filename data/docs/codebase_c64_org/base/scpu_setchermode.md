@@ -9,7 +9,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 
@@ -31,7 +31,7 @@ Set Character Set Mode (reset bit #5 of $d011).
         trb $d010
     }
 ```
-base/scpu_setchermode.txt · Last modified:  by 127.0.0.1
+base/scpu_setchermode.txt · Last modified:  by tww
 
 ## Codice Estratto
 

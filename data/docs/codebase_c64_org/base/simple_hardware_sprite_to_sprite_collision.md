@@ -3,18 +3,18 @@ title: base:simple_hardware_sprite_to_sprite_collision [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Asimple_hardware_sprite_to_sprite_collision
 category: reference
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 

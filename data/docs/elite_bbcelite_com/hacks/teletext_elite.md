@@ -1,10 +1,10 @@
 ---
 title: About Teletext Elite
-source_url: https://elite.bbcelite.com/hacks/teletext_elite.html
+source_url: https://elite.bbcelite.com/hacks/teletext_elite/
 category: reference
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # About Teletext Elite
@@ -23,7 +23,7 @@ scraped_at: '2026-08-10'
 
 Teletext Elite is the full and unabridged disc version of BBC Micro Elite, converted to run in the BBC Micro's teletext screen mode (so it looks like Ceefax and Oracle). For those of us of a certain age, this is peak 1980s nostalgia.
 
-Visit the [downloads page](https://elite.bbcelite.com/teletext_elite_downloads.html) to get hold of a copy, or check out the [instructions](https://elite.bbcelite.com/teletext_elite_instructions.html) or [technical information](https://elite.bbcelite.com/teletext_elite_technical_information.html) for more details.
+Visit the [downloads page](https://elite.bbcelite.com/hacks/teletext_elite/downloads.html) to get hold of a copy, or check out the [instructions](https://elite.bbcelite.com/hacks/teletext_elite/instructions.html) or [technical information](https://elite.bbcelite.com/hacks/teletext_elite/technical_information.html) for more details.
 
 Or keep reading to find out why Teletext Elite exists in the first place...
 
@@ -40,7 +40,7 @@ Neither of us thought that we would end up creating a version of Elite with a ch
 
 Creating a loving and 100% faithful conversion of Elite in teletext has been an absolute delight, and I hope you enjoy the results as much as we've enjoyed making it.
 
-To get your sixels all excited, here are a couple of videos. The first one shows various trading screens (including the [Galfax variant](https://elite.bbcelite.com/teletext_elite_instructions.html#eggs) of the Market Prices screen), with a launch into space and a hyperspace jump:
+To get your sixels all excited, here are a couple of videos. The first one shows various trading screens (including the [Galfax variant](https://elite.bbcelite.com/hacks/teletext_elite/instructions.html#eggs) of the Market Prices screen), with a launch into space and a hyperspace jump:
 
 And here's a clip of some deep-space fighting in the outer reaches of the agricultural anarchy system of Riedquat, just a small hop from Lave:
 
@@ -55,4 +55,4 @@ Finally, here are some screenshots of the main trading screens:
 ![Teletext Elite Market Prices screen](https://elite.bbcelite.com/images/teletext_elite/market_prices.png)
 
 ---
-*Fonte originale: [https://elite.bbcelite.com/hacks/teletext_elite.html](https://elite.bbcelite.com/hacks/teletext_elite.html)*
+*Fonte originale: [https://elite.bbcelite.com/hacks/teletext_elite/](https://elite.bbcelite.com/hacks/teletext_elite/)*

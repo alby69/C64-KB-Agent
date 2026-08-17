@@ -3,36 +3,36 @@ title: List of all subroutines in the Commodore 64 version of Elite
 source_url: https://elite.bbcelite.com/c64/indexes/subroutines.html
 category: source-code
 topics:
-- assembly
-- sprite programming
 - memory management
+- raster interrupts
+- assembly
 - sound generation
 - graphics
-- input handling
-- raster interrupts
 - basic
+- sprite programming
+- input handling
 difficulty: advanced
 language: mixed
 hardware:
-- CPU
-- SID
-- BASIC ROM
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # List of all subroutines in the Commodore 64 version of Elite

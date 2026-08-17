@@ -3,33 +3,33 @@ title: Advanced optimizing
 source_url: https://codebase.c64.org/doku.php?id=base%3Aadvanced_optimizing
 category: tutorial
 topics:
-- basic
-- raster interrupts
-- assembly
-- memory management
 - sprite programming
+- basic
 - graphics
+- assembly
+- raster interrupts
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
 - SID
-- CIA
-- KERNAL
-- CPU
 - VIC-II
+- CPU
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -508,7 +508,7 @@ When inside a loop, you can also use the compare at the end of the loop to set/c
        cpy #$00 ;sets carry again (upcoming bcs shows that clearly)
        bcs -
 ```
-if you need a cleared carry all the time, then do an incrementing loop and branch on clear. 
+if you need a cleared carry all the time, then do an incrementing loop and branch on clear.
 Also you might want to have a look at this article: [Some words about the ANC opcode](https://codebase.c64.org/doku.php?id=base:some_words_about_the_anc_opcode)
 
 If the carry has not the desired state, one can still circumvent a CLC/SEC beforehand by just taking the state of the carry into account:
@@ -582,7 +582,7 @@ offset  = $b0
 ```
 As you see, pos and offset are also added implicitely by the indexing done by the opcode. This might in some situations perform faster and will avoid clobbering the carry.
 
-Last but not least, you might give [SBX](https://codebase.c64.org/doku.php?id=base:advanced_optimizing#sbx) a try which does not care about the state of the carry on a subtraction. 
+Last but not least, you might give [SBX](https://codebase.c64.org/doku.php?id=base:advanced_optimizing#sbx) a try which does not care about the state of the carry on a subtraction.
 
 # Use of immediate values
 

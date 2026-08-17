@@ -8,19 +8,19 @@ topics:
 difficulty: beginner
 language: assembly
 hardware:
-- VIC-II
 - SID
+- VIC-II
 - KERNAL
 related:
-- vic-ii-registers
-- sound-programming
-- raster-interrupts
-- sid-registers
-- sprite-programming
 - kernal-routines
-- music-player
+- raster-interrupts
+- sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+- music-player
+- sid-registers
+scraped_at: '2026-08-17'
 ---
 
 

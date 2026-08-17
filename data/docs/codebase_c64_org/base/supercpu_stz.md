@@ -8,7 +8,7 @@ language: none
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # STZ
@@ -68,7 +68,7 @@ base:supercpu_stz
         }
     }
 ```
-base/supercpu_stz.txt · Last modified:  by 127.0.0.1
+base/supercpu_stz.txt · Last modified:  by tww
 
 ## Codice Estratto
 

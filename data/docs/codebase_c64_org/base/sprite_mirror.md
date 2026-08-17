@@ -3,19 +3,19 @@ title: base:sprite_mirror [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_mirror
 category: tool
 topics:
-- memory management
 - sprite programming
-- graphics
 - assembly
+- graphics
+- memory management
 difficulty: beginner
 language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # base:sprite_mirror [Codebase64 wiki]
@@ -81,7 +81,7 @@ sprmir:
 .fill 256, [[i & %00000011] << 6] | [[i & %00001100] << 2] | [[i & %00110000] >> 2] | [[i & %11000000] >> 6]
 	}
 ```
-base/sprite_mirror.txt · Last modified:  by 127.0.0.1
+base/sprite_mirror.txt · Last modified:  by tonysavon
 
 ## Codice Estratto
 

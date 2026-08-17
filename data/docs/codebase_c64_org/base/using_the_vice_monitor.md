@@ -3,32 +3,32 @@ title: Using the VICE monitor
 source_url: https://codebase.c64.org/doku.php?id=base%3Ausing_the_vice_monitor
 category: manual
 topics:
-- basic
-- raster interrupts
-- assembly
-- memory management
 - sprite programming
+- basic
+- assembly
+- raster interrupts
+- memory management
 difficulty: advanced
 language: mixed
 hardware:
 - SID
-- CIA
-- KERNAL
-- CPU
 - VIC-II
+- CPU
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Using the VICE monitor
@@ -48,7 +48,7 @@ This works differently depending on what target platform you are running VICE on
   l "<path>" 0 [<start address>]
   s "<path>" 0 [<start address>] [<end address>]
 
-For those of you who code in TASS, this is extremely handy, and it's quite useful for us others as well. The key here is using '0' as the device number, which tells VICE it should use the host's filesystem instead of an emulated device. *NOTE: The end address is* inclusive*, meaning that if you input '1000' as the end address, everything from the start address up until **and including** the value at $1000 will be saved. Also, all input files are assumed to be in .PRG format, so the first two bytes are always skipped even if you specify an explicit load address.*
+For those of you who code in TASS, this is extremely handy, and it's quite useful for us others as well. The key here is using '0' as the device number, which tells VICE it should use the host's filesystem instead of an emulated device. *NOTE: The end address is //inclusive*, meaning that if you input '1000' as the end address, everything from the start address up until **and including** the value at $1000 will be saved. Also, all input files are assumed to be in .PRG format, so the first two bytes are always skipped even if you specify an explicit load address.//
 
 ## Reading the status display
 

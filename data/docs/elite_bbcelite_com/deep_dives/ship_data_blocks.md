@@ -3,25 +3,25 @@ title: Ship data blocks
 source_url: https://elite.bbcelite.com/deep_dives/ship_data_blocks.html
 category: source-code
 topics:
-- memory management
 - assembly
+- memory management
 - sprite programming
 difficulty: intermediate
 language: assembly
 hardware:
-- CIA
 - SID
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Ship data blocks
@@ -32,7 +32,7 @@ As described in the deep dive on [the local bubble of universe](https://elite.bb
 
 The ship data block contains information about the ship's status, its location in space, its orientation and so on. Each ship in the local bubble also has an entry in the lookup table at [UNIV](https://elite.bbcelite.com/cassette/main/variable/univ.html) that points to its data block in K%, and along with the ship slots at [FRIN](https://elite.bbcelite.com/cassette/main/workspace/wp.html#frin) and the ship blueprints at [XX21](https://elite.bbcelite.com/cassette/main/variable/xx21.html), we have everything we need to simulate the world of Elite (see the deep dive on [the local bubble of universe](https://elite.bbcelite.com/the_local_bubble_of_universe.html) for details of the ship slots and how they work).
 
-For example, here's a screenshot of the [Elite Universe Editor](https://elite.bbcelite.com/hacks/elite_universe_editor.html), which allows you to edit the ships in the local bubble:
+For example, here's a screenshot of the [Elite Universe Editor](https://elite.bbcelite.com/hacks/elite_universe_editor/), which allows you to edit the ships in the local bubble:
 
 ![The ship ID poster in Elite Universe Editor](https://elite.bbcelite.com/images/elite_universe_editor/ship_id.png) 
 

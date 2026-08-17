@@ -3,22 +3,22 @@ title: The Constrictor mission
 source_url: https://elite.bbcelite.com/deep_dives/the_constrictor_mission.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- BASIC ROM
 - SID
 - KERNAL
+- CPU
+- BASIC ROM
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # The Constrictor mission

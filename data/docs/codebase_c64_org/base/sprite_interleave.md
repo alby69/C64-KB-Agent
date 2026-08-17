@@ -3,31 +3,31 @@ title: Sprite Interleave
 source_url: https://codebase.c64.org/doku.php?id=base%3Asprite_interleave
 category: reference
 topics:
-- basic
 - sprite programming
+- basic
 - graphics
 - assembly
 difficulty: intermediate
 language: assembly
 hardware:
 - SID
-- CIA
-- KERNAL
-- CPU
 - VIC-II
+- CPU
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

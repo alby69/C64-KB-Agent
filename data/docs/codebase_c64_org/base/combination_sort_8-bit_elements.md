@@ -3,26 +3,26 @@ title: Combination Sort
 source_url: https://codebase.c64.org/doku.php?id=base%3Acombination_sort_8-bit_elements
 category: reference
 topics:
-- basic
-- memory management
 - sprite programming
 - assembly
+- basic
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Combination Sort

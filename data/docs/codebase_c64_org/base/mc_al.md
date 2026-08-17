@@ -11,21 +11,21 @@ language: mixed
 hardware:
 - SID
 - CPU
-- CIA
 - KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Introduction
@@ -184,9 +184,7 @@ BCC      (branch carry clear)  - will branch if the carry is not set.
 SEC      (set carry)
 CLC      (clear carry) 
 
-*This was the end of part 1 in these tutorial series. Hoped you liked it!
-Feedback, corrections, misspelling are appreciated, if you let me know.
-Part 2 will hopefully follow soon.*
+// This was the end of part 1 in these tutorial series. Hoped you liked it! Feedback, corrections, misspelling are appreciated, if you let me know. Part 2 will hopefully follow soon.//
 
 ## Codice Estratto
 

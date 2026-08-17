@@ -3,26 +3,26 @@ title: Multi-language support in NES Elite
 source_url: https://elite.bbcelite.com/deep_dives/multi-language_support_in_nes_elite.html
 category: manual
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- SID
-- BASIC ROM
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Multi-language support in NES Elite

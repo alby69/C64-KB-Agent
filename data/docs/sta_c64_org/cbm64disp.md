@@ -8,15 +8,15 @@ topics:
 difficulty: intermediate
 language: assembly
 hardware:
-- VIC-II
 - KERNAL
+- VIC-II
 related:
-- kernal-routines
 - memory-map
-- vic-ii-registers
-- raster-interrupts
 - sprite-programming
-scraped_at: '2026-08-10'
+- raster-interrupts
+- kernal-routines
+- vic-ii-registers
+scraped_at: '2026-08-17'
 last_modified: Fri, 13 Feb 2015 23:00:00 GMT
 ---
 

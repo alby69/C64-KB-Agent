@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Short 8bit * 8bit = 16bit multiply
@@ -37,7 +37,7 @@ m1      ror
         ldx FAC1
         rts
 ```
-base/short_8bit_multiplication_16bit_product.txt · Last modified:  by 127.0.0.1
+base/short_8bit_multiplication_16bit_product.txt · Last modified:  by djmips
 
 ## Codice Estratto
 

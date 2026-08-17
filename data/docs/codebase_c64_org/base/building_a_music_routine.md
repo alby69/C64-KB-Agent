@@ -3,31 +3,31 @@ title: Building a musicroutine by Cadaver
 source_url: https://codebase.c64.org/doku.php?id=base%3Abuilding_a_music_routine
 category: source-code
 topics:
-- sound generation
 - raster interrupts
 - basic
+- sound generation
 - assembly
 difficulty: beginner
 language: mixed
 hardware:
 - SID
-- CIA
-- KERNAL
-- CPU
 - VIC-II
+- CPU
+- KERNAL
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Building a musicroutine by Cadaver
@@ -97,7 +97,7 @@ Another important building block of music: it probably sounds better if it is in
 As each multiplication of the frequency by 2 raises the voice one octave,
 frequency slides and vibrato appear slower in the higher octaves than in the
 lower. I recommend taking a look at the Rob Hubbard musicroutine dissection in
-[C=Hacking Issue 5](https://codebase.c64.org/doku.php?id=magazines:chacking5#rob_hubbard_s_musicdisassembled_commented_and_explained), 
+[C=Hacking Issue 5](https://codebase.c64.org/doku.php?id=magazines:chacking5#rob_hubbard_s_musicdisassembled_commented_and_explained),
 there a method to counteract this is shown.
 Basically, it involves taking a note's frequency and subtracting it from the
 neighbour note's (one halfstep lower) frequency and using this value as the

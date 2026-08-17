@@ -7,7 +7,7 @@ difficulty: intermediate
 language: none
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Shift bits and throw carry away with ALR
@@ -29,7 +29,7 @@ adc #$47
 
 Unfortunately there is no equivalent for shifting the bits left. There is however a version for ROR called ARR. But this works more like ANC since it's setting the carry to the value of bit 7. So beware of the confusion this might cause.
 
-base/shift_bits_and_throw_carry_away_with_alr.txt · Last modified:  by 127.0.0.1
+base/shift_bits_and_throw_carry_away_with_alr.txt · Last modified:  by cruzer
 
 ## Codice Estratto
 

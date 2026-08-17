@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # 16-bit multiply with 32-bit product
@@ -50,7 +50,7 @@ rotate_r	ror			; rotate partial product
 		bne	shift_r 
 		rts
 
-base/16bit_multiplication_32-bit_product.txt · Last modified:  by 127.0.0.1
+base/16bit_multiplication_32-bit_product.txt · Last modified:  by agentfriday
 
 ## Codice Estratto
 

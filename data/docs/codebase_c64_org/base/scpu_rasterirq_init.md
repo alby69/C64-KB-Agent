@@ -9,20 +9,20 @@ topics:
 difficulty: advanced
 language: assembly
 hardware:
-- CPU
-- CIA
 - KERNAL
+- CPU
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # RasterIRQ
@@ -65,7 +65,7 @@ Standard Memoryconfiguration set to RAM+IO
                                // IRQ Interrupt Handler.
     }
 ```
-base/scpu_rasterirq_init.txt · Last modified:  by 127.0.0.1
+base/scpu_rasterirq_init.txt · Last modified:  by tww
 
 ## Codice Estratto
 

@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # List of Illegal Mnemonics
@@ -351,7 +351,7 @@ OPC6502_INC_ABSX = $FE
 OPC6502_ISC_ABSX = $FF
 OPC6502_ISB_ABSX = $FF
 
-base/illegalmnemonicslist.txt · Last modified:  by 127.0.0.1
+base/illegalmnemonicslist.txt · Last modified:  by ftc
 
 ## Codice Estratto
 

@@ -9,10 +9,10 @@ language: assembly
 hardware:
 - VIC-II
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 
@@ -289,7 +289,7 @@ mul40	.for ue=0,ue<25,ue=ue+1
 	.word $0400+ue*40
 	.next
 ```
-base/8bit_atan2_using_the_cordic_algorithm.txt · Last modified:  by 127.0.0.1
+base/8bit_atan2_using_the_cordic_algorithm.txt · Last modified:  by icepic
 
 ## Codice Estratto
 

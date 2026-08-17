@@ -3,23 +3,23 @@ title: The original Elite-A source files
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_the_original_source_files.html
 category: source-code
 topics:
+- basic
 - assembly
 - graphics
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- BASIC ROM
 - SID
 - KERNAL
+- CPU
+- BASIC ROM
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # The original Elite-A source files

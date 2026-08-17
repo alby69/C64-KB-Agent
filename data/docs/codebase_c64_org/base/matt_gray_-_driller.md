@@ -12,12 +12,12 @@ hardware:
 - VIC-II
 related:
 - sid-registers
-- raster-interrupts
 - music-player
-- sprite-programming
-- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

@@ -10,7 +10,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Syntax Highlighting for ACME and Notepad++
@@ -139,7 +139,7 @@ By Strykker
 </UserLang>
 </NotepadPlus>
 ```
-base/acme_notepadplusplus_syntax.txt · Last modified:  by 127.0.0.1
+base/acme_notepadplusplus_syntax.txt · Last modified:  by ftc
 
 ## Codice Estratto
 

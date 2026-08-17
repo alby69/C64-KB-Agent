@@ -1,10 +1,10 @@
 ---
 title: BBC Micro disc Elite on the BBC Master
-source_url: https://elite.bbcelite.com/hacks/bbc_master_disc_elite.html
+source_url: https://elite.bbcelite.com/hacks/bbc_master_disc_elite/
 category: reference
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: mixed
 hardware:
@@ -12,7 +12,7 @@ hardware:
 related:
 - memory-map
 - kernal-routines
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # BBC Micro disc Elite on the BBC Master
@@ -37,7 +37,7 @@ I've tried to track down a copy of the AEFS, but it seems to have been lost to t
 
 So, despite having the more powerful computer, BBC Master owners can't play what's regarded as the canonical version of Elite.
 
-This just isn't fair, so I've hacked the original game to work on the Master. See the [downloads page](https://elite.bbcelite.com/bbc_master_disc_elite_downloads.html) to get hold of a copy, or check out the [technical information](https://elite.bbcelite.com/bbc_master_disc_elite_technical_information.html) for details of how it works.
+This just isn't fair, so I've hacked the original game to work on the Master. See the [downloads page](https://elite.bbcelite.com/hacks/bbc_master_disc_elite/downloads.html) to get hold of a copy, or check out the [technical information](https://elite.bbcelite.com/hacks/bbc_master_disc_elite/technical_information.html) for details of how it works.
 
 ---
-*Fonte originale: [https://elite.bbcelite.com/hacks/bbc_master_disc_elite.html](https://elite.bbcelite.com/hacks/bbc_master_disc_elite.html)*
+*Fonte originale: [https://elite.bbcelite.com/hacks/bbc_master_disc_elite/](https://elite.bbcelite.com/hacks/bbc_master_disc_elite/)*

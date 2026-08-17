@@ -3,18 +3,18 @@ title: Fastest 16x16 unsigned multiplication
 source_url: https://codebase.c64.org/doku.php?id=base%3Afastest_multiplication
 category: reference
 topics:
-- memory management
 - sprite programming
 - assembly
+- memory management
 difficulty: advanced
 language: mixed
 hardware:
 - CPU
 related:
-- vic-ii-registers
 - raster-interrupts
+- vic-ii-registers
 - sprite-programming
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Fastest 16x16 unsigned multiplication
@@ -229,7 +229,7 @@ Diagram of the additions
 ------------------------
     z3    z2    z1    z0     
 ```
-base/fastest_multiplication.txt · Last modified:  by 127.0.0.1
+base/fastest_multiplication.txt · Last modified:  by repose
 
 ## Codice Estratto
 

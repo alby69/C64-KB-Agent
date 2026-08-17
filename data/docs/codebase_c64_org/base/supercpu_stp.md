@@ -3,9 +3,9 @@ title: STP
 source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_stp
 category: reference
 topics:
-- sound generation
-- basic
 - sprite programming
+- basic
+- sound generation
 - assembly
 difficulty: advanced
 language: mixed
@@ -14,12 +14,12 @@ hardware:
 - CPU
 related:
 - sid-registers
-- raster-interrupts
 - music-player
-- sprite-programming
-- vic-ii-registers
+- raster-interrupts
 - sound-programming
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # STP
@@ -64,7 +64,7 @@ base:supercpu_stp
         .byte $db
     }
 ```
-base/supercpu_stp.txt · Last modified:  by 127.0.0.1
+base/supercpu_stp.txt · Last modified:  by tww
 
 ## Codice Estratto
 

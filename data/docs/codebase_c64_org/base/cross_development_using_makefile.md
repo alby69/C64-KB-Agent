@@ -3,27 +3,27 @@ title: Cross Development using Makefile
 source_url: https://codebase.c64.org/doku.php?id=base%3Across_development_using_makefile
 category: source-code
 topics:
-- basic
 - sprite programming
+- basic
 - graphics
 - assembly
 difficulty: beginner
 language: assembly
 hardware:
 - SID
-- CIA
 - VIC-II
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
 - sound-programming
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Cross Development using Makefile

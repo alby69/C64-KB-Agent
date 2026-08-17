@@ -9,7 +9,7 @@ language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # REP
@@ -63,7 +63,7 @@ base:supercpu_rep
         .byte $c2,val.getValue()
     }
 ```
-base/supercpu_rep.txt · Last modified:  by 127.0.0.1
+base/supercpu_rep.txt · Last modified:  by tww
 
 ## Codice Estratto
 

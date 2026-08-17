@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # Dispatching on a Byte
@@ -96,7 +96,7 @@ table: .word handler0, handler1, ..., handler127, handler128, ...
 - Similar to low-address dispatch but allows page-crosses at the cost of one cycle
 - Saves one cycle for the fall-through case
 
-base/dispatch_on_a_byte.txt · Last modified:  by 127.0.0.1
+base/dispatch_on_a_byte.txt · Last modified:  by white_flame
 
 ## Codice Estratto
 

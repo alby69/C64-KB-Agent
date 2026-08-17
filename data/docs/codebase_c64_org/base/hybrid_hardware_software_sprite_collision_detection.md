@@ -3,25 +3,25 @@ title: base:hybrid_hardware_software_sprite_collision_detection [Codebase64 wiki
 source_url: https://codebase.c64.org/doku.php?id=base%3Ahybrid_hardware_software_sprite_collision_detection
 category: reference
 topics:
-- memory management
 - sprite programming
 - assembly
+- memory management
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
 - KERNAL
+- SID
 - VIC-II
 related:
 - sid-registers
-- raster-interrupts
 - music-player
+- raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # base:hybrid_hardware_software_sprite_collision_detection [Codebase64 wiki]
@@ -149,7 +149,7 @@ SPRITEMSB
 ;-------------------------------------------------------------------------------
 ```
                     
-                                    base/hybrid_hardware_software_sprite_collision_detection.txt · Last modified:  by 127.0.0.1
+                                    base/hybrid_hardware_software_sprite_collision_detection.txt · Last modified:  by flavioweb
 
 ## Codice Estratto
 

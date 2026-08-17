@@ -3,34 +3,32 @@ title: CRT - CaRTridge Images (from the CCS64 emulator)
 source_url: https://codebase.c64.org/doku.php?id=base%3Acrt_file_format
 category: tool
 topics:
-- memory management
-- basic
 - assembly
+- basic
+- memory management
 difficulty: intermediate
 language: mixed
 hardware:
 - SID
-- CIA
 - KERNAL
+- CIA
 related:
-- sid-registers
 - keyboard-handling
+- sid-registers
 - music-player
 - cia-registers
-- kernal-routines
 - joystick-reading
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # CRT - CaRTridge Images (from the CCS64 emulator)
 
 # CRT - CaRTridge Images (from the CCS64 emulator)
 
-Document revision: 1.10 
-*Last updated: Nov 27, 2005* 
-Contributors/sources: Per Hakan Sundell, Markus Brenner, Marco Van Den Heuvel
+Document revision: 1.10 // Last updated: Nov 27, 2005 // Contributors/sources: Per Hakan Sundell, Markus Brenner, Marco Van Den Heuvel
 
 Cartridge files were introduced in the CCS64 emulator, written by Per Hakan Sundell, and use the “.CRT” file extension. This format was created to handle the various ROM cartridges that exist, such as Action Replay, the Power cartridge, and the Final Cartridge.
 

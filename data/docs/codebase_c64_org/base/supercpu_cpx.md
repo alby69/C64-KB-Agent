@@ -9,9 +9,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # CPX
@@ -67,7 +67,7 @@ base:supercpu_cpx
         }
     }
 ```
-base/supercpu_cpx.txt · Last modified:  by 127.0.0.1
+base/supercpu_cpx.txt · Last modified:  by tww
 
 ## Codice Estratto
 

@@ -3,8 +3,8 @@ title: PER
 source_url: https://codebase.c64.org/doku.php?id=base%3Asupercpu_per
 category: tool
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: intermediate
 language: mixed
@@ -13,10 +13,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # PER
@@ -86,7 +86,7 @@ base:supercpu_per
         .byte $62, <val.getValue()-*-3, >val.getValue()-*-3
     }
 ```
-base/supercpu_per.txt · Last modified:  by 127.0.0.1
+base/supercpu_per.txt · Last modified:  by tww
 
 ## Codice Estratto
 

@@ -3,9 +3,9 @@ title: Theory
 source_url: https://codebase.c64.org/doku.php?id=base%3Areu_read_and_write
 category: source-code
 topics:
-- memory management
-- basic
 - assembly
+- basic
+- memory management
 difficulty: advanced
 language: mixed
 hardware:
@@ -19,7 +19,7 @@ related:
 - kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Theory

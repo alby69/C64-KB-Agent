@@ -10,9 +10,9 @@ language: assembly
 hardware:
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 
@@ -20,9 +20,7 @@ scraped_at: '2026-08-10'
 
 base:sending_a_command_to_a_disk_drive
 
-                ### Table of Contents
-
-# Sending a command to a disk drive, the easy way
+                # Sending a command to a disk drive, the easy way
 
 The easiest way of sending a command to the disk drive is by simply using the command string as filename when calling OPEN.
 

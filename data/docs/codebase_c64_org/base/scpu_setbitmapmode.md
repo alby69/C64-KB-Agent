@@ -10,7 +10,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 
@@ -32,7 +32,7 @@ Set Bitmap Mode (set bit #5 of $d011).
         tsb $d010
     }
 ```
-base/scpu_setbitmapmode.txt · Last modified:  by 127.0.0.1
+base/scpu_setbitmapmode.txt · Last modified:  by tww
 
 ## Codice Estratto
 

@@ -3,9 +3,9 @@ title: Machine Language Tutorial Part 3 - Program Flow
 source_url: https://codebase.c64.org/doku.php?id=base%3Amachine_language_tutorial_part_3
 category: tutorial
 topics:
-- memory management
-- basic
 - assembly
+- basic
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
@@ -14,10 +14,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

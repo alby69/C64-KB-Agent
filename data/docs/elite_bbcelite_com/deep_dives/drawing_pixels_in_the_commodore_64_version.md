@@ -3,30 +3,30 @@ title: Drawing pixels in the Commodore 64 version
 source_url: https://elite.bbcelite.com/deep_dives/drawing_pixels_in_the_commodore_64_version.html
 category: manual
 topics:
+- basic
 - assembly
 - graphics
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- SID
-- VIC-II
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- VIC-II
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Drawing pixels in the Commodore 64 version

@@ -8,7 +8,7 @@ language: basic
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Different CPU types

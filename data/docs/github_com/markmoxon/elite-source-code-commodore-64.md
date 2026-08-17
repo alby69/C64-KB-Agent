@@ -8,8 +8,8 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
-last_modified: '2026-07-29T10:47:21Z'
+scraped_at: '2026-08-17'
+last_modified: '2026-08-11T12:11:36Z'
 ---
 
 # GitHub Repo: markmoxon/elite-source-code-commodore-64
@@ -20,7 +20,7 @@ last_modified: '2026-07-29T10:47:21Z'
 
 **GitHub URL:** https://github.com/markmoxon/elite-source-code-commodore-64
 **Stars:** 463
-**Last Updated:** 2026-07-29T10:47:21Z
+**Last Updated:** 2026-08-11T12:11:36Z
 
 
 ---

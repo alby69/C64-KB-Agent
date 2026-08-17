@@ -3,28 +3,28 @@ title: base:decruncher_for_mdg-packer_linker_1.1 [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Adecruncher_for_mdg-packer_linker_1.1
 category: reference
 topics:
-- basic
-- raster interrupts
-- assembly
-- memory management
 - sprite programming
+- basic
+- assembly
+- raster interrupts
+- memory management
 difficulty: advanced
 language: assembly
 hardware:
-- CPU
-- CIA
 - KERNAL
+- CPU
 - VIC-II
+- CIA
 related:
 - keyboard-handling
-- raster-interrupts
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 

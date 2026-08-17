@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # REU Detect
@@ -107,7 +107,7 @@ sig_candidate_start
 sig_candidate_end
     SIGNATURE_LENGTH_LOW = * - sig_candidate_start
 ```
-base/reu_detect.txt · Last modified:  by 127.0.0.1
+base/reu_detect.txt · Last modified:  by groepaz
 
 ## Codice Estratto
 

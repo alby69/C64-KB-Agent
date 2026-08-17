@@ -3,8 +3,8 @@ title: Running a Basic program from Assembler
 source_url: https://codebase.c64.org/doku.php?id=base%3Arunbasicprg
 category: tool
 topics:
-- basic
 - sprite programming
+- basic
 - assembly
 difficulty: intermediate
 language: assembly
@@ -14,10 +14,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 # Running a Basic program from Assembler
@@ -40,7 +40,7 @@ PRGEND = $1234    ; end of the Basic program
     JSR $A533    ; Rechain Lines
     JMP $A7AE    ; Basic Warm Start
 ```
-base/runbasicprg.txt · Last modified:  by 127.0.0.1
+base/runbasicprg.txt · Last modified:  by pararaum
 
 ## Codice Estratto
 

@@ -10,9 +10,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # 8bit Divide by Constant — 8bit result
@@ -470,7 +470,7 @@ base:8bit_divide_by_constant_8bit_result
 ref
 [https://atariage.com/forums/blogs/entry/10805-unsigned-integer-division-routines/](https://atariage.com/forums/blogs/entry/10805-unsigned-integer-division-routines/)
 
-base/8bit_divide_by_constant_8bit_result.txt · Last modified:  by 127.0.0.1
+base/8bit_divide_by_constant_8bit_result.txt · Last modified:  by ftc
 
 ## Codice Estratto
 

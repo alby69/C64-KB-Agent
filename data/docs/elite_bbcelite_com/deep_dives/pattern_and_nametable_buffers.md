@@ -3,22 +3,22 @@ title: The pattern and nametable buffers
 source_url: https://elite.bbcelite.com/deep_dives/pattern_and_nametable_buffers.html
 category: deep-dive
 topics:
+- basic
 - assembly
 - graphics
-- basic
 difficulty: beginner
 language: mixed
 hardware:
-- CPU
 - SID
 - KERNAL
+- CPU
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # The pattern and nametable buffers

@@ -11,9 +11,9 @@ hardware:
 - CPU
 - KERNAL
 related:
-- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+- kernal-routines
+scraped_at: '2026-08-17'
 ---
 
 # MVP
@@ -86,7 +86,7 @@ base:supercpu_mvp
         .byte $44, val2.getValue(), val1.getValue()
     }
 ```
-base/supercpu_mvp.txt · Last modified:  by 127.0.0.1
+base/supercpu_mvp.txt · Last modified:  by tww
 
 ## Codice Estratto
 

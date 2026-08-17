@@ -3,9 +3,9 @@ title: Ranged Random Numbers with Even Distribution
 source_url: https://codebase.c64.org/doku.php?id=base%3Aranged_random_numbers_with_even_distribution
 category: reference
 topics:
-- memory management
-- graphics
 - assembly
+- graphics
+- memory management
 difficulty: beginner
 language: mixed
 hardware:
@@ -18,7 +18,7 @@ related:
 - kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Ranged Random Numbers with Even Distribution

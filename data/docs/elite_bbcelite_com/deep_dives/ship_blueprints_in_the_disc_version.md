@@ -3,22 +3,22 @@ title: Ship blueprints in the BBC Micro disc version
 source_url: https://elite.bbcelite.com/deep_dives/ship_blueprints_in_the_disc_version.html
 category: deep-dive
 topics:
+- basic
 - assembly
 - graphics
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
 - SID
 - KERNAL
+- CPU
 related:
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Ship blueprints in the BBC Micro disc version

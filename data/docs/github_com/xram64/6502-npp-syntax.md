@@ -3,14 +3,14 @@ title: 'GitHub Repo: xram64/6502-npp-syntax'
 source_url: https://github.com/xram64/6502-npp-syntax
 category: source-code
 topics:
-- assembly
 - basic
+- assembly
 difficulty: intermediate
 language: assembly
 hardware:
 - CPU
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 last_modified: '2021-01-01T04:08:50Z'
 ---
 

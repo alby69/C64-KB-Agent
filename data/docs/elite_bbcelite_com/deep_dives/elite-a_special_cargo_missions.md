@@ -3,20 +3,20 @@ title: Special cargo missions
 source_url: https://elite.bbcelite.com/deep_dives/elite-a_special_cargo_missions.html
 category: deep-dive
 topics:
-- assembly
 - basic
+- assembly
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
 - KERNAL
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
 - kernal-routines
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Special cargo missions

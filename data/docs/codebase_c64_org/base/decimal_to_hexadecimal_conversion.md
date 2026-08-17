@@ -8,7 +8,7 @@ difficulty: intermediate
 language: assembly
 hardware: []
 related: []
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # Decimal to hexadecimal conversion
@@ -114,7 +114,7 @@ BCDBIN8
           
 pzTmp .equ $02    ; $02 is a unused zeropage memory location in C64
 ```
-base/decimal_to_hexadecimal_conversion.txt · Last modified:  by 127.0.0.1
+base/decimal_to_hexadecimal_conversion.txt · Last modified:  by verz
 
 ## Codice Estratto
 

@@ -13,10 +13,10 @@ hardware:
 related:
 - raster-interrupts
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
@@ -57,7 +57,7 @@ Now try soft-resetting. Instead of going back to the basic screen, instead you'l
 
 Note that if you're using the kernal NMI routine ([$FE47](http://unusedino.de/ec64/technical/aay/c64/romfe43.htm)), also redirect the vector at $8002.
 
-base/protecting_against_soft-resets.txt · Last modified:  by 127.0.0.1
+base/protecting_against_soft-resets.txt · Last modified:  by karmic
 
 ## Codice Estratto
 

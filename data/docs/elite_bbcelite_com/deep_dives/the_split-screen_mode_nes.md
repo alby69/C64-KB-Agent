@@ -5,28 +5,28 @@ category: deep-dive
 topics:
 - basic
 - assembly
-- sprite programming
 - raster interrupts
+- sprite programming
 difficulty: beginner
 language: mixed
 hardware:
-- CIA
 - SID
 - KERNAL
 - VIC-II
+- CIA
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
-- sprite-programming
-- vic-ii-registers
 - sid-registers
+- kernal-routines
+- raster-interrupts
+- sprite-programming
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-- raster-interrupts
-scraped_at: '2026-08-10'
+- cia-registers
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # The split-screen mode in NES Elite

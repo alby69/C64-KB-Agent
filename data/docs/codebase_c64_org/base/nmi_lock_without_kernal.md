@@ -7,15 +7,15 @@ topics:
 difficulty: advanced
 language: assembly
 hardware:
-- CIA
 - KERNAL
+- CIA
 related:
 - keyboard-handling
 - cia-registers
-- kernal-routines
 - joystick-reading
+- kernal-routines
 - memory-map
-scraped_at: '2026-08-10'
+scraped_at: '2026-08-17'
 ---
 
 # NMI Lock Without Kernal
@@ -47,7 +47,7 @@ Modification of the example given at [NMI lock](https://codebase.c64.org/doku.ph
 nmiRoutine
   rti ;; exit interrupt not acknowledged 
 
-base/nmi_lock_without_kernal.txt · Last modified:  by 127.0.0.1
+base/nmi_lock_without_kernal.txt · Last modified:  by sokrates
 
 ## Codice Estratto
 

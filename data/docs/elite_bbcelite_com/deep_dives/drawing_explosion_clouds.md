@@ -8,16 +8,16 @@ topics:
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
 - KERNAL
+- CPU
 - VIC-II
 related:
 - kernal-routines
-- sprite-programming
-- vic-ii-registers
-- memory-map
 - raster-interrupts
-scraped_at: '2026-08-10'
+- sprite-programming
+- memory-map
+- vic-ii-registers
+scraped_at: '2026-08-17'
 ---
 
 # Drawing explosion clouds

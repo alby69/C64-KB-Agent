@@ -3,27 +3,27 @@ title: Printing text tokens
 source_url: https://elite.bbcelite.com/deep_dives/printing_text_tokens.html
 category: source-code
 topics:
+- basic
 - assembly
 - graphics
-- basic
 difficulty: intermediate
 language: mixed
 hardware:
-- CPU
-- SID
-- BASIC ROM
-- KERNAL
 - CIA
+- SID
+- KERNAL
+- CPU
+- BASIC ROM
 related:
+- joystick-reading
 - keyboard-handling
-- cia-registers
-- kernal-routines
 - sid-registers
+- kernal-routines
 - sound-programming
 - music-player
 - memory-map
-- joystick-reading
-scraped_at: '2026-08-10'
+- cia-registers
+scraped_at: '2026-08-17'
 ---
 
 # Printing text tokens

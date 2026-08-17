@@ -3,30 +3,30 @@ title: base:micropong [Codebase64 wiki]
 source_url: https://codebase.c64.org/doku.php?id=base%3Amicropong
 category: reference
 topics:
-- input handling
-- memory management
 - raster interrupts
 - assembly
+- memory management
+- input handling
 difficulty: intermediate
 language: assembly
 hardware:
-- SID
-- CIA
 - KERNAL
+- SID
 - VIC-II
+- CIA
 related:
 - sid-registers
-- raster-interrupts
 - keyboard-handling
 - music-player
 - cia-registers
-- kernal-routines
+- raster-interrupts
 - joystick-reading
-- sprite-programming
-- vic-ii-registers
+- kernal-routines
 - sound-programming
 - memory-map
-scraped_at: '2026-08-10'
+- vic-ii-registers
+- sprite-programming
+scraped_at: '2026-08-17'
 ---
 
 
