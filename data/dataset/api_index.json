@@ -27797,7 +27797,7 @@
   },
   {
     "filepath": "dustlayer_com/about.md",
-    "title": "",
+    "title": "About Dustlayer",
     "source_url": "https://dustlayer.com/about",
     "category": "tutorial",
     "topics": [
@@ -27822,7 +27822,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool.md",
-    "title": "",
+    "title": "# Episode 1-1: Introduction to DUST - the Mac tool for C64 development",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool",
     "category": "tutorial",
     "topics": [
@@ -27853,7 +27853,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro.md",
-    "title": "",
+    "title": "# Episode 2-1: Let's compile and run C64 code",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro",
     "category": "tutorial",
     "topics": [
@@ -27882,7 +27882,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/4/8/episode-2-2-writing-to-the-c64-screen.md",
-    "title": "",
+    "title": "# Episode 2-2: Writing to the C64 Screen",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-2-writing-to-the-c64-screen",
     "category": "tutorial",
     "topics": [
@@ -27916,7 +27916,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/4/8/episode-2-3-did-i-interrupt-you.md",
-    "title": "",
+    "title": "# Episode 2-3: Did I interrupt you?",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-3-did-i-interrupt-you",
     "category": "tutorial",
     "topics": [
@@ -27952,7 +27952,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/4/8/episode-2-4-reading-from-a-data-table.md",
-    "title": "",
+    "title": "# Episode 2-4: Effects using a table of data",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-4-reading-from-a-data-table",
     "category": "tutorial",
     "topics": [
@@ -27978,7 +27978,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/4/8/episode-2-5-understanding-and-including-music.md",
-    "title": "",
+    "title": "# Episode 2-5: Understanding and including music",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-5-understanding-and-including-music",
     "category": "tutorial",
     "topics": [
@@ -28008,7 +28008,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/4/8/working-without-dust-environment.md",
-    "title": "",
+    "title": "# Episode 1-2: Working without DUST environment",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/4/8/working-without-dust-environment",
     "category": "tutorial",
     "topics": [
@@ -28033,7 +28033,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite.md",
-    "title": "",
+    "title": "# Episode 3-1: Spritro - an Intro with a Sprite",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite",
     "category": "tutorial",
     "topics": [
@@ -28068,7 +28068,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad.md",
-    "title": "",
+    "title": "# Episode 3-2: Creating the Shapes - Hello SpritePad",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad",
     "category": "tutorial",
     "topics": [
@@ -28104,7 +28104,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-3-loading-shapes-and-grasping-symbols.md",
-    "title": "",
+    "title": "# Episode 3-3: Loading Shapes and grasping Symbols",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-3-loading-shapes-and-grasping-symbols",
     "category": "tutorial",
     "topics": [
@@ -28140,7 +28140,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-4-flying-the-space-ship-off-course.md",
-    "title": "",
+    "title": "# Episode 3-4: Flying the Space Ship off Course",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-4-flying-the-space-ship-off-course",
     "category": "tutorial",
     "topics": [
@@ -28174,7 +28174,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-5-taking-command-of-the-ship-controls.md",
-    "title": "",
+    "title": "# Episode 3-5: Taking Command of the Ship Controls",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-5-taking-command-of-the-ship-controls",
     "category": "tutorial",
     "topics": [
@@ -28210,7 +28210,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-6-custom-character-sets-hello-charpad.md",
-    "title": "",
+    "title": "# Episode 3-6: Custom Character Sets - Hello CharPad",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-6-custom-character-sets-hello-charpad",
     "category": "tutorial",
     "topics": [
@@ -28244,7 +28244,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-7-creating-pseudo-timers-for-color-cycle.md",
-    "title": "",
+    "title": "# Epsiode 3-7 - Creating Pseudo Timers for Color Cycle",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-7-creating-pseudo-timers-for-color-cycle",
     "category": "tutorial",
     "topics": [
@@ -28278,7 +28278,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-8-if-the-sid-doesnt-fit-use-a-bigger-hammer.md",
-    "title": "",
+    "title": "# Episode 3-8: If the SID doesn't fit, use a bigger Hammer",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-8-if-the-sid-doesnt-fit-use-a-bigger-hammer",
     "category": "tutorial",
     "topics": [
@@ -28313,7 +28313,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/2013/5/24/episode-3-9-greetings-acknowledgments-and-links.md",
-    "title": "",
+    "title": "# Episode 3-9: Greetings, Acknowledgments and Links",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-9-greetings-acknowledgments-and-links",
     "category": "tutorial",
     "topics": [
@@ -28343,7 +28343,7 @@
   },
   {
     "filepath": "dustlayer_com/c64-coding-tutorials/tag/beginner.md",
-    "title": "",
+    "title": "C64 Coding Tutorials — Beginner",
     "source_url": "https://dustlayer.com/c64-coding-tutorials/tag/beginner",
     "category": "tutorial",
     "topics": [

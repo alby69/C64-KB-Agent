@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 3-2: Creating the Shapes - Hello SpritePad'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-2-creating-the-shapes-hello-spritepad
 category: tutorial
 topics:
@@ -29,8 +29,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
-
 # 
 
 # Episode 3-2: Creating the Shapes - Hello SpritePad

@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 2-4: Effects using a table of data'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-4-reading-from-a-data-table
 category: tutorial
 topics:
@@ -19,7 +19,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
 # 
 
 # Episode 2-4: Effects using a table of data

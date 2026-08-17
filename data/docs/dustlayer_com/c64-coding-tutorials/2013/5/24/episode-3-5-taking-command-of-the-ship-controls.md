@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 3-5: Taking Command of the Ship Controls'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-5-taking-command-of-the-ship-controls
 category: tutorial
 topics:
@@ -29,8 +29,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
-
 # 
 
 # Episode 3-5: Taking Command of the Ship Controls

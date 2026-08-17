@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 1-1: Introduction to DUST - the Mac tool for C64 development'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/2/10/dust-c64-command-line-tool
 category: tutorial
 topics:
@@ -24,7 +24,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
 # 
 
 # Episode 1-1: Introduction to DUST - the Mac tool for C64 development

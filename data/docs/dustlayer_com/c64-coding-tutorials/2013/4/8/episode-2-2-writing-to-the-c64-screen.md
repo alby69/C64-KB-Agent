@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 2-2: Writing to the C64 Screen'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-2-writing-to-the-c64-screen
 category: tutorial
 topics:
@@ -27,8 +27,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
-
 # 
 
 # Episode 2-2: Writing to the C64 Screen

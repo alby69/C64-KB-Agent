@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Epsiode 3-7 - Creating Pseudo Timers for Color Cycle'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-7-creating-pseudo-timers-for-color-cycle
 category: tutorial
 topics:
@@ -27,8 +27,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
-
 # 
 
 # Epsiode 3-7 - Creating Pseudo Timers for Color Cycle

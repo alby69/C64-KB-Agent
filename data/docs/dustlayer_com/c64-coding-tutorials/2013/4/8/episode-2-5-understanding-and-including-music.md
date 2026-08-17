@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 2-5: Understanding and including music'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-5-understanding-and-including-music
 category: tutorial
 topics:
@@ -23,7 +23,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
 # 
 
 # Episode 2-5: Understanding and including music

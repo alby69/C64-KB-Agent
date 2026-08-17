@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 2-3: Did I interrupt you?'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/episode-2-3-did-i-interrupt-you
 category: tutorial
 topics:
@@ -29,8 +29,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
-
 # 
 
 # Episode 2-3: Did I interrupt you?

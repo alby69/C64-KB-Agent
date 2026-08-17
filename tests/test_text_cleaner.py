@@ -10,8 +10,10 @@ from cleaners.text_cleaner import clean_text, advanced_clean, clean_file
 
 class TestCleanText:
     def test_remove_control_chars(self):
-        result = clean_text("hello\x00world\x01\x15test")
-        assert result == "helloworldtest"
+        # Rimuove i control char (0x00-0x08, 0x0B-0x0C, 0x0E-0x1F, 0x7F);
+        # la tab (\t) è preservata dal cleaner e normalizzata a spazio.
+        result = clean_text("hello\x00world\x01\test")
+        assert result == "helloworld est"
 
     def test_normalize_whitespace(self):
         result = clean_text("hello    world")

@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 3-1: Spritro - an Intro with a Sprite'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-1-spritro-an-intro-with-a-sprite
 category: tutorial
 topics:
@@ -28,7 +28,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
 # 
 
 # Episode 3-1: Spritro - an Intro with a Sprite

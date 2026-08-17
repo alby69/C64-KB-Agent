@@ -1,5 +1,5 @@
 ---
-title: ''
+title: C64 Coding Tutorials — Beginner
 source_url: https://dustlayer.com/c64-coding-tutorials/tag/beginner
 category: tutorial
 topics:
@@ -24,7 +24,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
 # 
 
 # 

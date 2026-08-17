@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "c64-kb-agent"
+version = "0.1.0"
+description = "C64-KB-Agent — Knowledge base centralizzata con deduplicazione e indicizzazione (FAISS/SQLite FTS5)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0-or-later" }
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "sentence-transformers>=2.2.0",
+    "faiss-cpu>=1.7.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0.0", "jsonschema>=4.0.0"]
+
+[project.scripts]
+c64-kb-agent = "main:main"
+
+[tool.setuptools]
+packages = ["cleaners"]

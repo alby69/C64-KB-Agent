@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/alby69/C64-KB-Agent/schemas/api_index.schema.json",
+  "title": "C64 API Index",
+  "description": "Contratto dati per api_index.json (indice di pagine con snippet di codice). Versione schema: 1",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "filepath", "title", "source_url", "category", "topics",
+      "difficulty", "language", "hardware", "related", "code_snippets", "routines"
+    ],
+    "properties": {
+      "filepath": { "type": "string", "minLength": 1 },
+      "title": { "type": "string", "minLength": 1 },
+      "source_url": { "type": "string", "format": "uri" },
+      "category": { "type": "string" },
+      "topics": { "type": "array", "items": { "type": "string" } },
+      "difficulty": { "type": "string" },
+      "language": { "type": "string" },
+      "hardware": { "type": "array", "items": { "type": "string" } },
+      "related": { "type": "array", "items": { "type": "string" } },
+      "code_snippets": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "language": { "type": "string" },
+            "dialect": { "type": "string" },
+            "code": { "type": "string" }
+          },
+          "required": ["language", "dialect", "code"],
+          "additionalProperties": true
+        }
+      },
+      "routines": { "type": "array" }
+    },
+    "additionalProperties": true
+  }
+}

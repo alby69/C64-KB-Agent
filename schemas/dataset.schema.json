@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/alby69/C64-KB-Agent/schemas/dataset.schema.json",
+  "title": "C64 Scraped Dataset record (JSONL)",
+  "description": "Contratto dati per le righe di scraped_dataset.jsonl prodotte da C64-Scrapy (JsonDatasetPipeline). Versione schema: 1",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+_[0-9a-f]{16}$",
+      "description": "ID deterministico: <spider>_<sha256(url)[:16]>"
+    },
+    "text": { "type": "string", "minLength": 1 },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "source": { "type": "string", "format": "uri" },
+        "category": { "type": "string" },
+        "topics": { "type": "array", "items": { "type": "string" } },
+        "difficulty": { "type": "string" },
+        "language": { "type": "string" },
+        "hardware": { "type": "array", "items": { "type": "string" } },
+        "related": { "type": "array", "items": { "type": "string" } },
+        "scraped_at": { "type": "string", "format": "date" },
+        "spider": { "type": "string" }
+      },
+      "required": ["source", "category", "topics", "difficulty", "language", "hardware", "related", "scraped_at", "spider"],
+      "additionalProperties": true
+    }
+  },
+  "required": ["id", "text", "metadata"],
+  "additionalProperties": false
+}

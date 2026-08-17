@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 1-2: Working without DUST environment'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/4/8/working-without-dust-environment
 category: tutorial
 topics:
@@ -18,7 +18,6 @@ related:
 - keyboard-handling
 scraped_at: '2026-08-17'
 ---
-
 # 
 
 # Episode 1-2: Working without DUST environment

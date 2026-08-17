@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 2-1: Let''s compile and run C64 code'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/2/17/a-simple-c64-intro
 category: tutorial
 topics:
@@ -22,8 +22,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
-
 # 
 
 # Episode 2-1: Let's compile and run C64 code

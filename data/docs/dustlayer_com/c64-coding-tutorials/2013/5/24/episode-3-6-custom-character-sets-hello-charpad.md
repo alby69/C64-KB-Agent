@@ -1,5 +1,5 @@
 ---
-title: ''
+title: '# Episode 3-6: Custom Character Sets - Hello CharPad'
 source_url: https://dustlayer.com/c64-coding-tutorials/2013/5/24/episode-3-6-custom-character-sets-hello-charpad
 category: tutorial
 topics:
@@ -27,8 +27,6 @@ related:
 - sid-registers
 scraped_at: '2026-08-17'
 ---
-
-
 # 
 
 # Episode 3-6: Custom Character Sets - Hello CharPad
