@@ -1,5 +1,5 @@
 ---
-title: ''
+title: DLCHR
 source_url: https://github.com/mist64/c64ref/blob/main/src/kernal/machine_language_routines.txt
 category: reference
 topics:
@@ -23,6 +23,7 @@ c64ref:
     author: Todd D Heimarck
     description: outine copies character shape data for both standard
 ---
+
 
 # DLCHR —  ($FF62)
 

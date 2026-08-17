@@ -1,5 +1,5 @@
 ---
-title: ''
+title: GETCFG
 source_url: https://github.com/mist64/c64ref/blob/main/src/kernal/machine_language_routines.txt
 category: reference
 topics:
@@ -23,6 +23,7 @@ c64ref:
     author: Todd D Heimarck
     description: outine translates a bank number (0-15) into the
 ---
+
 
 # GETCFG —  ($FF6B)
 

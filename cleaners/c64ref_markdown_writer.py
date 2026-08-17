@@ -159,7 +159,7 @@ class C64RefMarkdownWriter:
         source_url = f"https://github.com/mist64/c64ref/blob/main/src/{module}/{source_file_rel}"
 
         fm_dict = {
-            "title": entity.heading,
+            "title": entity.heading or entity.symbol or (addr or "Reference"),
             "source_url": source_url,
             "category": category,
             "topics": topics,

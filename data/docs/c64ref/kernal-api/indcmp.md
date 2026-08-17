@@ -1,5 +1,5 @@
 ---
-title: ''
+title: INDCMP
 source_url: https://github.com/mist64/c64ref/blob/main/src/kernal/machine_language_routines.txt
 category: reference
 topics:
@@ -23,6 +23,7 @@ c64ref:
     author: Todd D Heimarck
     description: outine compares .A to the number held in a memory
 ---
+
 
 # INDCMP —  ($FF7A)
 

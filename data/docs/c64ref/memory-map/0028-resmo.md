@@ -1,5 +1,5 @@
 ---
-title: ''
+title: RESMO
 source_url: https://github.com/mist64/c64ref/blob/main/src/c64mem/original_source_comments.txt
 category: reference
 topics:
@@ -27,6 +27,7 @@ c64ref:
     author: Microsoft/Commodore
     description: Temporary used by "UMULT"
 ---
+
 
 # RESMO —  ($0028)
 

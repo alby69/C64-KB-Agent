@@ -1,5 +1,5 @@
 ---
-title: ''
+title: LKUPLA
 source_url: https://github.com/mist64/c64ref/blob/main/src/kernal/machine_language_routines.txt
 category: reference
 topics:
@@ -23,6 +23,7 @@ c64ref:
     author: Todd D Heimarck
     description: outine checks whether a specified logical file number is
 ---
+
 
 # LKUPLA —  ($FF59)
 
