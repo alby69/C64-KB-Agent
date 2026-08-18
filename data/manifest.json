@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-18T07:52:55.644878+00:00",
+  "documents": {
+    "total": 1877,
+    "by_source": {
+      "c64ref": 1112,
+      "codebase_c64_org": 436,
+      "dustlayer_com": 18,
+      "elite_bbcelite_com": 218,
+      "github_com": 57,
+      "sta_c64_org": 36
+    }
+  },
+  "dataset_files": {
+    "scraped_dataset.jsonl": {
+      "size_bytes": 6472846,
+      "sha256": "a5d0b2733d35164961e12d2feebf97dfd045b8ab2190bcd3c3732fd8193236cd"
+    },
+    "api_index.json": {
+      "size_bytes": 5305785,
+      "sha256": "4ca472a003f5673fb1f0a37583be0f897d4dd09834485ab55c9db859db34cb2c"
+    },
+    "knowledge_graph.json": {
+      "size_bytes": 872431,
+      "sha256": "84cc6b7838a1661aa015ab38260bef1bbebaaeec34d02eb4ebb0c244258b8dde"
+    }
+  }
+}

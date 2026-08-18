@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/alby69/C64-KB-Agent/schemas/manifest.schema.json",
+  "title": "C64-KB-Agent Data Manifest",
+  "description": "Schema di tracciabilità per la Knowledge Base (data/manifest.json)",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1,
+      "description": "Versione dello schema manifest."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data e ora UTC di generazione in formato ISO 8601."
+    },
+    "documents": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "by_source": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "required": ["total", "by_source"],
+      "additionalProperties": false
+    },
+    "dataset_files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "size_bytes": { "type": "integer", "minimum": 0 },
+          "sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+        },
+        "required": ["size_bytes", "sha256"],
+        "additionalProperties": false
+      }
+    },
+    "producer": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "commit": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["schema_version", "generated_at", "documents", "dataset_files"],
+  "additionalProperties": false
+}
