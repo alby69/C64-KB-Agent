@@ -2,14 +2,14 @@ name: knowledge
 display_name: "C64-KB-Agent — Knowledge base"
 version: "0.1.0"
 sdk_api_version: "1"
-description: "Knowledge base centralizzata: deduplicazione, indicizzazione (FAISS/SQLite FTS5) e validazione dei dati secondo il contratto (schemas/)."
+description: "Knowledge base centralizzata: deduplicazione, indicizzazione SQLite FTS5 e validazione dei dati secondo il contratto (schemas/)."
 entry_points:
   service: "main.py:main"
 capabilities:
   - knowledge-base
   - indexing
   - deduplication
-  - faiss
+  - fts5
   - contract-data
 requires_python: ">=3.10"
 standalone: true

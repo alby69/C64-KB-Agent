@@ -3,3 +3,5 @@ __pycache__/
 .pytest_cache/
 venv/
 *.db-journal
+data/dataset/search_index.db
+*.egg-info/

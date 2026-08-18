@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/alby69/C64-KB-Agent/schemas/document.schema.v2.json",
+  "title": "C64 Knowledge Document v2",
+  "description": "Contratto dati v2 per i documenti Markdown con frontmatter YAML. Aggiunge tags come alias opzionale di topics. Versione schema: 2",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 2,
+      "description": "Versione del contratto dati: 2."
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "source_url": { "type": "string", "format": "uri" },
+    "category": {
+      "type": "string",
+      "enum": ["reference", "tutorial", "manual", "tool", "source-code", "deep-dive"]
+    },
+    "topics": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Alias opzionale di topics per consumatori legacy/C64-LLM."
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    "language": {
+      "type": "string",
+      "enum": ["assembly", "basic", "mixed", "none"]
+    },
+    "hardware": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "related": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "scraped_at": { "type": "string", "format": "date" }
+  },
+  "required": [
+    "schema_version", "title", "source_url", "category", "topics",
+    "difficulty", "language", "hardware", "related", "scraped_at"
+  ],
+  "additionalProperties": true
+}
