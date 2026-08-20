@@ -1,14 +1,10 @@
-import json
 import sqlite3
 import unittest
 from pathlib import Path
-import yaml
 
-from cleaners.c64ref_dataset_builder import C64RefDatasetBuilder
-from cleaners.c64ref_markdown_writer import C64RefMarkdownWriter
+from c64_kb_agent.db import DatabaseDAO
 from cleaners.c64ref_merger import C64RefMerger, get_slug
 from cleaners.c64ref_parser import C64DisasmParser, C64MemParser, CPU6502Parser, Entity
-from c64_kb_agent.db import DatabaseDAO
 
 BASE_PATH = Path(__file__).resolve().parent.parent
 C64REF_SRC = BASE_PATH / "data" / "sources" / "c64ref" / "src"
