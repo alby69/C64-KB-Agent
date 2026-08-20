@@ -1,9 +1,13 @@
 """Tests for FastAPI REST API endpoints in c64_kb_agent/server/api.py."""
 
-from fastapi.testclient import TestClient
+import pytest
 
-from c64_kb_agent.config import settings
-from c64_kb_agent.server.api import app
+pytest.importorskip("fastapi")
+
+from fastapi.testclient import TestClient  # noqa: E402
+
+from c64_kb_agent.config import settings  # noqa: E402
+from c64_kb_agent.server.api import app  # noqa: E402
 
 client = TestClient(app)
 
