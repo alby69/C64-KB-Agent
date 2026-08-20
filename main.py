@@ -40,13 +40,24 @@ def cmd_status() -> int:
 
     # Dataset status
     print("\n[Dataset files]")
-    dataset_files = ["scraped_dataset.jsonl", "api_index.json", "knowledge_graph.json", "manifest.json"]
+    dataset_files = [
+        "scraped_dataset.jsonl",
+        "api_index.json",
+        "knowledge_graph.json",
+        "manifest.json",
+    ]
     for filename in dataset_files:
-        fpath = DATASET_DIR / filename if filename != "manifest.json" else BASE_DIR / "data" / "manifest.json"
+        fpath = (
+            DATASET_DIR / filename
+            if filename != "manifest.json"
+            else BASE_DIR / "data" / "manifest.json"
+        )
         if fpath.exists():
             stat = fpath.stat()
             size_mb = stat.st_size / (1024 * 1024)
-            mtime = datetime.datetime.fromtimestamp(stat.st_mtime, tz=datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+            mtime = datetime.datetime.fromtimestamp(
+                stat.st_mtime, tz=datetime.timezone.utc
+            ).strftime("%Y-%m-%d %H:%M:%S UTC")
             print(f"  - {filename}: {size_mb:.2f} MB (modified {mtime})")
         else:
             print(f"  - {filename}: NOT FOUND")
@@ -56,14 +67,22 @@ def cmd_status() -> int:
     print("\n[Search Index (SQLite FTS5)]")
     if db_path.exists():
         size_mb = db_path.stat().st_size / (1024 * 1024)
-        mtime = datetime.datetime.fromtimestamp(db_path.stat().st_mtime, tz=datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+        mtime = datetime.datetime.fromtimestamp(
+            db_path.stat().st_mtime, tz=datetime.timezone.utc
+        ).strftime("%Y-%m-%d %H:%M:%S UTC")
         print(f"  - Path: {db_path.relative_to(BASE_DIR)}")
         print(f"  - Size: {size_mb:.2f} MB")
         print(f"  - Last modified: {mtime}")
         try:
             conn = sqlite3.connect(db_path)
             doc_count = conn.execute("SELECT COUNT(*) FROM documents").fetchone()[0]
-            routine_count = conn.execute("SELECT COUNT(*) FROM routines").fetchone()[0] if conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='routines'").fetchone() else 0
+            routine_count = (
+                conn.execute("SELECT COUNT(*) FROM routines").fetchone()[0]
+                if conn.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name='routines'"
+                ).fetchone()
+                else 0
+            )
             conn.close()
             print(f"  - Indexed documents: {doc_count}")
             print(f"  - Indexed routines: {routine_count}")
@@ -195,15 +214,32 @@ def cmd_rebuild_index() -> int:
 
         body_str = body.strip()
 
-        cursor.execute("""
+        cursor.execute(
+            """
             INSERT INTO documents (id, filepath, title, source_url, category, difficulty, language, hardware, topics, body)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (doc_id, rel_path, title, source_url, category, difficulty, language, hardware_str, topics_str, body_str))
+        """,
+            (
+                doc_id,
+                rel_path,
+                title,
+                source_url,
+                category,
+                difficulty,
+                language,
+                hardware_str,
+                topics_str,
+                body_str,
+            ),
+        )
 
-        cursor.execute("""
+        cursor.execute(
+            """
             INSERT INTO documents_fts (id, title, category, difficulty, language, hardware, topics, body)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """, (doc_id, title, category, difficulty, language, hardware_str, topics_str, body_str))
+        """,
+            (doc_id, title, category, difficulty, language, hardware_str, topics_str, body_str),
+        )
 
         indexed_docs += 1
 
@@ -213,10 +249,13 @@ def cmd_rebuild_index() -> int:
             symbol = c64ref_meta.get("symbol")
             address = c64ref_meta.get("address", "")
             if symbol:
-                cursor.execute("""
+                cursor.execute(
+                    """
                     INSERT INTO routines (name, address, description, source_url, doc_id)
                     VALUES (?, ?, ?, ?, ?)
-                """, (symbol, address, title, source_url, doc_id))
+                """,
+                    (symbol, address, title, source_url, doc_id),
+                )
                 indexed_routines += 1
 
     conn.commit()
@@ -233,7 +272,7 @@ def cmd_rebuild_index() -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="c64-kb-agent",
-        description="C64-KB-Agent CLI — Knowledge Base management, validation, and indexing."
+        description="C64-KB-Agent CLI — Knowledge Base management, validation, and indexing.",
     )
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 

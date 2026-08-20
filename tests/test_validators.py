@@ -27,12 +27,15 @@ def test_load_schema():
 
 def test_parse_frontmatter_tags_normalization(tmp_path):
     doc_path = tmp_path / "test_tags.md"
-    doc_path.write_text("""---
+    doc_path.write_text(
+        """---
 title: "Test Tags"
 tags: ["tag1", "tag2"]
 ---
 Body text here.
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     fm, body = parse_frontmatter(doc_path)
     assert fm["title"] == "Test Tags"
@@ -43,11 +46,14 @@ Body text here.
 
 def test_parse_frontmatter_invalid_yaml(tmp_path):
     doc_path = tmp_path / "invalid_yaml.md"
-    doc_path.write_text("""---
+    doc_path.write_text(
+        """---
 title: : invalid yaml syntax
 ---
 Body
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     with pytest.raises(ValueError):
         parse_frontmatter(doc_path)
@@ -55,12 +61,15 @@ Body
 
 def test_validate_document_unsupported_version(tmp_path):
     doc_path = tmp_path / "unsupported_ver.md"
-    doc_path.write_text("""---
+    doc_path.write_text(
+        """---
 schema_version: 99
 title: "Invalid Version"
 ---
 Body
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     with pytest.raises(ValidationError):
         validate_document(doc_path)
@@ -91,19 +100,23 @@ def test_validate_cross_references(tmp_path):
     docs_dir.mkdir()
     dataset_dir.mkdir()
 
-    (docs_dir / "valid.md").write_text("""---
+    (docs_dir / "valid.md").write_text(
+        """---
 id: "doc1"
 title: "Doc 1"
 ---
 Body
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     api_file = dataset_dir / "api_index.json"
-    api_file.write_text(json.dumps([{
-        "filepath": "nonexistent.md",
-        "doc_id": "missing_doc",
-        "title": "Bad Reference"
-    }]), encoding="utf-8")
+    api_file.write_text(
+        json.dumps(
+            [{"filepath": "nonexistent.md", "doc_id": "missing_doc", "title": "Bad Reference"}]
+        ),
+        encoding="utf-8",
+    )
 
     errors = validate_cross_references(docs_dir=docs_dir, dataset_dir=dataset_dir)
     assert len(errors) >= 1

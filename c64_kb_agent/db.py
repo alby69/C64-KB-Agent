@@ -116,9 +116,7 @@ class DatabaseDAO:
 
         for doc in doc_paths:
             rel_path = (
-                str(doc.relative_to(target_docs))
-                if doc.is_relative_to(target_docs)
-                else str(doc)
+                str(doc.relative_to(target_docs)) if doc.is_relative_to(target_docs) else str(doc)
             )
             try:
                 fm, body = parse_frontmatter(doc)

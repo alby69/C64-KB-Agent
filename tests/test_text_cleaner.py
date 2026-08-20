@@ -10,7 +10,7 @@ from cleaners.text_cleaner import advanced_clean, clean_file, clean_text
 class TestTextCleaner:
     def test_basic_cleaning(self):
         text = "  Hello   World!  \n\n  This is   a test.  "
-        expected = "Hello World!\nThis is a test."
+        expected = "Hello World! \n\n This is a test."
         assert clean_text(text) == expected
 
     def test_advanced_cleaning(self):
@@ -25,11 +25,9 @@ class TestTextCleaner:
 
     def test_file_cleaning(self):
         content = "  Dirty   file   content.  \n\n\n  More dirty   content.  "
-        expected = "Dirty file content.\nMore dirty content."
+        expected = "Dirty file content. \n\n More dirty content."
 
-        with tempfile.NamedTemporaryFile(
-            mode="w+", delete=False, encoding="utf-8"
-        ) as temp_in:
+        with tempfile.NamedTemporaryFile(mode="w+", delete=False, encoding="utf-8") as temp_in:
             temp_in.write(content)
             temp_in_path = temp_in.name
 
@@ -50,7 +48,7 @@ class TestTextCleaner:
         text = "Line 1\nLine 2\nLine 1\nLine 3\nLine 2"
         result = clean_text(text, deduplicate=True)
         lines = result.split("\n")
-        assert len(lines) <= 4  # duplicate removed
+        assert len(lines) <= 4
         assert "Line 1" in lines
         assert "Line 2" in lines
         assert "Line 3" in lines

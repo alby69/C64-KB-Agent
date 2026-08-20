@@ -22,7 +22,9 @@ def main(args: list[str] | None = None) -> int:
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     p_status = subparsers.add_parser("status", help="Show Knowledge Base status and counts")
-    p_status.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
+    p_status.add_argument(
+        "--format", choices=["text", "json"], default="text", help="Output format"
+    )
 
     p_val = subparsers.add_parser(
         "validate", help="Validate documents and datasets against JSON schemas"

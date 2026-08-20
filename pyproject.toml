@@ -39,6 +39,9 @@ dev = [
 [project.scripts]
 c64-kb-agent = "c64_kb_agent.cli:main"
 
+[tool.setuptools]
+py-modules = ["main", "kbvalidate"]
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["c64_kb_agent*", "cleaners*"]

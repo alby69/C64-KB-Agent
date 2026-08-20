@@ -10,7 +10,8 @@ def test_database_dao_and_fts_search(tmp_path):
     docs_dir.mkdir()
     dataset_dir.mkdir()
 
-    (docs_dir / "sprite_test.md").write_text("""---
+    (docs_dir / "sprite_test.md").write_text(
+        """---
 id: "sprite_test_01"
 title: "Sprite Test Guide"
 category: "reference"
@@ -24,7 +25,9 @@ c64ref:
   address: "$D015"
 ---
 This document explains sprite collision and VIC-II registers for Commodore 64.
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     db_path = dataset_dir / "search_index.db"
     dao = DatabaseDAO(db_path=db_path)

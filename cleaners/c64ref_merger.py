@@ -33,8 +33,10 @@ def get_slug(entity: Entity) -> str:
         return addr_clean
     return addr_clean or sym_clean
 
+
 class C64RefMerger:
     """Merges entities from different source files of the same module and resolves cross-references."""
+
     def __init__(self):
         self.global_slugs: dict[str, str] = {}  # key (symbol or address) -> slug
 
@@ -71,7 +73,7 @@ class C64RefMerger:
                     category=entity.category,
                     flags=entity.flags,
                     formula=entity.formula,
-                    opcodes_list=entity.opcodes_list
+                    opcodes_list=entity.opcodes_list,
                 )
             else:
                 existing = merged[key]

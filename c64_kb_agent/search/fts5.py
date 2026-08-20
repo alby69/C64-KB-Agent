@@ -87,19 +87,23 @@ class FTSSearchEngine:
 
             results = []
             for r in rows:
-                results.append({
-                    "id": r["id"],
-                    "filepath": r["filepath"],
-                    "title": r["title"],
-                    "source_url": r["source_url"],
-                    "category": r["category"],
-                    "difficulty": r["difficulty"],
-                    "language": r["language"],
-                    "hardware": r["hardware"],
-                    "topics": [t.strip() for t in r["topics"].split(",")] if r["topics"] else [],
-                    "rank": round(r["rank"], 4),
-                    "snippet": r["snippet"],
-                })
+                results.append(
+                    {
+                        "id": r["id"],
+                        "filepath": r["filepath"],
+                        "title": r["title"],
+                        "source_url": r["source_url"],
+                        "category": r["category"],
+                        "difficulty": r["difficulty"],
+                        "language": r["language"],
+                        "hardware": r["hardware"],
+                        "topics": [t.strip() for t in r["topics"].split(",")]
+                        if r["topics"]
+                        else [],
+                        "rank": round(r["rank"], 4),
+                        "snippet": r["snippet"],
+                    }
+                )
 
             return {
                 "query": query,

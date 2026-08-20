@@ -6,6 +6,7 @@ from typing import Any
 
 try:
     import structlog
+
     HAS_STRUCTLOG = True
 except ImportError:
     HAS_STRUCTLOG = False

@@ -23,7 +23,9 @@ class Settings(BaseSettings):
     docs_dir: Path = Field(default_factory=lambda: _REPO_ROOT / "data" / "docs")
     dataset_dir: Path = Field(default_factory=lambda: _REPO_ROOT / "data" / "dataset")
     schemas_dir: Path = Field(default_factory=lambda: _REPO_ROOT / "schemas")
-    db_path: Path = Field(default_factory=lambda: _REPO_ROOT / "data" / "dataset" / "search_index.db")
+    db_path: Path = Field(
+        default_factory=lambda: _REPO_ROOT / "data" / "dataset" / "search_index.db"
+    )
     manifest_path: Path = Field(default_factory=lambda: _REPO_ROOT / "data" / "manifest.json")
 
     log_level: str = "INFO"

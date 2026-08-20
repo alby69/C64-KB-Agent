@@ -34,7 +34,8 @@ def test_rebuild_index_command(tmp_path, monkeypatch, capsys):
 
     # Create dummy doc
     dummy_doc = test_docs / "test.md"
-    dummy_doc.write_text("""---
+    dummy_doc.write_text(
+        """---
 title: "Test Doc"
 source_url: "https://example.com/test"
 category: "reference"
@@ -49,7 +50,9 @@ c64ref:
   address: "$1234"
 ---
 Test body content.
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     monkeypatch.setattr(main, "DOCS_DIR", test_docs)
     monkeypatch.setattr(main, "DATASET_DIR", test_dataset)
@@ -80,11 +83,14 @@ def test_invalid_document_detected(tmp_path, monkeypatch):
     test_docs.mkdir(parents=True)
 
     invalid_doc = test_docs / "invalid.md"
-    invalid_doc.write_text("""---
+    invalid_doc.write_text(
+        """---
 title: "Missing category"
 ---
 No category present.
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     monkeypatch.setattr(kbvalidate, "DOCS_DIR", test_docs)
     count, errors = kbvalidate.validate_all_documents(test_docs)

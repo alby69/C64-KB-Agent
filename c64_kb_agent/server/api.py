@@ -144,12 +144,7 @@ def validate_kb() -> dict[str, Any]:
     cross_errors = validate_cross_references(settings.docs_dir, settings.dataset_dir)
 
     all_ok = not (
-        doc_errors
-        or jsonl_errors
-        or manifest_errors
-        or kg_errors
-        or api_errors
-        or cross_errors
+        doc_errors or jsonl_errors or manifest_errors or kg_errors or api_errors or cross_errors
     )
 
     return {
@@ -221,16 +216,18 @@ def list_documents(
             hw = fm.get("hardware", [])
             tp = fm.get("topics", fm.get("tags", []))
 
-            items.append({
-                "id": doc_id,
-                "filepath": rel,
-                "title": fm.get("title", ""),
-                "category": cat,
-                "difficulty": fm.get("difficulty", ""),
-                "language": fm.get("language", ""),
-                "hardware": hw,
-                "topics": tp if isinstance(tp, list) else [tp],
-            })
+            items.append(
+                {
+                    "id": doc_id,
+                    "filepath": rel,
+                    "title": fm.get("title", ""),
+                    "category": cat,
+                    "difficulty": fm.get("difficulty", ""),
+                    "language": fm.get("language", ""),
+                    "hardware": hw,
+                    "topics": tp if isinstance(tp, list) else [tp],
+                }
+            )
         except Exception:
             continue
 

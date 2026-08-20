@@ -22,7 +22,9 @@ def main():
     data_dir = base_dir / "data"
 
     if not src_dir.exists():
-        print(f"Error: c64ref source directory does not exist at {src_dir}. Did you initialize the submodule?")
+        print(
+            f"Error: c64ref source directory does not exist at {src_dir}. Did you initialize the submodule?"
+        )
         return
 
     all_raw_entities = []
@@ -81,6 +83,7 @@ def main():
     # Clean previous output directory to avoid stale files
     if output_dir.exists():
         import shutil
+
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -96,6 +99,7 @@ def main():
     builder.build(merged_entities)
 
     print("=== c64ref Cleaner Pipeline Completed Successfully ===")
+
 
 if __name__ == "__main__":
     main()

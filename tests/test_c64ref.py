@@ -22,7 +22,9 @@ class TestC64RefParser(unittest.TestCase):
     def test_parse_disassembly_en(self):
         parser = C64DisasmParser()
         base_path = Path(__file__).resolve().parent.parent
-        file_path = base_path / "data" / "sources" / "c64ref" / "src" / "c64disasm" / "c64disasm_en.txt"
+        file_path = (
+            base_path / "data" / "sources" / "c64ref" / "src" / "c64disasm" / "c64disasm_en.txt"
+        )
 
         entities = parser.parse_file(file_path)
         self.assertTrue(len(entities) > 10)
@@ -44,6 +46,7 @@ class TestC64RefParser(unittest.TestCase):
         self.assertEqual(lda_entities[0].category, "load")
         self.assertEqual(lda_entities[0].flags, "N-----Z-")
 
+
 class TestC64RefMerger(unittest.TestCase):
     def test_slug_generation(self):
         entity = Entity(
@@ -54,12 +57,13 @@ class TestC64RefMerger(unittest.TestCase):
             heading="Current Raster Line",
             description="",
             sources=[],
-            related=[]
+            related=[],
         )
         self.assertEqual(get_slug(entity), "d012-raster")
 
     def test_merge_entities(self):
         from cleaners.c64ref_parser import SourceComment
+
         entity1 = Entity(
             module="c64mem",
             address="$D012",
@@ -68,14 +72,11 @@ class TestC64RefMerger(unittest.TestCase):
             heading="Heading 1",
             description="Comment 1",
             sources=[],
-            related=[]
+            related=[],
         )
-        entity1.sources = [SourceComment(
-            source_name="Source 1",
-            author="Author 1",
-            text="Comment 1",
-            priority=3
-        )]
+        entity1.sources = [
+            SourceComment(source_name="Source 1", author="Author 1", text="Comment 1", priority=3)
+        ]
 
         entity2 = Entity(
             module="c64mem",
@@ -85,14 +86,11 @@ class TestC64RefMerger(unittest.TestCase):
             heading="Heading 2",
             description="Comment 2",
             sources=[],
-            related=[]
+            related=[],
         )
-        entity2.sources = [SourceComment(
-            source_name="Source 2",
-            author="Author 2",
-            text="Comment 2",
-            priority=5
-        )]
+        entity2.sources = [
+            SourceComment(source_name="Source 2", author="Author 2", text="Comment 2", priority=5)
+        ]
 
         merger = C64RefMerger()
         merger.build_global_slug_map([entity1, entity2])
@@ -102,6 +100,7 @@ class TestC64RefMerger(unittest.TestCase):
         # Should have selected priority 5 description
         self.assertEqual(merged[0].description, "Comment 2")
         self.assertEqual(len(merged[0].sources), 2)
+
 
 class TestC64RefDatabase(unittest.TestCase):
     def test_database_indexing_and_query(self):
@@ -113,7 +112,9 @@ class TestC64RefDatabase(unittest.TestCase):
         if db_path.exists():
             try:
                 conn = sqlite3.connect(db_path)
-                tbl = conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='documents'").fetchone()
+                tbl = conn.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name='documents'"
+                ).fetchone()
                 has_table = bool(tbl)
                 conn.close()
             except Exception:
@@ -131,7 +132,9 @@ class TestC64RefDatabase(unittest.TestCase):
         self.assertTrue(len(rows) > 0)
 
         # Check FTS index search
-        cursor.execute("SELECT id, title FROM documents_fts WHERE documents_fts MATCH 'RASTER' LIMIT 5")
+        cursor.execute(
+            "SELECT id, title FROM documents_fts WHERE documents_fts MATCH 'RASTER' LIMIT 5"
+        )
         fts_rows = cursor.fetchall()
         self.assertTrue(len(fts_rows) > 0)
 

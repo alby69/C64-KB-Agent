@@ -7,24 +7,33 @@ def test_quality_analysis(tmp_path):
     docs_dir = tmp_path / "docs"
     docs_dir.mkdir()
 
-    (docs_dir / "empty.md").write_text("""---
+    (docs_dir / "empty.md").write_text(
+        """---
 title: "Empty"
 ---
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
-    (docs_dir / "dup1.md").write_text("""---
+    (docs_dir / "dup1.md").write_text(
+        """---
 title: "Dup 1"
 source_url: "https://example.com/same"
 ---
 Duplicate content body.
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
-    (docs_dir / "dup2.md").write_text("""---
+    (docs_dir / "dup2.md").write_text(
+        """---
 title: "Dup 2"
 source_url: "https://example.com/same"
 ---
 Duplicate content body.
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     report = analyze_data_quality(docs_dir=docs_dir)
 

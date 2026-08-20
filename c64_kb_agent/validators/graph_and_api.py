@@ -95,11 +95,7 @@ def validate_cross_references(
                     rec_id = rec.get("id")
                     meta = rec.get("metadata", {})
                     rel_p = meta.get("filepath")
-                    if (
-                        rel_p
-                        and rel_p not in doc_rel_paths
-                        and not (target_docs / rel_p).is_file()
-                    ):
+                    if rel_p and rel_p not in doc_rel_paths and not (target_docs / rel_p).is_file():
                         errors.append(
                             f"scraped_dataset.jsonl line {line_no} (id: {rec_id}) references missing filepath: {rel_p}"
                         )

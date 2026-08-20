@@ -19,7 +19,9 @@ from c64_kb_agent.validators.manifest import validate_manifest
 
 
 def output_result(
-    data: dict[str, Any], text_formatter: Callable[[dict[str, Any]], int], output_format: str = "text"
+    data: dict[str, Any],
+    text_formatter: Callable[[dict[str, Any]], int],
+    output_format: str = "text",
 ) -> int:
     """Outputs result in JSON or plain text based on output_format."""
     if output_format == "json":
@@ -48,11 +50,7 @@ def cmd_status(output_format: str = "text") -> int:
         "knowledge_graph.json",
         "manifest.json",
     ]:
-        fpath = (
-            settings.dataset_dir / fname
-            if fname != "manifest.json"
-            else settings.manifest_path
-        )
+        fpath = settings.dataset_dir / fname if fname != "manifest.json" else settings.manifest_path
         if fpath.exists():
             stat = fpath.stat()
             dataset_files_info[fname] = {
@@ -110,12 +108,7 @@ def cmd_validate(output_format: str = "text") -> int:
     cross_errors = validate_cross_references(settings.docs_dir, settings.dataset_dir)
 
     all_errors = bool(
-        doc_errors
-        or jsonl_errors
-        or manifest_errors
-        or kg_errors
-        or api_errors
-        or cross_errors
+        doc_errors or jsonl_errors or manifest_errors or kg_errors or api_errors or cross_errors
     )
 
     data = {

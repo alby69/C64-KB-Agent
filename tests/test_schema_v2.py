@@ -18,7 +18,7 @@ def test_document_schema_v2_valid():
         "language": "assembly",
         "hardware": ["C64"],
         "related": [],
-        "scraped_at": "2026-01-01"
+        "scraped_at": "2026-01-01",
     }
     schema_v2 = kbvalidate.load_schema("document.schema.v2.json")
     validate(instance=v2_doc, schema=schema_v2)
@@ -35,7 +35,7 @@ def test_document_schema_v2_invalid_version():
         "language": "assembly",
         "hardware": ["C64"],
         "related": [],
-        "scraped_at": "2026-01-01"
+        "scraped_at": "2026-01-01",
     }
     schema_v2 = kbvalidate.load_schema("document.schema.v2.json")
     with pytest.raises(ValidationError):
@@ -47,7 +47,8 @@ def test_kbvalidate_accepts_v2_doc(tmp_path, monkeypatch):
     test_docs.mkdir(parents=True)
 
     v2_file = test_docs / "v2_doc.md"
-    v2_file.write_text("""---
+    v2_file.write_text(
+        """---
 schema_version: 2
 title: "Document v2"
 source_url: "https://example.com/doc2"
@@ -61,7 +62,9 @@ related: []
 scraped_at: "2026-02-01"
 ---
 Body text
-""", encoding="utf-8")
+""",
+        encoding="utf-8",
+    )
 
     monkeypatch.setattr(kbvalidate, "DOCS_DIR", test_docs)
     count, errors = kbvalidate.validate_all_documents(test_docs)

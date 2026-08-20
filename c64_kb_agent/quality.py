@@ -26,9 +26,7 @@ def analyze_data_quality(docs_dir: Path | None = None) -> dict[str, Any]:
 
     for p in doc_paths:
         rel_path = (
-            str(p.relative_to(settings.base_dir))
-            if p.is_relative_to(settings.base_dir)
-            else str(p)
+            str(p.relative_to(settings.base_dir)) if p.is_relative_to(settings.base_dir) else str(p)
         )
         try:
             fm, body = parse_frontmatter(p)
@@ -39,9 +37,8 @@ def analyze_data_quality(docs_dir: Path | None = None) -> dict[str, Any]:
         if not body.strip():
             empty_body_docs.append(rel_path)
 
-        doc_id = (
-            fm.get("id")
-            or (str(p.relative_to(target_docs)) if p.is_relative_to(target_docs) else str(p))
+        doc_id = fm.get("id") or (
+            str(p.relative_to(target_docs)) if p.is_relative_to(target_docs) else str(p)
         )
         seen_ids.setdefault(doc_id, []).append(rel_path)
 

@@ -30,9 +30,7 @@ def parse_frontmatter(file_path: Path) -> tuple[dict[str, Any], str]:
         if "tags" in fm and "topics" not in fm:
             fm["topics"] = fm["tags"]
         elif (
-            "tags" in fm
-            and isinstance(fm.get("topics"), list)
-            and isinstance(fm.get("tags"), list)
+            "tags" in fm and isinstance(fm.get("topics"), list) and isinstance(fm.get("tags"), list)
         ):
             for tag in fm["tags"]:
                 if tag not in fm["topics"]:
@@ -47,9 +45,7 @@ def get_all_documents(docs_dir: Path | None = None) -> list[Path]:
     target_dir = docs_dir or settings.docs_dir
     if not target_dir.exists():
         return []
-    return sorted(
-        p for p in target_dir.rglob("*.md") if p.is_file() and p.name != "index.md"
-    )
+    return sorted(p for p in target_dir.rglob("*.md") if p.is_file() and p.name != "index.md")
 
 
 def validate_document(
