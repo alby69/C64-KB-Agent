@@ -5,3 +5,7 @@ venv/
 *.db-journal
 data/dataset/search_index.db
 *.egg-info/
+.coverage
+.coverage.*
+htmlcov/
+data/llm_export/

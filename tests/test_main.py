@@ -1,14 +1,9 @@
 """Test suite for CLI commands in main.py and kbvalidate.py."""
 
-import json
 import sqlite3
-import sys
-from pathlib import Path
 
-import pytest
-
-import main
 import kbvalidate
+import main
 
 
 def test_status_command(capsys):

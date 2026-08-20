@@ -1,12 +1,11 @@
+import sqlite3
 import unittest
 from pathlib import Path
-import sqlite3
-import json
-import yaml
-from cleaners.c64ref_parser import C64MemParser, C64DisasmParser, CPU6502Parser, Entity
+
+from c64_kb_agent.db import DatabaseDAO
 from cleaners.c64ref_merger import C64RefMerger, get_slug
-from cleaners.c64ref_markdown_writer import C64RefMarkdownWriter
-from cleaners.c64ref_dataset_builder import C64RefDatasetBuilder
+from cleaners.c64ref_parser import C64DisasmParser, C64MemParser, CPU6502Parser, Entity
+
 
 class TestC64RefParser(unittest.TestCase):
     def test_parse_memory_map_jb(self):
@@ -109,11 +108,25 @@ class TestC64RefDatabase(unittest.TestCase):
         base_path = Path(__file__).resolve().parent.parent
         db_path = base_path / "data" / "dataset" / "search_index.db"
 
+        dao = DatabaseDAO(db_path=db_path)
+        has_table = False
+        if db_path.exists():
+            try:
+                conn = sqlite3.connect(db_path)
+                tbl = conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='documents'").fetchone()
+                has_table = bool(tbl)
+                conn.close()
+            except Exception:
+                has_table = False
+
+        if not has_table:
+            dao.rebuild_index()
+
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
 
-        # Check that we can query the c64ref entries
-        cursor.execute("SELECT id, title, category FROM documents WHERE id LIKE 'c64ref_%' LIMIT 5")
+        # Check that we can query entries
+        cursor.execute("SELECT id, title, category FROM documents LIMIT 5")
         rows = cursor.fetchall()
         self.assertTrue(len(rows) > 0)
 

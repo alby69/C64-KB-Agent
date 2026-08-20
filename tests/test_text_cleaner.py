@@ -1,11 +1,10 @@
-import pytest
 import os
 import sys
 import tempfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from cleaners.text_cleaner import clean_text, advanced_clean, clean_file
+from cleaners.text_cleaner import advanced_clean, clean_file, clean_text
 
 
 class TestCleanText:

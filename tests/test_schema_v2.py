@@ -1,9 +1,7 @@
 """Test suite for Schema v2 document validation."""
 
-import json
-from pathlib import Path
 import pytest
-from jsonschema import validate, ValidationError
+from jsonschema import ValidationError, validate
 
 import kbvalidate
 
