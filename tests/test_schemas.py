@@ -32,14 +32,12 @@ def _valid_docs():
     docs_dir = BASE / "data" / "docs"
     # index.md è generato da build_index.py (indice di navigazione),
     # non è un documento prodotto dal contratto Scrapy -> KB-Agent.
-    return sorted(
-        p for p in docs_dir.rglob("*.md")
-        if p.is_file() and p.name != "index.md"
-    )
+    return sorted(p for p in docs_dir.rglob("*.md") if p.is_file() and p.name != "index.md")
 
 
 def _parse_frontmatter(path: Path):
     import yaml
+
     text = path.read_text(encoding="utf-8")
     if not text.startswith("---"):
         return {}
@@ -111,10 +109,15 @@ class TestSchemaVersioning:
         """Documenti senza schema_version (storici) restano validi come v1 (B4)."""
         schema = _load_schema("document.schema.json")
         doc = {
-            "title": "X", "source_url": "https://example.com/x",
-            "category": "reference", "topics": ["assembly"],
-            "difficulty": "beginner", "language": "assembly",
-            "hardware": ["VIC-II"], "related": [], "scraped_at": "2026-01-01",
+            "title": "X",
+            "source_url": "https://example.com/x",
+            "category": "reference",
+            "topics": ["assembly"],
+            "difficulty": "beginner",
+            "language": "assembly",
+            "hardware": ["VIC-II"],
+            "related": [],
+            "scraped_at": "2026-01-01",
         }
         validate(instance=doc, schema=schema)
 

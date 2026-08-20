@@ -1,11 +1,16 @@
-import os
 from pathlib import Path
-from cleaners.c64ref_parser import (
-    C64MemParser, C64IOParser, KernalParser, C64DisasmParser, CPU6502Parser
-)
-from cleaners.c64ref_merger import C64RefMerger
-from cleaners.c64ref_markdown_writer import C64RefMarkdownWriter
+
 from cleaners.c64ref_dataset_builder import C64RefDatasetBuilder
+from cleaners.c64ref_markdown_writer import C64RefMarkdownWriter
+from cleaners.c64ref_merger import C64RefMerger
+from cleaners.c64ref_parser import (
+    C64DisasmParser,
+    C64IOParser,
+    C64MemParser,
+    CPU6502Parser,
+    KernalParser,
+)
+
 
 def main():
     print("=== Starting c64ref Cleaner Pipeline ===")
@@ -17,7 +22,9 @@ def main():
     data_dir = base_dir / "data"
 
     if not src_dir.exists():
-        print(f"Error: c64ref source directory does not exist at {src_dir}. Did you initialize the submodule?")
+        print(
+            f"Error: c64ref source directory does not exist at {src_dir}. Did you initialize the submodule?"
+        )
         return
 
     all_raw_entities = []
@@ -76,6 +83,7 @@ def main():
     # Clean previous output directory to avoid stale files
     if output_dir.exists():
         import shutil
+
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -91,6 +99,7 @@ def main():
     builder.build(merged_entities)
 
     print("=== c64ref Cleaner Pipeline Completed Successfully ===")
+
 
 if __name__ == "__main__":
     main()

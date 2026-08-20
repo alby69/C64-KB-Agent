@@ -1,18 +1,22 @@
-import json
+import contextlib
 import hashlib
+import json
 import sqlite3
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
-from cleaners.c64ref_parser import Entity, SourceComment
+
 from cleaners.c64ref_merger import get_slug
+from cleaners.c64ref_parser import Entity
+
 
 def generate_entity_id(module: str, key_id: str) -> str:
     """Generates a unique SHA-1 based ID for the c64ref entity."""
     sha = hashlib.sha1(key_id.encode("utf-8")).hexdigest()[:8]
     return f"c64ref_{module}_{sha}"
 
+
 class C64RefDatasetBuilder:
     """Updates JSONL dataset, knowledge graph, SQLite search index, and main documentation index."""
+
     def __init__(self, data_dir: Path):
         self.data_dir = data_dir
         self.jsonl_path = data_dir / "dataset" / "scraped_dataset.jsonl"
@@ -20,7 +24,7 @@ class C64RefDatasetBuilder:
         self.db_path = data_dir / "dataset" / "search_index.db"
         self.index_md_path = data_dir / "docs" / "index.md"
 
-    def build(self, entities: List[Entity]) -> None:
+    def build(self, entities: list[Entity]) -> None:
         """Executes the full update pipeline."""
         print("=== Updating Dataset & Indexes ===")
         self.update_jsonl(entities)
@@ -60,11 +64,11 @@ class C64RefDatasetBuilder:
             return f"c64ref/io-map/{filename}"
         return f"c64ref/{filename}"
 
-    def update_jsonl(self, entities: List[Entity]) -> None:
+    def update_jsonl(self, entities: list[Entity]) -> None:
         """Saves or appends c64ref records to scraped_dataset.jsonl without duplicates."""
         existing_records = []
         if self.jsonl_path.exists():
-            with open(self.jsonl_path, "r", encoding="utf-8") as f:
+            with open(self.jsonl_path, encoding="utf-8") as f:
                 for line in f:
                     if line.strip():
                         rec = json.loads(line)
@@ -130,15 +134,11 @@ class C64RefDatasetBuilder:
                     "module": entity.module,
                     "symbol": entity.symbol,
                     "address": entity.address,
-                    "sources": sources_list
-                }
+                    "sources": sources_list,
+                },
             }
 
-            new_records.append({
-                "id": entity_id,
-                "text": body_text,
-                "metadata": meta
-            })
+            new_records.append({"id": entity_id, "text": body_text, "metadata": meta})
 
         all_records = existing_records + new_records
 
@@ -147,18 +147,25 @@ class C64RefDatasetBuilder:
             for rec in all_records:
                 f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
-    def update_knowledge_graph(self, entities: List[Entity]) -> None:
+    def update_knowledge_graph(self, entities: list[Entity]) -> None:
         """Updates knowledge_graph.json with nodes and edges."""
         graph = {"nodes": [], "edges": []}
         if self.graph_path.exists():
-            try:
+            with contextlib.suppress(Exception):
                 graph = json.loads(self.graph_path.read_text(encoding="utf-8"))
-            except Exception:
-                pass
 
         # Clean existing c64ref entries
-        graph["nodes"] = [n for n in graph.get("nodes", []) if not n.get("id", "").startswith("c64ref/")]
-        graph["edges"] = [e for e in graph.get("edges", []) if not (e.get("source", "").startswith("c64ref/") or e.get("target", "").startswith("c64ref/"))]
+        graph["nodes"] = [
+            n for n in graph.get("nodes", []) if not n.get("id", "").startswith("c64ref/")
+        ]
+        graph["edges"] = [
+            e
+            for e in graph.get("edges", [])
+            if not (
+                e.get("source", "").startswith("c64ref/")
+                or e.get("target", "").startswith("c64ref/")
+            )
+        ]
 
         # Add new nodes and edges
         new_nodes = []
@@ -166,11 +173,7 @@ class C64RefDatasetBuilder:
 
         for entity in entities:
             doc_rel_path = self.get_doc_relative_path(entity)
-            new_nodes.append({
-                "id": doc_rel_path,
-                "type": "document",
-                "label": entity.heading
-            })
+            new_nodes.append({"id": doc_rel_path, "type": "document", "label": entity.heading})
 
             # Edges to hardware
             hardware_list = []
@@ -188,14 +191,12 @@ class C64RefDatasetBuilder:
                 hardware_list.append("C64")
 
             for hw in hardware_list:
-                new_edges.append({
-                    "source": doc_rel_path,
-                    "target": hw,
-                    "relation": "related_to_hardware"
-                })
+                new_edges.append(
+                    {"source": doc_rel_path, "target": hw, "relation": "related_to_hardware"}
+                )
 
             # Edges to related documents
-            for rel in entity.related:
+            for _rel in entity.related:
                 # Target path can be derived roughly
                 # For simplicity, we can link them if they are documents
                 pass
@@ -204,9 +205,11 @@ class C64RefDatasetBuilder:
         graph["edges"].extend(new_edges)
 
         # Save back as pretty JSON
-        self.graph_path.write_text(json.dumps(graph, indent=2, ensure_ascii=False), encoding="utf-8")
+        self.graph_path.write_text(
+            json.dumps(graph, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
 
-    def update_sqlite_index(self, entities: List[Entity]) -> None:
+    def update_sqlite_index(self, entities: list[Entity]) -> None:
         """Deletes old c64ref and inserts new documents & routines into search_index.db."""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -256,57 +259,62 @@ class C64RefDatasetBuilder:
 
             body_text = entity.description if entity.description else entity.heading
             source_file_rel = f"{entity.module}.txt"
-            source_url = f"https://github.com/mist64/c64ref/blob/main/src/{entity.module}/{source_file_rel}"
+            source_url = (
+                f"https://github.com/mist64/c64ref/blob/main/src/{entity.module}/{source_file_rel}"
+            )
 
             # Standard documents table
-            cursor.execute("""
+            cursor.execute(
+                """
                 INSERT INTO documents (id, filepath, title, source_url, category, difficulty, language, hardware, topics, body)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                entity_id,
-                doc_rel_path,
-                entity.heading,
-                source_url,
-                category,
-                difficulty,
-                "assembly",
-                hardware,
-                ",".join(topics),
-                body_text
-            ))
+            """,
+                (
+                    entity_id,
+                    doc_rel_path,
+                    entity.heading,
+                    source_url,
+                    category,
+                    difficulty,
+                    "assembly",
+                    hardware,
+                    ",".join(topics),
+                    body_text,
+                ),
+            )
 
             # Virtual FTS table
-            cursor.execute("""
+            cursor.execute(
+                """
                 INSERT INTO documents_fts (id, title, category, difficulty, language, hardware, topics, body)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                entity_id,
-                entity.heading,
-                category,
-                difficulty,
-                "assembly",
-                hardware,
-                ",".join(topics),
-                body_text
-            ))
+            """,
+                (
+                    entity_id,
+                    entity.heading,
+                    category,
+                    difficulty,
+                    "assembly",
+                    hardware,
+                    ",".join(topics),
+                    body_text,
+                ),
+            )
 
             # If KERNAL API, insert into routines
             if entity.module == "kernal":
-                cursor.execute("""
+                cursor.execute(
+                    """
                     INSERT INTO routines (name, address, description, source_url, doc_id)
                     VALUES (?, ?, ?, ?, ?)
-                """, (
-                    entity.symbol,
-                    entity.address,
-                    entity.heading,
-                    source_url,
-                    entity_id
-                ))
+                """,
+                    (entity.symbol, entity.address, entity.heading, source_url, entity_id),
+                )
 
         conn.commit()
         conn.close()
 
-    def update_index_md(self, entities: List[Entity]) -> None:
+    def update_index_md(self, entities: list[Entity]) -> None:
         """Parses, filters, and rebuilds data/docs/index.md to include new references."""
         if not self.index_md_path.exists():
             return
@@ -315,7 +323,7 @@ class C64RefDatasetBuilder:
 
         # Group lines under categories
         # Let's find sections like ## reference, ## source-code, etc.
-        sections_dict: Dict[str, List[str]] = {}
+        sections_dict: dict[str, list[str]] = {}
         current_section = None
 
         for line in content.splitlines():
@@ -344,12 +352,12 @@ class C64RefDatasetBuilder:
 
         # Deduplicate and sort sections alphabetically
         for sec in sections_dict:
-            sections_dict[sec] = sorted(list(set(sections_dict[sec])))
+            sections_dict[sec] = sorted(set(sections_dict[sec]))
 
         # Reconstruct index.md cleanly
         rebuilt_parts = [
             "# Indice — Manuale di programmazione per Commodore 64\n",
-            "> Documentazione aggiornata il 1785145870.6636875\n"
+            "> Documentazione aggiornata il 1785145870.6636875\n",
         ]
 
         # Sort section keys to keep index consistent
@@ -357,9 +365,10 @@ class C64RefDatasetBuilder:
             rebuilt_parts.append(f"## {sec_name}\n")
             for item in sections_dict[sec_name]:
                 rebuilt_parts.append(item)
-            rebuilt_parts.append("") # blank line after section
+            rebuilt_parts.append("")  # blank line after section
 
         self.index_md_path.write_text("\n".join(rebuilt_parts).strip() + "\n", encoding="utf-8")
+
 
 def hex_to_dec(hex_str: str) -> int:
     """Safely converts hex string like $D012 to decimal integer."""

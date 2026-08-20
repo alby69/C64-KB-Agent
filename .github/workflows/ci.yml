@@ -8,6 +8,64 @@ on:
   workflow_dispatch:
 
 jobs:
+  lint:
+    name: Linting (Ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+      - name: Run Ruff check and format
+        run: |
+          ruff check .
+          ruff format --check .
+
+  typecheck:
+    name: Type Check (Mypy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test,serve,dev]"
+      - name: Run mypy
+        run: |
+          mypy c64_kb_agent tests/test_api.py tests/test_cli.py tests/test_config.py tests/test_quality.py tests/test_search.py tests/test_validators.py scripts/generate_manifest.py
+
+  security:
+    name: Security Scan (Bandit & Pip Audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test,serve,dev]"
+      - name: Run Bandit
+        run: |
+          bandit -r c64_kb_agent -s B101,B104,B110,B112
+      - name: Run Pip Audit
+        run: |
+          pip-audit --skip-editable --ignore-vuln PYSEC-2026-196 --ignore-vuln PYSEC-2026-2875 --ignore-vuln PYSEC-2026-2876 --ignore-vuln GHSA-c38f-5x8q-v6j8 --ignore-vuln GHSA-6x32-v48g-cmvw
+
   test:
     name: Test (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
@@ -17,6 +75,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -26,19 +86,21 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[test]"
+          pip install -e ".[test,serve]"
 
-      - name: Run unit tests
+      - name: Run unit tests with coverage
         run: |
-          pytest -v
+          pytest -v --cov=c64_kb_agent --cov-report=xml --cov-fail-under=80
 
   contract-gate:
     name: Contract Validation Gate
     runs-on: ubuntu-latest
-    needs: test
+    needs: [test, lint, typecheck, security]
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -48,8 +110,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[test]"
+          pip install -e ".[test,serve]"
 
-      - name: Validate dataset contract
+      - name: Validate dataset contract and manifest
         run: |
-          python main.py validate
+          c64-kb-agent validate
+          python scripts/generate_manifest.py

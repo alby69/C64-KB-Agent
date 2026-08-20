@@ -1,8 +1,5 @@
 """Test suite for data/manifest.json generation and validation."""
 
-import json
-from pathlib import Path
-import pytest
 from jsonschema import validate
 
 import kbvalidate

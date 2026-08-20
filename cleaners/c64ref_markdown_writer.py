@@ -1,9 +1,10 @@
-import re
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+
 import yaml
-from cleaners.c64ref_parser import Entity, SourceComment
+
 from cleaners.c64ref_merger import get_slug
+from cleaners.c64ref_parser import Entity
+
 
 def hex_to_dec(hex_str: str) -> int:
     """Converts a hex string like $D012 to decimal."""
@@ -12,7 +13,8 @@ def hex_to_dec(hex_str: str) -> int:
     except ValueError:
         return 0
 
-def get_address_size(start: Optional[str], end: Optional[str]) -> str:
+
+def get_address_size(start: str | None, end: str | None) -> str:
     """Computes size in bytes for a given address range."""
     if not start:
         return "N/A"
@@ -26,8 +28,10 @@ def get_address_size(start: Optional[str], end: Optional[str]) -> str:
     except Exception:
         return "1 byte"
 
+
 class C64RefMarkdownWriter:
     """Writes merged entities into fully styled Markdown files with YAML frontmatter."""
+
     def __init__(self, output_dir: Path):
         self.output_dir = output_dir
 
@@ -92,7 +96,6 @@ class C64RefMarkdownWriter:
         """Builds valid YAML frontmatter conforming to C64-KB-Agent's schema."""
         module = entity.module
         addr = entity.address
-        sym = entity.symbol if entity.symbol else (entity.heading if module != "6502" else "")
 
         # Categorization & Topics
         category = "reference"
@@ -141,18 +144,18 @@ class C64RefMarkdownWriter:
                 hardware = ["CIA"]
 
         # Source files and comments metadata
-        source_files = list(set([s.source_name.lower().replace(" ", "_") + ".txt" for s in entity.sources]))
+        source_files = list(
+            {s.source_name.lower().replace(" ", "_") + ".txt" for s in entity.sources}
+        )
         sources_meta = []
         for s in entity.sources:
             # Short description is the first sentence or heading of the comment
             short_desc = s.text.split("\n")[0].strip() if s.text else ""
             if len(short_desc) > 80:
                 short_desc = short_desc[:77] + "..."
-            sources_meta.append({
-                "name": s.source_name,
-                "author": s.author,
-                "description": short_desc
-            })
+            sources_meta.append(
+                {"name": s.source_name, "author": s.author, "description": short_desc}
+            )
 
         # Base GitHub source URL
         source_file_rel = source_files[0] if source_files else f"{module}.txt"
@@ -174,8 +177,8 @@ class C64RefMarkdownWriter:
                 "address": addr,
                 "address_end": entity.address_end,
                 "symbol": entity.symbol,
-                "sources": sources_meta
-            }
+                "sources": sources_meta,
+            },
         }
 
         # Clean null values
@@ -198,7 +201,11 @@ class C64RefMarkdownWriter:
         if module in ["c64mem", "c64io"]:
             # Title
             body_parts.append(f"# {title} — {entity.heading} ({addr})")
-            body_parts.append("\n## Panoramica\nIl registro o area di memoria " + (sym if sym else addr) + " è descritto in dettaglio di seguito.")
+            body_parts.append(
+                "\n## Panoramica\nIl registro o area di memoria "
+                + (sym if sym else addr)
+                + " è descritto in dettaglio di seguito."
+            )
 
             # Technical Details
             dec_val = hex_to_dec(addr) if addr else 0
@@ -210,12 +217,16 @@ class C64RefMarkdownWriter:
             elif sym in ["FRELO1", "FREHI1", "FRELO2", "FREHI2", "FRELO3", "FREHI3"]:
                 permissions = "W"
 
-            body_parts.append(f"""
+            body_parts.append(
+                f"""
 ## Dettagli Tecnici
 - **Indirizzo**: `{addr}` (`{dec_val}` decimale)
-- **Range**: `{addr}`""" + (f"-`{entity.address_end}`" if entity.address_end else "") + f"""
+- **Range**: `{addr}`"""
+                + (f"-`{entity.address_end}`" if entity.address_end else "")
+                + f"""
 - **Dimensione**: `{size_bytes}`
-- **Permessi**: `{permissions}`""")
+- **Permessi**: `{permissions}`"""
+            )
 
             # Source Descriptions
             body_parts.append("\n## Descrizioni per Fonte")
@@ -254,9 +265,11 @@ L'istruzione `{entity.symbol}` viene descritta di seguito con dettagli operativi
             body_parts.append("\n## Modalità di Indirizzamento")
             body_parts.append("| Modalità | Opcode | Byte | Cicli | Note |")
             body_parts.append("|----------|--------|------|-------|------|")
-            for op in (entity.opcodes_list or []):
+            for op in entity.opcodes_list or []:
                 undoc_note = "Non documentata" if op["undocumented"] else "Standard"
-                body_parts.append(f"| {op['mode']} | `${op['opcode']}` | {op['bytes']} | {op['cycles']} | {undoc_note} |")
+                body_parts.append(
+                    f"| {op['mode']} | `${op['opcode']}` | {op['bytes']} | {op['cycles']} | {undoc_note} |"
+                )
 
             body_parts.append(f"\n## Descrizione\n{entity.description}")
 
@@ -265,8 +278,8 @@ L'istruzione `{entity.symbol}` viene descritta di seguito con dettagli operativi
 
             # Format disassembly lines
             disasm_lines = []
-            for line in (entity.disasm_lines or []):
-                comment_suffix = f"   ; {line['comment']}" if line['comment'] else ""
+            for line in entity.disasm_lines or []:
+                comment_suffix = f"   ; {line['comment']}" if line["comment"] else ""
                 disasm_lines.append(f".{line['addr'][1:]}  {line['code']}{comment_suffix}")
 
             disasm_block = "\n".join(disasm_lines)
@@ -282,6 +295,8 @@ L'istruzione `{entity.symbol}` viene descritta di seguito con dettagli operativi
                 body_parts.append(f"\n### {source.source_name} ({source.author})\n{source.text}")
 
         # Footer
-        body_parts.append(f"\n---\n*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*")
+        body_parts.append(
+            "\n---\n*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*"
+        )
 
         return "\n".join(body_parts)

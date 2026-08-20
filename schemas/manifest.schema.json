@@ -22,6 +22,14 @@
         "by_source": {
           "type": "object",
           "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "schema_versions_distribution": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "document_checksums": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
         }
       },
       "required": ["total", "by_source"],
