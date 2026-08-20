@@ -1,5 +1,5 @@
-from typing import List, Dict, Tuple, Any
-from cleaners.c64ref_parser import Entity, SourceComment
+from cleaners.c64ref_parser import Entity
+
 
 def get_slug(entity: Entity) -> str:
     """Generates the unique slug/filename for an entity based on the naming convention."""
@@ -36,9 +36,9 @@ def get_slug(entity: Entity) -> str:
 class C64RefMerger:
     """Merges entities from different source files of the same module and resolves cross-references."""
     def __init__(self):
-        self.global_slugs: Dict[str, str] = {}  # key (symbol or address) -> slug
+        self.global_slugs: dict[str, str] = {}  # key (symbol or address) -> slug
 
-    def build_global_slug_map(self, all_entities: List[Entity]) -> None:
+    def build_global_slug_map(self, all_entities: list[Entity]) -> None:
         """First pass to map every unique symbol/address to its slug."""
         for entity in all_entities:
             slug = get_slug(entity)
@@ -47,9 +47,9 @@ class C64RefMerger:
             if entity.address:
                 self.global_slugs[entity.address.upper()] = slug
 
-    def merge_entities(self, entities: List[Entity]) -> List[Entity]:
+    def merge_entities(self, entities: list[Entity]) -> list[Entity]:
         """Group entities by module and address/symbol, unifies descriptions and ranks sources."""
-        merged: Dict[Tuple[str, str], Entity] = {}
+        merged: dict[tuple[str, str], Entity] = {}
 
         for entity in entities:
             # Generate a key based on address if present, else symbol (e.g. for 6502)
@@ -93,7 +93,7 @@ class C64RefMerger:
                     existing.opcodes_list = entity.opcodes_list
 
         # Second pass: sort sources by priority descending, unify description/heading
-        for key, entity in merged.items():
+        for _key, entity in merged.items():
             # Sort sources by priority descending
             entity.sources.sort(key=lambda s: s.priority, reverse=True)
 
@@ -110,6 +110,6 @@ class C64RefMerger:
 
             # If there is same module references (like address within range or symbol),
             # let's include them.
-            entity.related = sorted(list(related_slugs))
+            entity.related = sorted(related_slugs)
 
         return list(merged.values())

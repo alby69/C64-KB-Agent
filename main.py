@@ -8,10 +8,8 @@ Provides commands:
 
 import argparse
 import datetime
-import os
 import sqlite3
 import sys
-from pathlib import Path
 
 from kbvalidate import (
     BASE_DIR,
@@ -224,7 +222,7 @@ def cmd_rebuild_index() -> int:
     conn.commit()
     conn.close()
 
-    print(f"Index rebuild complete!")
+    print("Index rebuild complete!")
     print(f"  - Indexed documents: {indexed_docs}")
     print(f"  - Indexed routines: {indexed_routines}")
     db_rel = db_path.relative_to(BASE_DIR) if db_path.is_relative_to(BASE_DIR) else db_path

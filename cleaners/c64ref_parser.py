@@ -1,7 +1,7 @@
-from dataclasses import dataclass, field
-from typing import List, Optional, Dict, Any
 import re
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 # Sources metadata lookup from Appendix A of the Technical Specification
 SOURCES_METADATA = {
@@ -54,25 +54,25 @@ class SourceComment:
 @dataclass
 class Entity:
     module: str
-    address: Optional[str]      # e.g., "$D012"
-    address_end: Optional[str]  # e.g., "$D013"
-    symbol: Optional[str]       # e.g., "RASTER"
+    address: str | None      # e.g., "$D012"
+    address_end: str | None  # e.g., "$D013"
+    symbol: str | None       # e.g., "RASTER"
     heading: str
     description: str
-    sources: List[SourceComment]
-    related: List[str]
-    disasm_lines: Optional[List[Dict[str, Any]]] = None  # to store raw disassembly lines for disasm module
-    category: Optional[str] = None                       # 6502 custom fields
-    flags: Optional[str] = None                          # 6502 custom fields
-    formula: Optional[str] = None                        # 6502 custom fields
-    opcodes_list: Optional[List[Dict[str, Any]]] = None  # 6502 custom fields
+    sources: list[SourceComment]
+    related: list[str]
+    disasm_lines: list[dict[str, Any]] | None = None  # to store raw disassembly lines for disasm module
+    category: str | None = None                       # 6502 custom fields
+    flags: str | None = None                          # 6502 custom fields
+    formula: str | None = None                        # 6502 custom fields
+    opcodes_list: list[dict[str, Any]] | None = None  # 6502 custom fields
 
 class C64RefParser:
     """Base parser class for c64ref txt source files."""
     def __init__(self, module: str):
         self.module = module
 
-    def extract_cross_references(self, text: str) -> List[str]:
+    def extract_cross_references(self, text: str) -> list[str]:
         """Extract internal cross references like addresses ($XXXX) and symbols from text."""
         refs = []
         # Find $XXXX addresses
@@ -86,17 +86,17 @@ class C64RefParser:
             if sym not in ["AND", "NOT", "FOR", "GET", "VAL", "LEN", "OR", "LET", "DIM", "SQR", "SGN"]:
                 refs.append(sym)
 
-        return sorted(list(set(refs)))
+        return sorted(set(refs))
 
 class C64MemParser(C64RefParser):
     """Memory Map Parser."""
     def __init__(self):
         super().__init__("c64mem")
 
-    def parse_file(self, filepath: Path) -> List[Entity]:
+    def parse_file(self, filepath: Path) -> list[Entity]:
         return self._parse_fixed_columns(filepath)
 
-    def _parse_fixed_columns(self, filepath: Path) -> List[Entity]:
+    def _parse_fixed_columns(self, filepath: Path) -> list[Entity]:
         filename = filepath.name
         metadata = SOURCES_METADATA.get(filename, (filename.replace(".txt", ""), "Unknown", 1, "en"))
         source_name, author, priority, lang = metadata
@@ -104,7 +104,7 @@ class C64MemParser(C64RefParser):
         entities = []
         current_entity = None
 
-        with open(filepath, "r", encoding="utf-8") as f:
+        with open(filepath, encoding="utf-8") as f:
             lines = f.readlines()
 
         for line in lines:
@@ -190,12 +190,12 @@ class C64DisasmParser(C64RefParser):
     def __init__(self):
         super().__init__("c64disasm")
 
-    def parse_file(self, filepath: Path) -> List[Entity]:
+    def parse_file(self, filepath: Path) -> list[Entity]:
         filename = filepath.name
         metadata = SOURCES_METADATA.get(filename, (filename.replace(".txt", ""), "Unknown", 1, "en"))
         source_name, author, priority, lang = metadata
 
-        with open(filepath, "r", encoding="utf-8") as f:
+        with open(filepath, encoding="utf-8") as f:
             lines = f.readlines()
 
         entities = []
@@ -253,7 +253,7 @@ class C64DisasmParser(C64RefParser):
 
         return entities
 
-    def _create_entity(self, heading: str, lines: List[Dict[str, Any]], start_addr: str,
+    def _create_entity(self, heading: str, lines: list[dict[str, Any]], start_addr: str,
                        source_name: str, author: str, priority: int, filepath: Path) -> Entity:
         comments = []
         for line in lines:
@@ -292,8 +292,8 @@ class CPU6502Parser(C64RefParser):
     def __init__(self):
         super().__init__("6502")
 
-    def parse_file(self, filepath: Path) -> List[Entity]:
-        with open(filepath, "r", encoding="utf-8") as f:
+    def parse_file(self, filepath: Path) -> list[Entity]:
+        with open(filepath, encoding="utf-8") as f:
             content = f.read()
 
         sections = {}

@@ -1,10 +1,12 @@
-import json
+import contextlib
 import hashlib
+import json
 import sqlite3
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
-from cleaners.c64ref_parser import Entity, SourceComment
+
 from cleaners.c64ref_merger import get_slug
+from cleaners.c64ref_parser import Entity
+
 
 def generate_entity_id(module: str, key_id: str) -> str:
     """Generates a unique SHA-1 based ID for the c64ref entity."""
@@ -20,7 +22,7 @@ class C64RefDatasetBuilder:
         self.db_path = data_dir / "dataset" / "search_index.db"
         self.index_md_path = data_dir / "docs" / "index.md"
 
-    def build(self, entities: List[Entity]) -> None:
+    def build(self, entities: list[Entity]) -> None:
         """Executes the full update pipeline."""
         print("=== Updating Dataset & Indexes ===")
         self.update_jsonl(entities)
@@ -60,11 +62,11 @@ class C64RefDatasetBuilder:
             return f"c64ref/io-map/{filename}"
         return f"c64ref/{filename}"
 
-    def update_jsonl(self, entities: List[Entity]) -> None:
+    def update_jsonl(self, entities: list[Entity]) -> None:
         """Saves or appends c64ref records to scraped_dataset.jsonl without duplicates."""
         existing_records = []
         if self.jsonl_path.exists():
-            with open(self.jsonl_path, "r", encoding="utf-8") as f:
+            with open(self.jsonl_path, encoding="utf-8") as f:
                 for line in f:
                     if line.strip():
                         rec = json.loads(line)
@@ -147,14 +149,12 @@ class C64RefDatasetBuilder:
             for rec in all_records:
                 f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
-    def update_knowledge_graph(self, entities: List[Entity]) -> None:
+    def update_knowledge_graph(self, entities: list[Entity]) -> None:
         """Updates knowledge_graph.json with nodes and edges."""
         graph = {"nodes": [], "edges": []}
         if self.graph_path.exists():
-            try:
+            with contextlib.suppress(Exception):
                 graph = json.loads(self.graph_path.read_text(encoding="utf-8"))
-            except Exception:
-                pass
 
         # Clean existing c64ref entries
         graph["nodes"] = [n for n in graph.get("nodes", []) if not n.get("id", "").startswith("c64ref/")]
@@ -195,7 +195,7 @@ class C64RefDatasetBuilder:
                 })
 
             # Edges to related documents
-            for rel in entity.related:
+            for _rel in entity.related:
                 # Target path can be derived roughly
                 # For simplicity, we can link them if they are documents
                 pass
@@ -206,7 +206,7 @@ class C64RefDatasetBuilder:
         # Save back as pretty JSON
         self.graph_path.write_text(json.dumps(graph, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    def update_sqlite_index(self, entities: List[Entity]) -> None:
+    def update_sqlite_index(self, entities: list[Entity]) -> None:
         """Deletes old c64ref and inserts new documents & routines into search_index.db."""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -306,7 +306,7 @@ class C64RefDatasetBuilder:
         conn.commit()
         conn.close()
 
-    def update_index_md(self, entities: List[Entity]) -> None:
+    def update_index_md(self, entities: list[Entity]) -> None:
         """Parses, filters, and rebuilds data/docs/index.md to include new references."""
         if not self.index_md_path.exists():
             return
@@ -315,7 +315,7 @@ class C64RefDatasetBuilder:
 
         # Group lines under categories
         # Let's find sections like ## reference, ## source-code, etc.
-        sections_dict: Dict[str, List[str]] = {}
+        sections_dict: dict[str, list[str]] = {}
         current_section = None
 
         for line in content.splitlines():
@@ -344,7 +344,7 @@ class C64RefDatasetBuilder:
 
         # Deduplicate and sort sections alphabetically
         for sec in sections_dict:
-            sections_dict[sec] = sorted(list(set(sections_dict[sec])))
+            sections_dict[sec] = sorted(set(sections_dict[sec]))
 
         # Reconstruct index.md cleanly
         rebuilt_parts = [

@@ -1,11 +1,16 @@
-import os
 from pathlib import Path
-from cleaners.c64ref_parser import (
-    C64MemParser, C64IOParser, KernalParser, C64DisasmParser, CPU6502Parser
-)
-from cleaners.c64ref_merger import C64RefMerger
-from cleaners.c64ref_markdown_writer import C64RefMarkdownWriter
+
 from cleaners.c64ref_dataset_builder import C64RefDatasetBuilder
+from cleaners.c64ref_markdown_writer import C64RefMarkdownWriter
+from cleaners.c64ref_merger import C64RefMerger
+from cleaners.c64ref_parser import (
+    C64DisasmParser,
+    C64IOParser,
+    C64MemParser,
+    CPU6502Parser,
+    KernalParser,
+)
+
 
 def main():
     print("=== Starting c64ref Cleaner Pipeline ===")

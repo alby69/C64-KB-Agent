@@ -1,9 +1,10 @@
-import re
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+
 import yaml
-from cleaners.c64ref_parser import Entity, SourceComment
+
 from cleaners.c64ref_merger import get_slug
+from cleaners.c64ref_parser import Entity
+
 
 def hex_to_dec(hex_str: str) -> int:
     """Converts a hex string like $D012 to decimal."""
@@ -12,7 +13,7 @@ def hex_to_dec(hex_str: str) -> int:
     except ValueError:
         return 0
 
-def get_address_size(start: Optional[str], end: Optional[str]) -> str:
+def get_address_size(start: str | None, end: str | None) -> str:
     """Computes size in bytes for a given address range."""
     if not start:
         return "N/A"
@@ -92,7 +93,6 @@ class C64RefMarkdownWriter:
         """Builds valid YAML frontmatter conforming to C64-KB-Agent's schema."""
         module = entity.module
         addr = entity.address
-        sym = entity.symbol if entity.symbol else (entity.heading if module != "6502" else "")
 
         # Categorization & Topics
         category = "reference"
@@ -141,7 +141,7 @@ class C64RefMarkdownWriter:
                 hardware = ["CIA"]
 
         # Source files and comments metadata
-        source_files = list(set([s.source_name.lower().replace(" ", "_") + ".txt" for s in entity.sources]))
+        source_files = list({s.source_name.lower().replace(" ", "_") + ".txt" for s in entity.sources})
         sources_meta = []
         for s in entity.sources:
             # Short description is the first sentence or heading of the comment
@@ -282,6 +282,6 @@ L'istruzione `{entity.symbol}` viene descritta di seguito con dettagli operativi
                 body_parts.append(f"\n### {source.source_name} ({source.author})\n{source.text}")
 
         # Footer
-        body_parts.append(f"\n---\n*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*")
+        body_parts.append("\n---\n*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*")
 
         return "\n".join(body_parts)

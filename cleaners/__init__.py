@@ -1,3 +1,3 @@
-from .text_cleaner import clean_text, advanced_clean
+from .text_cleaner import advanced_clean, clean_text
 
 __all__ = ["clean_text", "advanced_clean"]

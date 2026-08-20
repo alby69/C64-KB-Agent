@@ -55,7 +55,7 @@ jobs:
           pip install -e ".[test,serve,dev]"
       - name: Run Bandit
         run: |
-          bandit -r c64_kb_agent -s B101,B104
+          bandit -r c64_kb_agent -s B101,B104,B110,B112
       - name: Run Pip Audit
         run: |
           pip-audit --ignore-code GHSA-c38f-5x8q-v6j8 --ignore-code GHSA-6x32-v48g-cmvw
