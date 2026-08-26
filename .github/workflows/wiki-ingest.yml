@@ -1,0 +1,41 @@
+name: Wiki Automated Ingest
+
+on:
+  push:
+    paths:
+      - 'data/docs/**'
+  workflow_dispatch:
+
+jobs:
+  wiki-ingest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/python-version@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run Wiki Ingest & Linker
+        run: |
+          python scripts/migrate_wiki.py
+          c64-kb-agent wiki link
+          c64-kb-agent wiki synthesize
+          c64-kb-agent wiki rebuild-index
+
+      - name: Commit & Push updated wiki
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(wiki): automated ingest and wiki compilation update"
+          file_pattern: "data/wiki/*"

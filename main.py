@@ -269,28 +269,11 @@ def cmd_rebuild_index() -> int:
     return 0
 
 
+from c64_kb_agent.cli import main as pkg_main
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        prog="c64-kb-agent",
-        description="C64-KB-Agent CLI — Knowledge Base management, validation, and indexing.",
-    )
-    subparsers = parser.add_subparsers(dest="command", help="Available commands")
-
-    subparsers.add_parser("status", help="Show Knowledge Base status and counts")
-    subparsers.add_parser("validate", help="Validate documents and datasets against JSON schemas")
-    subparsers.add_parser("rebuild-index", help="Rebuild SQLite FTS5 search index")
-
-    args = parser.parse_args()
-
-    if args.command == "status":
-        sys.exit(cmd_status())
-    elif args.command == "validate":
-        sys.exit(cmd_validate())
-    elif args.command == "rebuild-index":
-        sys.exit(cmd_rebuild_index())
-    else:
-        parser.print_help()
-        sys.exit(0)
+    sys.exit(pkg_main())
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ from c64_kb_agent.cli_handlers import (
     cmd_status,
     cmd_validate,
 )
+from c64_kb_agent.engine.cli import build_engine_parser, handle_engine_cli
 
 
 def main(args: list[str] | None = None) -> int:
@@ -20,6 +21,7 @@ def main(args: list[str] | None = None) -> int:
         description="C64-KB-Agent CLI — Knowledge Base management, validation, and indexing.",
     )
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
+    build_engine_parser(subparsers)
 
     p_status = subparsers.add_parser("status", help="Show Knowledge Base status and counts")
     p_status.add_argument(
@@ -72,6 +74,8 @@ def main(args: list[str] | None = None) -> int:
         return cmd_quality_report(output_format=parsed.format)
     elif parsed.command == "serve":
         return cmd_serve(host=parsed.host, port=parsed.port)
+    elif parsed.command == "wiki":
+        return handle_engine_cli(parsed)
     else:
         parser.print_help()
         return 0

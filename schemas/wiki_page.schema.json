@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/alby69/C64-KB-Agent/main/schemas/wiki_page.schema.json",
+  "title": "C64 LLM-Wiki Page Frontmatter Schema",
+  "description": "JSON Schema validating frontmatter metadata for compiled wiki pages under data/wiki/",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "aliases",
+    "tags",
+    "sources",
+    "created_at",
+    "updated_at",
+    "status",
+    "contradictions",
+    "links_out"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Unique, lower-kebab-case slug identifier for the wiki page used in Obsidian wiki-links [[slug]]"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["entity", "concept", "topic", "source", "synthesis", "code"],
+      "description": "The structural classification type of the wiki page"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable display title for the page"
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Alternative names, symbols, or hexadecimal addresses for cross-referencing"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Categorical tags associated with the domain topic"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Relative path to Layer 1 raw document (e.g., data/docs/c64ref/io-map/vic-ii/d020.md)"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$",
+            "description": "SHA256 hash of the Layer 1 source document at time of ingestion"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Traceability array tracking source provenance back to Layer 1"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Creation date of the page in YYYY-MM-DD format"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Last update date of the page in YYYY-MM-DD format"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["stable", "needs_review", "contradiction_flagged", "deprecated"],
+      "description": "Maintenance state of the page"
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sources", "description"],
+        "properties": {
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Paths of conflicting source files"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed technical note describing the discrepancy between sources"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "List of flagged technical contradictions between source materials"
+    },
+    "links_out": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of outbound wiki-link IDs referenced by this page"
+    }
+  },
+  "additionalProperties": false
+}
