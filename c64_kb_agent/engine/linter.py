@@ -3,6 +3,7 @@
 Scans data/wiki/ for broken links, orphan pages, schema validation errors, and flagged contradictions.
 """
 
+import re
 from pathlib import Path
 from typing import Any
 
@@ -25,7 +26,8 @@ class WikiLinter:
         import json
 
         with open(self.schema_path, encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+            return dict(data) if isinstance(data, dict) else {}
 
     def lint_wiki(self) -> dict[str, Any]:
         """Runs full lint analysis over all compiled wiki pages.
@@ -82,6 +84,18 @@ class WikiLinter:
             pid for pid in valid_ids if inbound_count.get(pid, 0) == 0 and not pid.startswith("topic-")
         ]
 
+        hex_discrepancies: list[dict[str, str]] = []
+        for p in all_pages:
+            _, body = load_yaml_frontmatter(p)
+            rel_p = str(p.relative_to(self.wiki_dir))
+            # Check for non-standard 0x hex address formatting vs standard $ prefix
+            raw_hexes = re.findall(r"\b0x[0-9a-fA-F]{4}\b", body)
+            if raw_hexes:
+                hex_discrepancies.append({
+                    "path": rel_p,
+                    "warning": f"Non-standard hex address format found ({', '.join(set(raw_hexes))}); use '$' prefix."
+                })
+
         report = {
             "total_pages_scanned": len(all_pages),
             "valid_pages": len(valid_ids),
@@ -89,6 +103,7 @@ class WikiLinter:
             "broken_links": broken_links,
             "orphans": orphans,
             "flagged_contradictions": flagged_contradictions,
+            "hex_formatting_warnings": hex_discrepancies,
         }
 
         logger.info(

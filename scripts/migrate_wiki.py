@@ -5,8 +5,8 @@ under data/wiki/ without modifying or deleting any Layer 1 data.
 """
 
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from c64_kb_agent.config import settings
 from c64_kb_agent.engine.ingestor import WikiIngestor

@@ -70,13 +70,33 @@ class WikiSynthesizer:
         logger.info("wiki_index_rebuilt", total_pages=sum(len(v) for v in by_type.values()))
         return index_path
 
+    def auto_synthesize_topics(self) -> list[Path]:
+        """Scans all compiled entity pages and automatically groups them into topic pages."""
+        created_topics: list[Path] = []
+        topic_groups: dict[str, list[str]] = {}
+
+        for page in sorted(self.wiki_dir.rglob("*.md")):
+            if page.parent.name == "entities":
+                fm, _ = load_yaml_frontmatter(page)
+                page_id = fm.get("id") or page.stem
+                tags = fm.get("tags") or []
+                for tag in tags:
+                    topic_groups.setdefault(tag, []).append(page_id)
+
+        for tag, eids in topic_groups.items():
+            if len(eids) >= 1:
+                path = self.update_topic_page(tag.replace("-", " ").title(), eids)
+                created_topics.append(path)
+
+        return created_topics
+
     def update_topic_page(self, topic_name: str, entity_ids: list[str]) -> Path:
         """Creates or updates a aggregated topic page under data/wiki/topics/."""
         topic_id = f"topic-{topic_name.lower().replace(' ', '-')}"
         topic_path = self.wiki_dir / "topics" / f"{topic_id}.md"
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-        existing_fm = {}
+        existing_fm: dict[str, Any] = {}
         if topic_path.exists():
             existing_fm, _ = load_yaml_frontmatter(topic_path)
 

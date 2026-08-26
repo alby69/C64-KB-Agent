@@ -6,11 +6,11 @@ Provides commands:
   - rebuild-index: Rebuilds SQLite FTS5 index (data/dataset/search_index.db) from data/docs.
 """
 
-import argparse
 import datetime
 import sqlite3
 import sys
 
+from c64_kb_agent.cli import main as pkg_main
 from kbvalidate import (
     BASE_DIR,
     DATASET_DIR,
@@ -267,9 +267,6 @@ def cmd_rebuild_index() -> int:
     db_rel = db_path.relative_to(BASE_DIR) if db_path.is_relative_to(BASE_DIR) else db_path
     print(f"  - Database path: {db_rel}")
     return 0
-
-
-from c64_kb_agent.cli import main as pkg_main
 
 
 def main() -> None:

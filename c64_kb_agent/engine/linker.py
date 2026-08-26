@@ -4,8 +4,8 @@ Scans compiled Layer 2 wiki pages under data/wiki/ for Obsidian [[slug]] wiki-li
 extracts outgoing references, updates links_out frontmatter arrays, and maintains link graph integrity.
 """
 
-from pathlib import Path
 import re
+from pathlib import Path
 from typing import Any
 
 from c64_kb_agent.config import settings
@@ -33,7 +33,7 @@ class WikiLinker:
 
     def extract_wiki_links(self, body: str) -> list[str]:
         """Extracts unique Obsidian [[slug]] wiki-link target IDs from text body."""
-        return sorted(list(set(WIKI_LINK_REGEX.findall(body))))
+        return sorted(set(WIKI_LINK_REGEX.findall(body)))
 
     def update_page_links(self, page_path: Path) -> list[str]:
         """Scans single wiki page, extracts links, and updates frontmatter links_out.
