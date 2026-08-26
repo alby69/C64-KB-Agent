@@ -1,17 +1,123 @@
 # C64 LLM-Wiki Master Index
 
-Welcome to the C64 LLM-Wiki Knowledge Base. This index categorizes all compiled entity, concept, topic, source summary, synthesis, and code snippet pages maintained by the Wiki Engine.
+*Last Updated: 2026-08-26*
 
-## Structure Overview
-- **[[entities/index]]**: Hardware chips (SID, VIC-II, CIA), memory locations, registers, and specific components.
-- **[[concepts/index]]**: Programming techniques, algorithms, graphics routines, sound synthesis concepts.
-- **[[topics/index]]**: Comprehensive technical overviews aggregating multiple entities and concepts.
-- **[[sources/index]]**: Summary pages mapping back to Layer 1 raw source documents (`data/docs/`).
-- **[[synthesis/index]]**: High-level cross-topic synthesis maintained over time.
-- **[[code/index]]**: Repository snippets and disassembly reference code catalog.
+Welcome to the C64 LLM-Wiki Knowledge Base. Master content catalog maintained by Wiki Engine.
 
 ---
 
-## Catalog
+## Entities (50)
+- [[adc]] — [ADC — Add with Carry](entities/adc.md)
+- [[anc]] — [ANC](entities/anc.md)
+- [[and]] — [AND — Logical AND](entities/and.md)
+- [[arr]] — [ARR](entities/arr.md)
+- [[asl]] — [ASL — Arithmetic Shift Left](entities/asl.md)
+- [[asr]] — [ASR](entities/asr.md)
+- [[bcc]] — [BCC — Branch if Carry Clear](entities/bcc.md)
+- [[bcs]] — [BCS — Branch if Carry Set](entities/bcs.md)
+- [[beq]] — [BEQ — Branch if Equal](entities/beq.md)
+- [[bit]] — [BIT — Bit Test](entities/bit.md)
+- [[bmi]] — [BMI — Branch if Minus](entities/bmi.md)
+- [[bne]] — [BNE — Branch if Not Equal](entities/bne.md)
+- [[bpl]] — [BPL — Branch if Plus](entities/bpl.md)
+- [[brk]] — [BRK — Force Interrupt](entities/brk.md)
+- [[bvc]] — [BVC — Branch if Overflow Clear](entities/bvc.md)
+- [[bvs]] — [BVS — Branch if Overflow Set](entities/bvs.md)
+- [[clc]] — [CLC — Clear Carry Flag](entities/clc.md)
+- [[cld]] — [CLD — Clear Decimal Mode](entities/cld.md)
+- [[cli]] — [CLI — Clear Interrupt Disable](entities/cli.md)
+- [[clv]] — [CLV — Clear Overflow Flag](entities/clv.md)
+- [[cmp]] — [CMP — Compare](entities/cmp.md)
+- [[cpx]] — [CPX — Compare X Register](entities/cpx.md)
+- [[cpy]] — [CPY — Compare Y Register](entities/cpy.md)
+- [[dcp]] — [DCP](entities/dcp.md)
+- [[dec]] — [DEC — Decrement Memory](entities/dec.md)
+- [[dex]] — [DEX — Decrement X Register](entities/dex.md)
+- [[dey]] — [DEY — Decrement Y Register](entities/dey.md)
+- [[eor]] — [EOR — Exclusive OR](entities/eor.md)
+- [[inc]] — [INC — Increment Memory](entities/inc.md)
+- [[inx]] — [INX — Increment X Register](entities/inx.md)
+- [[iny]] — [INY — Increment Y Register](entities/iny.md)
+- [[isc]] — [ISC](entities/isc.md)
+- [[jam]] — [JAM](entities/jam.md)
+- [[jmp]] — [JMP — Jump](entities/jmp.md)
+- [[jsr]] — [JSR — Jump to Subroutine](entities/jsr.md)
+- [[las]] — [LAS](entities/las.md)
+- [[lax]] — [LAX](entities/lax.md)
+- [[lda]] — [LDA — Load Accumulator](entities/lda.md)
+- [[ldx]] — [LDX — Load X Register](entities/ldx.md)
+- [[ldy]] — [LDY — Load Y Register](entities/ldy.md)
+- [[lsr]] — [LSR — Logical Shift Right](entities/lsr.md)
+- [[nop]] — [NOP — No Operation](entities/nop.md)
+- [[ora]] — [ORA — Logical OR](entities/ora.md)
+- [[pha]] — [PHA — Push Accumulator](entities/pha.md)
+- [[php]] — [PHP — Push Processor Status](entities/php.md)
+- [[pla]] — [PLA — Pull Accumulator](entities/pla.md)
+- [[plp]] — [PLP — Pull Processor Status](entities/plp.md)
+- [[rla]] — [RLA](entities/rla.md)
+- [[rol]] — [ROL — Rotate Left](entities/rol.md)
+- [[ror]] — [ROR — Rotate Right](entities/ror.md)
 
-*No pages compiled yet. Wiki initialized in Phase 1.*
+## Concepts (0)
+*No compiled pages in this section yet.*
+
+## Topics (0)
+*No compiled pages in this section yet.*
+
+## Sources (50)
+- [[src-adc]] — [Source Summary: ADC — Add with Carry](sources/src-adc.md)
+- [[src-anc]] — [Source Summary: ANC](sources/src-anc.md)
+- [[src-and]] — [Source Summary: AND — Logical AND](sources/src-and.md)
+- [[src-arr]] — [Source Summary: ARR](sources/src-arr.md)
+- [[src-asl]] — [Source Summary: ASL — Arithmetic Shift Left](sources/src-asl.md)
+- [[src-asr]] — [Source Summary: ASR](sources/src-asr.md)
+- [[src-bcc]] — [Source Summary: BCC — Branch if Carry Clear](sources/src-bcc.md)
+- [[src-bcs]] — [Source Summary: BCS — Branch if Carry Set](sources/src-bcs.md)
+- [[src-beq]] — [Source Summary: BEQ — Branch if Equal](sources/src-beq.md)
+- [[src-bit]] — [Source Summary: BIT — Bit Test](sources/src-bit.md)
+- [[src-bmi]] — [Source Summary: BMI — Branch if Minus](sources/src-bmi.md)
+- [[src-bne]] — [Source Summary: BNE — Branch if Not Equal](sources/src-bne.md)
+- [[src-bpl]] — [Source Summary: BPL — Branch if Plus](sources/src-bpl.md)
+- [[src-brk]] — [Source Summary: BRK — Force Interrupt](sources/src-brk.md)
+- [[src-bvc]] — [Source Summary: BVC — Branch if Overflow Clear](sources/src-bvc.md)
+- [[src-bvs]] — [Source Summary: BVS — Branch if Overflow Set](sources/src-bvs.md)
+- [[src-clc]] — [Source Summary: CLC — Clear Carry Flag](sources/src-clc.md)
+- [[src-cld]] — [Source Summary: CLD — Clear Decimal Mode](sources/src-cld.md)
+- [[src-cli]] — [Source Summary: CLI — Clear Interrupt Disable](sources/src-cli.md)
+- [[src-clv]] — [Source Summary: CLV — Clear Overflow Flag](sources/src-clv.md)
+- [[src-cmp]] — [Source Summary: CMP — Compare](sources/src-cmp.md)
+- [[src-cpx]] — [Source Summary: CPX — Compare X Register](sources/src-cpx.md)
+- [[src-cpy]] — [Source Summary: CPY — Compare Y Register](sources/src-cpy.md)
+- [[src-dcp]] — [Source Summary: DCP](sources/src-dcp.md)
+- [[src-dec]] — [Source Summary: DEC — Decrement Memory](sources/src-dec.md)
+- [[src-dex]] — [Source Summary: DEX — Decrement X Register](sources/src-dex.md)
+- [[src-dey]] — [Source Summary: DEY — Decrement Y Register](sources/src-dey.md)
+- [[src-eor]] — [Source Summary: EOR — Exclusive OR](sources/src-eor.md)
+- [[src-inc]] — [Source Summary: INC — Increment Memory](sources/src-inc.md)
+- [[src-inx]] — [Source Summary: INX — Increment X Register](sources/src-inx.md)
+- [[src-iny]] — [Source Summary: INY — Increment Y Register](sources/src-iny.md)
+- [[src-isc]] — [Source Summary: ISC](sources/src-isc.md)
+- [[src-jam]] — [Source Summary: JAM](sources/src-jam.md)
+- [[src-jmp]] — [Source Summary: JMP — Jump](sources/src-jmp.md)
+- [[src-jsr]] — [Source Summary: JSR — Jump to Subroutine](sources/src-jsr.md)
+- [[src-las]] — [Source Summary: LAS](sources/src-las.md)
+- [[src-lax]] — [Source Summary: LAX](sources/src-lax.md)
+- [[src-lda]] — [Source Summary: LDA — Load Accumulator](sources/src-lda.md)
+- [[src-ldx]] — [Source Summary: LDX — Load X Register](sources/src-ldx.md)
+- [[src-ldy]] — [Source Summary: LDY — Load Y Register](sources/src-ldy.md)
+- [[src-lsr]] — [Source Summary: LSR — Logical Shift Right](sources/src-lsr.md)
+- [[src-nop]] — [Source Summary: NOP — No Operation](sources/src-nop.md)
+- [[src-ora]] — [Source Summary: ORA — Logical OR](sources/src-ora.md)
+- [[src-pha]] — [Source Summary: PHA — Push Accumulator](sources/src-pha.md)
+- [[src-php]] — [Source Summary: PHP — Push Processor Status](sources/src-php.md)
+- [[src-pla]] — [Source Summary: PLA — Pull Accumulator](sources/src-pla.md)
+- [[src-plp]] — [Source Summary: PLP — Pull Processor Status](sources/src-plp.md)
+- [[src-rla]] — [Source Summary: RLA](sources/src-rla.md)
+- [[src-rol]] — [Source Summary: ROL — Rotate Left](sources/src-rol.md)
+- [[src-ror]] — [Source Summary: ROR — Rotate Right](sources/src-ror.md)
+
+## Synthesis (0)
+*No compiled pages in this section yet.*
+
+## Code (0)
+*No compiled pages in this section yet.*
