@@ -3,8 +3,8 @@
 Scans data/wiki/ for broken links, orphan pages, schema validation errors, and flagged contradictions.
 """
 
-from pathlib import Path
 import re
+from pathlib import Path
 from typing import Any
 
 from jsonschema import ValidationError, validate
@@ -26,7 +26,8 @@ class WikiLinter:
         import json
 
         with open(self.schema_path, encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+            return dict(data) if isinstance(data, dict) else {}
 
     def lint_wiki(self) -> dict[str, Any]:
         """Runs full lint analysis over all compiled wiki pages.

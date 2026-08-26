@@ -3,7 +3,6 @@
 import argparse
 import json
 from pathlib import Path
-from typing import Any
 
 from c64_kb_agent.engine.indexer import WikiIndexer
 from c64_kb_agent.engine.ingestor import WikiIngestor
@@ -109,7 +108,11 @@ def handle_engine_cli(args: argparse.Namespace) -> int:
         else:
             print(f"Search Results for '{args.text}' ({len(results)} found):")
             for r in results:
-                print(f"  - [{r['title']}] ({r['filepath']}) score={r['rank']:.3f}")
+                if isinstance(r, dict):
+                    title_val = r.get("title", "")
+                    fp_val = r.get("filepath", "")
+                    rank_val = float(r.get("rank", 0.0))
+                    print(f"  - [{title_val}] ({fp_val}) score={rank_val:.3f}")
         return 0
 
     return 1

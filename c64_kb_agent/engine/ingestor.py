@@ -5,17 +5,16 @@ Ingests Layer 1 raw Markdown files (from data/docs/) into compiled Layer 2 wiki 
 and conflict detection without modifying Layer 1 data.
 """
 
-from datetime import datetime, timezone
 import hashlib
-from pathlib import Path
 import re
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 import yaml
 from jsonschema import validate
 
 from c64_kb_agent.config import settings
-from c64_kb_agent.utils.logging import logger
 
 
 def compute_sha256(filepath: Path) -> str:
@@ -72,7 +71,8 @@ class WikiIngestor:
 
     def _load_schema(self) -> dict[str, Any]:
         with open(self.schema_path, encoding="utf-8") as f:
-            return yaml.safe_load(f)
+            data = yaml.safe_load(f)
+            return dict(data) if isinstance(data, dict) else {}
 
     def log_operation(self, entry: str) -> None:
         """Appends a log entry to data/wiki/log.md."""
@@ -145,7 +145,7 @@ class WikiIngestor:
             entity_id = doc_id
             entity_path = self.wiki_dir / "entities" / f"{entity_id}.md"
 
-            existing_fm = {}
+            existing_fm: dict[str, Any] = {}
             if entity_path.exists():
                 existing_fm, _ = load_yaml_frontmatter(entity_path)
 

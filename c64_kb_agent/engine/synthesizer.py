@@ -96,7 +96,7 @@ class WikiSynthesizer:
         topic_path = self.wiki_dir / "topics" / f"{topic_id}.md"
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-        existing_fm = {}
+        existing_fm: dict[str, Any] = {}
         if topic_path.exists():
             existing_fm, _ = load_yaml_frontmatter(topic_path)
 
