@@ -35,7 +35,7 @@ jobs:
           c64-kb-agent wiki rebuild-index
 
       - name: Commit & Push updated wiki
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore(wiki): automated ingest and wiki compilation update"
           file_pattern: "data/wiki/*"
