@@ -21,6 +21,7 @@ class Settings(BaseSettings):
 
     base_dir: Path = Field(default_factory=lambda: _REPO_ROOT)
     docs_dir: Path = Field(default_factory=lambda: _REPO_ROOT / "data" / "docs")
+    wiki_dir: Path = Field(default_factory=lambda: _REPO_ROOT / "data" / "wiki")
     dataset_dir: Path = Field(default_factory=lambda: _REPO_ROOT / "data" / "dataset")
     schemas_dir: Path = Field(default_factory=lambda: _REPO_ROOT / "schemas")
     db_path: Path = Field(
