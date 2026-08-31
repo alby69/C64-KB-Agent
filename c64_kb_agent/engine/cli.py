@@ -22,13 +22,17 @@ def build_engine_parser(subparsers: argparse._SubParsersAction) -> None:
 
     # ingest
     ingest_p = wiki_subparsers.add_parser("ingest", help="Ingest Layer 1 doc into Layer 2 Wiki")
-    ingest_p.add_argument("--file", "-f", required=True, help="Path to raw Markdown document to ingest")
+    ingest_p.add_argument(
+        "--file", "-f", required=True, help="Path to raw Markdown document to ingest"
+    )
 
     # link
     wiki_subparsers.add_parser("link", help="Extract and update [[wiki-links]] across wiki pages")
 
     # synthesize
-    wiki_subparsers.add_parser("synthesize", help="Rebuild wiki master index.md and topic aggregations")
+    wiki_subparsers.add_parser(
+        "synthesize", help="Rebuild wiki master index.md and topic aggregations"
+    )
 
     # lint
     wiki_subparsers.add_parser("lint", help="Run schema and link integrity health-checks")
@@ -50,7 +54,11 @@ def handle_engine_cli(args: argparse.Namespace) -> int:
     if cmd == "ingest":
         ingestor = WikiIngestor()
         created = ingestor.ingest_document(Path(args.file))
-        result = {"status": "ok", "ingested_file": args.file, "pages_created": [str(p) for p in created]}
+        result = {
+            "status": "ok",
+            "ingested_file": args.file,
+            "pages_created": [str(p) for p in created],
+        }
         if output_format == "json":
             print(json.dumps(result, indent=2))
         else:
@@ -63,7 +71,9 @@ def handle_engine_cli(args: argparse.Namespace) -> int:
         if output_format == "json":
             print(json.dumps(res, indent=2))
         else:
-            print(f"Wiki linking completed: {res['pages_processed']} pages processed, {res['total_links']} links updated.")
+            print(
+                f"Wiki linking completed: {res['pages_processed']} pages processed, {res['total_links']} links updated."
+            )
         return 0
 
     if cmd == "synthesize":
@@ -81,6 +91,7 @@ def handle_engine_cli(args: argparse.Namespace) -> int:
         report = linter.lint_wiki()
         if output_format == "json":
             import sys
+
             sys.stdout.write(json.dumps(report, indent=2) + "\n")
         else:
             print(f"Wiki Lint Summary: Scanned {report['total_pages_scanned']} pages.")

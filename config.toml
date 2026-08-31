@@ -1,0 +1,33 @@
+[project]
+name = "C64-KB-Agent"
+title = "Commodore 64 Knowledge Base & LLM-Wiki Engine"
+context = "Commodore 64 Knowledge Base and Active LLM-Wiki Engine for Technical Specifications, Disassembly, Architecture, and Assembly Language"
+language = "en"
+
+[paths]
+sources = "data/sources"
+raw_docs = "data/docs"
+dataset = "data/dataset"
+wiki = "data/wiki"
+output = "data/output"
+schemas = "schemas"
+
+[i18n]
+supported_languages = ["en", "it"]
+default_language = "en"
+
+[agent]
+provider = "google"
+model = "jules"
+llm_wiki_pattern = true
+non_destructive = true
+
+[tags]
+allowed = [
+    "hardware", "cpu-6510", "vic-ii", "sid-6581", "cia-6526",
+    "assembly", "basic", "kernal", "rom", "disassembly",
+    "memory-map", "io-map", "graphics", "sound", "registers",
+    "interrupts", "raster", "sprites", "bad-lines", "scrolling",
+    "floppy-1541", "disk-format", "cartridge", "tool", "reference",
+    "tutorial", "code-snippet", "game-engine", "elite"
+]

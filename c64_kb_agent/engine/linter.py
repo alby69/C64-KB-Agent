@@ -81,7 +81,9 @@ class WikiLinter:
                     broken_links.append({"source_id": page_id, "broken_target_id": target_id})
 
         orphans: list[str] = [
-            pid for pid in valid_ids if inbound_count.get(pid, 0) == 0 and not pid.startswith("topic-")
+            pid
+            for pid in valid_ids
+            if inbound_count.get(pid, 0) == 0 and not pid.startswith("topic-")
         ]
 
         hex_discrepancies: list[dict[str, str]] = []
@@ -91,10 +93,12 @@ class WikiLinter:
             # Check for non-standard 0x hex address formatting vs standard $ prefix
             raw_hexes = re.findall(r"\b0x[0-9a-fA-F]{4}\b", body)
             if raw_hexes:
-                hex_discrepancies.append({
-                    "path": rel_p,
-                    "warning": f"Non-standard hex address format found ({', '.join(set(raw_hexes))}); use '$' prefix."
-                })
+                hex_discrepancies.append(
+                    {
+                        "path": rel_p,
+                        "warning": f"Non-standard hex address format found ({', '.join(set(raw_hexes))}); use '$' prefix.",
+                    }
+                )
 
         report = {
             "total_pages_scanned": len(all_pages),
