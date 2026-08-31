@@ -53,7 +53,18 @@ class WikiIndexer:
                         INSERT OR REPLACE INTO documents (id, filepath, title, source_url, category, difficulty, language, hardware, topics, body)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """,
-                        (doc_id, rel_path, title, source, "wiki", "", "", "", tags_str, body.strip()),
+                        (
+                            doc_id,
+                            rel_path,
+                            title,
+                            source,
+                            "wiki",
+                            "",
+                            "",
+                            "",
+                            tags_str,
+                            body.strip(),
+                        ),
                     )
                     cursor.execute(
                         """

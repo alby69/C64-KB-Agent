@@ -99,7 +99,7 @@ def generate_metrics_markdown(metrics: dict) -> str:
 
     return f"""# METRICS.md — Knowledge Base Metrics & Index Dashboard
 
-**Last Updated**: {metrics['generated_at']}
+**Last Updated**: {metrics["generated_at"]}
 
 ---
 
@@ -107,11 +107,11 @@ def generate_metrics_markdown(metrics: dict) -> str:
 
 | Metric | Count |
 |---|---|
-| **Layer 1 Raw Documents (`data/docs/`)** | {metrics['raw_doc_count']:,} |
-| **Layer 2 Compiled Wiki Pages (`data/wiki/`)** | {metrics['wiki_page_count']:,} |
-| **SQLite FTS5 Indexed Documents** | {metrics['indexed_doc_count']:,} |
-| **Knowledge Graph Entities (Nodes)** | {metrics['kg_nodes']:,} |
-| **Knowledge Graph Relationships (Edges)** | {metrics['kg_edges']:,} |
+| **Layer 1 Raw Documents (`data/docs/`)** | {metrics["raw_doc_count"]:,} |
+| **Layer 2 Compiled Wiki Pages (`data/wiki/`)** | {metrics["wiki_page_count"]:,} |
+| **SQLite FTS5 Indexed Documents** | {metrics["indexed_doc_count"]:,} |
+| **Knowledge Graph Entities (Nodes)** | {metrics["kg_nodes"]:,} |
+| **Knowledge Graph Relationships (Edges)** | {metrics["kg_edges"]:,} |
 
 ---
 
@@ -119,7 +119,7 @@ def generate_metrics_markdown(metrics: dict) -> str:
 
 | Directory Source | Document Count |
 |---|---|
-{docs_breakdown_rows or '| *None* | 0 |'}
+{docs_breakdown_rows or "| *None* | 0 |"}
 
 ---
 
@@ -127,7 +127,7 @@ def generate_metrics_markdown(metrics: dict) -> str:
 
 | Wiki Category | Page Count |
 |---|---|
-{wiki_breakdown_rows or '| *None* | 0 |'}
+{wiki_breakdown_rows or "| *None* | 0 |"}
 
 ---
 
@@ -135,7 +135,7 @@ def generate_metrics_markdown(metrics: dict) -> str:
 
 | Artifact Name | Size |
 |---|---|
-{dataset_rows or '| *None* | 0 |'}
+{dataset_rows or "| *None* | 0 |"}
 """
 
 

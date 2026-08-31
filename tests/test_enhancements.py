@@ -9,7 +9,9 @@ def test_auto_synthesize_topics(tmp_path):
     wiki_dir = tmp_path / "wiki"
     doc1 = tmp_path / "c64ref" / "io-map" / "doc1.md"
     doc1.parent.mkdir(parents=True, exist_ok=True)
-    doc1.write_text("---\ntitle: \"Doc 1\"\ntags: [graphics, raster]\n---\n# Doc 1\n", encoding="utf-8")
+    doc1.write_text(
+        '---\ntitle: "Doc 1"\ntags: [graphics, raster]\n---\n# Doc 1\n', encoding="utf-8"
+    )
 
     ingestor = WikiIngestor(wiki_dir=wiki_dir)
     ingestor.ingest_document(doc1)
@@ -26,8 +28,8 @@ def test_semantic_linter_hex_warning(tmp_path):
     (wiki_dir / "entities").mkdir(parents=True, exist_ok=True)
     page = wiki_dir / "entities" / "test-hex.md"
     page.write_text(
-        "---\nid: \"test-hex\"\ntype: \"entity\"\ntitle: \"Test Hex\"\naliases: []\ntags: []\nsources: []\ncreated_at: \"2026-08-26\"\nupdated_at: \"2026-08-26\"\nstatus: \"stable\"\ncontradictions: []\nlinks_out: []\n---\n\nAddress is 0xD020.\n",
-        encoding="utf-8"
+        '---\nid: "test-hex"\ntype: "entity"\ntitle: "Test Hex"\naliases: []\ntags: []\nsources: []\ncreated_at: "2026-08-26"\nupdated_at: "2026-08-26"\nstatus: "stable"\ncontradictions: []\nlinks_out: []\n---\n\nAddress is 0xD020.\n',
+        encoding="utf-8",
     )
 
     linter = WikiLinter(wiki_dir=wiki_dir)
