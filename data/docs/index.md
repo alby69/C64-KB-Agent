@@ -1,3 +1,3 @@
 # Indice — Manuale di programmazione per Commodore 64
 
-> Documentazione aggiornata il 1788180506.5587087
+> Documentazione aggiornata il 1788781235.60929
