@@ -23,7 +23,7 @@ class DatabaseDAO:
         return conn
 
     def get_status(self) -> dict[str, Any]:
-        """Returns database status and document/routine counts."""
+        """Returns database status and document/routine/wiki_page counts."""
         status_info: dict[str, Any] = {
             "exists": self.db_path.exists(),
             "path": str(self.db_path),
@@ -31,6 +31,7 @@ class DatabaseDAO:
             "last_modified": None,
             "indexed_documents": 0,
             "indexed_routines": 0,
+            "indexed_wiki_pages": 0,
         }
 
         if not self.db_path.exists():
@@ -53,6 +54,13 @@ class DatabaseDAO:
                 if routine_table:
                     rt_row = conn.execute("SELECT COUNT(*) FROM routines").fetchone()
                     status_info["indexed_routines"] = rt_row[0] if rt_row else 0
+
+                wiki_table = conn.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name='wiki_pages'"
+                ).fetchone()
+                if wiki_table:
+                    wiki_row = conn.execute("SELECT COUNT(*) FROM wiki_pages").fetchone()
+                    status_info["indexed_wiki_pages"] = wiki_row[0] if wiki_row else 0
         except sqlite3.Error as e:
             status_info["error"] = str(e)
 
@@ -107,6 +115,33 @@ class DatabaseDAO:
                 description TEXT,
                 source_url TEXT,
                 doc_id TEXT
+            )
+        """)
+
+        cursor.execute("""
+            CREATE TABLE wiki_pages (
+                id TEXT PRIMARY KEY,
+                filepath TEXT,
+                type TEXT,
+                title TEXT,
+                aliases TEXT,
+                tags TEXT,
+                status TEXT,
+                contradictions TEXT,
+                links_out TEXT,
+                body TEXT
+            )
+        """)
+
+        cursor.execute("""
+            CREATE VIRTUAL TABLE wiki_pages_fts USING fts5(
+                id,
+                type,
+                title,
+                aliases,
+                tags,
+                status,
+                body
             )
         """)
 
