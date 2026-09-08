@@ -60,7 +60,9 @@ def test_ingestor_error_handling(temp_wiki_dir, tmp_path):
     invalid_doc = tmp_path / "data" / "docs" / "c64ref" / "invalid-doc.md"
     invalid_doc.parent.mkdir(parents=True, exist_ok=True)
     # Produce an invalid tags type (integer) so frontmatter validation fails
-    invalid_doc.write_text("---\ntitle: 'Bad Doc'\ntags: 12345\n---\nBody content", encoding="utf-8")
+    invalid_doc.write_text(
+        "---\ntitle: 'Bad Doc'\ntags: 12345\n---\nBody content", encoding="utf-8"
+    )
 
     ingestor = WikiIngestor(wiki_dir=temp_wiki_dir, docs_dir=invalid_doc.parent)
     created = ingestor.ingest_document(invalid_doc)

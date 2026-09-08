@@ -88,7 +88,9 @@ class WikiIngestor:
         with open(log_path, "a", encoding="utf-8") as f:
             f.write(log_entry)
 
-    def _write_error_page(self, doc_path: Path, rel_doc_path: str, sha256: str, error_msg: str) -> Path:
+    def _write_error_page(
+        self, doc_path: Path, rel_doc_path: str, sha256: str, error_msg: str
+    ) -> Path:
         """Writes an error report page under data/wiki/errors/ when ingestion fails."""
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         doc_id = slugify(doc_path.stem)
@@ -206,13 +208,17 @@ class WikiIngestor:
                     "links_out": existing_fm.get("links_out") or [],
                 }
 
-                entity_body = f"# {title}\n\n{body}\n\n## References\n- Source: [[{source_page_id}]]\n"
+                entity_body = (
+                    f"# {title}\n\n{body}\n\n## References\n- Source: [[{source_page_id}]]\n"
+                )
 
                 validate(instance=entity_fm, schema=self.schema)
                 write_wiki_page(entity_path, entity_fm, entity_body)
                 created_pages.append(entity_path)
 
-            self.log_operation(f"Ingested `{rel_doc_path}` -> created {len(created_pages)} wiki pages")
+            self.log_operation(
+                f"Ingested `{rel_doc_path}` -> created {len(created_pages)} wiki pages"
+            )
             return created_pages
 
         except (ValidationError, Exception) as err:
