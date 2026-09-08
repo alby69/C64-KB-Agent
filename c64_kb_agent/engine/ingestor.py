@@ -5,6 +5,7 @@ Ingests Layer 1 raw Markdown files (from data/docs/) into compiled Layer 2 wiki 
 and conflict detection without modifying Layer 1 data.
 """
 
+import contextlib
 import hashlib
 import re
 from datetime import datetime, timezone
@@ -116,11 +117,8 @@ class WikiIngestor:
             f"## Error Details\n\n```text\n{error_msg}\n```\n"
         )
 
-        try:
+        with contextlib.suppress(ValidationError):
             validate(instance=error_fm, schema=self.schema)
-        except ValidationError:
-            # Fallback if error_fm doesn't conform
-            pass
 
         write_wiki_page(error_page_path, error_fm, error_body)
         return error_page_path
