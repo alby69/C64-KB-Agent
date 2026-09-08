@@ -5,6 +5,15 @@ on:
     paths:
       - 'data/docs/**'
   workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Limit total docs to migrate'
+        required: false
+        type: string
+      sources:
+        description: 'Space-separated sources to migrate (e.g. c64ref sta_c64_org)'
+        required: false
+        type: string
 
 jobs:
   wiki-ingest:
@@ -17,7 +26,7 @@ jobs:
           submodules: recursive
 
       - name: Set up Python
-        uses: actions/python-version@v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           cache: 'pip'
@@ -29,10 +38,15 @@ jobs:
 
       - name: Run Wiki Ingest & Linker
         run: |
-          python scripts/migrate_wiki.py
+          LIMIT_FLAG="${{ github.event.inputs.limit && format('--limit {0}', github.event.inputs.limit) || '' }}"
+          SOURCES_FLAG="${{ github.event.inputs.sources && format('--sources {0}', github.event.inputs.sources) || '' }}"
+          python scripts/migrate_wiki.py $LIMIT_FLAG $SOURCES_FLAG
           c64-kb-agent wiki link
           c64-kb-agent wiki synthesize
           c64-kb-agent wiki rebuild-index
+
+      - name: Git pull rebase
+        run: git pull --rebase origin ${{ github.ref_name }} || true
 
       - name: Commit & Push updated wiki
         uses: stefanzweifel/git-auto-commit-action@v5

@@ -16,7 +16,7 @@ from c64_kb_agent.engine.synthesizer import WikiSynthesizer
 @pytest.fixture
 def temp_wiki_dir(tmp_path):
     wiki_dir = tmp_path / "wiki"
-    for sub in ["entities", "concepts", "topics", "sources", "synthesis", "code"]:
+    for sub in ["entities", "concepts", "topics", "sources", "synthesis", "code", "errors"]:
         (wiki_dir / sub).mkdir(parents=True, exist_ok=True)
     return wiki_dir
 
@@ -54,6 +54,21 @@ def test_ingestor_flow(temp_wiki_dir, sample_doc):
     entity_page = temp_wiki_dir / "entities" / "test-doc.md"
     assert source_page.exists()
     assert entity_page.exists()
+
+
+def test_ingestor_error_handling(temp_wiki_dir, tmp_path):
+    invalid_doc = tmp_path / "data" / "docs" / "c64ref" / "invalid-doc.md"
+    invalid_doc.parent.mkdir(parents=True, exist_ok=True)
+    # Produce an invalid tags type (integer) so frontmatter validation fails
+    invalid_doc.write_text("---\ntitle: 'Bad Doc'\ntags: 12345\n---\nBody content", encoding="utf-8")
+
+    ingestor = WikiIngestor(wiki_dir=temp_wiki_dir, docs_dir=invalid_doc.parent)
+    created = ingestor.ingest_document(invalid_doc)
+
+    assert len(created) == 1
+    err_page = temp_wiki_dir / "errors" / "err-invalid-doc.md"
+    assert err_page.exists()
+    assert err_page in created
 
 
 def test_linker_flow(temp_wiki_dir, sample_doc):

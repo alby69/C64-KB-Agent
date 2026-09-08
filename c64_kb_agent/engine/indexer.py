@@ -1,9 +1,10 @@
 """Wiki search indexer module for C64 LLM-Wiki Engine.
 
 Indexes compiled data/wiki/ Markdown documents into SQLite FTS5 search_index.db
-alongside Layer 1 data/docs/.
+under dedicated wiki_pages and wiki_pages_fts tables.
 """
 
+import json
 from pathlib import Path
 
 from c64_kb_agent.config import settings
@@ -15,16 +16,22 @@ from c64_kb_agent.utils.logging import logger
 class WikiIndexer:
     """Indexer engine extending DatabaseDAO to index Layer 2 wiki pages into FTS5."""
 
-    def __init__(self, db_dao: DatabaseDAO | None = None, wiki_dir: Path | None = None) -> None:
+    def __init__(
+        self,
+        db_dao: DatabaseDAO | None = None,
+        wiki_dir: Path | None = None,
+        docs_dir: Path | None = None,
+    ) -> None:
         self.dao = db_dao or DatabaseDAO()
         self.wiki_dir = wiki_dir or (settings.base_dir / "data" / "wiki")
+        self.docs_dir = docs_dir
 
     def rebuild_fts_index_with_wiki(self) -> int:
         """Rebuilds SQLite FTS5 index including both data/docs/ and data/wiki/ pages.
 
-        Returns total count of indexed documents.
+        Returns total count of indexed documents (Layer 1 + Layer 2 wiki pages).
         """
-        indexed_docs, _ = self.dao.rebuild_index()
+        indexed_docs, _ = self.dao.rebuild_index(docs_dir=self.docs_dir)
         indexed_count = indexed_docs
 
         if self.wiki_dir.exists():
@@ -38,10 +45,16 @@ class WikiIndexer:
                 for page in wiki_pages:
                     fm, body = load_yaml_frontmatter(page)
                     doc_id = fm.get("id") or page.stem
+                    page_type = fm.get("type", "entity")
                     title = fm.get("title") or page.stem
+                    aliases = fm.get("aliases") or []
+                    aliases_str = ", ".join(aliases) if isinstance(aliases, list) else str(aliases)
                     tags = fm.get("tags") or []
                     tags_str = ", ".join(tags) if isinstance(tags, list) else str(tags)
-                    source = f"wiki/{page.parent.name}"
+                    status = fm.get("status", "stable")
+                    contradictions = json.dumps(fm.get("contradictions", []))
+                    links_out = json.dumps(fm.get("links_out", []))
+
                     rel_path = (
                         str(page.relative_to(settings.base_dir))
                         if page.is_relative_to(settings.base_dir)
@@ -50,28 +63,36 @@ class WikiIndexer:
 
                     cursor.execute(
                         """
-                        INSERT OR REPLACE INTO documents (id, filepath, title, source_url, category, difficulty, language, hardware, topics, body)
+                        INSERT OR REPLACE INTO wiki_pages (id, filepath, type, title, aliases, tags, status, contradictions, links_out, body)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """,
                         (
                             doc_id,
                             rel_path,
+                            page_type,
                             title,
-                            source,
-                            "wiki",
-                            "",
-                            "",
-                            "",
+                            aliases_str,
                             tags_str,
+                            status,
+                            contradictions,
+                            links_out,
                             body.strip(),
                         ),
                     )
                     cursor.execute(
                         """
-                        INSERT INTO documents_fts (id, title, category, difficulty, language, hardware, topics, body)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                        INSERT INTO wiki_pages_fts (id, type, title, aliases, tags, status, body)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
                         """,
-                        (doc_id, title, "wiki", "", "", "", tags_str, body.strip()),
+                        (
+                            doc_id,
+                            page_type,
+                            title,
+                            aliases_str,
+                            tags_str,
+                            status,
+                            body.strip(),
+                        ),
                     )
                     indexed_count += 1
                 conn.commit()

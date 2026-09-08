@@ -12,9 +12,10 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from jsonschema import validate
+from jsonschema import ValidationError, validate
 
 from c64_kb_agent.config import settings
+from c64_kb_agent.utils.logging import logger
 
 
 def compute_sha256(filepath: Path) -> str:
@@ -86,6 +87,44 @@ class WikiIngestor:
         with open(log_path, "a", encoding="utf-8") as f:
             f.write(log_entry)
 
+    def _write_error_page(self, doc_path: Path, rel_doc_path: str, sha256: str, error_msg: str) -> Path:
+        """Writes an error report page under data/wiki/errors/ when ingestion fails."""
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        doc_id = slugify(doc_path.stem)
+        error_id = f"err-{doc_id}"
+        error_page_path = self.wiki_dir / "errors" / f"{error_id}.md"
+
+        error_fm = {
+            "id": error_id,
+            "type": "source",
+            "title": f"Ingestion Error: {doc_path.name}",
+            "aliases": [doc_path.name],
+            "tags": ["ingest-error", "error"],
+            "sources": [{"path": rel_doc_path, "sha256": sha256}],
+            "created_at": today,
+            "updated_at": today,
+            "status": "needs_review",
+            "contradictions": [],
+            "links_out": [],
+        }
+
+        error_body = (
+            f"# Ingestion Error Report: `{doc_path.name}`\n\n"
+            f"**Raw Source File**: `{rel_doc_path}`\n"
+            f"**SHA256**: `{sha256}`\n"
+            f"**Timestamp**: `{today}`\n\n"
+            f"## Error Details\n\n```text\n{error_msg}\n```\n"
+        )
+
+        try:
+            validate(instance=error_fm, schema=self.schema)
+        except ValidationError:
+            # Fallback if error_fm doesn't conform
+            pass
+
+        write_wiki_page(error_page_path, error_fm, error_body)
+        return error_page_path
+
     def ingest_document(self, doc_path: Path) -> list[Path]:
         """Ingests a single Layer 1 document into Layer 2 Wiki pages.
 
@@ -100,78 +139,86 @@ class WikiIngestor:
             else str(doc_path)
         )
         sha256 = compute_sha256(doc_path)
-        fm, body = load_yaml_frontmatter(doc_path)
 
-        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-        title = fm.get("title") or doc_path.stem.replace("-", " ").title()
-        doc_id = slugify(doc_path.stem)
-        tags = fm.get("tags") or fm.get("topics") or ["general"]
-        if isinstance(tags, str):
-            tags = [tags]
+        try:
+            fm, body = load_yaml_frontmatter(doc_path)
 
-        created_pages: list[Path] = []
+            today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+            title = fm.get("title") or doc_path.stem.replace("-", " ").title()
+            doc_id = slugify(doc_path.stem)
+            tags = fm.get("tags") or fm.get("topics") or ["general"]
+            if isinstance(tags, str):
+                tags = [tags]
 
-        # 1. Create or update Source Summary page under data/wiki/sources/
-        source_page_id = f"src-{doc_id}"
-        source_page_path = self.wiki_dir / "sources" / f"{source_page_id}.md"
+            created_pages: list[Path] = []
 
-        source_fm = {
-            "id": source_page_id,
-            "type": "source",
-            "title": f"Source Summary: {title}",
-            "aliases": [title, doc_path.name],
-            "tags": list(tags),
-            "sources": [{"path": rel_doc_path, "sha256": sha256}],
-            "created_at": today,
-            "updated_at": today,
-            "status": "stable",
-            "contradictions": [],
-            "links_out": [],
-        }
+            # 1. Create or update Source Summary page under data/wiki/sources/
+            source_page_id = f"src-{doc_id}"
+            source_page_path = self.wiki_dir / "sources" / f"{source_page_id}.md"
 
-        source_body = (
-            f"# Source Summary: {title}\n\n"
-            f"**Raw Source File**: `{rel_doc_path}`\n"
-            f"**SHA256**: `{sha256}`\n\n"
-            f"## Summary\n\n{body[:500]}...\n"
-        )
-
-        validate(instance=source_fm, schema=self.schema)
-        write_wiki_page(source_page_path, source_fm, source_body)
-        created_pages.append(source_page_path)
-
-        # 2. Extract potential entity page (for hardware/registers/ROM labels)
-        if any(keyword in rel_doc_path.lower() for keyword in ["c64ref", "io-map", "rom"]):
-            entity_id = doc_id
-            entity_path = self.wiki_dir / "entities" / f"{entity_id}.md"
-
-            existing_fm: dict[str, Any] = {}
-            if entity_path.exists():
-                existing_fm, _ = load_yaml_frontmatter(entity_path)
-
-            sources_list = existing_fm.get("sources", [])
-            if not any(s.get("path") == rel_doc_path for s in sources_list):
-                sources_list.append({"path": rel_doc_path, "sha256": sha256})
-
-            entity_fm = {
-                "id": entity_id,
-                "type": "entity",
-                "title": title,
-                "aliases": existing_fm.get("aliases") or [title],
-                "tags": list(set((existing_fm.get("tags") or []) + tags)),
-                "sources": sources_list,
-                "created_at": existing_fm.get("created_at") or today,
+            source_fm = {
+                "id": source_page_id,
+                "type": "source",
+                "title": f"Source Summary: {title}",
+                "aliases": [title, doc_path.name],
+                "tags": list(tags),
+                "sources": [{"path": rel_doc_path, "sha256": sha256}],
+                "created_at": today,
                 "updated_at": today,
-                "status": existing_fm.get("status") or "stable",
-                "contradictions": existing_fm.get("contradictions") or [],
-                "links_out": existing_fm.get("links_out") or [],
+                "status": "stable",
+                "contradictions": [],
+                "links_out": [],
             }
 
-            entity_body = f"# {title}\n\n{body}\n\n## References\n- Source: [[{source_page_id}]]\n"
+            source_body = (
+                f"# Source Summary: {title}\n\n"
+                f"**Raw Source File**: `{rel_doc_path}`\n"
+                f"**SHA256**: `{sha256}`\n\n"
+                f"## Summary\n\n{body[:500]}...\n"
+            )
 
-            validate(instance=entity_fm, schema=self.schema)
-            write_wiki_page(entity_path, entity_fm, entity_body)
-            created_pages.append(entity_path)
+            validate(instance=source_fm, schema=self.schema)
+            write_wiki_page(source_page_path, source_fm, source_body)
+            created_pages.append(source_page_path)
 
-        self.log_operation(f"Ingested `{rel_doc_path}` -> created {len(created_pages)} wiki pages")
-        return created_pages
+            # 2. Extract potential entity page (for hardware/registers/ROM labels)
+            if any(keyword in rel_doc_path.lower() for keyword in ["c64ref", "io-map", "rom"]):
+                entity_id = doc_id
+                entity_path = self.wiki_dir / "entities" / f"{entity_id}.md"
+
+                existing_fm: dict[str, Any] = {}
+                if entity_path.exists():
+                    existing_fm, _ = load_yaml_frontmatter(entity_path)
+
+                sources_list = existing_fm.get("sources", [])
+                if not any(s.get("path") == rel_doc_path for s in sources_list):
+                    sources_list.append({"path": rel_doc_path, "sha256": sha256})
+
+                entity_fm = {
+                    "id": entity_id,
+                    "type": "entity",
+                    "title": title,
+                    "aliases": existing_fm.get("aliases") or [title],
+                    "tags": list(set((existing_fm.get("tags") or []) + tags)),
+                    "sources": sources_list,
+                    "created_at": existing_fm.get("created_at") or today,
+                    "updated_at": today,
+                    "status": existing_fm.get("status") or "stable",
+                    "contradictions": existing_fm.get("contradictions") or [],
+                    "links_out": existing_fm.get("links_out") or [],
+                }
+
+                entity_body = f"# {title}\n\n{body}\n\n## References\n- Source: [[{source_page_id}]]\n"
+
+                validate(instance=entity_fm, schema=self.schema)
+                write_wiki_page(entity_path, entity_fm, entity_body)
+                created_pages.append(entity_path)
+
+            self.log_operation(f"Ingested `{rel_doc_path}` -> created {len(created_pages)} wiki pages")
+            return created_pages
+
+        except (ValidationError, Exception) as err:
+            logger.error("ingest_document_error", path=rel_doc_path, error=str(err))
+            err_path = self._write_error_page(doc_path, rel_doc_path, sha256, str(err))
+            self.log_operation(f"Failed `{rel_doc_path}` -> wrote error page `{err_path.name}`")
+            return [err_path]
