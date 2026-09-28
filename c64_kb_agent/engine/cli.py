@@ -14,34 +14,54 @@ from c64_kb_agent.search.fts5 import FTSSearchEngine
 
 def build_engine_parser(subparsers: argparse._SubParsersAction) -> None:
     """Attaches wiki engine subcommands to main CLI subparser."""
+    fmt_parent = argparse.ArgumentParser(add_help=False)
+    fmt_parent.add_argument(
+        "--format", choices=["text", "json"], default="text", help="Output format"
+    )
+
     wiki_parser = subparsers.add_parser(
         "wiki",
+        parents=[fmt_parent],
         help="LLM-Wiki Engine commands (ingest, link, synthesize, lint, rebuild-index, query)",
     )
     wiki_subparsers = wiki_parser.add_subparsers(dest="wiki_command", required=True)
 
     # ingest
-    ingest_p = wiki_subparsers.add_parser("ingest", help="Ingest Layer 1 doc into Layer 2 Wiki")
+    ingest_p = wiki_subparsers.add_parser(
+        "ingest", parents=[fmt_parent], help="Ingest Layer 1 doc into Layer 2 Wiki"
+    )
     ingest_p.add_argument(
         "--file", "-f", required=True, help="Path to raw Markdown document to ingest"
     )
 
     # link
-    wiki_subparsers.add_parser("link", help="Extract and update [[wiki-links]] across wiki pages")
+    wiki_subparsers.add_parser(
+        "link", parents=[fmt_parent], help="Extract and update [[wiki-links]] across wiki pages"
+    )
 
     # synthesize
     wiki_subparsers.add_parser(
-        "synthesize", help="Rebuild wiki master index.md and topic aggregations"
+        "synthesize",
+        parents=[fmt_parent],
+        help="Rebuild wiki master index.md and topic aggregations",
     )
 
     # lint
-    wiki_subparsers.add_parser("lint", help="Run schema and link integrity health-checks")
+    wiki_subparsers.add_parser(
+        "lint", parents=[fmt_parent], help="Run schema and link integrity health-checks"
+    )
 
     # rebuild-index
-    wiki_subparsers.add_parser("rebuild-index", help="Rebuild FTS5 search index with wiki pages")
+    wiki_subparsers.add_parser(
+        "rebuild-index",
+        parents=[fmt_parent],
+        help="Rebuild FTS5 search index with wiki pages",
+    )
 
     # query
-    query_p = wiki_subparsers.add_parser("query", help="Query knowledge base via FTS5 search")
+    query_p = wiki_subparsers.add_parser(
+        "query", parents=[fmt_parent], help="Query knowledge base via FTS5 search"
+    )
     query_p.add_argument("text", help="Search query string")
     query_p.add_argument("--limit", "-l", type=int, default=10, help="Max search results")
 
@@ -117,8 +137,9 @@ def handle_engine_cli(args: argparse.Namespace) -> int:
         if output_format == "json":
             print(json.dumps(results, indent=2))
         else:
-            print(f"Search Results for '{args.text}' ({len(results)} found):")
-            for r in results:
+            res_list = results.get("results", []) if isinstance(results, dict) else results
+            print(f"Search Results for '{args.text}' ({len(res_list)} found):")
+            for r in res_list:
                 if isinstance(r, dict):
                     title_val = r.get("title", "")
                     fp_val = r.get("filepath", "")

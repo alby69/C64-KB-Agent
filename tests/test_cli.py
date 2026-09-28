@@ -48,3 +48,32 @@ def test_cli_handlers_text_output(capsys):
     assert cmd_rebuild_index(output_format="text") == 0
     assert cmd_search("sprite", output_format="text") == 0
     assert cmd_quality_report(output_format="text") == 0
+
+
+def test_cli_wiki_lint_json(capsys):
+    ret = main(["wiki", "lint", "--format", "json"])
+    assert ret in [0, 1]
+    captured = capsys.readouterr().out
+    data = json.loads(captured)
+    assert "total_pages_scanned" in data
+    assert "invalid_schema" in data
+
+
+def test_cli_wiki_subcommands_format_options(capsys):
+    assert main(["wiki", "link", "--format", "json"]) == 0
+    captured = capsys.readouterr().out
+    assert "pages_processed" in captured
+
+    assert main(["wiki", "synthesize", "--format", "json"]) == 0
+    captured = capsys.readouterr().out
+    assert "index_path" in captured
+
+    assert main(["wiki", "rebuild-index", "--format", "json"]) == 0
+    captured = capsys.readouterr().out
+    assert "total_indexed" in captured
+
+    assert main(["wiki", "query", "sprite", "--format", "json"]) == 0
+    captured = capsys.readouterr().out
+    data = json.loads(captured)
+    assert isinstance(data, dict)
+    assert "results" in data
