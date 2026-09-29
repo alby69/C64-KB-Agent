@@ -28,7 +28,7 @@ def setup_logging(log_level: str = "INFO") -> Any:
             ],
             wrapper_class=structlog.make_filtering_bound_logger(numeric_level),
             context_class=dict,
-            logger_factory=structlog.PrintLoggerFactory(),
+            logger_factory=structlog.PrintLoggerFactory(file=sys.stderr),
             cache_logger_on_first_use=True,
         )
         return structlog.get_logger()
@@ -36,7 +36,7 @@ def setup_logging(log_level: str = "INFO") -> Any:
         logging.basicConfig(
             level=numeric_level,
             format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-            handlers=[logging.StreamHandler(sys.stdout)],
+            handlers=[logging.StreamHandler(sys.stderr)],
         )
         return logging.getLogger("c64_kb_agent")
 
