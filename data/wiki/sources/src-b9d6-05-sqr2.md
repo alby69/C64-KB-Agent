@@ -1,0 +1,44 @@
+---
+id: src-b9d6-05-sqr2
+type: source
+title: 'Source Summary: 0,5 * SQR(2)'
+aliases:
+- 0,5 * SQR(2)
+- b9d6-05-sqr2.md
+tags:
+- rom-disassembly
+- basic-rom
+sources:
+- path: data/docs/c64ref/rom-disassembly/basic-rom/b9d6-05-sqr2.md
+  sha256: 5a0aa6ef39b02dcad39f7433f3311aaee915c5906ec7e43d20d98ce57958f761
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+status: stable
+contradictions: []
+links_out: []
+---
+
+# Source Summary: 0,5 * SQR(2)
+
+**Raw Source File**: `data/docs/c64ref/rom-disassembly/basic-rom/b9d6-05-sqr2.md`
+**SHA256**: `5a0aa6ef39b02dcad39f7433f3311aaee915c5906ec7e43d20d98ce57958f761`
+
+## Summary
+
+
+
+# $B9D6 — 0,5 * SQR(2)
+
+## Disassemblatura
+```assembly
+.B9D6  80 35 04 F3 34
+```
+
+
+## Commenti
+
+### Marko Mäkelä (Marko Mäkelä)
+Nessun commento disponibile.
+
+---
+*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*...

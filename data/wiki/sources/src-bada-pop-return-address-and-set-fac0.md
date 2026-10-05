@@ -1,0 +1,47 @@
+---
+id: src-bada-pop-return-address-and-set-fac0
+type: source
+title: 'Source Summary: POP RETURN ADDRESS AND SET FAC=0'
+aliases:
+- POP RETURN ADDRESS AND SET FAC=0
+- bada-pop-return-address-and-set-fac0.md
+tags:
+- rom-disassembly
+- basic-rom
+sources:
+- path: data/docs/c64ref/rom-disassembly/basic-rom/bada-pop-return-address-and-set-fac0.md
+  sha256: fc8e03192efc28909188a37c565061172d0ec39a9502e4eca7b2a18356c46b03
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+status: stable
+contradictions: []
+links_out: []
+---
+
+# Source Summary: POP RETURN ADDRESS AND SET FAC=0
+
+**Raw Source File**: `data/docs/c64ref/rom-disassembly/basic-rom/bada-pop-return-address-and-set-fac0.md`
+**SHA256**: `fc8e03192efc28909188a37c565061172d0ec39a9502e4eca7b2a18356c46b03`
+
+## Summary
+
+
+
+# $BADA — POP RETURN ADDRESS AND SET FAC=0
+
+## Disassemblatura
+```assembly
+.BADA  68       PLA
+.BADB  68       PLA
+.BADC  4C F7 B8 JMP $B8F7
+.BADF  4C 7E B9 JMP $B97E
+```
+
+
+## Commenti
+
+### Bob Sander-Cederlof (Bob Sander-Cederlof)
+Nessun commento disponibile.
+
+---
+*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*...

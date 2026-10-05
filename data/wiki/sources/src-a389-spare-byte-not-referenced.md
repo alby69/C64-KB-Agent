@@ -1,0 +1,44 @@
+---
+id: src-a389-spare-byte-not-referenced
+type: source
+title: 'Source Summary: spare byte, not referenced'
+aliases:
+- spare byte, not referenced
+- a389-spare-byte-not-referenced.md
+tags:
+- rom-disassembly
+- basic-rom
+sources:
+- path: data/docs/c64ref/rom-disassembly/basic-rom/a389-spare-byte-not-referenced.md
+  sha256: 43bde87be3e158a600b8001b7269e1d8d4a2b741343fbffd2885c2a8e04273b7
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+status: stable
+contradictions: []
+links_out: []
+---
+
+# Source Summary: spare byte, not referenced
+
+**Raw Source File**: `data/docs/c64ref/rom-disassembly/basic-rom/a389-spare-byte-not-referenced.md`
+**SHA256**: `43bde87be3e158a600b8001b7269e1d8d4a2b741343fbffd2885c2a8e04273b7`
+
+## Summary
+
+
+
+# $A389 — spare byte, not referenced
+
+## Disassemblatura
+```assembly
+.A389  A0   ; unused
+```
+
+
+## Commenti
+
+### Original Disassembly (—)
+- **$A389**: unused
+
+---
+*Fonte: [c64ref](https://github.com/mist64/c64ref) — Ultimate Commodore 64 Reference*...
